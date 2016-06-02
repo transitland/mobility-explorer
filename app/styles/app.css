@@ -1,4 +1,13 @@
 .leaflet-container{
 	height: 250px;
-	width: 100%;
+}
+
+
+.map-container{
+	background-color: rgb(110,160,164);
+	height: 500px;
+}
+
+.title{
+	padding-bottom: 15px;
 }

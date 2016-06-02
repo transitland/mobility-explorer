@@ -1,22 +1,58 @@
-<p><label>{{input type="checkbox" checked=nightMode}} Night mode</label></p>
-<p>Latitude: <code>{{lat}}</code> / Longitude: <code>{{lng}}</code></p>
-{{#leaflet-map lat=lat lng=lng zoom=zoom onMoveend=(action "updateCenter")}}
-  {{#if nightMode}}
-    {{tile-layer url="http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"}}
-  {{else}}
-    {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-  {{/if}}
-  {{#marker-layer location=emberConfLocation}}
-    <h3>The Oregon Convention Center</h3>
-    777 NE Martin Luther King Jr Blvd<br>
-    Portland, OR 97232
-  {{/marker-layer}}
 
-  {{#marker-layer location=hotel}}
-    <h3>Hotel</h3>
-  {{/marker-layer}}
 
-{{/leaflet-map}}
-{{#each model as |feed|}}
-<div>{{feed.id}}</div>
-{{/each}}
+<div class="row">
+  <div class="col-md-12 title">
+    <h1>Mobility Data Explorer</h1>
+  </div>
+</div>
+
+<div class="container-fluid">
+  
+  <div class="row">
+    
+    <div class="col-md-3">
+      <div class="toc" role="directory">
+        <ul class="nav toc-nav">
+          <li class="toc-top-level">
+            <a href="#">Home</a>
+          </li>
+          <li class="toc-top-level toc-current">
+            <a href="#" class="toc-subnav-toggle">Feeds</a>
+            <ul class="toc-subnav toc-expand">
+              {{#each model as |feed|}}
+                <li><a href="#">{{feed.id}}</a></li>
+              {{/each}}
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-9 map-container">
+      <h2>Map</h2>
+      <p><label>{{input type="checkbox" checked=nightMode}} Night mode</label></p>
+      <p>Latitude: <code>{{lat}}</code> / Longitude: <code>{{lng}}</code></p>
+
+      {{#leaflet-map lat=lat lng=lng zoom=zoom onMoveend=(action "updateCenter")}}
+        {{#if nightMode}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"}}
+        {{else}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+        {{/if}}
+        {{#marker-layer location=emberConfLocation}}
+          <h3>The Oregon Convention Center</h3>
+          777 NE Martin Luther King Jr Blvd<br>
+          Portland, OR 97232
+        {{/marker-layer}}
+
+        {{#marker-layer location=hotel}}
+          <h3>Hotel</h3>
+        {{/marker-layer}}
+
+      {{/leaflet-map}}
+    </div>
+  
+  </div>
+
+</div>
+
