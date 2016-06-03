@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
   zoom: 12,
   emberConfLocation: [45.528298, -122.662986],
   hotel: [45.530891, -122.655504],
+  icon: L.icon({iconUrl: 'assets/images/marker.png'}),
   actions: {
     updateCenter(e) {
       let center = e.target.getCenter();

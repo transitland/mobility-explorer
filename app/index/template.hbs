@@ -19,8 +19,22 @@
 </div>
   
   <div class="row">
-    
-    
+   <!--  <div class="col-md-3">
+      <div class="toc" role="directory">
+        <ul class="nav toc-nav">
+          <li class="toc-top-level">
+            <a href="#">Home</a>
+          </li>
+          <li class="toc-top-level toc-current">
+            <a href="#" class="toc-subnav-toggle">Feeds</a>
+            <ul class="toc-subnav toc-expand">
+                <li><a href="#">example</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9 map-container"> -->
     <div class="col-md-12 map-container">
       <div class="row">
         <p><label>{{input type="checkbox" checked=nightMode}} Night mode</label></p>
@@ -32,13 +46,13 @@
           {{else}}
             {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
           {{/if}}
-          {{#marker-layer location=emberConfLocation}}
+          {{#marker-layer location=emberConfLocation icon=icon draggable=true}}
             <h3>The Oregon Convention Center</h3>
             777 NE Martin Luther King Jr Blvd<br>
             Portland, OR 97232
           {{/marker-layer}}
 
-          {{#marker-layer location=hotel icon="./public/assets/images/marker.png"}}
+          {{#marker-layer location=hotel icon=icon}}
             <h3>Hotel</h3>
           {{/marker-layer}}
 
