@@ -37,7 +37,7 @@
     <div class="col-md-9 map-container"> -->
     <div class="col-md-12 map-container">
       <div class="row">
-        <p><label>{{input type="checkbox" checked=nightMode}} Night mode</label></p>
+        <p>{{input type="checkbox" checked=nightMode}} <label>Night mode</label></p>
         <p>Latitude: <code>{{lat}}</code> / Longitude: <code>{{lng}}</code></p>
 
         {{#leaflet-map lat=lat lng=lng zoom=zoom onMoveend=(action "updateCenter")}}
@@ -71,6 +71,24 @@
               <tr>
                 <td>{{feed.id}}</td>
                 <td>{{feed.url}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table></div>
+      </div> 
+       <div class="row">
+        <div class="table-wrapper"><table class="table">
+          <thead>
+            <tr>
+              <th>Operator ID</th>
+              <th>Operator Name</th>
+            </tr>
+          </thead>
+          <tbody>
+              {{#each model as |feed|}}
+              <tr>
+                <td>{{feed.id}}</td>
+                <td>{{feed.operators.firstObject.name}}</td>
               </tr>
             {{/each}}
           </tbody>
