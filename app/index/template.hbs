@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-md-12 title">
-    <h1>Mobility Data Explorer</h1>
+    <h1>Mobility Explorer</h1>
   </div>
 </div>
 
@@ -58,25 +58,35 @@
 
         {{/leaflet-map}}
       </div>
+
       <div class="row">
         <div class="table-wrapper"><table class="table">
           <thead>
             <tr>
+              <th>Operator ID</th>
+              <th>Operator Name</th>
               <th>Feed ID</th>
               <th>Feed URL</th>
             </tr>
           </thead>
           <tbody>
-              {{#each model as |feed|}}
+              {{#each model as |operator|}}
               <tr>
-                <td>{{feed.id}}</td>
-                <td>{{feed.url}}</td>
+                <td>{{operator.id}}</td>
+                <td>{{operator.name}}</td>
+                
+                <td>
+                  {{#each operator.feeds as |feed|}}
+                    <li>{{feed.id}}</li>
+                  {{/each}}
+                </td>
               </tr>
             {{/each}}
           </tbody>
         </table></div>
       </div> 
-       <div class="row">
+
+     <!--  <div class="row">
         <div class="table-wrapper"><table class="table">
           <thead>
             <tr>
@@ -85,15 +95,15 @@
             </tr>
           </thead>
           <tbody>
-              {{#each model as |feed|}}
+              {{#each model.operator as |operator|}}
               <tr>
-                <td>{{feed.id}}</td>
-                <td>{{feed.operators.firstObject.name}}</td>
+                <td>{{operator.id}}</td>
               </tr>
             {{/each}}
           </tbody>
         </table></div>
-      </div> 
+      </div>  -->
+       
 
     
     </div>

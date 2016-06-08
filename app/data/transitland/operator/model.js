@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+// import { hasMany } from 'ember-data/relationships';
+
 
 var Operator = DS.Model.extend({
-	feeds: DS.hasMany('feed', { async: true }),
+	feeds: DS.hasMany('data/transitland/feed', { async: true }),
 	identifiers: DS.attr(),
 	name: DS.attr('string'),
 	short_name: DS.attr('string'),
@@ -14,7 +16,6 @@ var Operator = DS.Model.extend({
 	timezone: DS.attr('string'),
 	created_at: DS.attr('date'),
 	updated_at: DS.attr('date'),
-	include_in_changeset: DS.attr('boolean', { defaultValue: true }),
 	geometry: DS.attr(),
 	tags: DS.attr(),
 });

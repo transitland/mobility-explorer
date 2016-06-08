@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+// import { hasMany } from 'ember-data/relationships';
+
 
 var Feed = DS.Model.extend({
   onestop_id: Ember.computed.alias('id'),
-  operators: DS.hasMany('operator', { async: true }),
+  operators: DS.hasMany('data/transitland/operator', { async: true }),
   url: DS.attr('string'),
   feed_format: DS.attr('string'),
   license_name: DS.attr('string'),
