@@ -77,9 +77,15 @@
                 
                 <td>
                   {{#each operator.feeds as |feed|}}
-                    <li>{{feed.id}}</li>
+                    <tr>{{feed.id}}</tr>
                   {{/each}}
                 </td>
+                <td>
+                  {{#each operator.feeds as |feed|}}
+                    <tr>{{feed.url}}</tr>
+                  {{/each}}
+                </td>
+
               </tr>
             {{/each}}
           </tbody>
