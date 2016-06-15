@@ -1,101 +1,103 @@
+<h1>Mobility Explorer</h1>
+<p>Latitude: <code>{{lat}}</code> / Longitude: <code>{{lng}}</code></p>
+<p>Bounding box: <code>{{bBox}}</code></p>
 
 
-<div class="row">
-  <div class="col-md-12 title">
-    <h1>Mobility Explorer</h1>
-  </div>
-</div>
-
-<div class="container-fluid">
-  <div class="demo-controls" id="demo-controls">
-  <div class="demo-control-previous"><i class="fa fa-fw fa-angle-left"></i></div>
-  <ul class="demo-control-list">
-    <li class="demo-control"> Transit</li>
-    <li class="demo-control active">Multi-modal Routing</li>
-    <li class="demo-control">Data Coverage</li>
-    <li class="demo-control">API Explorer</li>
-  </ul>
-  <div class="demo-control-next"><i class="fa fa-fw fa-angle-right"></i></div>
-</div>
-  
-  <div class="row">
-   <!--  <div class="col-md-3">
-      <div class="toc" role="directory">
-        <ul class="nav toc-nav">
-          <li class="toc-top-level">
-            <a href="#">Home</a>
-          </li>
-          <li class="toc-top-level toc-current">
-            <a href="#" class="toc-subnav-toggle">Feeds</a>
-            <ul class="toc-subnav toc-expand">
-                <li><a href="#">example</a></li>
-            </ul>
-          </li>
-        </ul>
+<container>
+<div class="map-side-nav">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-3">
+        <div class="toc" role="directory">
+          <ul class="nav toc-nav">
+            <li class="toc-top-level toc-current">
+              <a href="#" class="toc-subnav-toggle">Routes</a>
+              <ul class="toc-subnav toc-expand">
+                <li><a href="#">
+                  <form>
+                    <div class="form-group">
+                      <input type="radio" id="radio-1" name="options">
+                      <label for="radio-1">Mode</label>
+                    </div>
+                    <div class="form-group">
+                      <input type="radio" id="radio-2" name="options">
+                      <label for="radio-2">Operator</label>
+                    </div>
+                    <div class="form-group">
+                      <input type="radio" id="radio-3" name="options">
+                      <label for="radio-3">Bike</label>
+                    </div>
+                    <div class="form-group">
+                      <input type="radio" id="radio-4" name="options">
+                      <label for="radio-4">Wheelchair</label>
+                    </div>
+                    <div class="form-group">
+                      <input type="radio" id="radio-5" name="options">
+                      <label for="radio-5">Frequency</label>
+                    </div>
+                  </form>
+                </a></li>
+              </ul>
+            </li>
+            <li class="toc-top-level">
+              <a href="#">Stops</a>
+            </li>
+            <li class="toc-top-level">
+              <a href="#">Operators</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="col-md-9 map-container"> -->
-    <div class="col-md-12 map-container">
-      <div class="row">
-        <p>{{input type="checkbox" checked=nightMode}} <label>Night mode</label></p>
-        <p>Latitude: <code>{{lat}}</code> / Longitude: <code>{{lng}}</code></p>
+  </div>
+</div>
+    
+<div class="leaflet-container">
+  
+  <div id="map">
+    {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onMoveend=(action "updateCenter") onMoveend=(action "getBbox")}}
 
-        {{#leaflet-map lat=lat lng=lng zoom=zoom onMoveend=(action "updateCenter")}}
-          {{#if nightMode}}
-            {{tile-layer url="http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"}}
-          {{else}}
-            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-          {{/if}}
-          {{#marker-layer location=emberConfLocation icon=icon draggable=true}}
-            <h3>The Oregon Convention Center</h3>
-            777 NE Martin Luther King Jr Blvd<br>
-            Portland, OR 97232
-          {{/marker-layer}}
+      
+      {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+      {{#marker-layer location=emberConfLocation icon=icon draggable=true}}
+        <h3>The Oregon Convention Center</h3>
+        777 NE Martin Luther King Jr Blvd<br>
+        Portland, OR 97232
+      {{/marker-layer}}
 
-          {{#marker-layer location=hotel icon=icon}}
-            <h3>Hotel</h3>
-          {{/marker-layer}}
+      {{#marker-layer location=hotel icon=icon}}
+        <h3>Hotel</h3>
+      {{/marker-layer}}
 
-        {{/leaflet-map}}
-      </div>
+    {{/leaflet-map}}
+  </div>
 
-      <div class="row">
-        <div class="table-wrapper"><table class="table">
-          <thead>
+
+       
+        <!-- <tbody>
+            {{#each model as |operator|}}
             <tr>
-              <th>Operator ID</th>
-              <th>Operator Name</th>
-              <th>Feed ID</th>
-              <th>Feed URL</th>
+              <td>{{operator.id}}</td>
+              <td>{{operator.name}}</td>
+              
+              <td>
+                {{#each operator.feeds as |feed|}}
+                  <tr>{{feed.id}}</tr>
+                {{/each}}
+              </td>
+              <td>
+                {{#each operator.feeds as |feed|}}
+                  <tr>{{feed.url}}</tr>
+                {{/each}}
+              </td>
+
             </tr>
-          </thead>
-          <tbody>
-              {{#each model as |operator|}}
-              <tr>
-                <td>{{operator.id}}</td>
-                <td>{{operator.name}}</td>
-                
-                <td>
-                  {{#each operator.feeds as |feed|}}
-                    <tr>{{feed.id}}</tr>
-                  {{/each}}
-                </td>
-                <td>
-                  {{#each operator.feeds as |feed|}}
-                    <tr>{{feed.url}}</tr>
-                  {{/each}}
-                </td>
-
-              </tr>
-            {{/each}}
-          </tbody>
-        </table></div>
-      </div>     
-    </div>
-  </div>
-  
-  
-  
-
+          {{/each}}
+        </tbody> -->
+  <!-- </div> -->
 </div>
+</container>
+
+  
+  
 
