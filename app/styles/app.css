@@ -8,12 +8,12 @@ html, body {
  }
 
 
-.leaflet-container{
+.leaflet-container {
 	height: 500px;
 
 }
 
-.map-side-nav{
+.map-side-nav {
 	z-index: 2;
 	width: 50px;
 	height: 50px;

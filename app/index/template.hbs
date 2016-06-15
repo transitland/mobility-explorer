@@ -1,61 +1,117 @@
 <h1>Mobility Explorer</h1>
-<p>Latitude: <code>{{lat}}</code> / Longitude: <code>{{lng}}</code></p>
 <p>Bounding box: <code>{{bBox}}</code></p>
 
 
 <container>
-<div class="map-side-nav">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-3">
-        <div class="toc" role="directory">
-          <ul class="nav toc-nav">
-            <li class="toc-top-level toc-current">
-              <a href="#" class="toc-subnav-toggle">Routes</a>
-              <ul class="toc-subnav toc-expand">
-                <li><a href="#">
-                  <form>
-                    <div class="form-group">
-                      <input type="radio" id="radio-1" name="options">
-                      <label for="radio-1">Mode</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-2" name="options">
-                      <label for="radio-2">Operator</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-3" name="options">
-                      <label for="radio-3">Bike</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-4" name="options">
-                      <label for="radio-4">Wheelchair</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-5" name="options">
-                      <label for="radio-5">Frequency</label>
-                    </div>
-                  </form>
-                </a></li>
-              </ul>
-            </li>
-            <li class="toc-top-level">
-              <a href="#">Stops</a>
-            </li>
-            <li class="toc-top-level">
-              <a href="#">Operators</a>
-            </li>
-          </ul>
+  <div class="map-side-nav">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-3">
+          <div class="toc" role="directory">
+            <ul class="nav toc-nav">
+              {{#if routesSelected}}
+                <li class="toc-top-level toc-current">
+                  <a href="#" class="toc-subnav-toggle">Routes</a>
+                  <ul class="toc-subnav toc-expand">
+                    <li><a href="#">
+                      <form>
+                        <div class="form-group">
+                          <input type="radio" id="radio-1" name="options">
+                          <label for="radio-1">Mode</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="radio" id="radio-2" name="options">
+                          <label for="radio-2">Operator</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="radio" id="radio-3" name="options">
+                          <label for="radio-3">Bike</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="radio" id="radio-4" name="options">
+                          <label for="radio-4">Wheelchair</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="radio" id="radio-5" name="options">
+                          <label for="radio-5">Frequency</label>
+                        </div>
+                      </form>
+                    </a></li>
+                  </ul>
+                </li>
+              {{else}}
+                <li class="toc-top-level">
+                  <a href="#" {{action "toggleSelectedType" "routes"}}>Routes</a>
+                </li>
+              {{/if}}
+
+              {{#if stopsSelected}}
+                <li class="toc-top-level toc-current">
+                  <a href="#" class="toc-subnav-toggle">Stops</a>
+                  <ul class="toc-subnav toc-expand">
+                    <li><a href="#">
+                      <form>
+                        <div class="form-group">
+                          <input type="radio" id="radio-1" name="options">
+                          <label for="radio-1">Frequency</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="radio" id="radio-2" name="options">
+                          <label for="radio-2">Walkshed</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="radio" id="radio-3" name="options">
+                          <label for="radio-3">Transitshed</label>
+                        </div>
+                      </form>
+                    </a></li>
+                  </ul>
+                </li>
+              {{else}}
+                <li class="toc-top-level">
+                  <a href="#" {{action "toggleSelectedType" "stops"}}>Stops</a>
+                </li>
+              {{/if}}
+
+              {{#if operatorsSelected}}
+                <li class="toc-top-level toc-current">
+                  <a href="#" class="toc-subnav-toggle">Operators</a>
+                  <ul class="toc-subnav toc-expand">
+                    <li><a href="#">
+                      <form>
+                        <div class="form-group">
+                          <input type="radio" id="radio-1" name="options">
+                          <label for="radio-1">View service areas</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="radio" id="radio-2" name="options">
+                          <label for="radio-2">View routes</label>
+                        </div>
+                      </form>
+                    </a></li>
+                  </ul>
+                </li>
+              {{else}}
+                <li class="toc-top-level">
+                  <a href="#" {{action "toggleSelectedType" "operators"}}>Operators</a>
+                </li>
+              {{/if}}
+
+             
+            </ul>
+          </div>
         </div>
       </div>
+    <button class="btn btn-mapzen">Update results for map area</button>
+
     </div>
   </div>
-</div>
+
     
 <div class="leaflet-container">
   
   <div id="map">
-    {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onMoveend=(action "updateCenter") onMoveend=(action "getBbox")}}
+    {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onMove=(action "toggleReset") onMoveend=(action "getBbox")}}
 
       
       {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
