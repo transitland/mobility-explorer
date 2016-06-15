@@ -5,13 +5,17 @@ export default Ember.Controller.extend({
   lng: -122.680522,
   zoom: 12,
   bBox: null,
-  selectedType: null,
+  selectedType: "initial",
   resetButton: false,
   emberConfLocation: [45.528298, -122.662986],
   hotel: [45.530891, -122.655504],
   icon: L.icon({
     iconUrl: 'assets/images/marker.png',
     iconSize: (20, 20)
+  }),
+
+  initialSelected: Ember.computed('selectedType', function() {
+    return (this.get('selectedType') === "initial");
   }),
 
   routesSelected: Ember.computed('selectedType', function() {
