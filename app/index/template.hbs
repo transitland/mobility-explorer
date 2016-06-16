@@ -96,9 +96,7 @@
                   </li>
                   {{else}}
                     <li class="toc-top-level">
-                      {{#link-to 'operators'}}<span>Operators</span>{{/link-to}}
-
-
+                      {{#link-to 'operators' (query-params bBox=bBox)}}<span>Operators</span>{{/link-to}}
                       <!-- {{action "toggleSelectedType" "operators"}} -->
                     </li>
 
