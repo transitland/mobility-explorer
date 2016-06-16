@@ -4,10 +4,11 @@ export default Ember.Route.extend({
 
 	queryParams: {
     bBox: {
-      refreshModel: true
+      refreshModel: true,
+      replace: true
     }
 	},
-	
+
 	model: function(params){
 		return this.store.query('data/transitland/operator', params);
 	}
