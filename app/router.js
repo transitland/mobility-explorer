@@ -18,7 +18,7 @@ Router.map(function() {
 		this.route('wheelchair-access');
 		// when a single route is selected:
 		this.route('route', { path: "/:route-id" });
-		// params: info for specific route:
+		// info for specific route:
 		// - route name
 		// - route long name
 		// - operated by (link to operator model)
@@ -36,7 +36,7 @@ Router.map(function() {
 		this.route('transitshed');
 		// when a single stop is selected:
 		this.route('stop', { path: "/:stop-id" });
-		// params: info for specific stop:
+		// info for specific stop:
 		// - stop name
 		// - operators serving stop
 		// - routes serving stops
@@ -49,7 +49,7 @@ Router.map(function() {
 		this.route('service-areas');
 		// when a single stop is selected:
 		this.route('operator', { path: "/:operator-id" });
-		// - params: info for specific operator:
+		// - info for specific operator:
 		// - name
 		// - short name
 		// - onestop id
