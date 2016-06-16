@@ -1,6 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+
+	queryParams: {
+    bBox: {
+      refreshModel: true
+    }
+	},
+	
 	model: function(params){
 		return this.store.query('data/transitland/operator', params);
 	}
