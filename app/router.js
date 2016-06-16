@@ -7,7 +7,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
 
-	// params: bbox
+	// params for all: bbox
 
 	this.route('routes', function(){
 		// toggles for route line render style:

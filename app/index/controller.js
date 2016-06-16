@@ -31,11 +31,6 @@ export default Ember.Controller.extend({
   }),
 
   actions: {
-    updateCenter(e) {
-      let center = e.target.getCenter();
-      this.set('lat', center.lat);
-      this.set('lng', center.lng);
-    },
     getBbox(e) {
       let bBox = e.target.getBounds();
       this.set('bBox', bBox.toBBoxString());
@@ -48,7 +43,3 @@ export default Ember.Controller.extend({
     }
   }
 });
-
-// supportedImportLevel: Ember.computed('importLevel', function() {
-//     return (this.get('importLevel') >= 0 && this.get('importLevel') <= 4);
-//   })

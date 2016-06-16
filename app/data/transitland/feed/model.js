@@ -1,7 +1,5 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-// import { hasMany } from 'ember-data/relationships';
-
 
 var Feed = DS.Model.extend({
   onestop_id: Ember.computed.alias('id'),

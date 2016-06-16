@@ -1,7 +1,5 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-// import { hasMany } from 'ember-data/relationships';
-
 
 var Operator = DS.Model.extend({
 	feeds: DS.hasMany('data/transitland/feed', { async: true }),
