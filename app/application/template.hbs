@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-3 col-lg-3">
 			{{outlet}}
     </div>
-			{{#map-explorer}}{{/map-explorer}}
+		{{#map-explorer onMove=(action "getBbox")}}{{/map-explorer}}
 	</row>
 </container-fluid>
 

@@ -14,9 +14,10 @@ export default Ember.Component.extend({
 	}),
 
 	actions: {
-		getBbox(e) {
-		  let bBox = e.target.getBounds();
-		  this.set('bBox', bBox.toBBoxString());
+		updateBbox(e) {
+			var newBox = e.target.getBounds();
+		  this.get('onMove')(newBox);
 		}
 	}
 });
+
