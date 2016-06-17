@@ -11,9 +11,6 @@ export default Ember.Controller.extend({
 			let bBox = e.target.getBounds();
 			this.set('bBox', bBox.toBBoxString());
 		},
-		toggleSelectedType(type){
-			this.set('selectedType', type);
-		},
 		toggleReset(){
 			this.toggleProperty('resetButton');
 		}

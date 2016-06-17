@@ -5,17 +5,12 @@
     <div class="col-xs-12 col-md-3">
       <div class="toc" role="directory">
         <ul class="nav toc-nav">
-         
-         
             <li class="toc-top-level">
-              <a href="#" {{action "toggleSelectedType" "routes"}}>Routes</a>
+              {{#link-to 'routes' (query-params bBox=bBox)}}<span>Routes</span>{{/link-to}}
             </li>
-
-         
             <li class="toc-top-level">
-              <a href="#" {{action "toggleSelectedType" "stops"}}>Stops</a>
+              {{#link-to 'stops' (query-params bBox=bBox)}}<span>Stops</span>{{/link-to}}
             </li>
-
             <li class="toc-top-level toc-current">
               <a href="#" class="toc-subnav-toggle">Operators</a>
               <ul class="toc-subnav toc-expand">
@@ -33,12 +28,9 @@
                 </a></li>
               </ul>
             </li>
-           
-          
         </ul>
       </div>
-    		<button class="btn btn-mapzen-alt">Update results</button>
-
+    	<button class="btn btn-mapzen-alt">Update results</button>
     </div>
   </div>
 </div>

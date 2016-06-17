@@ -1,109 +1,23 @@
-
 <h2>Mobility Explorer</h2>
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-md-3">
       <div class="toc" role="directory">
         <ul class="nav toc-nav">
-          <!-- {{#if initialSelected}}
-            <li class="toc-top-level alert-info">
-              <a href="#">Select to view:</a>
-            </li>
-          {{/if}} -->
-          {{#if routesSelected}}
-            <li class="toc-top-level toc-current">
-              <a href="#" class="toc-subnav-toggle">Routes</a>
-              <ul class="toc-subnav toc-expand">
-                <li><a href="#">
-                  <form>
-                    <div class="form-group">
-                      <input type="radio" id="radio-1" name="options">
-                      <label for="radio-1">Mode</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-2" name="options">
-                      <label for="radio-2">Operator</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-3" name="options">
-                      <label for="radio-3">Bike</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-4" name="options">
-                      <label for="radio-4">Wheelchair</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-5" name="options">
-                      <label for="radio-5">Frequency</label>
-                    </div>
-                  </form>
-                </a></li>
-              </ul>
-            </li>
-          {{else}}
             <li class="toc-top-level">
-              <a href="#" {{action "toggleSelectedType" "routes"}}>Routes</a>
+              {{#link-to 'routes' (query-params bBox=bBox)}}<span>Routes</span>{{/link-to}}
             </li>
-          {{/if}}
-
-          {{#if stopsSelected}}
-            <li class="toc-top-level toc-current">
-              <a href="#" class="toc-subnav-toggle">Stops</a>
-              <ul class="toc-subnav toc-expand">
-                <li><a href="#">
-                  <form>
-                    <div class="form-group">
-                      <input type="radio" id="radio-1" name="options">
-                      <label for="radio-1">Frequency</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-2" name="options">
-                      <label for="radio-2">Walkshed</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-3" name="options">
-                      <label for="radio-3">Transitshed</label>
-                    </div>
-                  </form>
-                </a></li>
-              </ul>
-            </li>
-          {{else}}
+         
             <li class="toc-top-level">
-              <a href="#" {{action "toggleSelectedType" "stops"}}>Stops</a>
+              {{#link-to 'stops' (query-params bBox=bBox)}}<span>Stops</span>{{/link-to}}
             </li>
-          {{/if}}
 
-          {{#if operatorsSelected}}
-            <li class="toc-top-level toc-current">
-              <a href="#" class="toc-subnav-toggle">Operators</a>
-              <ul class="toc-subnav toc-expand">
-                <li><a href="#">
-                  <form>
-                    <div class="form-group">
-                      <input type="radio" id="radio-1" name="options">
-                      <label for="radio-1">View service areas</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-2" name="options">
-                      <label for="radio-2">View routes</label>
-                    </div>
-                  </form>
-                </a></li>
-              </ul>
+            <li class="toc-top-level">
+              {{#link-to 'operators' (query-params bBox=bBox)}}<span>Operators</span>{{/link-to}}
             </li>
-            {{else}}
-              <li class="toc-top-level">
-                {{#link-to 'operators' (query-params bBox=bBox)}}<span>Operators</span>{{/link-to}}
-                <!-- {{action "toggleSelectedType" "operators"}} -->
-              </li>
-
-          {{/if}}
-          
         </ul>
       </div>
-    		<button class="btn btn-mapzen-alt">Update results</button>
-
+   		<button class="btn btn-mapzen-alt">Update results</button>
     </div>
   </div>
 </div>
