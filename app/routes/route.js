@@ -5,5 +5,8 @@ export default Ember.Route.extend({
     bBox: {
       replace: true
     }
+  },
+  model: function(params){
+    return this.store.query('data/transitland/route', params);
   }
 });

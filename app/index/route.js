@@ -1,10 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-
+	bBox: null,
 	queryParams: {
     bBox: {
-      refreshModel: true,
       replace: true
     }
 	},

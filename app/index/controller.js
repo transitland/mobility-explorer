@@ -1,11 +1,11 @@
 import Ember from 'ember';
+// import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
+
 
 export default Ember.Controller.extend({
+	queryParams: ['bBox'],
 	bBox: null,
 	actions: {
-		getBbox(e) {
-			let bBox = e.target.getBounds();
-			this.set('bBox', bBox.toBBoxString());
-		}
+		
 	}
 });
