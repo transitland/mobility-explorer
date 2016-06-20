@@ -1,0 +1,36 @@
+<div id="map">
+  {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onMoveend=(action "updateBbox")}}
+		
+		{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+  	
+  	{{#marker-layer location=testLocation icon=icon draggable=true}}
+  		<h3>Test Location</h3>
+	      Sample Location<br>
+	      San Francisco
+  	{{/marker-layer}}
+
+	  {{#marker-layer location=testLocationTwo icon=icon}}
+	    <h3>Test Location 2</h3>
+	  {{/marker-layer}}
+
+    <!-- {{#each operators as |operator|}} -->
+    <!-- add method on operator model (toLeafletCoordinates) that reverses coordinates -->
+    <!-- Ian suggests: -->
+    <!-- return geometry(['coodrinates']).map(function(coord) {return coord.reverse()}) -->
+	  	<!-- {{#polygon-layer locations=coordinates }}
+
+	  	{{/polygon-layer}} -->
+	  	<!-- {{operator.name}} -->
+	  	
+
+    <!-- {{/each}} -->
+
+
+
+	{{/leaflet-map}}
+	{{bBox}}
+</div>
+    {{#each models as |model|}}
+    	{{detail}}
+    {{/each}}
+
