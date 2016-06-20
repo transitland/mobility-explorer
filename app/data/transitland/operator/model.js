@@ -2,7 +2,6 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 var Operator = DS.Model.extend({
-	feeds: DS.hasMany('data/transitland/feed', { async: true }),
 	identifiers: DS.attr(),
 	name: DS.attr('string'),
 	short_name: DS.attr('string'),
