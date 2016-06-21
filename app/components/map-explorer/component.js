@@ -5,14 +5,14 @@ export default Ember.Component.extend({
 	lng: -122.4194,
 	zoom: 12,
 	bBox: null,
-	// coordinates: Ember.computed(function(){
- //    var coords = this.get('geometry').coordinates.map(function(coord){
- //      coord.reverse();
- //      console.log('test');
- //      return coord;
- //    });
- //    return coords;
- //  }),
+	coordinates: Ember.computed(function(){
+	    var coords = this.get('geometry').coordinates.map(function(coord){
+	      coord.reverse();
+	      console.log('test');
+	      return coord;
+	    });
+	    return coords;
+	}),
 	resetButton: false,
 	testLocation: [37.7749, -122.4194],
 	testLocationTwo: [37.7900, -122.4194],
@@ -28,8 +28,8 @@ export default Ember.Component.extend({
 	actions: {
 		updateBbox(e) {
 			var newBox = e.target.getBounds();
-		  this.get('onMove')(newBox);
+			this.set('bBox', newBox.toBBoxString());
+			this.get('getBbox')(newBox);
 		}
 	}
 });
-

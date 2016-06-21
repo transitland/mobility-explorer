@@ -43,15 +43,11 @@
             </li>
         </ul>
       </div>
-    	<button class="btn btn-mapzen-alt">Update results</button>
+    	<button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button>
     </div>
-    {{#map-explorer}}{{/map-explorer}}
+    {{#map-explorer models=model detail="routes" getBbox=(action "setBbox")}}{{/map-explorer}}    
   </div>
 </div>
-
-
-
-
 
 
 

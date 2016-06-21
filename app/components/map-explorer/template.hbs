@@ -1,5 +1,5 @@
 <div id="map">
-  {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onMoveend=(action "updateBbox")}}
+  {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onLoad=(action "updateBbox") onMoveend=(action "updateBbox")}}
 		
 		{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
   	
@@ -12,6 +12,12 @@
 	  {{#marker-layer location=testLocationTwo icon=icon}}
 	    <h3>Test Location 2</h3>
 	  {{/marker-layer}}
+
+	<!-- {{#each models as |model|}}
+    	{{#polygon-layer locations=model.geometry.coordinates}}
+	    	<h3>{{model.name}}</h3>
+	  	{{/polygon-layer}}
+    {{/each}} -->
 
     <!-- {{#each operators as |operator|}} -->
     <!-- add method on operator model (toLeafletCoordinates) that reverses coordinates -->
@@ -30,7 +36,7 @@
 	{{/leaflet-map}}
 	{{bBox}}
 </div>
-    {{#each models as |model|}}
-    	{{detail}}
-    {{/each}}
+{{#each models as |model|}}
+	{{detail}}
+{{/each}}
 
