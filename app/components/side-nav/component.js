@@ -7,10 +7,26 @@ export default Ember.Component.extend({
       replace: true
     }
   },
-	actions: {
-		getBbox(e) {
-			let bBox = e.target.getBounds();
-			this.set('bBox', bBox.toBBoxString());
-		}
-	}
+  activeRoute: 'index',
+  test: false,
+  activeIndexRoute: function(){
+  	if (this.test === true){
+  		return true;
+  	}
+  },
+  activeOperatorsRoute: function(){
+  	if (activeRoute === 'operators'){
+  		return true;
+  	}
+  },
+  activeRoutesRoute: function(){
+  	if(activeRoute === 'routes'){
+  		return true;
+  	}
+  },
+  activeStopsRoute: function(){
+  	if(activeRoute === 'stops'){
+  		return true;
+  	}
+  }
 });
