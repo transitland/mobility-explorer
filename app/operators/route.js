@@ -7,6 +7,7 @@ export default Ember.Route.extend({
       replace: true
     }
   },
+  activeRoute: 'operators',
   actions: {
     getBbox(newBbox) {
       let bBox = newBbox;
