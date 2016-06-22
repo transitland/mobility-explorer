@@ -18,4 +18,3 @@ export default Ember.Controller.extend(mapBboxController, {
 		}
 	}	
 });
-
