@@ -35,7 +35,6 @@
       </div>
     	<button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button>
     </div>
-    <!-- {{#map-explorer models=model detail="stops" getBbox=(action "setBbox")}}{{/map-explorer}}     -->
     <div id="map">
 		  {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onLoad=(action "updateBbox") onMoveend=(action "updateBbox")}}
 				
