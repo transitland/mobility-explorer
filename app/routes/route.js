@@ -2,10 +2,11 @@ import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 
 export default Ember.Route.extend(mapBboxRoute, {
-  // bBox: null,
   queryParams: {
-    bBox: {
-      replace: true
+    bbox: {
+      replace: true,
+      refreshModel: true
+
     }
   },
   
