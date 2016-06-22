@@ -2,8 +2,8 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bBox'],
-	bBox: null,
+	queryParams: ['bbox'],
+	bbox: null,
 	lat: 37.7749,
 	lng: -122.4194,
 	zoom: 12,
@@ -12,11 +12,11 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (20, 20)
 	}),
 	actions: {
-    updateBbox(e) {
-			var newBox = e.target.getBounds();
-			this.set('bBox', newBox.toBBoxString());
+    updatebbox(e) {
+			var newbox = e.target.getBounds();
+			this.set('bbox', newbox.toBBoxString());
 		},
-    printBbox(){
+    printbbox(){
       console.log("routes bbox: " + this.bBox);
     }
   }

@@ -5,21 +5,30 @@
       <div class="toc" role="directory">
         <ul class="nav toc-nav">
             <li class="toc-top-level">
-              {{#link-to 'routes' (query-params bBox=bBox)}}<span>Routes</span>{{/link-to}}
+              {{#link-to 'routes' (query-params bbox=bbox)}}<span>Routes</span>{{/link-to}}
             </li>
          
             <li class="toc-top-level">
-              {{#link-to 'stops' (query-params bBox=bBox)}}<span>Stops</span>{{/link-to}}
+              {{#link-to 'stops' (query-params bbox=bbox)}}<span>Stops</span>{{/link-to}}
             </li>
 
             <li class="toc-top-level">
-              {{#link-to 'operators' (query-params bBox=bBox)}}<span>Operators</span>{{/link-to}}
+              {{#link-to 'operators' (query-params bbox=bbox)}}<span>Operators</span>{{/link-to}}
             </li>
         </ul>
       </div>
    		<button class="btn btn-mapzen-alt">Update results</button>
     </div>
-    {{#map-explorer}}{{/map-explorer}}
+    <div id="map">
+      {{#leaflet-map lat=lat lng=lng bbox=bbox zoom=zoom}}
+        
+        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+          
+      
+
+      {{/leaflet-map}}
+</div>
+
 
   </div>
 

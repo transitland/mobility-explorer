@@ -1,16 +1,18 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-	bBox: null,
+	bbox: null,
 	queryParams: {
-    bBox: {
-      replace: true
+    bbox: {
+      replace: true,
+      refreshModel: true
+
     }
 	},
 
-	model: function(params){
-		return this.store.query('data/transitland/operator', params);
-	}
+	// model: function(params){
+	// 	return this.store.query('data/transitland/operator', params);
+	// }
 
 	// model: function(params){
 	// 	let operator = this.store.query('data/transitland/operator', params);

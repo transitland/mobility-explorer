@@ -1,11 +1,11 @@
-{{#link-to 'index' (query-params bBox=bBox)}}<h2>Mobility Explorer</h2>{{/link-to}}
+{{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-md-3">
       <div class="toc" role="directory">
         <ul class="nav toc-nav">
           <li class="toc-top-level">
-            {{#link-to 'routes' (query-params bBox=bBox)}}<span>Routes</span>{{/link-to}}
+            {{#link-to 'routes' (query-params bbox=bbox)}}<span>Routes</span>{{/link-to}}
           </li>
           <li class="toc-top-level toc-current">
 					  <a href="#" class="toc-subnav-toggle">Stops</a>
@@ -29,14 +29,14 @@
 					  </ul>
 					</li>
           <li class="toc-top-level">
-            {{#link-to 'operators' (query-params bBox=bBox)}}<span>Operators</span>{{/link-to}}
+            {{#link-to 'operators' (query-params bbox=bbox)}}<span>Operators</span>{{/link-to}}
           </li>
         </ul>
       </div>
     	<button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button>
     </div>
     <div id="map">
-		  {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onLoad=(action "updateBbox") onMoveend=(action "updateBbox")}}
+		  {{#leaflet-map lat=lat lng=lng bbox=bbox zoom=zoom onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
 				
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				
