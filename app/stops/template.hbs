@@ -35,7 +35,21 @@
       </div>
     	<button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button>
     </div>
-    {{#map-explorer models=model detail="stops" getBbox=(action "setBbox")}}{{/map-explorer}}    
+    <!-- {{#map-explorer models=model detail="stops" getBbox=(action "setBbox")}}{{/map-explorer}}     -->
+    <div id="map">
+		  {{#leaflet-map lat=lat lng=lng bBox=bBox zoom=zoom onLoad=(action "updateBbox") onMoveend=(action "updateBbox")}}
+				
+				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+				
+				{{#each model as |stop|}}
+			  	{{#marker-layer location=stop.location icon=icon draggable=false}}
+			  		{{stop.onestop_id}}
+			  	{{/marker-layer}}
+			  {{/each}}
+
+			{{/leaflet-map}}
+			{{bBox}}
+		</div>
   </div>
 </div>
 

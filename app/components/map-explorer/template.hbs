@@ -3,7 +3,7 @@
 		
 		{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
   	
-  	{{#marker-layer location=testLocation icon=icon draggable=true}}
+  	<!-- {{#marker-layer location=testLocation icon=icon draggable=true}}
   		<h3>Test Location</h3>
 	      Sample Location<br>
 	      San Francisco
@@ -11,7 +11,13 @@
 
 	  {{#marker-layer location=testLocationTwo icon=icon}}
 	    <h3>Test Location 2</h3>
-	  {{/marker-layer}}
+	  {{/marker-layer}} -->
+
+	{{#each models as |model|}}
+  		{{#marker-layer location=toLeafletCoordinates icon=icon draggable=true}}
+  		{{model.onestop_id}}
+  		{{/marker-layer}}
+  	{{/each}}
 
 	<!-- {{#each models as |model|}}
     	{{#polygon-layer locations=model.geometry.coordinates}}
@@ -36,7 +42,11 @@
 	{{/leaflet-map}}
 	{{bBox}}
 </div>
-{{#each models as |model|}}
-	{{detail}}
-{{/each}}
+<!-- {{#each models as |model|}}
+  	{{#marker-layer location=model.geometry.coordinates icon=icon draggable=true}}
+  	{{/marker-layer}}
+
+
+	<!-- {{detail}} -->
+{{/each}} -->
 

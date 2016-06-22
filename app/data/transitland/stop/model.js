@@ -12,6 +12,9 @@ var Stop = DS.Model.extend({
 	updated_at: DS.attr('date'),
 	operators_serving_stop: DS.attr(),
 	routes_serving_stop: DS.attr(),
+	location: (function(){
+		return this.get('geometry')['coordinates'].reverse();
+	}).property('geometry')
 });
 
 export default Stop;
