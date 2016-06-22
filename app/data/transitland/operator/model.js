@@ -15,6 +15,9 @@ var Operator = DS.Model.extend({
 	updated_at: DS.attr('date'),
 	geometry: DS.attr(),
 	tags: DS.attr(),
+	location: (function(){
+		return this.get('geometry')['coordinates'].reverse();
+	}).property('geometry')
 });
 
 export default Operator;
