@@ -48,16 +48,23 @@
     <div id="map">
 		  {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "updatebbox") onMoveend=(action "updatebbox")}}
 				
-				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-				
-				{{#each model as |route|}}
+			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+			
+			{{#each model as |route|}}
 			  	{{#polyline-layer locations=route.location icon=icon draggable=false}}
 			  		onestop id: {{route.onestop_id}}<br>
 			  		name: {{route.name}}<br>
-			  		<!-- short name: {{route.short_name}}<br> -->
-			  		tags: {{#each route.tags as |tag|}}{{tag}}{{/each}}<br>
-			  	{{/polyline-layer}}
-			  {{/each}}
+					vehicle type: {{route.vehicle_type}}<br>
+					short name: {{route.short_name}}<br>
+					color: {{route.color}}<br>
+					tags/url: {{route.tags.route_url}}<br>
+					tags/desc: {{route.tags.route_desc}}<br>
+					tags/long name: {{route.tags.route_long_name}}<br>
+					tags/text color: {{route.tags.route_text_color}}<br>
+					operated by onestop_id: {{route.operated_by_onestop_id}}<br>
+					operated by name: {{route.operated_by_name}}<br>
+				{{/polyline-layer}}
+			{{/each}}
 
 			{{/leaflet-map}}
 		</div>

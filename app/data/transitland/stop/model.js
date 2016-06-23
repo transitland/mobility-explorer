@@ -3,6 +3,7 @@ import DS from 'ember-data';
 
 var Stop = DS.Model.extend({
 	identifiers: DS.attr(),
+	imported_from_feed_onestop_ids: DS.attr('string'),
 	onestop_id: Ember.computed.alias('id'),
 	geometry: DS.attr(),
 	name: DS.attr('string'),
