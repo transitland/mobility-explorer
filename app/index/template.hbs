@@ -20,26 +20,12 @@
    		<button class="btn btn-mapzen-alt">Update results</button>
     </div>
     <div id="map">
-      {{#leaflet-map lat=lat lng=lng bbox=bbox zoom=zoom}}
-        
-        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-          
-      
-
-      {{/leaflet-map}}
-</div>
-
-
+        {{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+        {{/leaflet-map}}
+       <!--  {{#leaflet-map lat=lat lng=lng bbox=bbox zoom=zoom onMoveend=(action "updatebbox")}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+        {{/leaflet-map}} -->
+    </div>
   </div>
-
 </div>
-
-
-
- <!-- {{#side-nav}}{{/side-nav}} -->
-
-
-
-
-
-

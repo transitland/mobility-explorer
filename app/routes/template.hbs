@@ -46,7 +46,7 @@
     	<button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button>
     </div>
     <div id="map">
-		  {{#leaflet-map lat=lat lng=lng bbox=bbox zoom=zoom onLoad=(action "updatebbox") onMoveend=(action "updatebbox")}}
+		  {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "updatebbox") onMoveend=(action "updatebbox")}}
 				
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				
