@@ -52,7 +52,10 @@
 				
 				{{#each model as |route|}}
 			  	{{#polyline-layer locations=route.location icon=icon draggable=false}}
-			  		{{route.onestop_id}}
+			  		onestop id: {{route.onestop_id}}<br>
+			  		name: {{route.name}}<br>
+			  		<!-- short name: {{route.short_name}}<br> -->
+			  		tags: {{#each route.tags as |tag|}}{{tag}}{{/each}}<br>
 			  	{{/polyline-layer}}
 			  {{/each}}
 
