@@ -42,7 +42,11 @@
 				
 				{{#each model as |stop|}}
 			  	{{#marker-layer location=stop.location icon=icon draggable=false}}
-			  		{{stop.onestop_id}}
+			  		id:{{stop.onestop_id}}<br>
+			  		name: {{stop.name}}<br>
+			  		tags: {{stop.tags}}<br>
+			  		routes serving stop: {{stop.routes_serving_stop}}<br>
+
 			  	{{/marker-layer}}
 			  {{/each}}
 
