@@ -3,17 +3,20 @@ import DS from 'ember-data';
 
 var Route = DS.Model.extend({
 	identifiers: DS.attr(),
-	name: DS.attr('string'),
-	short_name: DS.attr('string'),
+	imported_from_feed_onestop_ids: DS.attr('string'),
 	onestop_id: Ember.computed.alias('id'),
+	name: DS.attr('string'),
+	vehicle_type: DS.attr('string'),
+	short_name: DS.attr('string'),
 	geometry: DS.attr(),
+	color: DS.attr('string'),
 	tags: DS.attr(),
-	country: DS.attr('string'),
-	state: DS.attr('string'),
-	metro: DS.attr('string'),
-	timezone: DS.attr('string'),
+	operated_by_onestop_id: DS.attr('string'),
+	operated_by_name: DS.attr('string'),
 	created_at: DS.attr('date'),
 	updated_at: DS.attr('date'),
+	route_stop_patterns_by_onestop_id: DS.attr(),
+	
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'][0];
 		var coordinatesLength = coordinates.length;

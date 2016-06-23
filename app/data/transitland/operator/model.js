@@ -3,18 +3,20 @@ import DS from 'ember-data';
 
 var Operator = DS.Model.extend({
 	identifiers: DS.attr(),
+	imported_from_feed_onestop_ids: DS.attr('string'),
 	name: DS.attr('string'),
 	short_name: DS.attr('string'),
 	onestop_id: Ember.computed.alias('id'),
+	tags: DS.attr(),
+	website: DS.attr('string'),
 	country: DS.attr('string'),
 	state: DS.attr('string'),
 	metro: DS.attr('string'),
-	website: DS.attr('string'),
 	timezone: DS.attr('string'),
 	created_at: DS.attr('date'),
 	updated_at: DS.attr('date'),
 	geometry: DS.attr(),
-	tags: DS.attr(),
+	represented_in_feed_onestop_ids: DS.attr(),
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'][0];
 		var coordinatesLength = coordinates.length;

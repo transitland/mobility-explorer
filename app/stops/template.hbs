@@ -42,7 +42,31 @@
 				
 				{{#each model as |stop|}}
 			  	{{#marker-layer location=stop.location icon=icon draggable=false}}
-			  		{{stop.onestop_id}}
+			  		<strong>Name:</strong> {{stop.name}}<br>
+			  		<strong>ID:</strong>{{stop.onestop_id}}<br>
+			  		<strong>Zone ID:</strong> {{stop.tags.zone_id}}<br>
+						<strong>URL:</strong> {{stop.tags.stop_url}}<br>
+						<strong>Stop description:</strong> {{stop.tags.stop_desc}}<br>
+						<strong>OSM way ID:</strong> {{stop.tags.osm_way_id}}<br>
+						<strong>Wheelchair boarding:</strong> {{stop.tags.wheelchair_boarding}}<br>
+						<strong>Operators serving stop:</strong>
+							<ul>
+								{{#each stop.operators_serving_stop as |operators_serving_stop|}}
+					  		 <strong>{{operators_serving_stop.operator_name}}</strong>
+					  		 <li>Operator Onestop ID: {{operators_serving_stop.operator_onestop_id}}</li>
+					  		 <br>
+					  		{{/each}}
+			  			</ul>
+			  		<strong>Routes serving stop:</strong>
+			  			<ul>
+								{{#each stop.routes_serving_stop as |routes_serving_stop|}}
+									<strong>{{routes_serving_stop.route_name}}</strong>
+					  			<li>Route Onestop ID: {{routes_serving_stop.route_onestop_id}}</li>
+					  			<li>Operator name:{{routes_serving_stop.operator_name}}</li>
+					  			<li>Operator Onestop ID: {{routes_serving_stop.operator_onestop_id}}), </li>
+					  			<br>
+				  			{{/each}}
+		  				</ul>
 			  	{{/marker-layer}}
 			  {{/each}}
 

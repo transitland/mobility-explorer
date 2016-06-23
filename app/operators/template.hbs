@@ -39,7 +39,10 @@
           
           {{#each model as |operator|}}
             {{#polygon-layer locations=operator.location icon=icon draggable=false}}
-              {{operator.onestop_id}}
+              <strong>Name:</strong> {{operator.name}}<br>
+              <strong>Short name:</strong> {{operator.short_name}}<br>
+              <strong>ID:</strong> {{operator.onestop_id}}<br>
+              <strong>URL:</strong> {{operator.website}}<br>
             {{/polygon-layer}}
           {{/each}}
 
@@ -47,6 +50,5 @@
       </div>
   </div>
 </div>
-
 
 
