@@ -52,17 +52,17 @@
 			
 			{{#each model as |route|}}
 			  	{{#polyline-layer locations=route.location icon=icon draggable=false}}
-			  		onestop id: {{route.onestop_id}}<br>
-			  		name: {{route.name}}<br>
-					vehicle type: {{route.vehicle_type}}<br>
-					short name: {{route.short_name}}<br>
-					color: {{route.color}}<br>
-					tags/url: {{route.tags.route_url}}<br>
-					tags/desc: {{route.tags.route_desc}}<br>
-					tags/long name: {{route.tags.route_long_name}}<br>
-					tags/text color: {{route.tags.route_text_color}}<br>
-					operated by onestop_id: {{route.operated_by_onestop_id}}<br>
-					operated by name: {{route.operated_by_name}}<br>
+						<strong>ID:</strong> {{route.onestop_id}}<br>
+						<strong>Name:</strong> {{route.name}}<br>
+						<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>
+						<strong>Short name:</strong> {{route.short_name}}<br>
+						<strong>Color:</strong> {{route.color}}<br>
+						<strong>URL:</strong> {{route.tags.route_url}}<br>
+						<strong>Route description:</strong> {{route.tags.route_desc}}<br>
+						<strong>Long name:</strong> {{route.tags.route_long_name}}<br>
+						<strong>Text color:</strong> {{route.tags.route_text_color}}<br>
+						<strong>Operated by:</strong> {{route.operated_by_name}}<br>
+						<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>
 				{{/polyline-layer}}
 			{{/each}}
 
@@ -70,10 +70,3 @@
 		</div>
   </div>
 </div>
-
-
-
-
-
-
-
