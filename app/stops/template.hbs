@@ -42,8 +42,8 @@
 				
 				{{#each model as |stop|}}
 			  	{{#marker-layer location=stop.location icon=icon draggable=false}}
-			  		<strong>ID:</strong>{{stop.onestop_id}}<br>
 			  		<strong>Name:</strong> {{stop.name}}<br>
+			  		<strong>ID:</strong>{{stop.onestop_id}}<br>
 			  		<strong>Zone ID:</strong> {{stop.tags.zone_id}}<br>
 						<strong>URL:</strong> {{stop.tags.stop_url}}<br>
 						<strong>Stop description:</strong> {{stop.tags.stop_desc}}<br>

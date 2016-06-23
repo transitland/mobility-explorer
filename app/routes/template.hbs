@@ -52,10 +52,10 @@
 			
 			{{#each model as |route|}}
 			  	{{#polyline-layer locations=route.location icon=icon draggable=false}}
-						<strong>ID:</strong> {{route.onestop_id}}<br>
 						<strong>Name:</strong> {{route.name}}<br>
-						<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>
 						<strong>Short name:</strong> {{route.short_name}}<br>
+						<strong>ID:</strong> {{route.onestop_id}}<br>
+						<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>
 						<strong>Color:</strong> {{route.color}}<br>
 						<strong>URL:</strong> {{route.tags.route_url}}<br>
 						<strong>Route description:</strong> {{route.tags.route_desc}}<br>
