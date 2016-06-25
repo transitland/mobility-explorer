@@ -2,8 +2,9 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox'],
+	queryParams: ['bbox', 'onestop_id'],
 	bbox: null,
+	onestop_id: null,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			// -122.54287719726562%2C37.706911598228466%2C-122.29568481445312%2C37.84259697150785
@@ -36,37 +37,45 @@ export default Ember.Controller.extend(mapBboxController, {
 	}),
 	icon: L.icon({
 		iconUrl: 'assets/images/stop.png',		
-		iconSize: (7, 7)
+		iconSize: (10, 10)
 	}),
+	highlightedIcon: L.icon({
+		iconUrl: 'assets/images/stop2.png',		
+		iconSize: (10, 10),
+	}),
+	selectedStop: null,
 	actions: {
 		setbbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
-			// if (this.get('bbox') !== null){
-
-			// }
-			
 			let center = e.target.getCenter();
       let zoom = e.target.getZoom();
       this.set('bounds', this.get('bbox'));
       this.set('lat', center.lat);
       this.set('lng', center.lng);
       this.set('zoom', zoom);
-			console.log(this.get('bbox'));
-			console.log(this.get('center'));
-			console.log(this.get('zoom'));
 		},
 		updatebbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
 			let center = e.target.getCenter();
-      let zoom = e.target.getZoom();
-      this.set('bounds', this.get('bbox'));
-      this.set('lat', center.lat);
-      this.set('lng', center.lng);
-      this.set('zoom', zoom);
-			console.log(this.get('bbox'));
-			console.log(this.get('zoom'));
+	    let zoom = e.target.getZoom();
+	    this.set('bounds', this.get('bbox'));
+	    this.set('lat', center.lat);
+	    this.set('lng', center.lng);
+	    this.set('zoom', zoom);
+		},
+		highlightIcon() {
+			var highlightedStop = this.get('highlightedIcon');
+			this.set('icon', highlightedStop);
+		},
+		setOnestopId(stop) {
+			var onestopId = stop.id;
+			this.set('onestop_id', onestopId);
+			this.set('selectedStop', stop);
+
+			var highlightedStop = this.get('highlightedIcon');
+			this.set('icon', highlightedStop);
 		}
 	}	
 });

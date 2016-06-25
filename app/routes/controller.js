@@ -42,10 +42,7 @@ export default Ember.Controller.extend(mapBboxController, {
     updatebbox(e) {
 			var newbox = e.target.getBounds();
 			this.set('bbox', newbox.toBBoxString());
-		},
-    printbbox(){
-      console.log("routes bbox: " + this.bBox);
-    }
+		}
   }
 	
 });
