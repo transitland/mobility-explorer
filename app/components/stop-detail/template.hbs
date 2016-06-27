@@ -10,7 +10,7 @@ Stop details:<br>
 	{{#if stop.routes_serving_stop}}<strong>Served by:</strong>
 		<ul>
 			{{#each stop.routes_serving_stop as |routes_serving_stop|}}
-					<li><strong>{{routes_serving_stop.route_name}}</strong> ({{#link-to 'operators' (query-params bbox=bbox onestop_id=routes_serving_stop.operator_onestop_id) }}{{routes_serving_stop.operator_name}}{{/link-to}})</li>
+					<li><strong>{{#link-to 'routes' (query-params bbox=bbox onestop_id=routes_serving_stop.route_onestop_id) }}{{routes_serving_stop.route_name}}{{/link-to}}</strong> ({{#link-to 'operators' (query-params bbox=bbox onestop_id=routes_serving_stop.operator_onestop_id) }}{{routes_serving_stop.operator_name}}{{/link-to}})</li>
 			{{/each}}
 		</ul>
 	{{/if}}
@@ -26,11 +26,12 @@ Stop details:<br>
 		{{#if stop.routes_serving_stop}}<strong>Served by:</strong>
 			<ul>
 				{{#each stop.routes_serving_stop as |routes_serving_stop|}}
-						<li><strong>{{routes_serving_stop.route_name}}</strong> ({{#link-to 'operators' (query-params bbox=bbox onestop_id=routes_serving_stop.operator_onestop_id) }}{{routes_serving_stop.operator_name}}{{/link-to}})</li>
+						<li><strong>{{#link-to 'routes' (query-params bbox=bbox onestop_id=routes_serving_stop.route_onestop_id) }}{{routes_serving_stop.route_name}}{{/link-to}}</strong> ({{#link-to 'operators' (query-params bbox=bbox onestop_id=routes_serving_stop.operator_onestop_id) }}{{routes_serving_stop.operator_name}}{{/link-to}})</li>
 				{{/each}}
 			</ul>
 		{{/if}}
 	{{/each}}
 {{/if}}
 <!-- <button class="btn btn-mapzen-alt" {{action "testFunction" stop}}>Test results</button> -->
+
 
