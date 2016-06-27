@@ -2,6 +2,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 var Stop = DS.Model.extend({
+	// routes: DS.hasMany('data/transitland/route', {async: true}),
+
 	identifiers: DS.attr(),
 	imported_from_feed_onestop_ids: DS.attr('string'),
 	onestop_id: Ember.computed.alias('id'),
