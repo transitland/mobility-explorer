@@ -30,7 +30,12 @@
             </li>
         </ul>
       </div>
-    	<button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button>
+      {{#if onestop_id}}
+        {{#operator-detail onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+      {{else}}
+        {{#operator-detail bbox=bbox operators=model}}{{/operator-detail}}
+      {{/if}}
+    	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
     </div>
       <div id="map">
         {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "updatebbox") onMoveend=(action "updatebbox")}}
@@ -38,11 +43,7 @@
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
           
           {{#each model as |operator|}}
-            {{#polygon-layer locations=operator.location icon=icon draggable=false}}
-              <strong>Name:</strong> {{operator.name}}<br>
-              <strong>Short name:</strong> {{operator.short_name}}<br>
-              <strong>ID:</strong> {{operator.onestop_id}}<br>
-              <strong>URL:</strong> {{operator.website}}<br>
+            {{#polygon-layer locations=operator.location icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
             {{/polygon-layer}}
           {{/each}}
 
@@ -50,5 +51,4 @@
       </div>
   </div>
 </div>
-
 
