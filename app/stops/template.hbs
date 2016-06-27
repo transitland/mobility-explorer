@@ -34,7 +34,7 @@
         </ul>
       </div>
       {{#if onestop_id}}
-      	{{#stop-detail stop=selectedStop stops=model}}{{/stop-detail}}
+      	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
     	{{/if}}
     	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
     </div>
