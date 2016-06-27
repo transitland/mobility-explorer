@@ -10,11 +10,19 @@ export default Ember.Route.extend(mapBboxRoute, {
     bbox: {
       replace: true,
       refreshModel: true
-
+    },
+    served_by: {
+      refreshModel: true
     }
   },
-  
+
   model: function(params){
     return this.store.query('data/transitland/stop', params);
   }
+  // model: function(onestop_id){
+  //   return Ember.RSVP.hash({
+  //     stops: this.store.query('data/transitland/stop', onestop_id=onestop_id),
+  //     routes: this.store.query('data/transitland/route', onestop_id=)
+  //   })
+  // }
 });

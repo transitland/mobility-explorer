@@ -30,6 +30,11 @@ Route details:<br>
 		{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
 	{{/each}}
 {{/if}}
+<br>
+
+<!-- <button class="btn btn-mapzen-alt" {{action "testFunction" stop}}>View stops served by route</button> -->
+<p>{{#link-to 'stops' (query-params served_by=onestop_id) }}View stops served by route{{/link-to}}</p>
+
 
 
 <!-- onestop_id query param needs to be set to  operated_by_onestop_id -->

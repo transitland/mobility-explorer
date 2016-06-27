@@ -2,10 +2,11 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id'],
+	queryParams: ['bbox', 'onestop_id', 'served_by'],
 	bbox: null,
 	onestop_id: null,
 	selectedStop: null,
+	served_by: null,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
