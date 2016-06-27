@@ -41,7 +41,6 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (20, 20)
 	}),
 	actions: {
-
 		setbbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
@@ -56,18 +55,13 @@ export default Ember.Controller.extend(mapBboxController, {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
 			let center = e.target.getCenter();
-	    let zoom = e.target.getZoom();
-	    this.set('bounds', this.get('bbox'));
-	    this.set('lat', center.lat);
-	    this.set('lng', center.lng);
-	    this.set('zoom', zoom);
+			let zoom = e.target.getZoom();
+			this.set('bounds', this.get('bbox'));
+			this.set('lat', center.lat);
+			this.set('lng', center.lng);
+			this.set('zoom', zoom);
 		},
-
- //    updatebbox(e) {
-	// 		var newbox = e.target.getBounds();
-	// 		this.set('bbox', newbox.toBBoxString());
-	// },
-	setOnestopId(route) {
+		setOnestopId(route) {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
 			this.set('selectedRoute', route);

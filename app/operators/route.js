@@ -3,6 +3,11 @@ import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 
 export default Ember.Route.extend(mapBboxRoute, {
   queryParams: {
+  	queryParams: {
+  	onestop_id: {
+  		// replace: true,
+    	// refreshModel: true
+  	},
     bbox: {
       replace: true,
       refreshModel: true
