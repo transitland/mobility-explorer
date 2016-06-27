@@ -5,6 +5,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id'],
 	bbox: null,
 	onestop_id: null,
+	selectedStop: null,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -46,12 +47,8 @@ export default Ember.Controller.extend(mapBboxController, {
 		// this.set('selectedStop', stop);
 
 		if (this.get('onestop_id') !== null){
-			return true;
+			return false;
 		}
-		// return true;
-	},
-	stopIsSelected: function(){
-		return false;
 	},
 	actions: {
 		setbbox(e) {
@@ -77,6 +74,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		setOnestopId(stop) {
 			var onestopId = stop.id;
 			this.set('onestop_id', onestopId);
+			this.set('selectedStop', stop);
 		}
 	}	
 });
