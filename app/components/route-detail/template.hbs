@@ -24,7 +24,9 @@ Route details:<br>
 		{{#if route.tags.route_desc}}<strong>Route description:</strong> {{route.tags.route_desc}}<br>{{/if}}
 		{{#if route.tags.route_long_name}}<strong>Long name:</strong> {{route.tags.route_long_name}}<br>{{/if}}
 		{{#if route.tags.route_text_color}}<strong>Text color:</strong> {{route.tags.route_text_color}}<br>{{/if}}
-		{{#if route.operated_by_name}}<strong>Operated by:</strong> {{route.operated_by_name}}<br>{{/if}}
+		{{#if route.operated_by_name}}
+			<strong>Operated by:</strong> {{#link-to 'operators' (query-params bbox=bbox onestop_id=route.operated_by_onestop_id) }}{{route.operated_by_name}}<br>{{/link-to}}
+		{{/if}}
 		{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
 	{{/each}}
 {{/if}}
