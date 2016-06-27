@@ -1,14 +1,21 @@
-Operator details:<br>
-{{#if operator}}
-	{{#if operator.name}}<strong>Name:</strong> {{operator.name}}<br>{{/if}}
-	{{#if operator.short_name}}<strong>Short name:</strong> {{operator.short_name}}<br>{{/if}}
-	{{#if operator.onestop_id}}<strong>ID:</strong> {{operator.onestop_id}}<br>{{/if}}
-	{{#if operator.website}}<strong>URL:</strong> {{operator.website}}<br>{{/if}}
-{{else}}
-	{{#each operators as |operator|}}
+{{#if onestop_id}}
+	Operator details:<br>
+	{{#if operator}}
 		{{#if operator.name}}<strong>Name:</strong> {{operator.name}}<br>{{/if}}
 		{{#if operator.short_name}}<strong>Short name:</strong> {{operator.short_name}}<br>{{/if}}
 		{{#if operator.onestop_id}}<strong>ID:</strong> {{operator.onestop_id}}<br>{{/if}}
-		{{#if operator.website}}<strong>URL:</strong> {{operator.website}}<br>{{/if}}
-	{{/each}}
+		{{#if operator.website}}<strong>URL:</strong> <a target="_blank" href="{{operator.website}}">{{operator.website}}</a><br>{{/if}}
+	{{else}}
+		{{#each operators as |operator|}}
+			{{#if operator.name}}<strong>Name:</strong> {{operator.name}}<br>{{/if}}
+			{{#if operator.short_name}}<strong>Short name:</strong> {{operator.short_name}}<br>{{/if}}
+			{{#if operator.onestop_id}}<strong>ID:</strong> {{operator.onestop_id}}<br>{{/if}}
+			{{#if operator.website}}<strong>URL:</strong> <a target="_blank" href="{{operator.website}}">{{operator.website}}</a><br>{{/if}}
+		{{/each}}
+	{{/if}}
+{{else}}
+	{{#each operators as |operator|}}
+		{{#link-to 'operators' (query-params bbox=bbox onestop_id=operator.onestop_id)}}{{operator.name}}{{/link-to}}<br>
+	{{/each}}	
 {{/if}}
+

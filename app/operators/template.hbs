@@ -31,7 +31,9 @@
         </ul>
       </div>
       {{#if onestop_id}}
-        {{#operator-detail operator=selectedOperator operators=model}}{{/operator-detail}}
+        {{#operator-detail onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+      {{else}}
+        {{#operator-detail bbox=bbox operators=model}}{{/operator-detail}}
       {{/if}}
     	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
     </div>
