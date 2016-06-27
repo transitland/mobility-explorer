@@ -43,13 +43,6 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/stop2.png',		
 		iconSize: (10, 10),
 	}),
-	onestopIdQueryParamExists: function(){
-		// this.set('selectedStop', stop);
-
-		if (this.get('onestop_id') !== null){
-			return false;
-		}
-	},
 	actions: {
 		setbbox(e) {
 			var bounds = e.target.getBounds();

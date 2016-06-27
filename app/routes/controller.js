@@ -2,8 +2,10 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox'],
+	queryParams: ['bbox', 'onestop_id'],
 	bbox: null,
+	onestop_id: null,
+	selectedRoute: null,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			// -122.54287719726562%2C37.706911598228466%2C-122.29568481445312%2C37.84259697150785
@@ -39,9 +41,36 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (20, 20)
 	}),
 	actions: {
-    updatebbox(e) {
-			var newbox = e.target.getBounds();
-			this.set('bbox', newbox.toBBoxString());
+
+		setbbox(e) {
+			var bounds = e.target.getBounds();
+			this.set('bbox', bounds.toBBoxString());
+			let center = e.target.getCenter();
+      let zoom = e.target.getZoom();
+      this.set('bounds', this.get('bbox'));
+      this.set('lat', center.lat);
+      this.set('lng', center.lng);
+      this.set('zoom', zoom);
+		},
+		updatebbox(e) {
+			var bounds = e.target.getBounds();
+			this.set('bbox', bounds.toBBoxString());
+			let center = e.target.getCenter();
+	    let zoom = e.target.getZoom();
+	    this.set('bounds', this.get('bbox'));
+	    this.set('lat', center.lat);
+	    this.set('lng', center.lng);
+	    this.set('zoom', zoom);
+		},
+
+ //    updatebbox(e) {
+	// 		var newbox = e.target.getBounds();
+	// 		this.set('bbox', newbox.toBBoxString());
+	// },
+	setOnestopId(route) {
+			var onestopId = route.id;
+			this.set('onestop_id', onestopId);
+			this.set('selectedRoute', route);
 		}
   }
 	

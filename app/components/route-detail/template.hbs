@@ -1,0 +1,30 @@
+Route details:<br>
+{{#if route}}
+	{{#if route.name}}<strong>Name:</strong> {{route.name}}<br>{{/if}}	
+	{{#if route.short_name}}<strong>Short name:</strong> {{route.short_name}}<br>{{/if}}
+	{{#if route.onestop_id}}<strong>ID:</strong> {{route.onestop_id}}<br>{{/if}}
+	{{#if route.vehicle_type}}<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>{{/if}}
+	{{#if route.color}}<strong>Color:</strong> {{route.color}}<br>{{/if}}
+	{{#if route.tags.route_url}}<strong>URL:</strong> {{route.tags.route_url}}<br>{{/if}}
+	{{#if route.tags.route_desc}}<strong>Route description:</strong> {{route.tags.route_desc}}<br>{{/if}}
+	{{#if route.tags.route_long_name}}<strong>Long name:</strong> {{route.tags.route_long_name}}<br>{{/if}}
+	{{#if route.tags.route_text_color}}<strong>Text color:</strong> {{route.tags.route_text_color}}<br>{{/if}}
+	{{#if route.operated_by_name}}<strong>Operated by:</strong> {{route.operated_by_name}}<br>{{/if}}
+	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
+{{else}}
+	{{#each routes as |route|}}
+		{{#if route.name}}<strong>Name:</strong> {{route.name}}<br>{{/if}}
+		{{#if route.short_name}}<strong>Short name:</strong> {{route.short_name}}<br>{{/if}}
+		{{#if route.onestop_id}}<strong>ID:</strong> {{route.onestop_id}}<br>{{/if}}
+		{{#if route.vehicle_type}}<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>{{/if}}
+		{{#if route.color}}<strong>Color:</strong> {{route.color}}<br>{{/if}}
+		{{#if route.tags.route_url}}<strong>URL:</strong> {{route.tags.route_url}}<br>{{/if}}
+		{{#if route.tags.route_desc}}<strong>Route description:</strong> {{route.tags.route_desc}}<br>{{/if}}
+		{{#if route.tags.route_long_name}}<strong>Long name:</strong> {{route.tags.route_long_name}}<br>{{/if}}
+		{{#if route.tags.route_text_color}}<strong>Text color:</strong> {{route.tags.route_text_color}}<br>{{/if}}
+		{{#if route.operated_by_name}}<strong>Operated by:</strong> {{route.operated_by_name}}<br>{{/if}}
+		{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
+	{{/each}}
+{{/if}}
+
+
