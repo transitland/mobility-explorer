@@ -44,7 +44,10 @@
         </ul>
       </div>
       {{#if onestop_id}}
-      	{{#route-detail route=selectedRoute routes=model}}{{/route-detail}}
+      	<!-- {{#route-detail bbox=bbox onestop_id=onestop_id operatorOnestopId=operatedByOnestopId route=selectedRoute routes=model}}{{/route-detail}} -->
+      	{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute routes=model}}{{/route-detail}}
+    	{{else}}
+	      {{#route-detail bbox=bbox routes=model}}{{/route-detail}}
     	{{/if}}
     	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
     </div>
