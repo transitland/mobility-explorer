@@ -33,7 +33,7 @@
           </li>
         </ul>
       </div>
-      {{#if selectedStop}}
+      {{#if onestopIdQueryParamExists}}
       	{{#stop-detail stop=selectedStop}}{{/stop-detail}}
     	{{/if}}
     	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
