@@ -36,6 +36,7 @@
     "ember-data": "^2.5.0",
     "ember-export-application-global": "^1.0.5",
     "ember-leaflet": "2.2.2",
+    "ember-leaflet-multi-options-polyline": "0.2.0",
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.1"

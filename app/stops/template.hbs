@@ -5,7 +5,7 @@
       <div class="toc" role="directory">
         <ul class="nav toc-nav">
           <li class="toc-top-level">
-            {{#link-to 'routes' (query-params bbox=bbox)}}<span>Routes</span>{{/link-to}}
+            {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' stops_served_by_route='null' operated_by='null')}}<span>Routes</span>{{/link-to}}
           </li>
           <li class="toc-top-level toc-current">
 					  <a href="#" class="toc-subnav-toggle">Stops</a>
@@ -29,7 +29,7 @@
 					  </ul>
 					</li>
           <li class="toc-top-level">
-            {{#link-to 'operators' (query-params bbox=bbox)}}<span>Operators</span>{{/link-to}}
+            {{#link-to 'operators' (query-params bbox=bbox onestop_id='null')}}<span>Operators</span>{{/link-to}}
           </li>
         </ul>
       </div>

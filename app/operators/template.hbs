@@ -6,10 +6,10 @@
       <div class="toc" role="directory">
         <ul class="nav toc-nav">
             <li class="toc-top-level">
-              {{#link-to 'routes' (query-params bbox=bbox)}}<span>Routes</span>{{/link-to}}
+              {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' stops_served_by_route='null' operated_by='null')}}<span>Routes</span>{{/link-to}}
             </li>
             <li class="toc-top-level">
-              {{#link-to 'stops' (query-params bbox=bbox)}}<span>Stops</span>{{/link-to}}
+              {{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by='null')}}<span>Stops</span>{{/link-to}}
             </li>
             <li class="toc-top-level toc-current">
               <a href="#" class="toc-subnav-toggle">Operators</a>
@@ -31,7 +31,7 @@
         </ul>
       </div>
       {{#if onestop_id}}
-        {{#operator-detail onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+        {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
       {{else}}
         {{#operator-detail bbox=bbox operators=model}}{{/operator-detail}}
       {{/if}}
