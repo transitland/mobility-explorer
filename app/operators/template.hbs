@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-md-3">
+    <div class="col-xs-12 col-sm-12 col-md-3">
       <div class="toc" role="directory">
         <ul class="nav toc-nav">
             <li class="toc-top-level">
@@ -32,11 +32,13 @@
       </div>
       {{#if onestop_id}}
         {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+        <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id) }}View routes served by this operator{{/link-to}}</p><br>
+        <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id) }}View stops served by this operator{{/link-to}}</p>
       {{else}}
         {{#operator-detail bbox=bbox operators=model}}{{/operator-detail}}
       {{/if}}
-    	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
     </div>
+    <div class="col-xs-12 col-sm-12 col-md-9">
       <div id="map">
         {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "updatebbox") onMoveend=(action "updatebbox")}}
           
@@ -49,6 +51,7 @@
 
         {{/leaflet-map}}
       </div>
+    </div>
   </div>
 </div>
 
