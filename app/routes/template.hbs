@@ -36,10 +36,10 @@
 							  </li>
             </li>
             <li class="toc-top-level">
-              {{#link-to 'stops' (query-params bbox=bbox)}}<span>Stops</span>{{/link-to}}
+              {{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by='null')}}<span>Stops</span>{{/link-to}}
             </li>
             <li class="toc-top-level">
-              {{#link-to 'operators' (query-params bbox=bbox)}}<span>Operators</span>{{/link-to}}
+              {{#link-to 'operators' (query-params bbox=bbox onestop_id='null')}}<span>Operators</span>{{/link-to}}
             </li>
         </ul>
       </div>
@@ -57,7 +57,7 @@
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				
 				{{#each model as |route|}}
-				  {{#polyline-layer locations=route.location icon=icon draggable=false onClick=(action "setOnestopId" route)}}
+				  {{#polyline-layer locations=route.location  onClick=(action "setOnestopId" route)}}
 					{{/polyline-layer}}
 				{{/each}}
 

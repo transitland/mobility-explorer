@@ -2,10 +2,10 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'stops_served_by_route', 'operated_by'],
+	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by'],
 	bbox: null,
 	onestop_id: null,
-	stops_served_by_route: null,
+	serves: null,
 	operated_by: null,
 	// operatedByOnestopId: null,
 	selectedRoute: null,

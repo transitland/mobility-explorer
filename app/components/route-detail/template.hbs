@@ -15,25 +15,20 @@ Route details:<br>
 	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
 {{else}}
 	{{#each routes as |route|}}
-		{{#if route.name}}<strong>Name:</strong> {{route.name}}<br>{{/if}}
-		{{#if route.short_name}}<strong>Short name:</strong> {{route.short_name}}<br>{{/if}}
-		{{#if route.onestop_id}}<strong>ID:</strong> {{route.onestop_id}}<br>{{/if}}
-		{{#if route.vehicle_type}}<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>{{/if}}
-		{{#if route.color}}<strong>Color:</strong> {{route.color}}<br>{{/if}}
-		{{#if route.tags.route_url}}<strong>URL:</strong> {{route.tags.route_url}}<br>{{/if}}
-		{{#if route.tags.route_desc}}<strong>Route description:</strong> {{route.tags.route_desc}}<br>{{/if}}
-		{{#if route.tags.route_long_name}}<strong>Long name:</strong> {{route.tags.route_long_name}}<br>{{/if}}
-		{{#if route.tags.route_text_color}}<strong>Text color:</strong> {{route.tags.route_text_color}}<br>{{/if}}
+		{{#if route.name}}<strong>Name:</strong> {{#link-to 'routes' (query-params onestop_id=route.onestop_id)}}{{route.name}}{{/link-to}}<br>{{/if}}
 		{{#if route.operated_by_name}}
-			<strong>Operated by:</strong> {{#link-to 'operators' (query-params bbox=bbox onestop_id=route.operated_by_onestop_id) }}{{route.operated_by_name}}<br>{{/link-to}}
+			<strong>Operated by:</strong> {{#link-to 'operators' (query-params bbox=bbox onestop_id=route.operated_by_onestop_id) }}<p style="background-color:{{route.operator_color}}">{{route.operated_by_name}}</p><br>{{/link-to}}
 		{{/if}}
-		{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
-	{{/each}}
+		<br>
+
+
+		<!-- {{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
+	{{/each}} -->
 {{/if}}
 <br>
 
 <!-- <button class="btn btn-mapzen-alt" {{action "testFunction" stop}}>View stops served by route</button> -->
-<p>{{#link-to 'stops' (query-params served_by=onestop_id) }}View stops served by route{{/link-to}}</p>
+<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by=onestop_id) }}View stops served by route{{/link-to}}</p>
 
 
 

@@ -12,7 +12,7 @@ export default Ember.Route.extend(mapBboxRoute, {
       refreshModel: true
 
     },
-    stops_served_by_route: {
+    serves: {
       refreshModel: true
     },
     operated_by: {
