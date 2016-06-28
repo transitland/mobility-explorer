@@ -43,7 +43,19 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
 	}),
+	routes: Ember.computed(function(){
+		var data = this.get('model');
+
+		var routes = [];
+		routes = routes.concat(data.map(function(route){return route}))
+		return routes;
+	}),
 	actions: {
+		setRoute(route){
+			var onestop_id = route.get('id');
+			this.set('onestop_id', onestop_id);
+			this.set('selectedRoute', route);
+		},
 		setbbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());

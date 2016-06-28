@@ -33,3 +33,13 @@ input, button, select, textarea {
 	margin-left: 10px;
 	position: absolute;
 }*/
+
+.ember-power-select-trigger{
+	/*display: table-cell;*/
+	/*vertical-align: middle;*/
+	border-radius: 0;
+	height: 40px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}

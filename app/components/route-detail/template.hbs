@@ -13,20 +13,4 @@
 		<strong>Operated by:</strong> {{#link-to 'operators' (query-params bbox=bbox onestop_id=route.operated_by_onestop_id) }}{{route.operated_by_name}}<br>{{/link-to}}
 	{{/if}}
 	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
-{{else}}
-  	Select a route to view details:<br>
-		<select>
-			{{#each routes as |route|}}
-		   	<option>
-		   		
-
-					{{#if route.name}}{{#link-to 'routes' (query-params onestop_id=route.onestop_id)}}{{route.name}}
-				{{/link-to}}
-
-					{{/if}}
-					{{#if route.operated_by_name}} ({{route.operated_by_name}}){{/if}}
-				</option>
-			{{/each}}
-		</select>
 {{/if}}
-<br>
