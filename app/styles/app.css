@@ -2,6 +2,7 @@ body {
     padding: 0;
     margin: 0;
 }
+
 html, body, #map{
     height: 100%;
     width: 100%;
@@ -11,6 +12,12 @@ html, body, #map{
 .leaflet-container {
 	height: 1000px;
 
+}
+
+input, button, select, textarea {
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 15px;
 }
 
 /*.btn-mapzen-alt {

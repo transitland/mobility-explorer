@@ -38,6 +38,7 @@
     "ember-leaflet": "2.2.2",
     "ember-leaflet-multi-options-polyline": "0.2.0",
     "ember-load-initializers": "^0.5.1",
+    "ember-power-select": "1.0.0-alpha.8",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.1"
   }
