@@ -57,7 +57,7 @@
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				
 				{{#each model as |route|}}
-				  {{#polyline-layer locations=route.location icon=icon draggable=false onClick=(action "setOnestopId" route)}}
+				  {{#polyline-layer locations=route.location  onClick=(action "setOnestopId" route)}}
 					{{/polyline-layer}}
 				{{/each}}
 
