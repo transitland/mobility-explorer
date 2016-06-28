@@ -35,7 +35,16 @@
         <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id) }}View routes served by this operator{{/link-to}}</p><br>
         <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id) }}View stops served by this operator{{/link-to}}</p>
       {{else}}
-        {{#operator-detail bbox=bbox operators=model}}{{/operator-detail}}
+        {{#power-select
+          options=operators
+          selected=operator
+          placeholder="Search for operator"
+          searchPlaceholder="Type to filter..."
+          onchange=(action "setOperator")
+          as |operator|
+        }}
+          {{operator.name}} 
+        {{/power-select}}
       {{/if}}
     </div>
     <div class="col-xs-12 col-sm-12 col-md-9">

@@ -45,7 +45,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	}),
 	routes: Ember.computed(function(){
 		var data = this.get('model');
-
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route}))
 		return routes;

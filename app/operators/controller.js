@@ -39,7 +39,18 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
 	}),
+	operators: Ember.computed(function(){
+		var data = this.get('model');
+		var operators = [];
+		operators = operators.concat(data.map(function(operator){return operator}))
+		return operators;
+	}),
 	actions: {
+		setOperator(operator){
+			var onestop_id = operator.get('id');
+			this.set('onestop_id', onestop_id);
+			this.set('selectedOperator', operator);
+		},
 		setbbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
