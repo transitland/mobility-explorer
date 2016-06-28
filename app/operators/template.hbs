@@ -43,7 +43,7 @@
           onchange=(action "setOperator")
           as |operator|
         }}
-          {{operator.name}} 
+          {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
         {{/power-select}}
       {{/if}}
     </div>
