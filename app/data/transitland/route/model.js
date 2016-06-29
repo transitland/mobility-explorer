@@ -45,8 +45,38 @@ var Route = DS.Model.extend({
 		
 		// write funtion that creates a hash
 
+		var str = this.get('operated_by_onestop_id');
+		var hash = 0;
+		for (var i = 0; i <str.length; i++) {
+			hash = str.charCodeAt(i) + ((hash << 5) - hash);
+		}
 
-	}).property('operated_by_onestop_id')
+		var i = hash;
+
+		var hex = ((i>>24)&0xFF).toString(16) + ((i>>16)&0xFF).toString(16) + ((i>>8)&0xFF).toString(16) + (i&0xFF).toString(16);
+
+		hex += '000000';
+		var colorCode = hex.substring(0, 6);
+	  console.log(colorCode);
+	  colorCode.toString();
+	  console.log(colorCode);
+	  colorCode = "#" + colorCode;
+	  console.log(colorCode);
+	  return colorCode;
+
+
+	}).property('operated_by_onestop_id'),
+	mode_color: (function(){
+		// if (this.get('operated_by_onestop_id') === 'o-9q8y-sfmta'){
+		// 	return 'red';
+		// } else {
+			return 'yellow';
+		// }
+		
+		// write funtion that creates a hash
+
+
+	}).property('vehicle_type')
 });
 
 export default Route;
