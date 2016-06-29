@@ -34,7 +34,20 @@ var Operator = DS.Model.extend({
 			reversedCoordArray.push(coordArray);
 		}
 		return reversedCoordArray;
-	}).property('geometry')
+	}).property('geometry'),
+	operator_color: (function(){
+		var str = this.get('onestop_id');
+		var hash = 0;
+		for (var i = 0; i <str.length; i++) {
+			hash = str.charCodeAt(i) + ((hash << 5) - hash);
+		}
+		var hex = ((hash>>24)&0xFF).toString(16) + ((hash>>16)&0xFF).toString(16) + ((hash>>8)&0xFF).toString(16) + (hash&0xFF).toString(16);
+		hex += '000000';
+		var colorCode = hex.substring(0, 6);
+		colorCode.toString();
+		colorCode = "#" + colorCode;
+		return colorCode;
+	}).property('onestop_id')
 });
 
 export default Operator;

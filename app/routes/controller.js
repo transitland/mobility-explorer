@@ -76,7 +76,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	actions: {
 		styleRoutes(style){
 			this.set('routeStyle', style);
-			console.log(this.get('routeStyle'));
 		},
 		setRoute(route){
 			var onestop_id = route.get('id');
