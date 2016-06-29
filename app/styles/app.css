@@ -11,6 +11,7 @@ html, body, #map{
 
 .leaflet-container {
 	height: 1000px;
+	width: 100%;
 
 }
 

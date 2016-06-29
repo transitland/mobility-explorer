@@ -10,24 +10,26 @@ Router.map(function() {
     // params for all: bbox
 
     this.route('routes', function(){
-        // toggles for route line render style:
-        this.route('by-mode');
-        this.route('by-operator');
-        this.route('by-frequency');
-        this.route('bike-access');
-        this.route('wheelchair-access');
-        // when a single route is selected:
-        this.route('route', { path: "/:route-id" });
-        // params: 
-        // - stops along route (link to stop model)
-        // info for specific route:
-        // - route name
-        // - route long name
-        // - operated by (link to operator model)
-        // - vehicle type
-        // - onestop id
-        // links:
-        // - to route JSON
+      // toggles for route line render style:
+      this.route('by-mode');
+      this.route('by-operator');
+      this.route('by-frequency');
+      this.route('bike-access');
+      this.route('wheelchair-access');
+      // when a single route is selected:
+      this.route('route', { path: "/:route-id" });
+      // params: 
+      // - stops along route (link to stop model)
+      // info for specific route:
+      // - route name
+      // - route long name
+      // - operated by (link to operator model)
+      // - vehicle type
+      // - onestop id
+      // links:
+      // - to route JSON
+      this.route('mode');
+      this.route('operator');
     });
 
     this.route('stops', function(){

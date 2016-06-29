@@ -7,7 +7,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	onestop_id: null,
 	serves: null,
 	operated_by: null,
-	// operatedByOnestopId: null,
 	selectedRoute: null,
 	routeStyle: null,
 	routeColor: Ember.computed('routeStyle', function(){
@@ -25,7 +24,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	}),
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
-			// -122.54287719726562%2C37.706911598228466%2C-122.29568481445312%2C37.84259697150785
 			var defaultBoundsArray = [];
 			defaultBoundsArray.push([37.706911598228466, -122.54287719726562]);
 			defaultBoundsArray.push([37.84259697150785, -122.29568481445312]);
