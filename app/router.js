@@ -10,14 +10,13 @@ Router.map(function() {
     // params for all: bbox
 
     this.route('routes', function(){
-      // toggles for route line render style:
-      this.route('by-mode');
-      this.route('by-operator');
+      // future toggles for route line render style:
+      this.route('route', { path: "/:route-id" });
+      
       this.route('by-frequency');
       this.route('bike-access');
       this.route('wheelchair-access');
       // when a single route is selected:
-      this.route('route', { path: "/:route-id" });
       // params: 
       // - stops along route (link to stop model)
       // info for specific route:
@@ -28,6 +27,7 @@ Router.map(function() {
       // - onestop id
       // links:
       // - to route JSON
+      // routes in use:
       this.route('mode');
       this.route('operator');
     });

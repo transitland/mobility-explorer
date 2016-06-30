@@ -44,8 +44,10 @@
         </ul>
       </div>
       <div class="route-style-options">
-     		<button class="btn btn-mapzen-alt" {{action "styleRoutes" "mode"}}>Color routes by mode</button>
-    		<button class="btn btn-mapzen-alt" {{action "styleRoutes" "operator"}}>Color routes by operator</button>
+     		<!-- <button class="btn btn-mapzen-alt" {{action "styleRoutesMode"}}>Color routes by mode</button>
+    		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button> -->
+    		{{#link-to 'routes.operator' (query-params bbox=bbox)}}<button class="btn btn-mapzen-alt">Color routes by mode</button>{{/link-to}}
+    		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button>
   		</div>
 
       {{#if onestop_id}}
@@ -67,17 +69,13 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 	    <div id="map">
-	    	{{#if routeStyleIsOperator}}
 					{{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
 						{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 						{{#each model as |route|}}
-						  {{#polyline-layer locations=route.location color=route.operator_color onClick=(action "setOnestopId" route)}}
+						  {{#polyline-layer locations=route.location onClick=(action "setOnestopId" route)}}
 							{{/polyline-layer}}
 						{{/each}}
 					{{/leaflet-map}}
-				{{else}}
-					routeStyleIsMode
-				{{/if}}
 			</div>
 		</div>
   </div>

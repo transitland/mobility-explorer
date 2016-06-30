@@ -2,10 +2,26 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id'],
+	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by'],
 	bbox: null,
 	onestop_id: null,
-	selectedOperator: null,
+	serves: null,
+	operated_by: null,
+	selectedRoute: null,
+	routeStyle: null,
+	routeColor: Ember.computed('routeStyle', function(){
+		if (this.get('routeStyle') === 'mode'){
+			if (this.get('route.vehicle_type') === 'bus'){
+				return 'green';
+			} else if (this.get('route.vehicle_type') === 'train'){
+				return 'purple';
+			} else {
+				return 'orange';
+			}
+		} else if (this.get('routeStyle') === 'operator'){
+			return 'blue';
+		}
+	}),
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -39,17 +55,30 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
 	}),
-	operators: Ember.computed(function(){
+	routes: Ember.computed(function(){
 		var data = this.get('model');
-		var operators = [];
-		operators = operators.concat(data.map(function(operator){return operator;}));
-		return operators;
+		var routes = [];
+		routes = routes.concat(data.map(function(route){return route;}));
+		return routes;
 	}),
+	routeStyleIsMode(){
+		if (this.get('routeStyle') === 'mode'){
+			return true;
+		}
+	},
+	routeStyleIsOperator(){
+		if (this.get('routeStyle') === 'operator'){
+			return true;
+		}
+	},
 	actions: {
-		setOperator(operator){
-			var onestop_id = operator.get('id');
+		styleRoutes(style){
+			this.set('routeStyle', style);
+		},
+		setRoute(route){
+			var onestop_id = route.get('id');
 			this.set('onestop_id', onestop_id);
-			this.set('selectedOperator', operator);
+			this.set('selectedRoute', route);
 		},
 		setbbox(e) {
 			var bounds = e.target.getBounds();
@@ -71,10 +100,13 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('lng', center.lng);
 			this.set('zoom', zoom);
 		},
-		setOnestopId(operator) {
-			var onestopId = operator.id;
+		setOnestopId(route) {
+			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
-			this.set('selectedOperator', operator);
+			this.set('selectedRoute', route);
+			var operatorOnestopId = route.operated_by_onestop_id;
+			this.set('operated_by_onestop_id', operatorOnestopId);
 		}
-	}	
+  }
+	
 });

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 		var data = this.get('routes');
 
 		var routes = [];
-		routes = routes.concat(data.map(function(route){return route.get('name')}))
+		routes = routes.concat(data.map(function(route){return route.get('name');}));
 		// return ['Stefan', 'Miguel', 'Tomster', 'Pluto']
 		return routes;
 	})
