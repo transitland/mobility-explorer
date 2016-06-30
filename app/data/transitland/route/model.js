@@ -48,14 +48,29 @@ var Route = DS.Model.extend({
 		colorCode = "#" + colorCode;
 		return colorCode;
 	}).property('operated_by_onestop_id'),
+	vehicle_type_color: (function(){
+		if (this.get('vehicle_type') ==='bus') {
+			return 'red';
+		} else if (this.get('vehicle_type') ==='rail') {
+			return 'blue';
+		} else if (this.get('vehicle_type') ==='metro') {
+			return 'green';
+		} else {
+			return 'purple';
+		}
+	}).property('vehicle_type'),
 	mode_color: (function(){
-		// if (this.get('operated_by_onestop_id') === 'o-9q8y-sfmta'){
-		// 	return 'red';
-		// } else {
-			return 'yellow';
-		// }
+
+
+	// 'Tram'
+	// 'Metro'
+	// 'Rail'
+	// 'Bus'
+	// 'Ferry'
+	// 'Cablecar'
+	// 'Gondola'
+	// 'Funicular'
 		
-		// write funtion that creates a hash
 
 
 	}).property('vehicle_type')

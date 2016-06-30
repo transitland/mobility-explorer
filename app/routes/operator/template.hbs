@@ -1,4 +1,4 @@
-<!-- {{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
+{{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -6,7 +6,7 @@
         <ul class="nav toc-nav">
             <li class="toc-top-level">
                 <li class="toc-top-level toc-current">
-							    <a href="#" class="toc-subnav-toggle">Routes</a>
+							    {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' served_by='null')}}<div class="toc-subnav-toggle">Routes</div>{{/link-to}}
 							    <ul class="toc-subnav toc-expand">
 							      <li><a href="#">
 							        <form>
@@ -44,8 +44,10 @@
         </ul>
       </div>
       <div class="route-style-options">
-     		<button class="btn btn-mapzen-alt" {{action "styleRoutes" "mode"}}>Color routes by mode</button>
-    		<button class="btn btn-mapzen-alt" {{action "styleRoutes" "operator"}}>Color routes by operator</button>
+     		<!-- <button class="btn btn-mapzen-alt" {{action "styleRoutesMode"}}>Color routes by mode</button>
+    		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button> -->
+    		{{#link-to 'routes.mode'}}<button class="btn btn-mapzen-alt">Color routes by mode</button>{{/link-to}}
+    		{{#link-to 'routes.operator'}}<button class="btn btn-mapzen-alt">Color routes by operator</button>{{/link-to}}
   		</div>
 
       {{#if onestop_id}}
@@ -70,11 +72,7 @@
 				{{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 					{{#each model as |route|}}
-					  {{#polyline-layer 
-					  	locations=route.location 
-					  	color=route.operator_color
-					  	onClick=(action "setOnestopId" route)
-					  }}
+					  {{#polyline-layer locations=route.location color=route.operator_color onClick=(action "setOnestopId" route)}}
 						{{/polyline-layer}}
 					{{/each}}
 				{{/leaflet-map}}
@@ -82,5 +80,3 @@
 		</div>
   </div>
 </div>
- -->
- operator

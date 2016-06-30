@@ -1,27 +1,22 @@
 import Ember from 'ember';
-import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
-export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by'],
+export default Ember.Controller.extend({
 	bbox: null,
-	onestop_id: null,
-	serves: null,
-	operated_by: null,
 	selectedRoute: null,
-	// routeStyle: null,
-	// routeColor: Ember.computed('routeStyle', function(){
-	// 	if (this.get('routeStyle') === 'mode'){
-	// 		if (this.get('route.vehicle_type') === 'bus'){
-	// 			return 'green';
-	// 		} else if (this.get('route.vehicle_type') === 'train'){
-	// 			return 'purple';
-	// 		} else {
-	// 			return 'orange';
-	// 		}
-	// 	} else if (this.get('routeStyle') === 'operator'){
-	// 		return 'blue';
-	// 	}
-	// }),
+	routeStyle: null,
+	routeColor: Ember.computed('routeStyle', function(){
+		if (this.get('routeStyle') === 'mode'){
+			if (this.get('route.vehicle_type') === 'bus'){
+				return 'green';
+			} else if (this.get('route.vehicle_type') === 'train'){
+				return 'purple';
+			} else {
+				return 'orange';
+			}
+		} else if (this.get('routeStyle') === 'operator'){
+			return 'blue';
+		}
+	}),
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -61,20 +56,18 @@ export default Ember.Controller.extend(mapBboxController, {
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
-	// routeStyleIsMode: false,
-	// routeStyleIsOperator: false,
-	routeStyleIsMode: null,
-	routeStyleIsOperator: null,
+	routeStyleIsMode: false,
+	routeStyleIsOperator: false,
 	actions: {
 		styleRoutesMode(){
 			this.set('routeStyleIsMode', true);
 			this.set('routeStyleIsOperator', false);
-			console.log(this.get('routeStyleIsMode'));
+			// console.log(this.get('routeStyle'));
 		},
 		styleRoutesOperator(){
 			this.set('routeStyleIsMode', false);
 			this.set('routeStyleIsOperator', true);
-			console.log(this.get('routeStyleIsOperator'));
+			// console.log(this.get('routeStyle'));
 		},
 		setRoute(route){
 			var onestop_id = route.get('id');
