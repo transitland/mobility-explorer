@@ -6,7 +6,7 @@
         <ul class="nav toc-nav">
             <li class="toc-top-level">
                 <li class="toc-top-level toc-current">
-							    <a href="#" class="toc-subnav-toggle">Routes</a>
+							    {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' served_by='null')}}<div class="toc-subnav-toggle">Routes</div>{{/link-to}}
 							    <ul class="toc-subnav toc-expand">
 							      <li><a href="#">
 							        <form>
@@ -46,8 +46,8 @@
       <div class="route-style-options">
      		<!-- <button class="btn btn-mapzen-alt" {{action "styleRoutesMode"}}>Color routes by mode</button>
     		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button> -->
-    		{{#link-to 'routes.operator' (query-params bbox=bbox)}}<button class="btn btn-mapzen-alt">Color routes by mode</button>{{/link-to}}
-    		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button>
+    		{{#link-to 'routes.mode'}}<button class="btn btn-mapzen-alt">Color routes by mode</button>{{/link-to}}
+    		{{#link-to 'routes.operator'}}<button class="btn btn-mapzen-alt">Color routes by operator</button>{{/link-to}}
   		</div>
 
       {{#if onestop_id}}
@@ -68,7 +68,7 @@
     	{{/if}}
     </div>
     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-	    <div id="map">
+	    <!-- <div id="map">
 					{{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
 						{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 						{{#each model as |route|}}
@@ -76,7 +76,8 @@
 							{{/polyline-layer}}
 						{{/each}}
 					{{/leaflet-map}}
-			</div>
+			</div> -->
+			{{outlet}}
 		</div>
   </div>
 </div>
