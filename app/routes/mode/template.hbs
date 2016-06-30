@@ -1,0 +1,9 @@
+<div id="map">
+	{{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
+		{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+		{{#each model as |route|}}
+		  {{#polyline-layer locations=route.location color="red" onClick=(action "setOnestopId" route)}}
+			{{/polyline-layer}}
+		{{/each}}
+	{{/leaflet-map}}
+</div>

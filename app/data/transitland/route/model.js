@@ -35,18 +35,45 @@ var Route = DS.Model.extend({
 		}
 		return reversedCoordArray;
 	}).property('geometry'),
-
 	operator_color: (function(){
-		// if (this.get('operated_by_onestop_id') === 'o-9q8y-sfmta'){
-		// 	return 'red';
-		// } else {
-		// 	return 'yellow';
-		// }
+		var str = this.get('operated_by_onestop_id');
+		var hash = 0;
+		for (var i = 0; i <str.length; i++) {
+			hash = str.charCodeAt(i) + ((hash << 5) - hash);
+		}
+		var hex = ((hash>>24)&0xFF).toString(16) + ((hash>>16)&0xFF).toString(16) + ((hash>>8)&0xFF).toString(16) + (hash&0xFF).toString(16);
+		hex += '000000';
+		var colorCode = hex.substring(0, 6);
+		colorCode.toString();
+		colorCode = "#" + colorCode;
+		return colorCode;
+	}).property('operated_by_onestop_id'),
+	vehicle_type_color: (function(){
+		if (this.get('vehicle_type') ==='bus') {
+			return 'red';
+		} else if (this.get('vehicle_type') ==='rail') {
+			return 'blue';
+		} else if (this.get('vehicle_type') ==='metro') {
+			return 'green';
+		} else {
+			return 'purple';
+		}
+	}).property('vehicle_type'),
+	mode_color: (function(){
+
+
+	// 'Tram'
+	// 'Metro'
+	// 'Rail'
+	// 'Bus'
+	// 'Ferry'
+	// 'Cablecar'
+	// 'Gondola'
+	// 'Funicular'
 		
-		// write funtion that creates a hash
 
 
-	}).property('operated_by_onestop_id')
+	}).property('vehicle_type')
 });
 
 export default Route;

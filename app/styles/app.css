@@ -1,16 +1,19 @@
 body {
     padding: 0;
     margin: 0;
+    z-index: 30;
 }
 
 html, body, #map{
     height: 100%;
     width: 100%;
+    z-index: 30;
  }
 
 
 .leaflet-container {
 	height: 1000px;
+	width: 100%;
 
 }
 
@@ -33,6 +36,16 @@ input, button, select, textarea {
 	margin-left: 10px;
 	position: absolute;
 }*/
+
+.test {
+	z-index: 2;
+	background: transparent;
+}
+
+.route-style-options{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 
 .ember-power-select-trigger{
 	/*display: table-cell;*/

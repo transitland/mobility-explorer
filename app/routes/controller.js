@@ -7,11 +7,23 @@ export default Ember.Controller.extend(mapBboxController, {
 	onestop_id: null,
 	serves: null,
 	operated_by: null,
-	// operatedByOnestopId: null,
 	selectedRoute: null,
+	// routeStyle: null,
+	// routeColor: Ember.computed('routeStyle', function(){
+	// 	if (this.get('routeStyle') === 'mode'){
+	// 		if (this.get('route.vehicle_type') === 'bus'){
+	// 			return 'green';
+	// 		} else if (this.get('route.vehicle_type') === 'train'){
+	// 			return 'purple';
+	// 		} else {
+	// 			return 'orange';
+	// 		}
+	// 	} else if (this.get('routeStyle') === 'operator'){
+	// 		return 'blue';
+	// 	}
+	// }),
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
-			// -122.54287719726562%2C37.706911598228466%2C-122.29568481445312%2C37.84259697150785
 			var defaultBoundsArray = [];
 			defaultBoundsArray.push([37.706911598228466, -122.54287719726562]);
 			defaultBoundsArray.push([37.84259697150785, -122.29568481445312]);
@@ -46,10 +58,24 @@ export default Ember.Controller.extend(mapBboxController, {
 	routes: Ember.computed(function(){
 		var data = this.get('model');
 		var routes = [];
-		routes = routes.concat(data.map(function(route){return route}))
+		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
+	// routeStyleIsMode: false,
+	// routeStyleIsOperator: false,
+	routeStyleIsMode: null,
+	routeStyleIsOperator: null,
 	actions: {
+		styleRoutesMode(){
+			this.set('routeStyleIsMode', true);
+			this.set('routeStyleIsOperator', false);
+			console.log(this.get('routeStyleIsMode'));
+		},
+		styleRoutesOperator(){
+			this.set('routeStyleIsMode', false);
+			this.set('routeStyleIsOperator', true);
+			console.log(this.get('routeStyleIsOperator'));
+		},
 		setRoute(route){
 			var onestop_id = route.get('id');
 			this.set('onestop_id', onestop_id);

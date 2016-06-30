@@ -44,12 +44,11 @@
         </ul>
       </div>
       <div class="route-style-options">
-     		<button class="btn btn-mapzen-alt" {{action "styleRoutesMode"}}>Color routes by mode</button>
-    		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button>
-    		<!-- {{#link-to 'routes.mode'}}<button class="btn btn-mapzen-alt">Color routes by mode</button>{{/link-to}}
-    		{{#link-to 'routes.operator'}}<button class="btn btn-mapzen-alt">Color routes by operator</button>{{/link-to}} -->
+     		<!-- <button class="btn btn-mapzen-alt" {{action "styleRoutesMode"}}>Color routes by mode</button>
+    		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button> -->
+    		{{#link-to 'routes.mode'}}<button class="btn btn-mapzen-alt">Color routes by mode</button>{{/link-to}}
+    		{{#link-to 'routes.operator'}}<button class="btn btn-mapzen-alt">Color routes by operator</button>{{/link-to}}
   		</div>
-
 
       {{#if onestop_id}}
       	{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
@@ -72,22 +71,10 @@
 			<div id="map">
 				{{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-    				{{#if routeStyleIsMode}}
-							{{#each model as |route|}}
-							  {{#polyline-layer locations=route.location color=route.vehicle_type_color weight=1 onClick=(action "setOnestopId" route)}}
-								{{/polyline-layer}}
-							{{/each}}
-						{{else if routeStyleIsOperator}}
-							{{#each model as |route|}}
-							  {{#polyline-layer locations=route.location color=route.operator_color weight=1 onClick=(action "setOnestopId" route)}}
-								{{/polyline-layer}}
-							{{/each}}
-						{{else}}
-							{{#each model as |route|}}
-							  {{#polyline-layer locations=route.location weight=1 onClick=(action "setOnestopId" route)}}
-								{{/polyline-layer}}
-							{{/each}}
-						{{/if}}
+					{{#each model as |route|}}
+					  {{#polyline-layer locations=route.location color=route.operator_color onClick=(action "setOnestopId" route)}}
+						{{/polyline-layer}}
+					{{/each}}
 				{{/leaflet-map}}
 			</div>
 		</div>
