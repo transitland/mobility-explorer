@@ -74,21 +74,22 @@
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
     				{{#if routeStyleIsMode}}
 							{{#each model as |route|}}
-							  {{#polyline-layer locations=route.location color=route.vehicle_type_color weight=1 onClick=(action "setOnestopId" route)}}
+							  {{#polyline-layer locations=route.location color=route.vehicle_type_color weight=route.route_path_weight opacity=route.oute_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
 								{{/polyline-layer}}
 							{{/each}}
 						{{else if routeStyleIsOperator}}
 							{{#each model as |route|}}
-							  {{#polyline-layer locations=route.location color=route.operator_color weight=1 onClick=(action "setOnestopId" route)}}
+							  {{#polyline-layer locations=route.location color=route.operator_color weight=route.route_path_weight opacity=route.oute_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
 								{{/polyline-layer}}
 							{{/each}}
 						{{else}}
 							{{#each model as |route|}}
-							  {{#polyline-layer locations=route.location weight=1 onClick=(action "setOnestopId" route)}}
+							  {{#polyline-layer locations=route.location weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
 								{{/polyline-layer}}
 							{{/each}}
 						{{/if}}
 				{{/leaflet-map}}
+
 			</div>
 		</div>
   </div>

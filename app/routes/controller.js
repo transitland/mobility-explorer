@@ -8,20 +8,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	serves: null,
 	operated_by: null,
 	selectedRoute: null,
-	// routeStyle: null,
-	// routeColor: Ember.computed('routeStyle', function(){
-	// 	if (this.get('routeStyle') === 'mode'){
-	// 		if (this.get('route.vehicle_type') === 'bus'){
-	// 			return 'green';
-	// 		} else if (this.get('route.vehicle_type') === 'train'){
-	// 			return 'purple';
-	// 		} else {
-	// 			return 'orange';
-	// 		}
-	// 	} else if (this.get('routeStyle') === 'operator'){
-	// 		return 'blue';
-	// 	}
-	// }),
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -61,8 +47,6 @@ export default Ember.Controller.extend(mapBboxController, {
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
-	// routeStyleIsMode: false,
-	// routeStyleIsOperator: false,
 	routeStyleIsMode: null,
 	routeStyleIsOperator: null,
 	actions: {
@@ -80,6 +64,16 @@ export default Ember.Controller.extend(mapBboxController, {
 			var onestop_id = route.get('id');
 			this.set('onestop_id', onestop_id);
 			this.set('selectedRoute', route);
+		},
+		selectRoute(route){
+			console.log('selectRoute');
+			route.set('route_path_opacity', 1);
+			route.set('route_path_weight', 3);
+		},
+		unselectRoute(route){
+			console.log('unselectRoute');
+			route.set('route_path_opacity', 0.5);
+			route.set('route_path_weight', 1.5);
 		},
 		setbbox(e) {
 			var bounds = e.target.getBounds();
