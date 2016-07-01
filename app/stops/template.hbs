@@ -33,6 +33,9 @@
           </li>
         </ul>
       </div>
+      {{#if selectedStop}}
+      	<div {{action "setOnestopId" selectedStop}}>Stop name: {{selectedStop.name}}</div>
+    	{{/if}}
       {{#if onestop_id}}
       	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
 				<p>{{#link-to 'routes' (query-params serves=onestop_id) }}View routes serving this stop{{/link-to}}</p>
@@ -46,7 +49,8 @@
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 					
 					{{#each model as |stop|}}
-				  	{{#marker-layer location=stop.location icon=icon draggable=false riseOnHover=true riseOffset=1000  onClick=(action "setOnestopId" stop)}}{{/marker-layer}}
+					  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000  onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+					  		{{/marker-layer}}
 				  {{/each}}
 
 				{{/leaflet-map}}
