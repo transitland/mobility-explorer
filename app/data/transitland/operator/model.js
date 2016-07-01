@@ -17,6 +17,8 @@ var Operator = DS.Model.extend({
 	updated_at: DS.attr('date'),
 	geometry: DS.attr(),
 	represented_in_feed_onestop_ids: DS.attr(),
+	operator_path_opacity: 0.5,
+	operator_path_weight: 1.5,
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'][0];
 		var coordinatesLength = coordinates.length;

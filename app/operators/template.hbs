@@ -54,7 +54,7 @@
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
           
           {{#each model as |operator|}}
-            {{#polygon-layer locations=operator.location color=operator.operator_color icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
+            {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
             {{/polygon-layer}}
           {{/each}}
 
@@ -63,4 +63,3 @@
     </div>
   </div>
 </div>
-

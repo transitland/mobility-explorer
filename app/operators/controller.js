@@ -75,6 +75,17 @@ export default Ember.Controller.extend(mapBboxController, {
 			var onestopId = operator.id;
 			this.set('onestop_id', onestopId);
 			this.set('selectedOperator', operator);
+		},
+		selectOperator(operator){
+			console.log('selectOperator');
+			operator.set('operator_path_opacity', 1);
+			operator.set('operator_path_weight', 3);
+		},
+		unselectOperator(operator){
+			console.log('unselectOperator');
+
+			operator.set('operator_path_opacity', 0.5);
+			operator.set('operator_path_weight', 1.5);
 		}
 	}	
 });

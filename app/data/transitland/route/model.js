@@ -16,6 +16,8 @@ var Route = DS.Model.extend({
 	created_at: DS.attr('date'),
 	updated_at: DS.attr('date'),
 	route_stop_patterns_by_onestop_id: DS.attr(),
+	route_path_opacity: 0.5,
+	route_path_weight: 1.5,
 	
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'][0];
@@ -58,22 +60,8 @@ var Route = DS.Model.extend({
 		} else {
 			return 'purple';
 		}
-	}).property('vehicle_type'),
-	mode_color: (function(){
-
-
-	// 'Tram'
-	// 'Metro'
-	// 'Rail'
-	// 'Bus'
-	// 'Ferry'
-	// 'Cablecar'
-	// 'Gondola'
-	// 'Funicular'
-		
-
-
 	}).property('vehicle_type')
+
 });
 
 export default Route;

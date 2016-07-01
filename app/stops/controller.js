@@ -65,10 +65,19 @@ export default Ember.Controller.extend(mapBboxController, {
 	    this.set('lng', center.lng);
 	    this.set('zoom', zoom);
 		},
+		selectStop(stop){
+			var highlightedIcon = this.get('highlightedIcon');
+			this.set('selectedStop', stop);
+			stop.set('stop_icon', highlightedIcon);
+		},
+		unselectStop(stop){
+			var icon = this.get('icon');
+			this.set('selectedStop', null);
+			stop.set('stop_icon', icon);
+		},
 		setOnestopId(stop) {
 			var onestopId = stop.id;
 			this.set('onestop_id', onestopId);
-			this.set('selectedStop', stop);
 		}
 	}	
 });

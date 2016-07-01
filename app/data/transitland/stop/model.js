@@ -17,7 +17,11 @@ var Stop = DS.Model.extend({
 	routes_serving_stop: DS.attr(),
 	location: (function(){
 		return this.get('geometry')['coordinates'].reverse();
-	}).property('geometry')
+	}).property('geometry'),
+	stop_icon: L.icon({
+		iconUrl: 'assets/images/stop.png',		
+		iconSize: (10, 10),
+	})
 });
 
 export default Stop;
