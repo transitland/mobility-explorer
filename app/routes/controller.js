@@ -66,12 +66,10 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('selectedRoute', route);
 		},
 		selectRoute(route){
-			console.log('selectRoute');
 			route.set('route_path_opacity', 1);
 			route.set('route_path_weight', 3);
 		},
 		unselectRoute(route){
-			console.log('unselectRoute');
 			route.set('route_path_opacity', 0.5);
 			route.set('route_path_weight', 1.5);
 		},
