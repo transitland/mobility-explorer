@@ -1,65 +1,60 @@
-{{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
+<div class="col-xs-12 col-sm-12 col-md-3">
+  {{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
+  <div class="toc" role="directory">
+    <ul class="nav toc-nav">
+        <li class="toc-top-level">
+          {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' stops_served_by_route='null' operated_by='null')}}<span>Routes</span>{{/link-to}}
+        </li>
+        <li class="toc-top-level">
+          {{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by='null')}}<span>Stops</span>{{/link-to}}
+        </li>
+        <li class="toc-top-level toc-current">
+          <a href="#" class="toc-subnav-toggle">Operators</a>
+          <ul class="toc-subnav toc-expand">
+            <li><a href="#">
+              <form>
+                <div class="form-group">
+                  <input type="radio" id="radio-1" name="options">
+                  <label for="radio-1">View service areas</label>
+                </div>
+                <div class="form-group">
+                  <input type="radio" id="radio-2" name="options">
+                  <label for="radio-2">View routes</label>
+                </div>
+              </form>
+            </a></li>
+          </ul>
+        </li>
+    </ul>
+  </div>
+  {{#if onestop_id}}
+    {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+    <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id) }}View routes served by this operator{{/link-to}}</p><br>
+    <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id) }}View stops served by this operator{{/link-to}}</p>
+  {{else}}
+    {{#power-select
+      options=operators
+      selected=operator
+      placeholder="Search for operator"
+      searchPlaceholder="Type to filter..."
+      onchange=(action "setOperator")
+      as |operator|
+    }}
+      {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+    {{/power-select}}
+  {{/if}}
+</div>
+<div class="col-xs-12 col-sm-12 col-md-9">
+  <div id="map">
+    {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "updatebbox") onMoveend=(action "updatebbox")}}
+      
+      {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+      
+      {{#each model as |operator|}}
+        {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
+        {{/polygon-layer}}
+      {{/each}}
 
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-3">
-      <div class="toc" role="directory">
-        <ul class="nav toc-nav">
-            <li class="toc-top-level">
-              {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' stops_served_by_route='null' operated_by='null')}}<span>Routes</span>{{/link-to}}
-            </li>
-            <li class="toc-top-level">
-              {{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by='null')}}<span>Stops</span>{{/link-to}}
-            </li>
-            <li class="toc-top-level toc-current">
-              <a href="#" class="toc-subnav-toggle">Operators</a>
-              <ul class="toc-subnav toc-expand">
-                <li><a href="#">
-                  <form>
-                    <div class="form-group">
-                      <input type="radio" id="radio-1" name="options">
-                      <label for="radio-1">View service areas</label>
-                    </div>
-                    <div class="form-group">
-                      <input type="radio" id="radio-2" name="options">
-                      <label for="radio-2">View routes</label>
-                    </div>
-                  </form>
-                </a></li>
-              </ul>
-            </li>
-        </ul>
-      </div>
-      {{#if onestop_id}}
-        {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
-        <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id) }}View routes served by this operator{{/link-to}}</p><br>
-        <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id) }}View stops served by this operator{{/link-to}}</p>
-      {{else}}
-        {{#power-select
-          options=operators
-          selected=operator
-          placeholder="Search for operator"
-          searchPlaceholder="Type to filter..."
-          onchange=(action "setOperator")
-          as |operator|
-        }}
-          {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
-        {{/power-select}}
-      {{/if}}
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-9">
-      <div id="map">
-        {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "updatebbox") onMoveend=(action "updatebbox")}}
-          
-          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-          
-          {{#each model as |operator|}}
-            {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
-            {{/polygon-layer}}
-          {{/each}}
-
-        {{/leaflet-map}}
-      </div>
-    </div>
+    {{/leaflet-map}}
   </div>
 </div>
