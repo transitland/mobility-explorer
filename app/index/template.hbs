@@ -1,3 +1,29 @@
-{{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
-  {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-{{/leaflet-map}}
+<!-- <div class="container"> -->
+  <!-- <div class="row"> -->
+    <div class="col-xs-12 col-sm-12 col-md-3">
+      <h2>Mobility Explorer</h2>
+      <div class="toc" role="directory">
+        <ul class="nav toc-nav">
+            <li class="toc-top-level">
+              {{#link-to 'routes' (query-params bbox=bbox)}}<span>Routes</span>{{/link-to}}
+            </li>
+         
+            <li class="toc-top-level">
+              {{#link-to 'stops' (query-params bbox=bbox)}}<span>Stops</span>{{/link-to}}
+            </li>
+
+            <li class="toc-top-level">
+              {{#link-to 'operators' (query-params bbox=bbox)}}<span>Operators</span>{{/link-to}}
+            </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-9">
+      <div id="map">
+        {{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+        {{/leaflet-map}}
+      </div>
+    </div>
+  <!-- </div> -->
+<!-- </div>
