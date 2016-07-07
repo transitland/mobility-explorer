@@ -1,64 +1,60 @@
-{{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-3">
-      <div class="toc" role="directory">
-        <ul class="nav toc-nav">
-          <li class="toc-top-level">
-            {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' stops_served_by_route='null' operated_by='null')}}<span>Routes</span>{{/link-to}}
-          </li>
-          <li class="toc-top-level toc-current">
-					  <a href="#" class="toc-subnav-toggle">Stops</a>
-					  <ul class="toc-subnav toc-expand">
-					    <li><a href="#">
-					      <form>
-					        <div class="form-group">
-					          <input type="radio" id="radio-1" name="options">
-					          <label for="radio-1">Frequency</label>
-					        </div>
-					        <div class="form-group">
-					          <input type="radio" id="radio-2" name="options">
-					          <label for="radio-2">Walkshed</label>
-					        </div>
-					        <div class="form-group">
-					          <input type="radio" id="radio-3" name="options">
-					          <label for="radio-3">Transitshed</label>
-					        </div>
-					      </form>
-					    </a></li>
-					  </ul>
-					</li>
-          <li class="toc-top-level">
-            {{#link-to 'operators' (query-params bbox=bbox onestop_id='null')}}<span>Operators</span>{{/link-to}}
-          </li>
-        </ul>
-      </div>
-      {{#if selectedStop}}
-      	<div {{action "setOnestopId" selectedStop}}>Stop name: {{selectedStop.name}}</div>
-    	{{/if}}
-      {{#if onestop_id}}
-      	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
-				<p>{{#link-to 'routes' (query-params serves=onestop_id) }}View routes serving this stop{{/link-to}}</p>
-    	{{/if}}
-    	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-9">
-	    <div id="map">
-			  {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
-					
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-					
-					{{#each model as |stop|}}
-					  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000  onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
-					  		{{/marker-layer}}
-				  {{/each}}
+<div class="col-xs-12 col-sm-12 col-md-3">
+	{{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
 
-				{{/leaflet-map}}
-			</div>
-		</div>
+  <div class="toc" role="directory">
+    <ul class="nav toc-nav">
+      <li class="toc-top-level">
+        {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' stops_served_by_route='null' operated_by='null')}}<span>Routes</span>{{/link-to}}
+      </li>
+      <li class="toc-top-level toc-current">
+			  <a href="#" class="toc-subnav-toggle">Stops</a>
+			  <ul class="toc-subnav toc-expand">
+			    <li><a href="#">
+			      <form>
+			        <div class="form-group">
+			          <input type="radio" id="radio-1" name="options">
+			          <label for="radio-1">Frequency</label>
+			        </div>
+			        <div class="form-group">
+			          <input type="radio" id="radio-2" name="options">
+			          <label for="radio-2">Walkshed</label>
+			        </div>
+			        <div class="form-group">
+			          <input type="radio" id="radio-3" name="options">
+			          <label for="radio-3">Transitshed</label>
+			        </div>
+			      </form>
+			    </a></li>
+			  </ul>
+			</li>
+      <li class="toc-top-level">
+        {{#link-to 'operators' (query-params bbox=bbox onestop_id='null')}}<span>Operators</span>{{/link-to}}
+      </li>
+    </ul>
   </div>
+  {{#if selectedStop}}
+  	<div {{action "setOnestopId" selectedStop}}>Stop name: {{selectedStop.name}}</div>
+	{{/if}}
+  {{#if onestop_id}}
+  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
+		<p>{{#link-to 'routes' (query-params serves=onestop_id) }}View routes serving this stop{{/link-to}}</p>
+	{{/if}}
+	<!-- <button class="btn btn-mapzen-alt" {{action "printBbox"}}>Update results</button> -->
 </div>
+<div class="col-xs-12 col-sm-12 col-md-9">
+  <div id="map">
+	  {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
+			
+			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+			
+			{{#each model as |stop|}}
+			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000  onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+			  		{{/marker-layer}}
+		  {{/each}}
 
+		{{/leaflet-map}}
+	</div>
+</div>
 
 
 
