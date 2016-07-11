@@ -8,6 +8,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	serves: null,
 	operated_by: null,
 	selectedRoute: null,
+	hoverRoute: null,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -47,18 +48,16 @@ export default Ember.Controller.extend(mapBboxController, {
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
-	routeStyleIsMode: null,
-	routeStyleIsOperator: null,
+	routeStyleIsMode: false,
+	routeStyleIsOperator: false,
 	actions: {
 		styleRoutesMode(){
-			this.set('routeStyleIsMode', true);
+			this.toggleProperty('routeStyleIsMode');
 			this.set('routeStyleIsOperator', false);
-			console.log(this.get('routeStyleIsMode'));
 		},
 		styleRoutesOperator(){
+			this.toggleProperty('routeStyleIsOperator');
 			this.set('routeStyleIsMode', false);
-			this.set('routeStyleIsOperator', true);
-			console.log(this.get('routeStyleIsOperator'));
 		},
 		setRoute(route){
 			var onestop_id = route.get('id');
@@ -68,12 +67,12 @@ export default Ember.Controller.extend(mapBboxController, {
 		selectRoute(route){
 			route.set('route_path_opacity', 1);
 			route.set('route_path_weight', 3);
-			this.set('selectedRoute', route);
+			this.set('hoverRoute', route);
 		},
 		unselectRoute(route){
 			route.set('route_path_opacity', 0.5);
 			route.set('route_path_weight', 1.5);
-			this.set('selectedRoute', null);
+			this.set('hoverRoute', null);
 		},
 		setbbox(e) {
 			var bounds = e.target.getBounds();
