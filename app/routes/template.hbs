@@ -5,7 +5,11 @@
     <div class="expanded-selection">
 
 		{{#if onestop_id}}
-	  	{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
+			{{#if selectedRoute}}
+	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
+  		{{else}}
+	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
+  		{{/if}}
 	  	<br>
 			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by=onestop_id) }}View stops served by route{{/link-to}}</p>
 		{{else}}
@@ -45,18 +49,19 @@
 			{{/unless}}
 		{{/if}}
 		{{#if routeStyleIsOperator}}
-			Operator
+			Operator Key coming soon
 		{{/if}}
-		{{#if hoverRoute}}
-			{{#unless selectedRoute}}
+		
+		{{#if selectedRoute}}
+		{{else if onlyRoute}}
+		{{else if hoverRoute}}
 				<div class="hover-detail">
 					{{hoverRoute.name}}<br>
 					{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
 					<p class="caption">Click the route line for more information</p>
 				</div>
-			{{/unless}}
-		{{else}}
-			<p class="caption">Hover on the route line for information</p>
+			{{else}}
+				<p class="caption">Hover on the route line for information</p>
 		{{/if}}
 	</div>
 

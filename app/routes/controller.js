@@ -8,6 +8,15 @@ export default Ember.Controller.extend(mapBboxController, {
 	serves: null,
 	operated_by: null,
 	selectedRoute: null,
+	onlyRoute: Ember.computed('onestop_id', function(){
+		var data = this.get('routes');
+		var onlyRoute = data.get('firstObject');
+		if (this.get('onestop_id') === null){
+			return null
+		} else {
+			return onlyRoute;
+		}
+	}),
 	hoverRoute: null,
 	unstyledColor: "blue",
 	bounds: Ember.computed('bbox', function(){
@@ -49,21 +58,6 @@ export default Ember.Controller.extend(mapBboxController, {
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
-	// operators: Ember.computed(function(){
-	// 	var data = this.get('routes');
-	// 	var operatorColors = [];
-	// 	var operators = {};
-	// 	for (var i = 0, l = data.length; i < l; i++) {
-	// 		if (operatorColors.indexOf(data[i].get('operator_color')) === -1){
-	// 			var color = data[i].get('operator_color');
-	// 			var operatorName = data[i].get('operated_by_name');
-	// 			operatorColors.push(color);
-	// 			operators[operatorName] = color;
-	// 		}
-	// 	}
-	// 	return operators;
-	// }),
-
 	routeStyleIsMode: false,
 	routeStyleIsOperator: false,
 	actions: {
