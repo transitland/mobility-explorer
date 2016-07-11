@@ -29,16 +29,18 @@
 		{{/if}}
 		
 		
-		{{#if hoverStop}}
-			{{#unless selectedStop}}
+		
+			{{#if selectedStop}}
+			{{else if onlyStop}}
+			{{else if hoverStop}}
 				<div class="hover-detail">
 					<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
 					<p class="caption">Click the stop for more information</p>
 				</div>
-			{{/unless}}
 			{{else}}
-      <p class="caption">Hover on a stop for information</p>
-		{{/if}}
+      		<p class="caption">Hover on a stop for information</p>
+			{{/if}}
+			
 
 	</div>
 

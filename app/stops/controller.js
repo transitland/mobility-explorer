@@ -8,6 +8,15 @@ export default Ember.Controller.extend(mapBboxController, {
 	selectedStop: null,
 	served_by: null,
 	hoverStop: null,
+	onlyStop: Ember.computed('onestop_id', function(){
+		var data = this.get('model');
+		var onlyStop = data.get('firstObject');
+		if (this.get('onestop_id') === null){
+			return null
+		} else {
+			return onlyStop;
+		}
+	}),
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];

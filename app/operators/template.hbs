@@ -23,15 +23,16 @@
       {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
     {{/power-select}}
   {{/if}}
-  {{#if hoverOperator}}
-    {{#unless selectedOperator}}
-      <div class="hover-detail">
-        {{hoverOperator.name}}<br>
-        <p class="caption">Click the operator area for more information</p>
-      </div>
-    {{/unless}}
-    {{else}}
-      <p class="caption">Hover on the operator area for information</p>
+  
+  {{#if selectedOperator}}
+  {{else if onlyOperator}}
+  {{else if hoverOperator}}
+    <div class="hover-detail">
+      {{hoverOperator.name}}<br>
+      <p class="caption">Click the operator area for more information</p>
+    </div>
+  {{else}}
+    <p class="caption">Hover on the operator area for information</p>
   {{/if}}
 </div>
 </div>
