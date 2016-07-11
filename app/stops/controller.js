@@ -7,6 +7,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	onestop_id: null,
 	selectedStop: null,
 	served_by: null,
+	hoverStop: null,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -67,16 +68,17 @@ export default Ember.Controller.extend(mapBboxController, {
 		},
 		selectStop(stop){
 			var highlightedIcon = this.get('highlightedIcon');
-			this.set('selectedStop', stop);
 			stop.set('stop_icon', highlightedIcon);
+			this.set('hoverStop', stop);
 		},
 		unselectStop(stop){
 			var icon = this.get('icon');
-			this.set('selectedStop', null);
 			stop.set('stop_icon', icon);
+			this.set('hoverStop', null);
 		},
 		setOnestopId(stop) {
 			var onestopId = stop.id;
+			this.set('selectedStop', stop);
 			this.set('onestop_id', onestopId);
 		}
 	}	

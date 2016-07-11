@@ -3,12 +3,6 @@
   
     {{#link-to 'routes' (query-params bbox=bbox)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
     <div class="expanded-selection">
-	  	
-	  	
-
-
-  		<!-- <button class="btn btn-mapzen-alt-style" {{action "styleRoutesMode"}}>style by mode</button>
-			<button class="btn btn-transparent-alt-style" {{action "styleRoutesOperator"}}>style by operator</button> -->
 
 		{{#if onestop_id}}
 	  	{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
