@@ -55,13 +55,13 @@
 		{{#if selectedRoute}}
 		{{else if onlyRoute}}
 		{{else if hoverRoute}}
-				<div class="hover-detail">
-					{{hoverRoute.name}}<br>
-					{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
-					<p class="caption">Click the route line for more information</p>
-				</div>
-			{{else}}
-				<p class="caption">Hover on the route line for information</p>
+			<div class="hover-detail">
+				{{hoverRoute.name}}<br>
+				{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
+				<p class="caption">Click the route line for more information</p>
+			</div>
+		{{else}}
+			<p class="caption">Hover on the route line for information</p>
 		{{/if}}
 	</div>
 
