@@ -57,8 +57,14 @@ var Route = DS.Model.extend({
 			return 'blue';
 		} else if (this.get('vehicle_type') ==='metro') {
 			return 'green';
-		} else {
+		} else if (this.get('vehicle_type') ==='ferry') {
 			return 'purple';
+		} else if (this.get('vehicle_type') ==='cablecar') {
+			return 'orange';
+		} else if (this.get('vehicle_type') ==='tram') {
+			return 'aqua';
+		} else {
+			return 'grey';
 		}
 	}).property('vehicle_type')
 

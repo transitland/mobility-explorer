@@ -39,11 +39,29 @@
 	      {{route.name}} {{route.tags.route_long_name}}
 	    {{/power-select}}
 		{{/if}}
+		{{#if routeStyleIsMode}}
+			{{#unless selectedRoute}}
+				<p style="color:red;">Bus</p>
+				<p style="color:blue;">Rail</p>
+				<p style="color:green;">Metro</p>
+				<p style="color:aqua;">Tram</p>
+				<p style="color:purple;">Ferry</p>
+				<p style="color:orange;">Cablecar</p>
+				<p style="color:grey;">Other</p>
+			{{/unless}}
+		{{/if}}
+		{{#if routeStyleIsOperator}}
+			<!-- {{#each operators as |operator| }}
+				{{operator}}
+			{{/each}} -->
+		{{/if}}
 		{{#if hoverRoute}}
 			{{#unless selectedRoute}}
-				Route: {{hoverRoute.name}}<br>
-				{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
-				<p class="caption">Click on the route line for more information</p>
+				<div class="hover-detail">
+					Route: {{hoverRoute.name}}<br>
+					{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
+					<p class="caption">Click on the route line for more information</p>
+				</div>
 			{{/unless}}
 		{{/if}}
 	</div>

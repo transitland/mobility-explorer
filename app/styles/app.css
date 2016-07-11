@@ -104,3 +104,8 @@ input, button, select, textarea {
 	margin-bottom: 10px;
 	/*background-color: #6ea0a4;*/
 }
+
+.hover-detail{
+	background-color: #e6ead2;
+	padding: 10px;
+}
