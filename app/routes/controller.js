@@ -9,6 +9,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	operated_by: null,
 	selectedRoute: null,
 	hoverRoute: null,
+	unstyledColor: "blue",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -88,6 +89,19 @@ export default Ember.Controller.extend(mapBboxController, {
 			route.set('route_path_opacity', 0.5);
 			route.set('route_path_weight', 1.5);
 			this.set('hoverRoute', null);
+		},
+		selectUnstyledRoute(route){
+			route.set('route_path_opacity', 1);
+			route.set('route_path_weight', 3);
+			this.set('hoverRoute', route);
+			route.set('default_color', "red");
+
+		},
+		unselectUnstyledRoute(route){
+			route.set('route_path_opacity', 0.5);
+			route.set('route_path_weight', 1.5);
+			this.set('hoverRoute', null);
+			route.set('default_color', "blue");
 		},
 		setbbox(e) {
 			var bounds = e.target.getBounds();
