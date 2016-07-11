@@ -1,32 +1,12 @@
 <div class="col-xs-12 col-sm-12 col-md-3">
-  {{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
-  <div class="toc" role="directory">
-    <ul class="nav toc-nav">
-        <li class="toc-top-level">
-          {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' stops_served_by_route='null' operated_by='null')}}<span>Routes</span>{{/link-to}}
-        </li>
-        <li class="toc-top-level">
-          {{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by='null')}}<span>Stops</span>{{/link-to}}
-        </li>
-        <li class="toc-top-level toc-current">
-          <a href="#" class="toc-subnav-toggle">Operators</a>
-          <ul class="toc-subnav toc-expand">
-            <li><a href="#">
-              <form>
-                <div class="form-group">
-                  <input type="radio" id="radio-1" name="options">
-                  <label for="radio-1">View service areas</label>
-                </div>
-                <div class="form-group">
-                  <input type="radio" id="radio-2" name="options">
-                  <label for="radio-2">View routes</label>
-                </div>
-              </form>
-            </a></li>
-          </ul>
-        </li>
-    </ul>
-  </div>
+  {{#link-to 'index' (query-params bbox=bbox onestop_id=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+  {{#link-to 'routes' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+  {{#link-to 'stops' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+
+
+  {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-mapzen-alt">Operators</button>{{/link-to}}
+  <div class="expanded-selection">
+  
   {{#if onestop_id}}
     {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
     <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id) }}View routes served by this operator{{/link-to}}</p><br>
@@ -43,6 +23,17 @@
       {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
     {{/power-select}}
   {{/if}}
+  {{#if hoverOperator}}
+    {{#unless selectedOperator}}
+      <div class="hover-detail">
+        {{hoverOperator.name}}<br>
+        <p class="caption">Click the operator area for more information</p>
+      </div>
+    {{/unless}}
+    {{else}}
+      <p class="caption">Hover on the operator area for information</p>
+  {{/if}}
+</div>
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">

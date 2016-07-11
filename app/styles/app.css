@@ -56,3 +56,56 @@ input, button, select, textarea {
 	padding-bottom: 5px;
 	margin-bottom: 10px;
 }
+
+.btn-mapzen-alt {
+	outline-color: #6ea0a4;
+	outline-style: solid;
+	outline-width: 2px;
+	background-color: #6ea0a4;
+	margin: 0;
+}
+
+.btn-mapzen-alt-style {
+	color: #FFFFFF;
+	outline-color: #d4645c;
+	outline-style: solid;
+	outline-width: 2px;
+	background-color: #d4645c;
+}
+
+.btn-transparent-alt {
+	color: #6ea0a4;
+	background-color: white;
+	outline-color: #6ea0a4;
+	outline-style: solid;
+	outline-width: 2px;
+	margin-bottom: 10px;
+	margin-top: 0;
+}
+
+.btn-transparent-alt-style {
+	color: #d4645c;
+	background-color: white;
+	outline-color: #d4645c;
+	outline-style: solid;
+	outline-width: 2px;
+	margin-bottom: 10px;
+	margin-top: 0;
+}
+.btn-group-vertical {
+	width: 100%;
+}
+
+.expanded-selection{
+	outline-color: #6ea0a4;
+	outline-style: solid;
+	outline-width: 2px;
+	padding: 10px;
+	margin-bottom: 10px;
+	/*background-color: #6ea0a4;*/
+}
+
+.hover-detail{
+	background-color: #e6ead2;
+	padding: 10px;
+}

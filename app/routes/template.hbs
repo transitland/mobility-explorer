@@ -1,68 +1,70 @@
 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-	{{#link-to 'index' (query-params bbox=bbox)}}<h2>Mobility Explorer</h2>{{/link-to}}
-  <div class="toc" role="directory">
-    <ul class="nav toc-nav">
-        <li class="toc-top-level">
-            <li class="toc-top-level toc-current">
-					    {{#link-to 'routes' (query-params bbox=bbox onestop_id='null' served_by='null')}}<div class="toc-subnav-toggle">Routes</div>{{/link-to}}
-					    <ul class="toc-subnav toc-expand">
-					      <li><a href="#">
-					        <form>
-					          <div class="form-group">
-					            <input type="radio" id="radio-1" name="options">
-					            <label for="radio-1">Mode</label>
-					          </div>
-					          <div class="form-group">
-					            <input type="radio" id="radio-2" name="options">
-					            <label for="radio-2">Operator</label>
-					          </div>
-					          <div class="form-group">
-					            <input type="radio" id="radio-3" name="options">
-					            <label for="radio-3">Bike</label>
-					          </div>
-					          <div class="form-group">
-					            <input type="radio" id="radio-4" name="options">
-					            <label for="radio-4">Wheelchair</label>
-					          </div>
-					          <div class="form-group">
-					            <input type="radio" id="radio-5" name="options">
-					            <label for="radio-5">Frequency</label>
-					          </div>
-					        </form>
-					      </a></li>
-					    </ul>
-					  </li>
-        </li>
-        <li class="toc-top-level">
-          {{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by='null')}}<span>Stops</span>{{/link-to}}
-        </li>
-        <li class="toc-top-level">
-          {{#link-to 'operators' (query-params bbox=bbox onestop_id='null')}}<span>Operators</span>{{/link-to}}
-        </li>
-    </ul>
-  </div>
-  <div class="route-style-options">
- 		<button class="btn btn-mapzen-alt" {{action "styleRoutesMode"}}>Color routes by mode</button>
-		<button class="btn btn-mapzen-alt" {{action "styleRoutesOperator"}}>Color routes by operator</button>
+	{{#link-to 'index' (query-params bbox=bbox onestop_id=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+  
+    {{#link-to 'routes' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
+    <div class="expanded-selection">
+
+		{{#if onestop_id}}
+	  	{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
+	  	<br>
+			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by=onestop_id) }}View stops served by route{{/link-to}}</p>
+		{{else}}
+			<form>
+			  <div class="form-group-header">Style routes by:</div>
+			  <div class="form-group" {{action "styleRoutesMode"}}>
+			  	{{#if routeStyleIsMode}}<input type="checkbox" id="check-1" name="option-one" checked>
+			  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
+			    <label for="check-1">Mode</label>
+			  </div>
+			  <div class="form-group" {{action "styleRoutesOperator"}}>
+			    {{#if routeStyleIsOperator}}<input type="checkbox" id="check-2" name="option-two" checked>
+			    {{else}}<input type="checkbox" id="check-2" name="option-two">{{/if}}
+			    <label for="check-2">Operator</label>
+			  </div>
+			</form>
+	    {{#power-select
+	      options=routes
+	      selected=route
+				placeholder="Search for a route"
+				searchPlaceholder="Type to filter..."
+	      onchange=(action "setRoute")
+	      as |route|
+	    }}
+	      {{route.name}} {{route.tags.route_long_name}}
+	    {{/power-select}}
+		{{/if}}
+		{{#if routeStyleIsMode}}
+			{{#unless selectedRoute}}
+				<p style="color:red;">Bus</p>
+				<p style="color:blue;">Rail</p>
+				<p style="color:green;">Metro</p>
+				<p style="color:aqua;">Tram</p>
+				<p style="color:purple;">Ferry</p>
+				<p style="color:orange;">Cablecar</p>
+				<p style="color:grey;">Other</p>
+			{{/unless}}
+		{{/if}}
+		{{#if routeStyleIsOperator}}
+			Operator
+		{{/if}}
+		{{#if hoverRoute}}
+			{{#unless selectedRoute}}
+				<div class="hover-detail">
+					{{hoverRoute.name}}<br>
+					{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
+					<p class="caption">Click the route line for more information</p>
+				</div>
+			{{/unless}}
+		{{else}}
+			<p class="caption">Hover on the route line for information</p>
+		{{/if}}
 	</div>
 
+    {{#link-to 'stops' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+    {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+  
 
-  {{#if onestop_id}}
-  	{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
-  	<br>
-		<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by=onestop_id) }}View stops served by route{{/link-to}}</p>
-	{{else}}
-    {{#power-select
-      options=routes
-      selected=route
-			placeholder="Search for route"
-			searchPlaceholder="Type to filter..."
-      onchange=(action "setRoute")
-      as |route|
-    }}
-      {{route.name}} {{route.tags.route_long_name}}
-    {{/power-select}}
-	{{/if}}
+  
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
 	<div id="map">
@@ -70,7 +72,7 @@
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#if routeStyleIsMode}}
 					{{#each model as |route|}}
-					  {{#polyline-layer locations=route.location color=route.vehicle_type_color weight=route.route_path_weight opacity=route.oute_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
+					  {{#polyline-layer locations=route.location color=route.vehicle_type_color weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
 						{{/polyline-layer}}
 					{{/each}}
 				{{else if routeStyleIsOperator}}
@@ -80,7 +82,7 @@
 					{{/each}}
 				{{else}}
 					{{#each model as |route|}}
-					  {{#polyline-layer locations=route.location weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
+					  {{#polyline-layer locations=route.location color=route.default_color weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectUnstyledRoute" route) onMouseout=(action "unselectUnstyledRoute" route) onClick=(action "setOnestopId" route)}}
 						{{/polyline-layer}}
 					{{/each}}
 				{{/if}}

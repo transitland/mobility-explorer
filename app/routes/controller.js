@@ -8,6 +8,8 @@ export default Ember.Controller.extend(mapBboxController, {
 	serves: null,
 	operated_by: null,
 	selectedRoute: null,
+	hoverRoute: null,
+	unstyledColor: "blue",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -47,18 +49,31 @@ export default Ember.Controller.extend(mapBboxController, {
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
-	routeStyleIsMode: null,
-	routeStyleIsOperator: null,
+	// operators: Ember.computed(function(){
+	// 	var data = this.get('routes');
+	// 	var operatorColors = [];
+	// 	var operators = {};
+	// 	for (var i = 0, l = data.length; i < l; i++) {
+	// 		if (operatorColors.indexOf(data[i].get('operator_color')) === -1){
+	// 			var color = data[i].get('operator_color');
+	// 			var operatorName = data[i].get('operated_by_name');
+	// 			operatorColors.push(color);
+	// 			operators[operatorName] = color;
+	// 		}
+	// 	}
+	// 	return operators;
+	// }),
+
+	routeStyleIsMode: false,
+	routeStyleIsOperator: false,
 	actions: {
 		styleRoutesMode(){
-			this.set('routeStyleIsMode', true);
+			this.toggleProperty('routeStyleIsMode');
 			this.set('routeStyleIsOperator', false);
-			console.log(this.get('routeStyleIsMode'));
 		},
 		styleRoutesOperator(){
+			this.toggleProperty('routeStyleIsOperator');
 			this.set('routeStyleIsMode', false);
-			this.set('routeStyleIsOperator', true);
-			console.log(this.get('routeStyleIsOperator'));
 		},
 		setRoute(route){
 			var onestop_id = route.get('id');
@@ -68,10 +83,25 @@ export default Ember.Controller.extend(mapBboxController, {
 		selectRoute(route){
 			route.set('route_path_opacity', 1);
 			route.set('route_path_weight', 3);
+			this.set('hoverRoute', route);
 		},
 		unselectRoute(route){
 			route.set('route_path_opacity', 0.5);
 			route.set('route_path_weight', 1.5);
+			this.set('hoverRoute', null);
+		},
+		selectUnstyledRoute(route){
+			route.set('route_path_opacity', 1);
+			route.set('route_path_weight', 3);
+			this.set('hoverRoute', route);
+			route.set('default_color', "red");
+
+		},
+		unselectUnstyledRoute(route){
+			route.set('route_path_opacity', 0.5);
+			route.set('route_path_weight', 1.5);
+			this.set('hoverRoute', null);
+			route.set('default_color', "blue");
 		},
 		setbbox(e) {
 			var bounds = e.target.getBounds();

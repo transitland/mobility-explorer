@@ -17,7 +17,8 @@ var Route = DS.Model.extend({
 	updated_at: DS.attr('date'),
 	route_stop_patterns_by_onestop_id: DS.attr(),
 	route_path_opacity: 0.5,
-	route_path_weight: 1.5,
+	route_path_weight: 2.5,
+	default_color: "blue",
 	
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'][0];
@@ -57,8 +58,14 @@ var Route = DS.Model.extend({
 			return 'blue';
 		} else if (this.get('vehicle_type') ==='metro') {
 			return 'green';
-		} else {
+		} else if (this.get('vehicle_type') ==='ferry') {
 			return 'purple';
+		} else if (this.get('vehicle_type') ==='cablecar') {
+			return 'orange';
+		} else if (this.get('vehicle_type') ==='tram') {
+			return 'aqua';
+		} else {
+			return 'grey';
 		}
 	}).property('vehicle_type')
 
