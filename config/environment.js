@@ -29,9 +29,18 @@ module.exports = function(environment) {
     ENV.transitlandDatastoreHost = 'https://dev.transit.land';
   }
 
+  if (environment === 'staging') {
+    ENV.baseURL = '/mobility/explorer/';
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.transitlandDatastoreHost = 'https://dev.transit.land';
+  }
+
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter
@@ -42,7 +51,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.baseURL = '/mobility/explorer/';
   }
 
   return ENV;
