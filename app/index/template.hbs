@@ -8,7 +8,22 @@
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
-  <div class="location-search">search bar goes here</div>
+  <div class="location-search">
+    {{#power-select
+      search=(action "searchRepo")
+      selected=selected
+      onchange=(action (mut selected))
+      as |repo|
+    }}
+      {{repo.full_name}}
+    {{/power-select}}
+
+    <!-- <form class="row">
+      <div class="form-group inline-submit col-sm-7 col-xs-12">
+        <input type="search" class="col-xs-8 col-sm-9" name="q" placeholder="search for location">
+      </div>
+    </form> -->
+  </div>
 
     {{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
       {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}

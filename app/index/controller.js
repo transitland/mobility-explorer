@@ -42,7 +42,12 @@ export default Ember.Controller.extend(mapBboxController, {
 		updatebbox(e) {
 			var newbox = e.target.getBounds();
 			this.set('bbox', newbox.toBBoxString());
-		}
+		},
+		searchRepo(term) {
+      if (Ember.isBlank(term)) { return []; }
+      const url = `//api.github.com/search/repositories?q=${term}`;
+      return ajax({ url }).then(json => json.items);
+    }
 	}	,
 	bboxExists: function(){
 		// if (this.get('bbox') !== null) {
