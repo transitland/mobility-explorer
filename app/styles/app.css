@@ -37,10 +37,24 @@ input, button, select, textarea {
 	position: absolute;
 }*/
 
-.test {
+.location-search{
+	background-color: yellow;
+	margin-top: 10px;
+	margin-left: 50px;
+	width: 200px;
+	padding: 10px;
+	z-index: 2;
+	position: absolute;
+}
+
+.map{
+	z-index: 3;
+}
+
+/*.test {
 	z-index: 2;
 	background: transparent;
-}
+}*/
 
 .route-style-options{
 	margin-top: 10px;

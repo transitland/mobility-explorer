@@ -8,6 +8,8 @@
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
+  <div class="location-search">search bar goes here</div>
+
     {{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
       {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
     {{/leaflet-map}}
