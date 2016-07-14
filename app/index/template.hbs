@@ -11,12 +11,12 @@
   <div class="location-search">
     {{#power-select
       search=(action "searchRepo")
-      selected=selected
-      onchange=(action (mut selected))
+      selected=place
+      onchange=(action "setPlace")
       as |repo|
     }}
-      {{repo.properties.name}}
-      
+      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+
     {{/power-select}}
 
     <!-- <form class="row">
