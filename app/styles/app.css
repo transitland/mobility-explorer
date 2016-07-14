@@ -23,23 +23,29 @@ input, button, select, textarea {
 	margin-bottom: 15px;
 }
 
-/*.btn-mapzen-alt {
-	background-color: #444444;
-	border-color: #444444;
+.ember-power-select-trigger {
+	border-radius: 0;
+	border: 1px solid #ccc;
+	background-size: 19px 19px;
+	background-position: 3px 14px;
+	padding: 8px 2px 8px 26px;
+	background-image: url(data:image/svg+xml,%3Csvg%20version%3D%271.1%27%20id%3D%27Layer_1%27%20xmln…y1%3D%2710.637%27%20x2%3D%2716.789%27%20y2%3D%2714.173%27/%3E%3C/svg%3E%0A);
 }
-*/
-/*.map-side-nav {
-	z-index: 2;
-	width: 50px;
-	height: 50px;
-	margin-top: 10%;
-	margin-left: 10px;
-	position: absolute;
-}*/
 
-.test {
+.location-search{
+	margin-top: 10px;
+	margin-left: 50px;
+	width: 250px;
 	z-index: 2;
-	background: transparent;
+	position: absolute;
+	background-size: 19px 19px;
+	background-position: 3px 14px;
+	padding: 8px 2px 8px 26px;
+	/*background-image: url(data:image/svg+xml,%3Csvg%20version%3D%271.1%27%20id%3D%27Layer_1%27%20xmln…y1%3D%2710.637%27%20x2%3D%2716.789%27%20y2%3D%2714.173%27/%3E%3C/svg%3E%0A);*/
+}
+
+.map{
+	z-index: 3;
 }
 
 .route-style-options{
@@ -48,8 +54,6 @@ input, button, select, textarea {
 }
 
 .ember-power-select-trigger{
-	/*display: table-cell;*/
-	/*vertical-align: middle;*/
 	border-radius: 0;
 	height: 40px;
 	padding-top: 5px;
