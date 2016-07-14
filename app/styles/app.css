@@ -23,20 +23,6 @@ input, button, select, textarea {
 	margin-bottom: 15px;
 }
 
-/*.btn-mapzen-alt {
-	background-color: #444444;
-	border-color: #444444;
-}
-*/
-/*.map-side-nav {
-	z-index: 2;
-	width: 50px;
-	height: 50px;
-	margin-top: 10%;
-	margin-left: 10px;
-	position: absolute;
-}*/
-
 .ember-power-select-trigger {
 	border-radius: 0;
 	border: 1px solid #ccc;
@@ -49,7 +35,7 @@ input, button, select, textarea {
 .location-search{
 	margin-top: 10px;
 	margin-left: 50px;
-	width: 200px;
+	width: 250px;
 	z-index: 2;
 	position: absolute;
 	background-size: 19px 19px;
@@ -62,19 +48,12 @@ input, button, select, textarea {
 	z-index: 3;
 }
 
-/*.test {
-	z-index: 2;
-	background: transparent;
-}*/
-
 .route-style-options{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
 .ember-power-select-trigger{
-	/*display: table-cell;*/
-	/*vertical-align: middle;*/
 	border-radius: 0;
 	height: 40px;
 	padding-top: 5px;
