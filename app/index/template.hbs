@@ -15,7 +15,8 @@
       onchange=(action (mut selected))
       as |repo|
     }}
-      {{repo.full_name}}
+      {{repo.properties.name}}
+      
     {{/power-select}}
 
     <!-- <form class="row">

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
+
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox'],
 	bbox: null,
@@ -43,17 +44,31 @@ export default Ember.Controller.extend(mapBboxController, {
 			var newbox = e.target.getBounds();
 			this.set('bbox', newbox.toBBoxString());
 		},
-		searchRepo(term) {
+		searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `//api.github.com/search/repositories?q=${term}`;
-      return ajax({ url }).then(json => json.items);
-    }
-	}	,
-	bboxExists: function(){
+      const url = `http://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      return Ember.$.ajax({ url }).then(json => json.features);
+    },
+  	// searchRepo(term) {
+   //      return new Ember.RSVP.Promise((resolve, reject) => {
+   //      	run.debounce(this, this._performSearch, term, resolve, reject, 600);
+   //      });
+      
+   //  },
+
+   //  performSearch(term, resolve, reject) {
+   //    if (isBlank(term)) { return resolve([]); }
+   //    	this.get('ajax').request(`http://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`)
+   //      	.then(json => resolve(json.features), reject);
+   //    }
+
+  
+	
+	// bboxExists: function(){
 		// if (this.get('bbox') !== null) {
 		// 	return true;
 		// }
-			return true;
+			// return true;
 
 	}
 });
