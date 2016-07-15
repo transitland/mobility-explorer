@@ -46,12 +46,6 @@ export default Ember.Controller.extend(mapBboxController, {
 			var newbox = e.target.getBounds();
 			this.set('bbox', newbox.toBBoxString());
 		},
-		searchRepo(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
-      return Ember.$.ajax({ url }).then(json => json.features);
-    },
-
   // to debounce:
 	
 	// searchRepo(term) {
@@ -65,6 +59,12 @@ export default Ember.Controller.extend(mapBboxController, {
   //     	this.get('ajax').request(`http://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`)
   //       .then(json => resolve(json.features), reject);
   //   }
+
+  	searchRepo(term) {
+      if (Ember.isBlank(term)) { return []; }
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      return Ember.$.ajax({ url }).then(json => json.features);
+    },
 
   	setPlace: function(selected){
   		this.set('place', selected);
