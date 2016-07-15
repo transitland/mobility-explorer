@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'mobility-playground',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    locationType: '#',
     transitlandDatastoreHost: 'https://transit.land',
     EmberENV: {
       FEATURES: {
