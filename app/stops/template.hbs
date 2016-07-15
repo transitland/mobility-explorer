@@ -54,6 +54,7 @@
 	    {{#power-select
 	      search=(action "searchRepo")
 	      selected=place
+        renderInPlace=true
 	      placeholder="Search for location..."
 	      onchange=(action "setPlace")
         onclose=(action "clearPlace")

@@ -15,6 +15,7 @@ export default Ember.Route.extend(mapBboxRoute, {
   },
   
   model: function(params){
+    this.store.unloadAll('data/transitland/operator');
     return this.store.query('data/transitland/operator', params);
   }
 });

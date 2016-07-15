@@ -104,9 +104,11 @@ export default Ember.Controller.extend(mapBboxController, {
     },
   	setPlace: function(selected){
   		// this.set('place', selected);
-  		this.set('bbox', selected.bbox);
+  		// this.set('bbox', selected.bbox);
+  		var newbbox = selected.bbox;
   		// this.set('onestop_id', null);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+
+  		this.transitionToRoute('index', {queryParams: {bbox: newbbox}});
   	},
   	clearPlace: function(){
   		this.set('place', null);

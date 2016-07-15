@@ -38,6 +38,7 @@
     <div class="location-search">
       {{#power-select
         search=(action "searchRepo")
+        renderInPlace=true
         selected=place
         placeholder="Search for location..."
         onchange=(action "setPlace")
