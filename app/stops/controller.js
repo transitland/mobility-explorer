@@ -56,22 +56,11 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (10, 10),
 	}),
 	actions: {
-		setbbox(e) {
-			var bounds = e.target.getBounds();
-			this.set('bbox', bounds.toBBoxString());
-			let center = e.target.getCenter();
-      let zoom = e.target.getZoom();
-      this.set('bounds', this.get('bbox'));
-      this.set('lat', center.lat);
-      this.set('lng', center.lng);
-      this.set('zoom', zoom);
-		},
 		updatebbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
 			let center = e.target.getCenter();
 	    let zoom = e.target.getZoom();
-	    this.set('bounds', this.get('bbox'));
 	    this.set('lat', center.lat);
 	    this.set('lng', center.lng);
 	    this.set('zoom', zoom);
@@ -90,6 +79,7 @@ export default Ember.Controller.extend(mapBboxController, {
 			var onestopId = stop.id;
 			this.set('selectedStop', stop);
 			this.set('onestop_id', onestopId);
+			this.set('served_by', null);
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
@@ -100,6 +90,9 @@ export default Ember.Controller.extend(mapBboxController, {
   		this.set('place', selected);
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  	},
+  	clearPlace: function(){
+  		this.set('place', null);
   	}
 	}	
 });

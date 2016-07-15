@@ -32,6 +32,7 @@
 				placeholder="Search for a route"
 				searchPlaceholder="Type to filter..."
 	      onchange=(action "setRoute")
+        onclose=(action "clearPlace")
 	      as |route|
 	    }}
 	      {{route.name}} {{route.tags.route_long_name}}
@@ -76,6 +77,7 @@
 		<div class="location-search">
 	    {{#power-select
 	      search=(action "searchRepo")
+        renderInPlace=true
 	      selected=place
 	      placeholder="Search for location..."
 	      onchange=(action "setPlace")
@@ -84,7 +86,7 @@
 	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 	    {{/power-select}}
 	  </div>
-		{{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
+		{{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#if routeStyleIsMode}}
 					{{#each model as |route|}}

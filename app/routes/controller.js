@@ -98,22 +98,11 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('hoverRoute', null);
 			route.set('default_color', "blue");
 		},
-		setbbox(e) {
-			var bounds = e.target.getBounds();
-			this.set('bbox', bounds.toBBoxString());
-			let center = e.target.getCenter();
-      let zoom = e.target.getZoom();
-      this.set('bounds', this.get('bbox'));
-      this.set('lat', center.lat);
-      this.set('lng', center.lng);
-      this.set('zoom', zoom);
-		},
 		updatebbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
 			let center = e.target.getCenter();
 			let zoom = e.target.getZoom();
-			this.set('bounds', this.get('bbox'));
 			this.set('lat', center.lat);
 			this.set('lng', center.lng);
 			this.set('zoom', zoom);
@@ -124,6 +113,8 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('selectedRoute', route);
 			var operatorOnestopId = route.operated_by_onestop_id;
 			this.set('operated_by_onestop_id', operatorOnestopId);
+			this.set('serves', null);
+			this.set('operated_by', null);
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
@@ -134,6 +125,9 @@ export default Ember.Controller.extend(mapBboxController, {
   		this.set('place', selected);
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  	},
+  	clearPlace: function(){
+  		this.set('place', null);
   	}
   }
 	

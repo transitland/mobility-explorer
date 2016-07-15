@@ -8,7 +8,7 @@
 
 		{{#if onestop_id}}
 	  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
-			<p>{{#link-to 'routes' (query-params serves=onestop_id) }}View routes serving this stop{{/link-to}}</p>
+			<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id='null') }}View routes serving this stop{{/link-to}}</p>
 		{{else}}
 			<form>
 			  <div class="form-group-header">Style routes by:</div>
@@ -54,14 +54,16 @@
 	    {{#power-select
 	      search=(action "searchRepo")
 	      selected=place
+        renderInPlace=true
 	      placeholder="Search for location..."
 	      onchange=(action "setPlace")
+        onclose=(action "clearPlace")
 	      as |repo|
 	    }}
 	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 	    {{/power-select}}
 	  </div>
-	  {{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
+	  {{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
 			
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 			

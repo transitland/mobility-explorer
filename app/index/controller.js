@@ -69,6 +69,9 @@ export default Ember.Controller.extend(mapBboxController, {
   	setPlace: function(selected){
   		this.set('place', selected);
   		this.set('bbox', selected.bbox);
+  	},
+  	clearPlace: function(){
+  		this.set('place', null);
   	}
 
   }
