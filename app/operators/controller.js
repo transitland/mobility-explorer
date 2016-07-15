@@ -62,22 +62,11 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('onestop_id', onestop_id);
 			this.set('selectedOperator', operator);
 		},
-		setbbox(e) {
-			var bounds = e.target.getBounds();
-			this.set('bbox', bounds.toBBoxString());
-			let center = e.target.getCenter();
-      let zoom = e.target.getZoom();
-      this.set('bounds', this.get('bbox'));
-      this.set('lat', center.lat);
-      this.set('lng', center.lng);
-      this.set('zoom', zoom);
-		},
 		updatebbox(e) {
 			var bounds = e.target.getBounds();
 			this.set('bbox', bounds.toBBoxString());
 			let center = e.target.getCenter();
 			let zoom = e.target.getZoom();
-			this.set('bounds', this.get('bbox'));
 			this.set('lat', center.lat);
 			this.set('lng', center.lng);
 			this.set('zoom', zoom);
