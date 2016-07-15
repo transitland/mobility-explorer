@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'mobility-playground',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    location: '#',
     transitlandDatastoreHost: 'https://transit.land',
     EmberENV: {
       FEATURES: {
@@ -37,6 +37,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.transitlandDatastoreHost = 'https://dev.transit.land';
+
   }
 
   if (environment === 'test') {
@@ -52,6 +53,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.baseURL = '/mobility/explorer/';
+
   }
 
   return ENV;
