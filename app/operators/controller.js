@@ -103,10 +103,13 @@ export default Ember.Controller.extend(mapBboxController, {
       return Ember.$.ajax({ url }).then(json => json.features);
     },
   	setPlace: function(selected){
-  		this.set('place', selected);
+  		// this.set('place', selected);
   		this.set('bbox', selected.bbox);
-  		this.set('onestop_id', null);
+  		// this.set('onestop_id', null);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  	},
+  	clearPlace: function(){
+  		this.set('place', null);
   	}
 	}	
 });

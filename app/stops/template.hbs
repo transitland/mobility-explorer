@@ -8,7 +8,7 @@
 
 		{{#if onestop_id}}
 	  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
-			<p>{{#link-to 'routes' (query-params serves=onestop_id) }}View routes serving this stop{{/link-to}}</p>
+			<p>{{#link-to 'routes' (query-params serves=onestop_id onestop_id=null) }}View routes serving this stop{{/link-to}}</p>
 		{{else}}
 			<form>
 			  <div class="form-group-header">Style routes by:</div>
@@ -56,6 +56,7 @@
 	      selected=place
 	      placeholder="Search for location..."
 	      onchange=(action "setPlace")
+        onclose=(action "clearPlace")
 	      as |repo|
 	    }}
 	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}

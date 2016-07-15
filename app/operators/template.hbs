@@ -41,6 +41,7 @@
         selected=place
         placeholder="Search for location..."
         onchange=(action "setPlace")
+        onclose=(action "clearPlace")
         as |repo|
       }}
         {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}

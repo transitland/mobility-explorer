@@ -32,6 +32,7 @@
 				placeholder="Search for a route"
 				searchPlaceholder="Type to filter..."
 	      onchange=(action "setRoute")
+        onclose=(action "clearPlace")
 	      as |route|
 	    }}
 	      {{route.name}} {{route.tags.route_long_name}}

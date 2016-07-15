@@ -90,6 +90,7 @@ export default Ember.Controller.extend(mapBboxController, {
 			var onestopId = stop.id;
 			this.set('selectedStop', stop);
 			this.set('onestop_id', onestopId);
+			this.set('served_by', null);
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
@@ -100,6 +101,9 @@ export default Ember.Controller.extend(mapBboxController, {
   		this.set('place', selected);
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  	},
+  	clearPlace: function(){
+  		this.set('place', null);
   	}
 	}	
 });
