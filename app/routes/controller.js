@@ -8,6 +8,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	serves: null,
 	operated_by: null,
 	selectedRoute: null,
+	place: null,
 	onlyRoute: Ember.computed('onestop_id', function(){
 		var data = this.get('routes');
 		var onlyRoute = data.get('firstObject');
@@ -123,7 +124,17 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('selectedRoute', route);
 			var operatorOnestopId = route.operated_by_onestop_id;
 			this.set('operated_by_onestop_id', operatorOnestopId);
-		}
+		},
+		searchRepo(term) {
+      if (Ember.isBlank(term)) { return []; }
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      return Ember.$.ajax({ url }).then(json => json.features);
+    },
+  	setPlace: function(selected){
+  		this.set('place', selected);
+  		this.set('bbox', selected.bbox);
+  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  	}
   }
 	
 });

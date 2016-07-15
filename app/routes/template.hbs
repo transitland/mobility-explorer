@@ -73,6 +73,17 @@
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
 	<div id="map">
+		<div class="location-search">
+	    {{#power-select
+	      search=(action "searchRepo")
+	      selected=place
+	      placeholder="Search for location..."
+	      onchange=(action "setPlace")
+	      as |repo|
+	    }}
+	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+	    {{/power-select}}
+	  </div>
 		{{#leaflet-map bounds=bounds bbox=bbox onLoad=(action "setbbox") onMoveend=(action "updatebbox")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#if routeStyleIsMode}}

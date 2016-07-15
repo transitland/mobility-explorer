@@ -8,6 +8,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	selectedStop: null,
 	served_by: null,
 	hoverStop: null,
+	place: null,
 	onlyStop: Ember.computed('onestop_id', function(){
 		var data = this.get('model');
 		var onlyStop = data.get('firstObject');
@@ -89,6 +90,16 @@ export default Ember.Controller.extend(mapBboxController, {
 			var onestopId = stop.id;
 			this.set('selectedStop', stop);
 			this.set('onestop_id', onestopId);
-		}
+		},
+		searchRepo(term) {
+      if (Ember.isBlank(term)) { return []; }
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      return Ember.$.ajax({ url }).then(json => json.features);
+    },
+  	setPlace: function(selected){
+  		this.set('place', selected);
+  		this.set('bbox', selected.bbox);
+  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  	}
 	}	
 });
