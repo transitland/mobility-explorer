@@ -66,6 +66,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	    this.set('zoom', zoom);
 		},
 		selectStop(stop){
+			this.set('selectedStop', null);
 			var highlightedIcon = this.get('highlightedIcon');
 			stop.set('stop_icon', highlightedIcon);
 			this.set('hoverStop', stop);

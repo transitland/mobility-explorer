@@ -77,6 +77,7 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('selectedOperator', operator);
 		},
 		selectOperator(operator){
+			this.set('selectedOperator', null);
 			operator.set('operator_path_opacity', 1);
 			operator.set('operator_path_weight', 3);
 			this.set('hoverOperator', operator);
