@@ -8,7 +8,7 @@
 
 		{{#if onestop_id}}
 	  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
-			<p>{{#link-to 'routes' (query-params serves=onestop_id onestop_id=null) }}View routes serving this stop{{/link-to}}</p>
+			<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox) }}View routes serving this stop{{/link-to}}</p>
 		{{else}}
 			<form>
 			  <div class="form-group-header">Style routes by:</div>
