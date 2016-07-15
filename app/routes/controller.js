@@ -125,6 +125,7 @@ export default Ember.Controller.extend(mapBboxController, {
 			var operatorOnestopId = route.operated_by_onestop_id;
 			this.set('operated_by_onestop_id', operatorOnestopId);
 			this.set('serves', null);
+			this.set('operated_by', null);
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
