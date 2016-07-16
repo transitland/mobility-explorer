@@ -76,6 +76,7 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('selectedRoute', route);
 		},
 		selectRoute(route){
+			this.set('selectedRoute', null);
 			route.set('route_path_opacity', 1);
 			route.set('route_path_weight', 3);
 			this.set('hoverRoute', route);
@@ -86,11 +87,11 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('hoverRoute', null);
 		},
 		selectUnstyledRoute(route){
+			this.set('selectedRoute', null);
 			route.set('route_path_opacity', 1);
 			route.set('route_path_weight', 3);
 			this.set('hoverRoute', route);
 			route.set('default_color', "red");
-
 		},
 		unselectUnstyledRoute(route){
 			route.set('route_path_opacity', 0.5);
@@ -111,8 +112,6 @@ export default Ember.Controller.extend(mapBboxController, {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
 			this.set('selectedRoute', route);
-			var operatorOnestopId = route.operated_by_onestop_id;
-			this.set('operated_by_onestop_id', operatorOnestopId);
 			this.set('serves', null);
 			this.set('operated_by', null);
 		},

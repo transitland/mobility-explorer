@@ -6,8 +6,8 @@
   <div class="expanded-selection">
   {{#if onestop_id}}
     {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
-    <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id) }}View routes served by this operator{{/link-to}}</p><br>
-    <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id) }}View stops served by this operator{{/link-to}}</p>
+    <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id serves=null) }}View routes served by this operator{{/link-to}}</p><br>
+    <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id onestop_id=null) }}View stops served by this operator{{/link-to}}</p>
   {{else}}
     {{#power-select
       options=operators

@@ -11,7 +11,7 @@
 	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
   		{{/if}}
 	  	<br>
-			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by=onestop_id) }}View stops served by route{{/link-to}}</p>
+			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by=onestop_id)  }}View stops served by route{{/link-to}}</p>
 		{{else}}
 			<form>
 			  <div class="form-group-header">Style routes by:</div>
@@ -90,17 +90,17 @@
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#if routeStyleIsMode}}
 					{{#each model as |route|}}
-					  {{#polyline-layer locations=route.location color=route.vehicle_type_color weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
+					  {{#polyline-layer locations=route.location color=route.vehicle_type_color weight=route.route_path_weight opacity=route.route_path_opacity riseOnHover=true onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
 						{{/polyline-layer}}
 					{{/each}}
 				{{else if routeStyleIsOperator}}
 					{{#each model as |route|}}
-					  {{#polyline-layer locations=route.location color=route.operator_color weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
+					  {{#polyline-layer locations=route.location color=route.operator_color weight=route.route_path_weight opacity=route.route_path_opacity riseOnHover=true onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute" route) onClick=(action "setOnestopId" route)}}
 						{{/polyline-layer}}
 					{{/each}}
 				{{else}}
 					{{#each model as |route|}}
-					  {{#polyline-layer locations=route.location color=route.default_color weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectUnstyledRoute" route) onMouseout=(action "unselectUnstyledRoute" route) onClick=(action "setOnestopId" route)}}
+					  {{#polyline-layer locations=route.location color=route.default_color weight=route.route_path_weight opacity=route.route_path_opacity riseOnHover=true onMouseover=(action "selectUnstyledRoute" route) onMouseout=(action "unselectUnstyledRoute" route) onClick=(action "setOnestopId" route)}}
 						{{/polyline-layer}}
 					{{/each}}
 				{{/if}}
