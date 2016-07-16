@@ -112,8 +112,6 @@ export default Ember.Controller.extend(mapBboxController, {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
 			this.set('selectedRoute', route);
-			var operatorOnestopId = route.operated_by_onestop_id;
-			this.set('operated_by_onestop_id', operatorOnestopId);
 			this.set('serves', null);
 			this.set('operated_by', null);
 		},
