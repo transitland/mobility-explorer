@@ -6,6 +6,9 @@ export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox'],
 	bbox: null,
 	place: null,
+	zoom: 12,
+	lat: 37.778008,
+	lng: -122.431272,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			// -122.54287719726562%2C37.706911598228466%2C-122.29568481445312%2C37.84259697150785
@@ -68,7 +71,7 @@ export default Ember.Controller.extend(mapBboxController, {
 
   	setPlace: function(selected){
   		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
+  		this.set('bbox', selected.coordinates);
   	},
   	clearPlace: function(){
   		this.set('place', null);
