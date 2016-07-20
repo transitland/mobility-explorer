@@ -21,7 +21,7 @@
     {{/power-select}}
   </div>
 
-    {{#leaflet-map lat=lat lng=lng zoom=zoom bbox=bbox onMoveend=(action "updatebbox")}}
+    {{#leaflet-map bounds=displayBbox onMoveend=(action "updatebbox")}}
       {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
     {{/leaflet-map}}
   </div>
