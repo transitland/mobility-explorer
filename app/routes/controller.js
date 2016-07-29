@@ -55,7 +55,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
 	}),
-	routes: Ember.computed(function(){
+	routes: Ember.computed('model', function(){
 		var data = this.get('model');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
@@ -66,11 +66,11 @@ export default Ember.Controller.extend(mapBboxController, {
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
-			this.set('displayBbox', leafletBounds.toBBoxString());
+			this.set('leafletBbox', leafletBounds.toBBoxString());
 			// this.set('queryIsInactive', false);
 		},
 		updatebbox(e) {
-			var bounds = this.get('displayBbox');
+			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
 			// this.set('queryIsInactive', true);
 		},

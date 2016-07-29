@@ -23,7 +23,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
 	}),
-	operators: Ember.computed(function(){
+	operators: Ember.computed('model', function(){
 		if (this.get('model') === null){
 			return
 		} else {
@@ -41,11 +41,11 @@ export default Ember.Controller.extend(mapBboxController, {
 		},
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
-			this.set('displayBbox', leafletBounds.toBBoxString());
+			this.set('leafletBbox', leafletBounds.toBBoxString());
 			// this.set('queryIsInactive', false);
 		},
 		updatebbox(e) {
-			var bounds = this.get('displayBbox');
+			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
 			// this.set('queryIsInactive', true);
 		},

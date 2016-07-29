@@ -35,11 +35,11 @@ export default Ember.Controller.extend(mapBboxController, {
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
-			this.set('displayBbox', leafletBounds.toBBoxString());
+			this.set('leafletBbox', leafletBounds.toBBoxString());
 			// this.set('queryIsInactive', false);
 		},
 		updatebbox(e) {
-			var bounds = this.get('displayBbox');
+			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
 			// this.set('queryIsInactive', true);
 		},

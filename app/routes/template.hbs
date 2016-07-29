@@ -1,19 +1,21 @@
 <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
-	{{#link-to 'index' (query-params bbox=bbox onestop_id=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
   
-    {{#link-to 'routes' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
+    {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
     <div class="expanded-selection">
 
 		{{#if onestop_id}}
 			{{#if selectedRoute}}
-	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
+	  		{{#route-detail bbox=leafletBbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
   		{{else}}
-	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
+	  		{{#route-detail bbox=leafletBbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
   		{{/if}}
 	  	<br>
-			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id='null' served_by=onestop_id)  }}View stops served by route{{/link-to}}</p>
+			<p>{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null operated_by=null serves=null served_by=onestop_id)  }}View stops served by route{{/link-to}}</p>
 		{{else if operated_by}}
 			<form>
+				<strong>Operated by:</strong> {{operated_by}}<br>
+
 			  <div class="form-group-header">Style routes by:</div>
 			  <div class="form-group" {{action "styleRoutesMode"}}>
 			  	{{#if routeStyleIsMode}}<input type="checkbox" id="check-1" name="option-one" checked>
@@ -77,8 +79,8 @@
     	<button class="btn btn-mapzen" disabled={{queryIsInactive}} {{action "updatebbox"}}>Query</button>
   	{{/unless}}
 	</div>
-  {{#link-to 'stops' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
-  {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
+  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
 	<div id="map">
