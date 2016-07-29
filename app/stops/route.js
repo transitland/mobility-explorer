@@ -15,17 +15,33 @@ export default Ember.Route.extend(mapBboxRoute, {
       refreshModel: true
     }
   },
+  setupController: function (controller, model) {
+    if (controller.get('bbox') !== null){
+      var coordinateArray = [];
+      var bboxString = controller.get('bbox');
+      var tempArray = [];
+      var boundsArray = [];
+      coordinateArray = bboxString.split(',');
+      for (var i = 0; i < coordinateArray.length; i++){
+        tempArray.push(parseFloat(coordinateArray[i]));
+      }
+      var arrayOne = [];
+      var arrayTwo = [];
+      arrayOne.push(tempArray[1]);
+      arrayOne.push(tempArray[0]);
+      arrayTwo.push(tempArray[3]);
+      arrayTwo.push(tempArray[2]);
+      boundsArray.push(arrayOne);
+      boundsArray.push(arrayTwo);
+      controller.set('leafletBbox', boundsArray);
+    }
+    this._super(controller, model);
 
+  },
   model: function(params){
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
     return this.store.query('data/transitland/stop', params);
   }
-  // model: function(onestop_id){
-  //   return Ember.RSVP.hash({
-  //     stops: this.store.query('data/transitland/stop', onestop_id=onestop_id),
-  //     routes: this.store.query('data/transitland/route', onestop_id=)
-  //   })
-  // }
 });

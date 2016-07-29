@@ -4,6 +4,8 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by'],
 	bbox: null,
+	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+	queryIsInactive: false,
 	onestop_id: null,
 	serves: null,
 	operated_by: null,
@@ -53,7 +55,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
 	}),
-	routes: Ember.computed(function(){
+	routes: Ember.computed('model', function(){
 		var data = this.get('model');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
@@ -62,6 +64,16 @@ export default Ember.Controller.extend(mapBboxController, {
 	routeStyleIsMode: false,
 	routeStyleIsOperator: false,
 	actions: {
+		updateLeafletBbox(e) {
+			var leafletBounds = e.target.getBounds();
+			this.set('leafletBbox', leafletBounds.toBBoxString());
+			// this.set('queryIsInactive', false);
+		},
+		updatebbox(e) {
+			var bounds = this.get('leafletBbox');
+			this.set('bbox', bounds);
+			// this.set('queryIsInactive', true);
+		},
 		styleRoutesMode(){
 			this.toggleProperty('routeStyleIsMode');
 			this.set('routeStyleIsOperator', false);
@@ -99,15 +111,6 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('hoverRoute', null);
 			route.set('default_color', "blue");
 		},
-		updatebbox(e) {
-			var bounds = e.target.getBounds();
-			this.set('bbox', bounds.toBBoxString());
-			let center = e.target.getCenter();
-			let zoom = e.target.getZoom();
-			this.set('lat', center.lat);
-			this.set('lng', center.lng);
-			this.set('zoom', zoom);
-		},
 		setOnestopId(route) {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
@@ -115,19 +118,23 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('serves', null);
 			this.set('operated_by', null);
 		},
-		searchRepo(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
-      return Ember.$.ajax({ url }).then(json => json.features);
-    },
-  	setPlace: function(selected){
+		setPlace: function(selected){
   		this.set('place', selected);
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
   	},
-  	clearPlace: function(){
+		// setPlace(selected){
+  //   	var newbbox = selected.bbox;
+  //   	this.transitionToRoute('index', {queryParams: {bbox: newbbox}});
+  // 	},
+  	clearPlace(){
   		this.set('place', null);
-  	}
+  	},
+		searchRepo(term) {
+      if (Ember.isBlank(term)) { return []; }
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      return Ember.$.ajax({ url }).then(json => json.features);
+    }
   }
 	
 });
