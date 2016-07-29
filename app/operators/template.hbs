@@ -4,34 +4,37 @@
   {{#link-to 'stops' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
   {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-mapzen-alt">Operators</button>{{/link-to}}
   <div class="expanded-selection">
-  {{#if onestop_id}}
-    {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
-    <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id serves=null) }}View routes served by this operator{{/link-to}}</p><br>
-    <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id onestop_id=null) }}View stops served by this operator{{/link-to}}</p>
-  {{else}}
-    {{#power-select
-      options=operators
-      selected=operator
-      placeholder="Search for operator"
-      searchPlaceholder="Type to filter..."
-      onchange=(action "setOperator")
-      as |operator|
-    }}
-      {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
-    {{/power-select}}
-  {{/if}}
-  
-  {{#if selectedOperator}}
-  {{else if onlyOperator}}
-  {{else if hoverOperator}}
-    <div class="hover-detail">
-      {{hoverOperator.name}}<br>
-      <p class="caption">Click the operator area for more information</p>
-    </div>
-  {{else}}
-    <p class="caption">Hover on the operator area for information</p>
-  {{/if}}
-</div>
+    {{#if onestop_id}}
+      {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+      <p>{{#link-to 'routes' (query-params bbox=bbox operated_by=onestop_id serves='null' served_by='null') }}View routes served by this operator{{/link-to}}</p><br>
+      <p>{{#link-to 'stops' (query-params bbox=bbox served_by=onestop_id onestop_id='null') }}View stops served by this operator{{/link-to}}</p>
+    {{else}}
+      {{#power-select
+        options=operators
+        selected=operator
+        placeholder="List of operators"
+        searchPlaceholder="Type to filter..."
+        onchange=(action "setOperator")
+        as |operator|
+      }}
+        {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+      {{/power-select}}
+    {{/if}}
+    
+    {{#if selectedOperator}}
+    {{else if onlyOperator}}
+    {{else if hoverOperator}}
+      <div class="hover-detail">
+        {{hoverOperator.name}}<br>
+        <p class="caption">Click the operator area for more information</p>
+      </div>
+    {{else}}
+      <p class="caption">Hover on the operator area for information</p>
+    {{/if}}
+  </div>
+  {{#unless onestop_id}}
+    <button class="btn btn-mapzen" disabled={{queryIsInactive}} {{action "updatebbox"}}>Query</button>
+  {{/unless}}
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
@@ -48,7 +51,7 @@
         {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
       {{/power-select}}
     </div>
-    {{#leaflet-map bounds=bounds bbox=bbox onMoveend=(action "updatebbox")}}
+    {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox")}}
       {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
       {{#each model as |operator|}}
         {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}

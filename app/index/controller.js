@@ -7,44 +7,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	bbox: null,
 	displayBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	place: null,
-	// bounds: Ember.computed('bbox', function(){
-	// 	console.log("bounds fired");
-	// 	if (this.get('displayBbox') === null) {
-	// 		if (this.get('bbox') === null){
-	// 			console.log("bounds null");
-
-	// 			var defaultBoundsArray = [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]];
-	// 			this.set('displayBbox', defaultBoundsArray);
-	// 			console.log(this.get('displayBbox'));			
-
-	// 			return defaultBoundsArray;
-	// 		} else {
-	// 			console.log("bounds not null");
-	// 			var coordinateArray = [];
-	// 			var bboxString = this.get('bbox');
-	// 			var tempArray = [];
-	// 			var boundsArray = [];
-
-	// 			coordinateArray = bboxString.split(',');
-
-	// 			for (var i = 0; i < coordinateArray.length; i++){
-	// 				tempArray.push(parseFloat(coordinateArray[i]));
-	// 			}
-			
-	// 			var arrayOne = [];
-	// 			var arrayTwo = [];
-	// 			arrayOne.push(tempArray[1]);
-	// 			arrayOne.push(tempArray[0]);
-	// 			arrayTwo.push(tempArray[3]);
-	// 			arrayTwo.push(tempArray[2]);
-	// 			boundsArray.push(arrayOne);
-	// 			boundsArray.push(arrayTwo);
-	// 			console.log(this.get('displayBbox'));
-	// 			this.set('displayBbox', boundsArray);
-	// 			return boundsArray;
-	// 		}
-	// 	}
-	// }),
 	icon: L.icon({
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
@@ -71,7 +33,7 @@ export default Ember.Controller.extend(mapBboxController, {
 
   	searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
 

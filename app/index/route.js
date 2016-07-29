@@ -11,7 +11,6 @@ export default Ember.Route.extend({
 	},
 	setupController: function (controller, model) {
 		if (controller.get('bbox') !== null){
-			// console.log('setup');
 			var coordinateArray = [];
 			var bboxString = controller.get('bbox');
 			var tempArray = [];
@@ -34,6 +33,5 @@ export default Ember.Route.extend({
 			controller.set('displayBbox', boundsArray);
 
 		}
-
 	}
 });
