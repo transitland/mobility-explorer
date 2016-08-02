@@ -17,6 +17,9 @@ export default Ember.Route.extend(mapBboxRoute, {
     },
     operated_by: {
       refreshModel: true
+    },
+    vehicle_type: {
+      refreshModel: true
     }
   },
   setupController: function (controller, model) {
