@@ -40,7 +40,27 @@ export default Ember.Controller.extend(mapBboxController, {
   	setPlace: function(selected){
   		this.set('place', selected);
       this.set('bbox', selected.bbox);
-  		console.log('bbox' + selected.bbox);
+      
+      var coordinateArray = [];
+      var bboxString = this.get('bbox').toString();
+      var tempArray = [];
+      var boundsArray = [];
+
+      coordinateArray = bboxString.split(',');
+
+      for (var i = 0; i < coordinateArray.length; i++){
+        tempArray.push(parseFloat(coordinateArray[i]));
+      }
+    
+      var arrayOne = [];
+      var arrayTwo = [];
+      arrayOne.push(tempArray[1]);
+      arrayOne.push(tempArray[0]);
+      arrayTwo.push(tempArray[3]);
+      arrayTwo.push(tempArray[2]);
+      boundsArray.push(arrayOne);
+      boundsArray.push(arrayTwo);
+      this.set('leafletBbox', boundsArray);
   	},
   	clearPlace: function(){
   		this.set('place', null);
