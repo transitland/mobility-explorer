@@ -11,6 +11,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	served_by: null,
 	hoverStop: null,
 	place: null,
+	displayIsochrone: false,
 	onlyStop: Ember.computed('onestop_id', function(){
 		if (this.get('onestop_id') === null) {
 			return
@@ -72,6 +73,9 @@ export default Ember.Controller.extend(mapBboxController, {
   	},
   	clearPlace(){
   		this.set('place', null);
-  	}
+  	},
+  	showIsochrone(){
+			this.toggleProperty('displayIsochrone');
+		},
 	}	
 });

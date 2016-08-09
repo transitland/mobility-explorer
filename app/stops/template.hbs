@@ -5,10 +5,20 @@
     <div class="expanded-selection">
 			{{#if onestop_id}}
 		  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
+		  	<form>
+				  <div class="form-group" {{action "showIsochrone"}}>
+				  	{{#if displayIsochrone}}<input type="checkbox" id="check-1" name="option-one" checked>{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
+				    <label for="check-1">View isochrone</label>
+				    <br>{{#if displayIsochrone}}SHOW ME THE ISOCHRONE
+				    {{#if selectedStop}}<br>selected stop: {{selectedStop.name}}{{/if}}
+				    {{#if onlyStop}}<br>only stop: {{onlyStop.name}}{{/if}}
+				    {{/if}}
+				  </div>
+				</form>
 				<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null) }}View routes serving this stop{{/link-to}}</p>
 			{{else}}
 				<form>
-				  <div class="form-group-header">Style routes by:</div>
+				  <div class="form-group-header">Style stops by: (not yet functional)</div>
 				  <div class="form-group">
 				  	<input type="checkbox" id="check-1" name="option-one">
 				    <label for="check-1">Frequency</label>
@@ -23,8 +33,7 @@
 				  </div>
 				</form>
 			{{/if}}
-			{{#if selectedStop}}
-			{{else if onlyStop}}
+			{{#if onestop_id}}
 			{{else if hoverStop}}
 				<div class="hover-detail">
 					<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
