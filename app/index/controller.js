@@ -33,13 +33,34 @@ export default Ember.Controller.extend(mapBboxController, {
 
   	searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;      
       return Ember.$.ajax({ url }).then(json => json.features);
     },
 
   	setPlace: function(selected){
   		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
+      this.set('bbox', selected.bbox);
+      
+      var coordinateArray = [];
+      var bboxString = this.get('bbox').toString();
+      var tempArray = [];
+      var boundsArray = [];
+
+      coordinateArray = bboxString.split(',');
+
+      for (var i = 0; i < coordinateArray.length; i++){
+        tempArray.push(parseFloat(coordinateArray[i]));
+      }
+    
+      var arrayOne = [];
+      var arrayTwo = [];
+      arrayOne.push(tempArray[1]);
+      arrayOne.push(tempArray[0]);
+      arrayTwo.push(tempArray[3]);
+      arrayTwo.push(tempArray[2]);
+      boundsArray.push(arrayOne);
+      boundsArray.push(arrayTwo);
+      this.set('leafletBbox', boundsArray);
   	},
   	clearPlace: function(){
   		this.set('place', null);
