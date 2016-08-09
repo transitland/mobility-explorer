@@ -10,8 +10,7 @@
 				  	{{#if displayIsochrone}}<input type="checkbox" id="check-1" name="option-one" checked>{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
 				    <label for="check-1">View isochrone</label>
 				    <br>{{#if displayIsochrone}}SHOW ME THE ISOCHRONE
-				    {{#if selectedStop}}<br>selected stop: {{selectedStop.name}}{{/if}}
-				    {{#if onlyStop}}<br>only stop: {{onlyStop.name}}{{/if}}
+				    {{#if onlyStop}}<br>only stop: {{onlyStop.geometry.coordinates}}{{/if}}
 				    {{/if}}
 				  </div>
 				</form>

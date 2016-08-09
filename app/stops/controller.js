@@ -60,6 +60,7 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('selectedStop', stop);
 			this.set('onestop_id', onestopId);
 			this.set('served_by', null);
+			this.set('displayIsochrone', false);
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
