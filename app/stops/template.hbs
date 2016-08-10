@@ -5,10 +5,23 @@
     <div class="expanded-selection">
 			{{#if onestop_id}}
 		  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
+		  	<form>
+				  <div class="form-group" {{action "showIsochrone"}}>
+				  	{{#if displayIsochrone}}<input type="checkbox" id="check-1" name="option-one" checked>{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
+				    <label for="check-1">View stop walkshed</label>
+			  		{{#if displayIsochrone}}
+			  				<div class="isochron-legend" style="color:#50bf40;">15 min walk from stop</div>
+			  				<div class="isochron-legend" style="color:#9fbf40;">30 min walk from stop</div>
+			  				<div class="isochron-legend" style="color:#bf8f40;">45 min walk from stop</div>
+			  				<div class="isochron-legend" style="color:#bf4040;">60 min walk from stop</div>
+			  		{{/if}}
+
+				  </div>
+				</form>
 				<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null) }}View routes serving this stop{{/link-to}}</p>
 			{{else}}
 				<form>
-				  <div class="form-group-header">Style routes by:</div>
+				  <div class="form-group-header">Style stops by: (not yet functional)</div>
 				  <div class="form-group">
 				  	<input type="checkbox" id="check-1" name="option-one">
 				    <label for="check-1">Frequency</label>
@@ -23,8 +36,7 @@
 				  </div>
 				</form>
 			{{/if}}
-			{{#if selectedStop}}
-			{{else if onlyStop}}
+			{{#if onestop_id}}
 			{{else if hoverStop}}
 				<div class="hover-detail">
 					<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
@@ -60,6 +72,15 @@
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000  onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}
 		  {{/each}}
+		  {{#if onestop_id}}
+			  {{#if displayIsochrone}}
+				  {{#each isochrones as |isochrone|}}
+				  	<!-- isochrone layer here -->
+				  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+				  	{{/geojson-layer}}
+			  	{{/each}}
+			  {{/if}}
+		  {{/if}}
 		{{/leaflet-map}}
 	</div>
 </div>
