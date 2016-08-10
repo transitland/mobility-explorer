@@ -11,8 +11,11 @@ export default Ember.Controller.extend(mapBboxController, {
 	served_by: null,
 	hoverStop: null,
 	place: null,
-	displayIsochrone: false,
+	pedestrianIsochrone: false,
+	bicycleIsochrone: false,
+	autoIsochrone: false,
 	isochrones: null,
+	isochroneMode: null,
 	onlyStop: Ember.computed('onestop_id', function(){
 		if (this.get('onestop_id') === null) {
 			return
@@ -76,18 +79,41 @@ export default Ember.Controller.extend(mapBboxController, {
   	clearPlace(){
   		this.set('place', null);
   	},
-  	showIsochrone(){
-			this.toggleProperty('displayIsochrone');
-			var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
-			var stopLocation = this.get('onlyStop.geometry.coordinates');
-			var json = {
-				locations: [{"lat":stopLocation[0], "lon":stopLocation[1]}],
-				costing: "pedestrian",
-				contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
-			};
-			url += escape(JSON.stringify(json));
-	    var self = this; 
-	    return Ember.$.ajax({ url }).then(function(json){self.set('isochrones', json.features)});
+  	showIsochrone(mode){
+  		this.set('isochrones', null);
+
+
+  		if (mode === 'pedestrian'){
+  			this.toggleProperty('pedestrianIsochrone');
+  		} else {
+  			this.set('pedestrianIsochrone', false);
+  		}
+  		if (mode === 'bicycle'){
+  			this.toggleProperty('bicycleIsochrone');
+  		} else {
+  			this.set('bicycleIsochrone', false);
+  		}
+  		if (mode === 'auto'){
+  			this.toggleProperty('autoIsochrone');
+  		} else {
+  			this.set('autoIsochrone', false);
+  		}
+
+  		if (this.get('isochroneMode') !== mode){
+  			this.set('isochroneMode', mode);
+				var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
+				var stopLocation = this.get('onlyStop.geometry.coordinates');
+				var json = {
+					locations: [{"lat":stopLocation[0], "lon":stopLocation[1]}],
+					costing: mode,
+					contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
+				};
+				url += escape(JSON.stringify(json));
+		    var self = this; 
+		    return Ember.$.ajax({ url }).then(function(json){self.set('isochrones', json.features)});
+	    } else {
+	    	this.set('isochroneMode', null);
+	    }
 		},
 	}	
 });

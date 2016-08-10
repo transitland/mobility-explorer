@@ -6,14 +6,42 @@
 			{{#if onestop_id}}
 		  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model}}{{/stop-detail}}
 		  	<form>
-				  <div class="form-group" {{action "showIsochrone"}}>
-				  	{{#if displayIsochrone}}<input type="checkbox" id="check-1" name="option-one" checked>{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
+				  <div class="form-group">
+				  	{{#if pedestrianIsochrone}}
+				  		<input type="checkbox" id="check-1" name="option-one" checked {{action "showIsochrone" "pedestrian"}}>
+			  		{{else}}
+			  			<input type="checkbox" id="check-1" name="option-one" {{action "showIsochrone" "pedestrian"}}>
+			  		{{/if}}
 				    <label for="check-1">View stop walkshed</label>
-			  		{{#if displayIsochrone}}
+			  		{{#if pedestrianIsochrone}}
 			  				<div class="isochron-legend" style="color:#50bf40;">15 min walk from stop</div>
 			  				<div class="isochron-legend" style="color:#9fbf40;">30 min walk from stop</div>
 			  				<div class="isochron-legend" style="color:#bf8f40;">45 min walk from stop</div>
 			  				<div class="isochron-legend" style="color:#bf4040;">60 min walk from stop</div>
+			  		{{/if}}
+			  		{{#if bicycleIsochrone}}
+			  			<input type="checkbox" id="check-2" name="option-two" checked {{action "showIsochrone" "bicycle"}}>
+			  		{{else}}
+			  			<input type="checkbox" id="check-2" name="option-two" {{action "showIsochrone" "bicycle"}}>
+			  		{{/if}}
+				    <label for="check-2">View stop bikeshed</label>
+			  		{{#if bicycleIsochrone}}
+			  				<div class="isochron-legend" style="color:#50bf40;">15 min bike ride from stop</div>
+			  				<div class="isochron-legend" style="color:#9fbf40;">30 min bike ride from stop</div>
+			  				<div class="isochron-legend" style="color:#bf8f40;">45 min bike ride from stop</div>
+			  				<div class="isochron-legend" style="color:#bf4040;">60 min bike ride from stop</div>
+			  		{{/if}}
+			  		{{#if autoIsochrone}}
+			  			<input type="checkbox" id="check-3" name="option-three" checked {{action "showIsochrone" "auto"}}>
+			  		{{else}}
+			  			<input type="checkbox" id="check-3" name="option-three" {{action "showIsochrone" "auto"}}>
+			  		{{/if}}
+				    <label for="check-3">View stop driveshed</label>
+			  		{{#if autoIsochrone}}
+			  				<div class="isochron-legend" style="color:#50bf40;">15 min drive from stop</div>
+			  				<div class="isochron-legend" style="color:#9fbf40;">30 min drive from stop</div>
+			  				<div class="isochron-legend" style="color:#bf8f40;">45 min drive from stop</div>
+			  				<div class="isochron-legend" style="color:#bf4040;">60 min drive from stop</div>
 			  		{{/if}}
 
 				  </div>
@@ -21,18 +49,10 @@
 				<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null) }}View routes serving this stop{{/link-to}}</p>
 			{{else}}
 				<form>
-				  <div class="form-group-header">Style stops by: (not yet functional)</div>
+				  <div class="form-group-header">Style stops by:</div>
 				  <div class="form-group">
-				  	<input type="checkbox" id="check-1" name="option-one">
-				    <label for="check-1">Frequency</label>
-				  </div>
-				  <div class="form-group">
-				  	<input type="checkbox" id="check-2" name="option-two">
-				    <label for="check-2">Walkshed</label>
-				  </div>
-				  <div class="form-group">
-				  	<input type="checkbox" id="check-3" name="option-three">
-				    <label for="check-2">Travelshed</label>
+				  	<input type="checkbox" id="check-1" name="option-one" disabled>
+				    <label for="check-1">Frequency (not yet functional)</label>
 				  </div>
 				</form>
 			{{/if}}
@@ -73,9 +93,20 @@
 			  		{{/marker-layer}}
 		  {{/each}}
 		  {{#if onestop_id}}
-			  {{#if displayIsochrone}}
+			  {{#if pedestrianIsochrone}}
 				  {{#each isochrones as |isochrone|}}
-				  	<!-- isochrone layer here -->
+				  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+				  	{{/geojson-layer}}
+			  	{{/each}}
+			  {{/if}}
+			  {{#if bicycleIsochrone}}
+				  {{#each isochrones as |isochrone|}}
+				  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+				  	{{/geojson-layer}}
+			  	{{/each}}
+			  {{/if}}
+			  {{#if autoIsochrone}}
+				  {{#each isochrones as |isochrone|}}
 				  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
 				  	{{/geojson-layer}}
 			  	{{/each}}
