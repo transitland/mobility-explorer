@@ -68,6 +68,13 @@
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000  onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}
 		  {{/each}}
+		  {{#if onestop_id}}
+			  {{#if displayIsochrone}}
+			  	<!-- isochrone layer here -->
+			  	{{#geojson-layer geoJSON=isochrone}}
+			  	{{/geojson-layer}}
+			  {{/if}}
+		  {{/if}}
 		{{/leaflet-map}}
 	</div>
 </div>

@@ -12,6 +12,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	hoverStop: null,
 	place: null,
 	displayIsochrone: false,
+	isochrone: null,
 	onlyStop: Ember.computed('onestop_id', function(){
 		if (this.get('onestop_id') === null) {
 			return
@@ -77,6 +78,16 @@ export default Ember.Controller.extend(mapBboxController, {
   	},
   	showIsochrone(){
 			this.toggleProperty('displayIsochrone');
+			var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
+			var stopLocation = this.get('onlyStop.geometry.coordinates');
+			var json = {
+				locations: [{"lat":stopLocation[0], "lon":stopLocation[1]}],
+				costing: "pedestrian",
+				contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
+			};
+			url += escape(JSON.stringify(json));
+	    var self = this; 
+	    return Ember.$.ajax({ url }).then(function(json){self.set('isochrone', json.features)});
 		},
 	}	
 });
