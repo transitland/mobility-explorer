@@ -8,10 +8,14 @@
 		  	<form>
 				  <div class="form-group" {{action "showIsochrone"}}>
 				  	{{#if displayIsochrone}}<input type="checkbox" id="check-1" name="option-one" checked>{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
-				    <label for="check-1">View isochrone</label>
-				    <br>{{#if displayIsochrone}}SHOW ME THE ISOCHRONE
-				    {{#if onlyStop}}<br>only stop: {{onlyStop.geometry.coordinates}}{{/if}}
-				    {{/if}}
+				    <label for="check-1">View stop walkshed</label>
+			  		{{#if displayIsochrone}}
+			  				<div class="isochron-legend" style="color:#50bf40;">15 min walk from stop</div>
+			  				<div class="isochron-legend" style="color:#9fbf40;">30 min walk from stop</div>
+			  				<div class="isochron-legend" style="color:#bf8f40;">45 min walk from stop</div>
+			  				<div class="isochron-legend" style="color:#bf4040;">60 min walk from stop</div>
+			  		{{/if}}
+
 				  </div>
 				</form>
 				<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null) }}View routes serving this stop{{/link-to}}</p>
@@ -70,9 +74,11 @@
 		  {{/each}}
 		  {{#if onestop_id}}
 			  {{#if displayIsochrone}}
-			  	<!-- isochrone layer here -->
-			  	{{#geojson-layer geoJSON=isochrone}}
-			  	{{/geojson-layer}}
+				  {{#each isochrones as |isochrone|}}
+				  	<!-- isochrone layer here -->
+				  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+				  	{{/geojson-layer}}
+			  	{{/each}}
 			  {{/if}}
 		  {{/if}}
 		{{/leaflet-map}}

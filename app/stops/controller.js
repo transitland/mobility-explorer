@@ -12,7 +12,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	hoverStop: null,
 	place: null,
 	displayIsochrone: false,
-	isochrone: null,
+	isochrones: null,
 	onlyStop: Ember.computed('onestop_id', function(){
 		if (this.get('onestop_id') === null) {
 			return
@@ -87,7 +87,7 @@ export default Ember.Controller.extend(mapBboxController, {
 			};
 			url += escape(JSON.stringify(json));
 	    var self = this; 
-	    return Ember.$.ajax({ url }).then(function(json){self.set('isochrone', json.features)});
+	    return Ember.$.ajax({ url }).then(function(json){self.set('isochrones', json.features)});
 		},
 	}	
 });
