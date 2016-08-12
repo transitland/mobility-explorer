@@ -124,3 +124,8 @@ input, button, select, textarea {
   -webkit-hyphens: auto;
   hyphens: auto;
 }
+.isochrone-legend {
+  opacity: .5;
+  margin-bottom:0;
+  margin-top: 0;
+}

@@ -11,7 +11,7 @@
 	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
   		{{/if}}
 	  	<br>
-			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null)  }}View stops served by route{{/link-to}}</p>
+			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}}</p>
 		{{else if operated_by}}
 			<form>
 				<strong>Operated by:</strong> {{operated_by}}<br>
@@ -80,7 +80,7 @@
     	<button class="btn btn-mapzen" disabled={{queryIsInactive}} {{action "updatebbox"}}>Query</button>
   	{{/unless}}
 	</div>
-  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">

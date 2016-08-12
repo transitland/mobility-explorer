@@ -2,7 +2,7 @@
   <h2>Mobility Explorer</h2>
   <div class="btn-group-vertical" role="group">
     {{#link-to 'routes' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
-    {{#link-to 'stops' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+    {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
     {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
   </div>
 </div>
