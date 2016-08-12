@@ -3,16 +3,19 @@ import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 
 export default Ember.Route.extend(mapBboxRoute, {
   queryParams: {
-  	onestop_id: {
-  		// replace: true,
-    	refreshModel: true
-  	},
+    onestop_id: {
+      refreshModel: true
+    },
     bbox: {
       replace: true,
       refreshModel: true
     },
     served_by: {
       refreshModel: true
+    },
+    isochrone_mode: {
+      replace: true,
+      refreshModel: true,
     }
   },
   setupController: function (controller, model) {
@@ -36,12 +39,40 @@ export default Ember.Route.extend(mapBboxRoute, {
       controller.set('leafletBbox', boundsArray);
     }
     this._super(controller, model);
-
   },
   model: function(params){
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
-    return this.store.query('data/transitland/stop', params);
+    var self = this;
+    return this.store.query('data/transitland/stop', params).then(function(stops) {
+      if (stops.get('query.isochrone_mode')){
+        var onlyStop = stops.get('firstObject');
+        var stopLocation = onlyStop.get('geometry.coordinates');
+        var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
+        var mode = stops.get('query.isochrone_mode');
+        var json = {
+          locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
+          costing: mode,
+          contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
+        };
+        url += escape(JSON.stringify(json));
+        return Ember.RSVP.hash({
+          stops: stops,
+          onlyStop: onlyStop,
+          isochrones: Ember.$.ajax({ url })
+        });
+      } else {
+        var onlyStop = stops.get('firstObject');
+        var stopLocation = onlyStop.get('geometry.coordinates');
+        var mode = stops.get('query.isochrone_mode');
+        
+        return Ember.RSVP.hash({
+          stops: stops,
+          onlyStop: onlyStop,
+        });
+      }
+    });
   }
+
 });
