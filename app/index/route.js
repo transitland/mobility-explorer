@@ -32,5 +32,7 @@ export default Ember.Route.extend({
 			controller.set('leafletBbox', boundsArray);
 
 		}
+    this._super(controller, model);
+		
 	}
 });
