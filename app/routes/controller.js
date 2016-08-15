@@ -2,7 +2,7 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type'],
+	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by'],
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
@@ -10,6 +10,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	serves: null,
 	operated_by: null,
 	vehicle_type: null,
+	style_routes_by: null,
 	selectedRoute: null,
 	place: null,
 	onlyRoute: Ember.computed('onestop_id', function(){
@@ -62,8 +63,12 @@ export default Ember.Controller.extend(mapBboxController, {
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
-	routeStyleIsMode: false,
-	routeStyleIsOperator: false,
+	routeStyleIsMode: Ember.computed('style_routes_by', function(){
+		return (this.get('style_routes_by') === 'mode');
+	}),
+	routeStyleIsOperator: Ember.computed('style_routes_by', function(){
+		return (this.get('style_routes_by') === 'operator');
+	}),
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -75,13 +80,12 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('bbox', bounds);
 			// this.set('queryIsInactive', true);
 		},
-		styleRoutesMode(){
-			this.toggleProperty('routeStyleIsMode');
-			this.set('routeStyleIsOperator', false);
-		},
-		styleRoutesOperator(){
-			this.toggleProperty('routeStyleIsOperator');
-			this.set('routeStyleIsMode', false);
+		setRouteStyle(style){
+			if (this.get('style_routes_by') === style){
+  			this.set('style_routes_by', null);
+  		} else {
+  			this.set('style_routes_by', style);
+  		}
 		},
 		setRoute(route){
 			var onestop_id = route.get('id');
