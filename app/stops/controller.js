@@ -9,6 +9,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	selectedStop: null,
 	served_by: null,
 	isochrone_mode: null,
+	isochrones_mode: false,
 	hoverStop: null,
 	place: null,
 	pedestrianIsochrone: Ember.computed('isochrone_mode', function(){
@@ -74,6 +75,9 @@ export default Ember.Controller.extend(mapBboxController, {
   		} else {
   			this.set('isochrone_mode', mode);
   		}
+		},
+		setIsochronesMode(){
+  		this.toggleProperty('isochrones_mode');
 		}
 	}
 });

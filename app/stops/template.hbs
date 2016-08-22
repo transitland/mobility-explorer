@@ -55,7 +55,18 @@
 				    <label for="check-1">Frequency (not yet functional)</label>
 				  </div>
 				</form>
-			{{/if}}
+				<form>
+				  <div class="form-group-header">Show isochrones for:</div>
+				  <div class="form-group">
+				  	{{#if isochrones_mode}}
+				  	<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
+				  	{{else}}
+				  	<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
+				  	{{/if}}
+				    <label for="check-2">Walking</label>
+				  </div>
+				</form>
+				{{/if}}
 			{{#if onestop_id}}
 			{{else if hoverStop}}
 				<div class="hover-detail">
@@ -94,13 +105,19 @@
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}
 		  {{/each}}
-		  {{#if onestop_id}}
-			  {{#if isochrone_mode}}
+		  {{#if isochrone_mode}}
+		  	{{#if onestop_id}}
 				  {{#each model.isochrones.features as |isochrone|}}
 				  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
 				  	{{/geojson-layer}}
 			  	{{/each}}
 			  {{/if}}
+		  {{/if}}
+			{{#if isochrones_mode}}
+				{{#each model.isochrones.features as |isochrone|}}
+				  {{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+				  {{/geojson-layer}}
+			  {{/each}}
 		  {{/if}}
 		{{/leaflet-map}}
 	</div>
