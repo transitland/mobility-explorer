@@ -2,16 +2,17 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode'],
+	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode', 'isochrones_mode'],
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	onestop_id: null,
 	selectedStop: null,
 	served_by: null,
 	isochrone_mode: null,
-	isochrones_mode: false,
+	isochrones_mode: null,
 	hoverStop: null,
-	place: null,
+	place: null, 
+	// stop_isochrone: {"features":[{"properties":{"fill-opacity":0.33,"contour":15,"fill":"#50bf40"},"type":"Feature","geometry":{"coordinates":[[[-122.408623,37.798100],[-122.401268,37.794598],[-122.398018,37.793793],[-122.396843,37.792419],[-122.396423,37.785183],[-122.397209,37.779755],[-122.399864,37.777977],[-122.415672,37.777946],[-122.417923,37.781418],[-122.422165,37.785183],[-122.421677,37.787125],[-122.415977,37.792278],[-122.414642,37.794567],[-122.412231,37.796036],[-122.411324,37.797844],[-122.410690,37.798450],[-122.408623,37.798100]]],"type":"Polygon"}}],"type":"FeatureCollection"},
 	pedestrianIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'pedestrian');
 	}),
@@ -77,7 +78,11 @@ export default Ember.Controller.extend(mapBboxController, {
   		}
 		},
 		setIsochronesMode(){
-  		this.toggleProperty('isochrones_mode');
+  		if (this.get('isochrones_mode') === null){
+  			this.set('isochrones_mode', true);
+  		} else {
+  			this.set('isochrones_mode', null);
+  		}
 		}
 	}
 });

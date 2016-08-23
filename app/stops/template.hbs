@@ -114,10 +114,10 @@
 			  {{/if}}
 		  {{/if}}
 			{{#if isochrones_mode}}
-				{{#each model.isochrones.features as |isochrone|}}
-				  {{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+				{{#each model.isochrones as |isochrone|}}
+					{{#geojson-layer geoJSON=isochrone}}
 				  {{/geojson-layer}}
-			  {{/each}}
+				{{/each}}
 		  {{/if}}
 		{{/leaflet-map}}
 	</div>
