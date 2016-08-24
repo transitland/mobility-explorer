@@ -70,20 +70,21 @@ export default Ember.Route.extend(mapBboxRoute, {
         var stopLocations = [];
         var isochrones = [];
         stopLocations = stopLocations.concat(stops.map(function(stop){return stop.get('geometry.coordinates')}))
+        
         for (var i = 0; i < stopLocations.length; i++){
           var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
           var mode = 'pedestrian';
           var json = {
-            locations: [{"lat":stopLocations[i][1], "lon":stopLocations[i][0]}],
+            locations: [{"lat":stopLocations[0][1], "lon":stopLocations[0][0]}],
             costing: mode,
             contours: [{"time":15}]
           };
           url += escape(JSON.stringify(json));
-          var response = Ember.$.ajax({ url }).then(function(response){isochrones.push(response.features)});
+          isochrones.push(Ember.$.ajax({ url }));
         }
         return Ember.RSVP.hash({
           stops: stops,
-          isochrones: isochrones,
+          isochrones: isochrones
         });
        
       } else {

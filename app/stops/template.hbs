@@ -115,8 +115,11 @@
 		  {{/if}}
 			{{#if isochrones_mode}}
 				{{#each model.isochrones as |isochrone|}}
-					{{#geojson-layer geoJSON=isochrone}}
-				  {{/geojson-layer}}
+					{{#each isochrone.features as |feature|}}
+				  	{{#geojson-layer geoJSON=feature fillColor=feature.properties.fill  stroke=false weight=1 fillOpacity=feature.properties.fill-opacity}}
+				  	{{/geojson-layer}}
+			  	{{/each}}
+					
 				{{/each}}
 		  {{/if}}
 		{{/leaflet-map}}
