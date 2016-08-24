@@ -81,6 +81,12 @@
   		{{/unless}}
 		</div>
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+	{{#each model.isochrones as |isochrone|}}
+		{{#each isochrone.features as |feature|}}
+			{{feature.geometry.coordinates.[0].[0]}}
+		{{/each}}
+	{{/each}}
+
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
@@ -116,10 +122,11 @@
 			{{#if isochrones_mode}}
 				{{#each model.isochrones as |isochrone|}}
 					{{#each isochrone.features as |feature|}}
-				  	{{#geojson-layer geoJSON=feature fillColor=feature.properties.fill  stroke=false weight=1 fillOpacity=feature.properties.fill-opacity}}
+
+				  	{{#geojson-layer geoJSON=feature fillColor=feature.properties.fill weight=1 color=feature.properties.fill fillOpacity=feature.properties.fill-opacity}}
 				  	{{/geojson-layer}}
-			  	{{/each}}
-					
+
+				  {{/each}}
 				{{/each}}
 		  {{/if}}
 		{{/leaflet-map}}

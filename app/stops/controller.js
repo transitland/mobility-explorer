@@ -78,7 +78,6 @@ export default Ember.Controller.extend(mapBboxController, {
   		}
 		},
 		setIsochronesMode(){
-			debugger;
   		if (this.get('isochrones_mode') === null){
   			this.set('isochrones_mode', true);
   		} else {
