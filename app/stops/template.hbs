@@ -98,20 +98,12 @@
 	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 	    {{/power-select}}
 	  </div>
-
-
 	  {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 			{{#each model.stops as |stop|}}
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}
 		  {{/each}}
-		  {{#if served_by}}
-		  	{{#each model.route.features as |routeLine|}}
-		  		{{#polyline-layer locations=routeLine.geometry.coordinates}}
-					{{/polyline-layer}}
-				{{/each}}
-			{{/if}}
 		  {{#if isochrone_mode}}
 		  	{{#if onestop_id}}
 				  {{#each model.isochrones.features as |isochrone|}}

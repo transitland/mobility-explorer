@@ -67,14 +67,9 @@ export default Ember.Route.extend(mapBboxRoute, {
           isochrones: Ember.$.ajax({ url })
         });
 
-     
-
       } else if (stops.get('query.isochrones_mode')){
         var stopLocations = [];
         var isochrones = [];
-        var routeId = stops.get('query.served_by');
-        var transitland_url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
-        transitland_url += routeId;
         stopLocations = stopLocations.concat(stops.map(function(stop){return stop.get('geometry.coordinates')}))
 
         for (var i = 0; i < stopLocations.length; i++){
@@ -90,7 +85,6 @@ export default Ember.Route.extend(mapBboxRoute, {
         }     
         return Ember.RSVP.hash({
           stops: stops,
-          route: Ember.$.ajax({ transitland_url }),
           isochrones: Ember.RSVP.all(isochrones)
         });
       } else {
