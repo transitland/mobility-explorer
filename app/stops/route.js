@@ -66,12 +66,17 @@ export default Ember.Route.extend(mapBboxRoute, {
           onlyStop: onlyStop,
           isochrones: Ember.$.ajax({ url })
         });
+
+     
+
       } else if (stops.get('query.isochrones_mode')){
         var stopLocations = [];
         var isochrones = [];
+        var routeId = stops.get('query.served_by');
+        var transitland_url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
+        transitland_url += routeId;
         stopLocations = stopLocations.concat(stops.map(function(stop){return stop.get('geometry.coordinates')}))
-        // debugger;
-        
+
         for (var i = 0; i < stopLocations.length; i++){
           var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
           var mode = 'pedestrian';
@@ -82,12 +87,12 @@ export default Ember.Route.extend(mapBboxRoute, {
           };
           url += escape(JSON.stringify(json));
           isochrones.push(Ember.$.ajax({ url }));
-        }
+        }     
         return Ember.RSVP.hash({
           stops: stops,
+          route: Ember.$.ajax({ transitland_url }),
           isochrones: Ember.RSVP.all(isochrones)
         });
-       
       } else {
         var onlyStop = stops.get('firstObject');
         var stopLocation = onlyStop.get('geometry.coordinates');

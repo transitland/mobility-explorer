@@ -48,13 +48,14 @@
 				  </div>
 				</form>
 			{{else}}
-				<form>
-				  <div class="form-group-header">Style stops by:</div>
-				  <div class="form-group">
-				  	<input type="checkbox" id="check-1" name="option-one" disabled>
-				    <label for="check-1">Frequency (not yet functional)</label>
-				  </div>
-				</form>
+				{{#if served_by}}
+					<form>
+					  <div class="form-group-header">Stops served by:</div>
+					  <div class="form-group">
+					    <label>{{served_by}}</label>
+					  </div>
+					</form>
+				{{/if}}
 				<form>
 				  <div class="form-group-header">Show isochrones for:</div>
 				  <div class="form-group">
@@ -81,12 +82,6 @@
   		{{/unless}}
 		</div>
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
-	{{#each model.isochrones as |isochrone|}}
-		{{#each isochrone.features as |feature|}}
-			{{feature.geometry.coordinates.[0].[0]}}
-		{{/each}}
-	{{/each}}
-
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
@@ -111,6 +106,12 @@
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}
 		  {{/each}}
+		  {{#if served_by}}
+		  	{{#each model.route.features as |routeLine|}}
+		  		{{#polyline-layer locations=routeLine.geometry.coordinates}}
+					{{/polyline-layer}}
+				{{/each}}
+			{{/if}}
 		  {{#if isochrone_mode}}
 		  	{{#if onestop_id}}
 				  {{#each model.isochrones.features as |isochrone|}}
@@ -122,18 +123,14 @@
 			{{#if isochrones_mode}}
 				{{#each model.isochrones as |isochrone|}}
 					{{#each isochrone.features as |feature|}}
-
 				  	{{#geojson-layer geoJSON=feature fillColor=feature.properties.fill weight=1 color=feature.properties.fill fillOpacity=feature.properties.fill-opacity}}
 				  	{{/geojson-layer}}
-
 				  {{/each}}
 				{{/each}}
 		  {{/if}}
 		{{/leaflet-map}}
 	</div>
 </div>
-
-
 
 
 
