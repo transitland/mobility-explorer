@@ -77,7 +77,9 @@
 			<p class="caption">Hover on the route line for information</p>
 		{{/if}}
 		{{#unless onestop_id}}
-    	<button class="btn btn-mapzen" disabled={{queryIsInactive}} {{action "updatebbox"}}>Query</button>
+    	{{#if mapMoved}}
+    		<button class="btn btn-mapzen" disabled={{queryIsInactive}} {{action "updatebbox"}}>Redo search in map area</button>
+  		{{/if}}
   	{{/unless}}
 	</div>
   {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
@@ -97,7 +99,7 @@
 	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 	    {{/power-select}}
 	  </div>
-		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox")}}
+		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#if routeStyleIsMode}}
 					{{#each model as |route|}}

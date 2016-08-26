@@ -69,16 +69,19 @@ export default Ember.Controller.extend(mapBboxController, {
 	routeStyleIsOperator: Ember.computed('style_routes_by', function(){
 		return (this.get('style_routes_by') === 'operator');
 	}),
+	mapMoved: false,
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
-			// this.set('queryIsInactive', false);
 		},
 		updatebbox(e) {
 			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
-			// this.set('queryIsInactive', true);
+			this.set('mapMoved', false);
+		},
+		updateMapMoved(){
+			this.set('mapMoved', true);
 		},
 		setRouteStyle(style){
 			if (this.get('style_routes_by') === style){
@@ -128,10 +131,6 @@ export default Ember.Controller.extend(mapBboxController, {
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
   	},
-		// setPlace(selected){
-  //   	var newbbox = selected.bbox;
-  //   	this.transitionToRoute('index', {queryParams: {bbox: newbbox}});
-  // 	},
   	clearPlace(){
   		this.set('place', null);
   	},
