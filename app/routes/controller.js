@@ -70,6 +70,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		return (this.get('style_routes_by') === 'operator');
 	}),
 	mapMoved: false,
+	mousedOver: false,
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -81,7 +82,12 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('mapMoved', false);
 		},
 		updateMapMoved(){
-			this.set('mapMoved', true);
+			if (this.get('mousedOver') === true){
+				this.set('mapMoved', true);
+			}
+		},
+		mouseOver(){
+			this.set('mousedOver', true);
 		},
 		setRouteStyle(style){
 			if (this.get('style_routes_by') === style){
