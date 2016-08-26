@@ -28,6 +28,8 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconUrl: 'assets/images/stop2.png',		
 		iconSize: (10, 10),
 	}),
+	mapMoved: false,
+	mousedOver: false,
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -36,6 +38,15 @@ export default Ember.Controller.extend(mapBboxController, {
 		updatebbox(e) {
 			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
+			this.set('mapMoved', false);
+		},
+		updateMapMoved(){
+			if (this.get('mousedOver') === true){
+				this.set('mapMoved', true);
+			}
+		},
+		mouseOver(){
+			this.set('mousedOver', true);
 		},
 		selectStop(stop){
 			this.set('selectedStop', null);

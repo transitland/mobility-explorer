@@ -75,12 +75,10 @@
 			</div>
 		{{else}}
 			<p class="caption">Hover on the route line for information</p>
-		{{/if}}
-		{{#unless onestop_id}}
-    	{{#if mapMoved}}
-    		<button class="btn btn-mapzen" disabled={{queryIsInactive}} {{action "updatebbox"}}>Redo search in map area</button>
+			{{#if mapMoved}}
+    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
   		{{/if}}
-  	{{/unless}}
+		{{/if}}
 	</div>
   {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
