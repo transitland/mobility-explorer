@@ -66,11 +66,23 @@ export default Ember.Route.extend(mapBboxRoute, {
         var onlyStop = stops.get('firstObject');
         var stopLocation = onlyStop.get('geometry.coordinates');
         var mode = stops.get('query.isochrone_mode');
-        
-        return Ember.RSVP.hash({
-          stops: stops,
-          onlyStop: onlyStop,
-        });
+        var route = stops.get('query.served_by');
+        if (route) {
+          console.log("true route: " + route);
+          var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
+          url += route;
+          console.log(url);
+          return Ember.RSVP.hash({
+            stops: stops,
+            onlyStop: onlyStop,
+            servedByRoute: Ember.$.ajax({ url })
+          });
+        } else {
+          return Ember.RSVP.hash({
+            stops: stops,
+            onlyStop: onlyStop,
+          });
+        }
       }
     });
   }
