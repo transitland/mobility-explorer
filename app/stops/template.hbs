@@ -91,8 +91,8 @@
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 			{{#if served_by}}
 				{{#each model.servedByRoute.features as |route|}}
-					{{#polyline-layer locations=route.geometry}}
-					{{/polyline-layer}}
+					{{#geojson-layer geoJSON=route}}
+					{{/geojson-layer}}
 				{{/each}}
 			{{/if}}
 			{{#each model.stops as |stop|}}
