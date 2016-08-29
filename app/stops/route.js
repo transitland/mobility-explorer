@@ -67,7 +67,7 @@ export default Ember.Route.extend(mapBboxRoute, {
         var stopLocation = onlyStop.get('geometry.coordinates');
         var mode = stops.get('query.isochrone_mode');
         var route = stops.get('query.served_by');
-        if (route) {
+        if (route.indexOf('r') === 0) {
           console.log("true route: " + route);
           var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
           url += route;

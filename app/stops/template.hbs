@@ -91,7 +91,7 @@
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 			{{#if served_by}}
 				{{#each model.servedByRoute.features as |route|}}
-					{{#geojson-layer geoJSON=route}}
+					{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
 					{{/geojson-layer}}
 				{{/each}}
 			{{/if}}
