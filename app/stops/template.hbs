@@ -47,12 +47,11 @@
 
 				  </div>
 				</form>
-			{{else}}
+			{{else if served_by}}
 				<form>
-				  <div class="form-group-header">Style stops by:</div>
+				  <div class="form-group-header">Stops served by:</div>
 				  <div class="form-group">
-				  	<input type="checkbox" id="check-1" name="option-one" disabled>
-				    <label for="check-1">Frequency (not yet functional)</label>
+				    <label for="check-1">{{served_by}}</label>
 				  </div>
 				</form>
 			{{/if}}
@@ -90,6 +89,12 @@
 
 	  {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+			{{#if served_by}}
+				{{#each model.servedByRoute.features as |route|}}
+					{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
+					{{/geojson-layer}}
+				{{/each}}
+			{{/if}}
 			{{#each model.stops as |stop|}}
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}
