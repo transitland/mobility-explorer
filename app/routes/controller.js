@@ -106,14 +106,12 @@ export default Ember.Controller.extend(mapBboxController, {
 			e.target.setStyle({
 				"route_path_opacity": 1,
 				"route_path_weight": 2.5,
-				"color":"red"			
 			});
 		},
 		unselectRoute(e){
 			e.target.setStyle({
 				"route_path_opacity": 1,
 				"route_path_weight": 2.5,
-				"color":"blue"
 			});
 		},
 		selectUnstyledRoute(e){
