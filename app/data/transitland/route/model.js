@@ -16,9 +16,9 @@ var Route = DS.Model.extend({
 	created_at: DS.attr('date'),
 	updated_at: DS.attr('date'),
 	route_stop_patterns_by_onestop_id: DS.attr(),
-	route_path_opacity: 0.5,
+	route_path_opacity: 0.75,
 	route_path_weight: 2.5,
-	default_color: "blue",
+	default_color: "#6ea0a4",
 	
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'][0];

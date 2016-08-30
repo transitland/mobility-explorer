@@ -23,7 +23,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		}
 	}),
 	hoverRoute: null,
-	unstyledColor: "blue",
+	unstyledColor: "#6ea0a4",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -101,29 +101,35 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('onestop_id', onestop_id);
 			this.set('selectedRoute', route);
 		},
-		selectRoute(route){
-			this.set('selectedRoute', null);
-			route.set('route_path_opacity', 1);
-			route.set('route_path_weight', 3);
-			this.set('hoverRoute', route);
+		selectRoute(e){
+			e.target.bringToFront();
+			e.target.setStyle({
+				"route_path_opacity": 1,
+				"route_path_weight": 2.5,
+				"color":"red"			
+			});
 		},
-		unselectRoute(route){
-			route.set('route_path_opacity', 0.5);
-			route.set('route_path_weight', 1.5);
-			this.set('hoverRoute', null);
+		unselectRoute(e){
+			e.target.setStyle({
+				"route_path_opacity": 1,
+				"route_path_weight": 2.5,
+				"color":"blue"
+			});
 		},
-		selectUnstyledRoute(route){
-			this.set('selectedRoute', null);
-			route.set('route_path_opacity', 1);
-			route.set('route_path_weight', 3);
-			this.set('hoverRoute', route);
-			route.set('default_color', "red");
+		selectUnstyledRoute(e){
+			e.target.bringToFront();
+			e.target.setStyle({
+				"color":"#d4645c",
+				"route_path_opacity": 1,
+				"route_path_weight": 2.5
+			});
 		},
-		unselectUnstyledRoute(route){
-			route.set('route_path_opacity', 0.5);
-			route.set('route_path_weight', 1.5);
-			this.set('hoverRoute', null);
-			route.set('default_color', "blue");
+		unselectUnstyledRoute(e){
+			e.target.setStyle({
+				"color":"#6ea0a4",
+				"route_path_opacity": 0.75,
+				"route_path_weight": 2.5
+			});
 		},
 		setOnestopId(route) {
 			var onestopId = route.id;
