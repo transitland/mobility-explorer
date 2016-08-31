@@ -16,7 +16,6 @@
 			  		{{/if}}
 				    <label for="check-1">walking</label>
 			  		{{#if pedestrianIsochrone}}
-			  				<p class="caption">currently includes travel by ferry</p>
 			  				<div class="isochron-legend" style="color:#50bf40;">15 min walk from stop</div>
 			  				<div class="isochron-legend" style="color:#9fbf40;">30 min walk from stop</div>
 			  				<div class="isochron-legend" style="color:#bf8f40;">45 min walk from stop</div>
@@ -29,22 +28,22 @@
 			  		{{/if}}
 				    <label for="check-2">biking</label>
 			  		{{#if bicycleIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min bike ride from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min bike ride from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min bike ride from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min bike ride from stop</div>
+			  				<div class="isochron-legend" style="color:#50bf40;">15 min ride from stop</div>
+			  				<div class="isochron-legend" style="color:#9fbf40;">30 min ride from stop</div>
+			  				<div class="isochron-legend" style="color:#bf8f40;">45 min ride from stop</div>
+			  				<div class="isochron-legend" style="color:#bf4040;">60 min ride from stop</div>
 			  		{{/if}}
 			  		{{#if multimodalIsochrone}}
 			  			<input type="checkbox" id="check-4" name="option-four" checked {{action "setIsochroneMode" "multimodal"}}>
 			  		{{else}}
 			  			<input type="checkbox" id="check-4" name="option-four" {{action "setIsochroneMode" "multimodal"}}>
 			  		{{/if}}
-				    <label for="check-4">multimodal (walking + transit)</label>
+				    <label for="check-4">transit</label>
 			  		{{#if multimodalIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min multimodal journey from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min multimodal journey from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min multimodal journey from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min multimodal journey from stop</div>
+			  				<div class="isochron-legend" style="color:#50bf40;">15 min trip from stop</div>
+			  				<div class="isochron-legend" style="color:#9fbf40;">30 min trip from stop</div>
+			  				<div class="isochron-legend" style="color:#bf8f40;">45 min trip from stop</div>
+			  				<div class="isochron-legend" style="color:#bf4040;">60 min trip from stop</div>
 			  		{{/if}}
 			  		{{#if autoIsochrone}}
 			  			<input type="checkbox" id="check-3" name="option-three" checked {{action "setIsochroneMode" "auto"}}>
