@@ -60,7 +60,13 @@ export default Ember.Route.extend(mapBboxRoute, {
         return Ember.RSVP.hash({
           stops: stops,
           onlyStop: onlyStop,
-          isochrones: Ember.$.ajax({ url })
+          isochrones: Ember.$.ajax({ url }).then(function(response){
+            var polygons= response.features;
+            for (var i = 0; i < (polygons.length-1); i++){
+              var ring = polygons[i].geometry.coordinates.push(polygons[i+1].geometry.coordinates[0]);
+            }
+            return response;
+          })
         });
       } else {
         var onlyStop = stops.get('firstObject');
