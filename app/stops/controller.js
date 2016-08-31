@@ -17,6 +17,9 @@ export default Ember.Controller.extend(mapBboxController, {
 	bicycleIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'bicycle');
 	}),
+	multimodalIsochrone: Ember.computed('isochrone_mode', function(){
+		return (this.get('isochrone_mode') === 'multimodal');
+	}),
 	autoIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'auto');
 	}),
