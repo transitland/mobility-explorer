@@ -6,7 +6,6 @@ export default Ember.Route.extend({
     bbox: {
       replace: true,
       refreshModel: true
-
     }
 	},
 	setupController: function (controller, model) {

@@ -33,6 +33,8 @@ export default Ember.Controller.extend(mapBboxController, {
 			return operators;
 		}	
 	}),
+	mapMoved: false,
+	mousedOver: false,
 	actions: {
 		setOperator(operator){
 			var onestop_id = operator.get('id');
@@ -42,12 +44,19 @@ export default Ember.Controller.extend(mapBboxController, {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
-			// this.set('queryIsInactive', false);
 		},
 		updatebbox(e) {
 			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
-			// this.set('queryIsInactive', true);
+			this.set('mapMoved', false);
+		},
+		updateMapMoved(){
+			if (this.get('mousedOver') === true){
+				this.set('mapMoved', true);
+			}
+		},
+		mouseOver(){
+			this.set('mousedOver', true);
 		},
 		setOnestopId(operator) {
 			var onestopId = operator.id;

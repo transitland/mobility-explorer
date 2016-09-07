@@ -2,7 +2,7 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type'],
+	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by'],
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
@@ -10,6 +10,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	serves: null,
 	operated_by: null,
 	vehicle_type: null,
+	style_routes_by: null,
 	selectedRoute: null,
 	place: null,
 	onlyRoute: Ember.computed('onestop_id', function(){
@@ -22,7 +23,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		}
 	}),
 	hoverRoute: null,
-	unstyledColor: "blue",
+	unstyledColor: "#6ea0a4",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -62,55 +63,71 @@ export default Ember.Controller.extend(mapBboxController, {
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
 	}),
-	routeStyleIsMode: false,
-	routeStyleIsOperator: false,
+	routeStyleIsMode: Ember.computed('style_routes_by', function(){
+		return (this.get('style_routes_by') === 'mode');
+	}),
+	routeStyleIsOperator: Ember.computed('style_routes_by', function(){
+		return (this.get('style_routes_by') === 'operator');
+	}),
+	mapMoved: false,
+	mousedOver: false,
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
-			// this.set('queryIsInactive', false);
 		},
 		updatebbox(e) {
 			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
-			// this.set('queryIsInactive', true);
+			this.set('mapMoved', false);
 		},
-		styleRoutesMode(){
-			this.toggleProperty('routeStyleIsMode');
-			this.set('routeStyleIsOperator', false);
+		updateMapMoved(){
+			if (this.get('mousedOver') === true){
+				this.set('mapMoved', true);
+			}
 		},
-		styleRoutesOperator(){
-			this.toggleProperty('routeStyleIsOperator');
-			this.set('routeStyleIsMode', false);
+		mouseOver(){
+			this.set('mousedOver', true);
+		},
+		setRouteStyle(style){
+			if (this.get('style_routes_by') === style){
+  			this.set('style_routes_by', null);
+  		} else {
+  			this.set('style_routes_by', style);
+  		}
 		},
 		setRoute(route){
 			var onestop_id = route.get('id');
 			this.set('onestop_id', onestop_id);
 			this.set('selectedRoute', route);
 		},
-		selectRoute(route){
-			this.set('selectedRoute', null);
-			route.set('route_path_opacity', 1);
-			route.set('route_path_weight', 3);
-			this.set('hoverRoute', route);
+		selectRoute(e){
+			e.target.bringToFront();
+			e.target.setStyle({
+				"route_path_opacity": 1,
+				"route_path_weight": 2.5,
+			});
 		},
-		unselectRoute(route){
-			route.set('route_path_opacity', 0.5);
-			route.set('route_path_weight', 1.5);
-			this.set('hoverRoute', null);
+		unselectRoute(e){
+			e.target.setStyle({
+				"route_path_opacity": 1,
+				"route_path_weight": 2.5,
+			});
 		},
-		selectUnstyledRoute(route){
-			this.set('selectedRoute', null);
-			route.set('route_path_opacity', 1);
-			route.set('route_path_weight', 3);
-			this.set('hoverRoute', route);
-			route.set('default_color', "red");
+		selectUnstyledRoute(e){
+			e.target.bringToFront();
+			e.target.setStyle({
+				"color":"#d4645c",
+				"route_path_opacity": 1,
+				"route_path_weight": 2.5
+			});
 		},
-		unselectUnstyledRoute(route){
-			route.set('route_path_opacity', 0.5);
-			route.set('route_path_weight', 1.5);
-			this.set('hoverRoute', null);
-			route.set('default_color', "blue");
+		unselectUnstyledRoute(e){
+			e.target.setStyle({
+				"color":"#6ea0a4",
+				"route_path_opacity": 0.75,
+				"route_path_weight": 2.5
+			});
 		},
 		setOnestopId(route) {
 			var onestopId = route.id;
@@ -124,10 +141,6 @@ export default Ember.Controller.extend(mapBboxController, {
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
   	},
-		// setPlace(selected){
-  //   	var newbbox = selected.bbox;
-  //   	this.transitionToRoute('index', {queryParams: {bbox: newbbox}});
-  // 	},
   	clearPlace(){
   		this.set('place', null);
   	},
