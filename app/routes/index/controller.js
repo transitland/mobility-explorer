@@ -62,12 +62,10 @@ export default Ember.Controller.extend({
 		styleRoutesMode(){
 			this.set('routeStyleIsMode', true);
 			this.set('routeStyleIsOperator', false);
-			// console.log(this.get('routeStyle'));
 		},
 		styleRoutesOperator(){
 			this.set('routeStyleIsMode', false);
 			this.set('routeStyleIsOperator', true);
-			// console.log(this.get('routeStyle'));
 		},
 		setRoute(route){
 			var onestop_id = route.get('id');
