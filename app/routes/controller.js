@@ -3,6 +3,32 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by'],
+	queryUrl: Ember.computed('bbox', function(){
+		var url = "https://transit.land/api/v1/routes?";
+		var bbox = "bbox=" + this.get('bbox');
+		var onestopId = this.get('onestop_id');
+		var serves = this.get('serves');
+		var operated_by = this.get('operated_by');
+		var vehicle_type = this.get('vehicle_type');
+		url += bbox;
+		if (onestopId !== null){
+				onestopId = "&onestop_id=" + onestopId;
+				url += onestopId;
+		}
+		if (serves !== null){
+				serves = "&serves=" + serves;
+				url += serves;
+		}
+		if (operated_by !== null){
+				operated_by = "&operated_by=" + operated_by;
+				url += operated_by;
+		}
+		if (vehicle_type !== null){
+				vehicle_type = "&vehicle_type=" + vehicle_type;
+				url += vehicle_type;
+		}
+		return url;
+	}),
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
