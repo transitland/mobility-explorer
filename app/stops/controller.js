@@ -3,22 +3,18 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode'],
-	queryUrl: Ember.computed('bbox', function(){
+	queryUrl: Ember.computed('bbox', 'onestop_id', function(){
 		var url = "https://transit.land/api/v1/stops?";
-		var bbox = "bbox=" + this.get('bbox');
-		var onestopId = this.get('onestop_id');
-		var served_by = this.get('served_by');
-		url += bbox;
-		if (onestopId !== null){
-			console.log(url);
-				onestopId = "&onestop_id=" + onestopId;
-				url += onestopId;
-			console.log(url);
-
-		}
-		if (served_by !== null){
-				served_by = "&served_by=" + served_by;
-				url += served_by;
+		var arrayOfQueryParams = ['isochrone_mode'];
+		for (var i = 0; i < this.get('queryParams').length; i++){
+			if (arrayOfQueryParams.indexOf(this.get('queryParams')[i]) === -1 && this.get(this.get('queryParams')[i]) !== null){
+				arrayOfQueryParams.push(this.get('queryParams')[i])
+				if (i === 0){
+					url = url + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+				} else {
+					url = url + "&" + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+				}
+			}
 		}
 		return url;
 	}),

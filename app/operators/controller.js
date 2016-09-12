@@ -5,12 +5,16 @@ export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id'],
 	queryUrl: Ember.computed('bbox', 'onestop_id', function(){
 		var url = "https://transit.land/api/v1/operators?";
-		var bbox = "bbox=" + this.get('bbox');
-		var onestopId = this.get('onestop_id');
-		url += bbox;
-		if (onestopId){
-				onestopId = "&onestop_id=" + onestopId;
-				url += onestopId;
+		var arrayOfQueryParams = [];
+		for (var i = 0; i < this.get('queryParams').length; i++){
+			if (arrayOfQueryParams.indexOf(this.get('queryParams')[i]) === -1 && this.get(this.get('queryParams')[i]) !== null){
+				arrayOfQueryParams.push(this.get('queryParams')[i])
+				if (i === 0){
+					url = url + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+				} else {
+					url = url + "&" + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+				}
+			}
 		}
 		return url;
 	}),

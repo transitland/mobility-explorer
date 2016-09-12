@@ -3,29 +3,18 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by'],
-	queryUrl: Ember.computed('bbox', function(){
+	queryUrl: Ember.computed('bbox', 'onestop_id', function(){
 		var url = "https://transit.land/api/v1/routes?";
-		var bbox = "bbox=" + this.get('bbox');
-		var onestopId = this.get('onestop_id');
-		var serves = this.get('serves');
-		var operated_by = this.get('operated_by');
-		var vehicle_type = this.get('vehicle_type');
-		url += bbox;
-		if (onestopId !== null){
-				onestopId = "&onestop_id=" + onestopId;
-				url += onestopId;
-		}
-		if (serves !== null){
-				serves = "&serves=" + serves;
-				url += serves;
-		}
-		if (operated_by !== null){
-				operated_by = "&operated_by=" + operated_by;
-				url += operated_by;
-		}
-		if (vehicle_type !== null){
-				vehicle_type = "&vehicle_type=" + vehicle_type;
-				url += vehicle_type;
+		var arrayOfQueryParams = ['style_routes_by'];
+		for (var i = 0; i < this.get('queryParams').length; i++){
+			if (arrayOfQueryParams.indexOf(this.get('queryParams')[i]) === -1 && this.get(this.get('queryParams')[i]) !== null){
+				arrayOfQueryParams.push(this.get('queryParams')[i])
+				if (i === 0){
+					url = url + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+				} else {
+					url = url + "&" + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+				}
+			}
 		}
 		return url;
 	}),
