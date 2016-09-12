@@ -3,7 +3,7 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode'],
-	queryUrl: Ember.computed('bbox', 'onestop_id', function(){
+	queryUrl: Ember.computed('bbox', 'onestop_id', 'served_by', function(){
 		var url = "https://transit.land/api/v1/stops?";
 		var arrayOfQueryParams = ['isochrone_mode'];
 		for (var i = 0; i < this.get('queryParams').length; i++){
