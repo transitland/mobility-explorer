@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 	queryUrl: Ember.computed('bbox', 'onestop_id', function(){
 		// var url = "https://transit.land/api/v1/operators?";
-		var url = "https://transit.land/api/v1/" + this.type + "?"
+		var url = "https://transit.land/api/v1/" + this.entity + "?"
 		var arrayOfQueryParams = [];
 		console.log(this.type);
 		for (var i = 0; i < this.get('queryParams').length; i++){
