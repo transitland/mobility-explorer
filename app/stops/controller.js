@@ -2,7 +2,7 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode', 'isochrones_mode'],
+	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode', 'isochrones_mode', 'bus_only'],
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	onestop_id: null,
@@ -11,12 +11,16 @@ export default Ember.Controller.extend(mapBboxController, {
 	isochrone_mode: null,
 	isochrones_mode: null,
 	hoverStop: null,
-	place: null, 
+	place: null,
+	bus_only: null,
 	pedestrianIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'pedestrian');
 	}),
 	bicycleIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'bicycle');
+	}),
+	multimodalIsochrone: Ember.computed('isochrone_mode', function(){
+		return (this.get('isochrone_mode') === 'multimodal');
 	}),
 	autoIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'auto');
@@ -26,9 +30,11 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (10, 10)
 	}),
 	highlightedIcon: L.icon({
-		iconUrl: 'assets/images/stop2.png',		
+		iconUrl: 'assets/images/stop2.png',
 		iconSize: (10, 10),
 	}),
+	mapMoved: false,
+	mousedOver: false,
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -37,6 +43,15 @@ export default Ember.Controller.extend(mapBboxController, {
 		updatebbox(e) {
 			var bounds = this.get('leafletBbox');
 			this.set('bbox', bounds);
+			this.set('mapMoved', false);
+		},
+		updateMapMoved(){
+			if (this.get('mousedOver') === true){
+				this.set('mapMoved', true);
+			}
+		},
+		mouseOver(){
+			this.set('mousedOver', true);
 		},
 		selectStop(stop){
 			this.set('selectedStop', null);
@@ -81,6 +96,14 @@ export default Ember.Controller.extend(mapBboxController, {
   			this.set('isochrones_mode', true);
   		} else {
   			this.set('isochrones_mode', null);
+  		}
+  	},
+		setBusOnly(){
+  		if (this.get('bus_only') === true){
+  			this.set('bus_only', null);
+  		} else {
+  			this.set('bus_only', true);
+
   		}
 		}
 	}

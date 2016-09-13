@@ -7,81 +7,109 @@
 		  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
 		  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null) }}View routes serving this stop{{/link-to}}</p>
 		  	<form>
+		  		<div class="form-group-header">View distance you can travel from this stop via:</div>
 				  <div class="form-group">
 				  	{{#if pedestrianIsochrone}}
-				  		<input type="checkbox" id="check-1" name="option-one" checked {{action "setIsochroneMode" "pedestrian"}}>
+				  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
 			  		{{else}}
-			  			<input type="checkbox" id="check-1" name="option-one" {{action "setIsochroneMode" "pedestrian"}}>
+			  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
 			  		{{/if}}
-				    <label for="check-1">View stop walkshed</label>
+				    <label for="radio-1">walking</label><br>
 			  		{{#if pedestrianIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min walk from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min walk from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min walk from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min walk from stop</div>
+			  			<div class="isochrone-legend-box">
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min walk from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min walk from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min walk from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min walk from stop</div>
+			  			</div>
 			  		{{/if}}
 			  		{{#if bicycleIsochrone}}
-			  			<input type="checkbox" id="check-2" name="option-two" checked {{action "setIsochroneMode" "bicycle"}}>
+			  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
 			  		{{else}}
-			  			<input type="checkbox" id="check-2" name="option-two" {{action "setIsochroneMode" "bicycle"}}>
+			  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
 			  		{{/if}}
-				    <label for="check-2">View stop bikeshed</label>
+				    <label for="radio-2">biking</label><br>
 			  		{{#if bicycleIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min bike ride from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min bike ride from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min bike ride from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min bike ride from stop</div>
+			  			<div class="isochrone-legend-box">
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min ride from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min ride from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min ride from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min ride from stop</div>
+			  			</div>
 			  		{{/if}}
-			  		{{#if autoIsochrone}}
-			  			<input type="checkbox" id="check-3" name="option-three" checked {{action "setIsochroneMode" "auto"}}>
+			  		{{#if multimodalIsochrone}}
+			  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
 			  		{{else}}
-			  			<input type="checkbox" id="check-3" name="option-three" {{action "setIsochroneMode" "auto"}}>
+			  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
 			  		{{/if}}
-				    <label for="check-3">View stop driveshed</label>
+				    <label for="radio-4">transit</label><br>
+			  		{{#if multimodalIsochrone}}
+			  			<div class="isochrone-legend-box">
+			  			{{#if bus_only}}
+			  				<input type="checkbox" id="check-1" name="bus-only" {{action "setBusOnly"}} checked><label for="check-1">Bus only</label>
+				  		{{else}}
+			  				<input type="checkbox" id="check-1" name="bus-only" {{action "setBusOnly"}}><label for="check-1">Bus only</label>
+				  		{{/if}}
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min trip from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min trip from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min trip from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min trip from stop</div>
+			  			</div>
+			  		{{/if}}
 			  		{{#if autoIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min drive from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min drive from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min drive from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min drive from stop</div>
+			  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+			  		{{else}}
+			  			<input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "auto"}}>
 			  		{{/if}}
-
+				    <label for="radio-3">driving</label>
+			  		{{#if autoIsochrone}}
+			  			<div class="isochrone-legend-box">
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min drive from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min drive from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min drive from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min drive from stop</div>
+			  			</div>
+			  		{{/if}}
 				  </div>
 				</form>
-			{{else}}
-				{{#if served_by}}
-					<form>
-					  <div class="form-group-header">Stops served by:</div>
-					  <div class="form-group">
-					    <label>{{served_by}}</label>
-					  </div>
-					</form>
-				{{/if}}
+			{{else if served_by}}
 				<form>
-				  <div class="form-group-header">Show isochrones for:</div>
+				  <div class="form-group-header">Stops served by:</div>
 				  <div class="form-group">
-				  	{{#if isochrones_mode}}
-				  	<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
-				  	{{else}}
-				  	<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
-				  	{{/if}}
-				    <label for="check-2">Walking</label>
+				    <label for="radio-1">{{served_by}}</label>
 				  </div>
 				</form>
-				{{/if}}
-			{{#if onestop_id}}
-			{{else if hoverStop}}
-				<div class="hover-detail">
-					<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
-					<p class="caption">Click the stop for more information</p>
-				</div>
-			{{else}}
-	    		<p class="caption">Hover on a stop for information</p>
 			{{/if}}
-			{{#unless onestop_id}}
-    	<button class="btn btn-mapzen" {{action "updatebbox"}}>Query</button>
-  		{{/unless}}
+			<form>
+				<div class="form-group-header">Show isochrones for:</div>
+				<div class="form-group">
+			  	{{#if isochrones_mode}}
+			  		<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
+			  	{{else}}
+			  		<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
+			  	{{/if}}
+			    <label for="check-2">Walking</label>
+				</div>
+			</form>
+			{{#if onestop_id}}
+				{{else if hoverStop}}
+					<div class="hover-detail">
+						<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
+						<p class="caption">Click the stop for more information</p>
+					</div>
+				{{else}}
+		    		<p class="caption">Hover on a stop for information</p>
+		    		{{#if mapMoved}}
+	    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+	  				{{/if}}
+			{{/if}}
 		</div>
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+
+	{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
+	
+	{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
+
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
@@ -98,8 +126,15 @@
 	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 	    {{/power-select}}
 	  </div>
-	  {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox")}}
+
+	  {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+			{{#if served_by}}
+				{{#each model.servedByRoute.features as |route|}}
+					{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
+					{{/geojson-layer}}
+				{{/each}}
+			{{/if}}
 			{{#each model.stops as |stop|}}
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}

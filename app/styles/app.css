@@ -125,7 +125,12 @@ input, button, select, textarea {
   hyphens: auto;
 }
 .isochrone-legend {
-  opacity: .5;
   margin-bottom:0;
   margin-top: 0;
+}
+.isochrone-legend-box {
+  margin-left: 25px;
+  width: 75%;
+  padding: 10px;
+  background-color: #f8f8f8;
 }

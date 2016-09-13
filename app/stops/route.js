@@ -18,6 +18,10 @@ export default Ember.Route.extend(mapBboxRoute, {
       refreshModel: true,
     },
     isochrones_mode: {
+       replace: true,
+      refreshModel: true,
+    },
+    bus_only: {
       replace: true,
       refreshModel: true,
     }
@@ -55,16 +59,34 @@ export default Ember.Route.extend(mapBboxRoute, {
         var stopLocation = onlyStop.get('geometry.coordinates');
         var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
         var mode = stops.get('query.isochrone_mode');
-        var json = {
-          locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
-          costing: mode,
-          contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
-        };
+        var busOnly = stops.get('query.bus_only');
+        if (busOnly) {
+          var json = {
+            locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
+            costing: mode,
+            costing_options: {"transit":{"use_bus":1.0}},
+            contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
+          };
+        } else {
+          var json = {
+            locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
+            costing: mode,
+            costing_options: {"pedestrian":{"use_ferry":0}},
+            contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
+          };
+        }
         url += escape(JSON.stringify(json));
         return Ember.RSVP.hash({
           stops: stops,
           onlyStop: onlyStop,
-          isochrones: Ember.$.ajax({ url })
+          url: url,
+          isochrones: Ember.$.ajax({ url }).then(function(response){
+            var polygons= response.features;
+            for (var i = 0; i < (polygons.length-1); i++){
+              var ring = polygons[i].geometry.coordinates.push(polygons[i+1].geometry.coordinates[0]);
+            }
+            return response;
+          })
         });
 
       } else if (stops.get('query.isochrones_mode')){
@@ -91,11 +113,28 @@ export default Ember.Route.extend(mapBboxRoute, {
         var onlyStop = stops.get('firstObject');
         var stopLocation = onlyStop.get('geometry.coordinates');
         var mode = stops.get('query.isochrone_mode');
-
-        return Ember.RSVP.hash({
-          stops: stops,
-          onlyStop: onlyStop,
-        });
+        var servedBy = stops.get('query.served_by');
+        if (servedBy!== null){
+          if (servedBy.indexOf('r') === 0) {
+            var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
+            url += servedBy;
+            return Ember.RSVP.hash({
+              stops: stops,
+              onlyStop: onlyStop,
+              servedByRoute: Ember.$.ajax({ url })
+            });
+          } else {
+            return Ember.RSVP.hash({
+              stops: stops,
+              onlyStop: onlyStop
+            });
+          }
+        } else {
+          return Ember.RSVP.hash({
+            stops: stops,
+            onlyStop: onlyStop
+          });
+        }
       }
     });
   }
