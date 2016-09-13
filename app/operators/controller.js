@@ -3,21 +3,21 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id'],
-	queryUrl: Ember.computed('bbox', 'onestop_id', function(){
-		var url = "https://transit.land/api/v1/operators?";
-		var arrayOfQueryParams = [];
-		for (var i = 0; i < this.get('queryParams').length; i++){
-			if (arrayOfQueryParams.indexOf(this.get('queryParams')[i]) === -1 && this.get(this.get('queryParams')[i]) !== null){
-				arrayOfQueryParams.push(this.get('queryParams')[i])
-				if (i === 0){
-					url = url + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
-				} else {
-					url = url + "&" + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
-				}
-			}
-		}
-		return url;
-	}),
+	// queryUrl: Ember.computed('bbox', 'onestop_id', function(){
+	// 	var url = "https://transit.land/api/v1/operators?";
+	// 	var arrayOfQueryParams = [];
+	// 	for (var i = 0; i < this.get('queryParams').length; i++){
+	// 		if (arrayOfQueryParams.indexOf(this.get('queryParams')[i]) === -1 && this.get(this.get('queryParams')[i]) !== null){
+	// 			arrayOfQueryParams.push(this.get('queryParams')[i])
+	// 			if (i === 0){
+	// 				url = url + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+	// 			} else {
+	// 				url = url + "&" + this.get('queryParams')[i] + "=" + this.get(this.get('queryParams')[i]);
+	// 			}
+	// 		}
+	// 	}
+	// 	return url;
+	// }),
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
