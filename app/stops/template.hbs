@@ -82,7 +82,7 @@
 			{{/if}}
 		</div>
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
-	<div><a target="_blank" href="{{queryUrl}}">See the Transitland API request URL for these results.</a></div>
+	{{url-builder entity="stops" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
