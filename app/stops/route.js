@@ -16,6 +16,10 @@ export default Ember.Route.extend(mapBboxRoute, {
     isochrone_mode: {
       replace: true,
       refreshModel: true,
+    },
+    bus_only: {
+      replace: true,
+      refreshModel: true,
     }
   },
   setupController: function (controller, model) {
@@ -51,12 +55,22 @@ export default Ember.Route.extend(mapBboxRoute, {
         var stopLocation = onlyStop.get('geometry.coordinates');
         var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
         var mode = stops.get('query.isochrone_mode');
-        var json = {
-          locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
-          costing: mode,
-          costing_options: {"pedestrian":{"use_ferry":0}},
-          contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
-        };
+        var busOnly = stops.get('query.bus_only');
+        if (busOnly) {
+          var json = {
+            locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
+            costing: mode,
+            costing_options: {"transit":{"use_bus":1.0}},
+            contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
+          };
+        } else {
+          var json = {
+            locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
+            costing: mode,
+            costing_options: {"pedestrian":{"use_ferry":0}},
+            contours: [{"time":15},{"time":30},{"time":45},{"time":60}]
+          };
+        }
         url += escape(JSON.stringify(json));
         return Ember.RSVP.hash({
           stops: stops,
