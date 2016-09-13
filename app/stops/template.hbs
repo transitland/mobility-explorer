@@ -56,12 +56,6 @@
 			  				<div class="isochrone-legend" style="color:#bf4040;">60 min trip from stop</div>
 			  			</div>
 			  		{{/if}}
-
-			  		
-
-
-
-
 			  		{{#if autoIsochrone}}
 			  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
 			  		{{else}}
@@ -86,17 +80,28 @@
 				  </div>
 				</form>
 			{{/if}}
-			{{#if onestop_id}}
-			{{else if hoverStop}}
-				<div class="hover-detail">
-					<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
-					<p class="caption">Click the stop for more information</p>
+			<form>
+				<div class="form-group-header">Show isochrones for:</div>
+				<div class="form-group">
+			  	{{#if isochrones_mode}}
+			  		<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
+			  	{{else}}
+			  		<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
+			  	{{/if}}
+			    <label for="check-2">Walking</label>
 				</div>
-			{{else}}
-	    		<p class="caption">Hover on a stop for information</p>
-	    		{{#if mapMoved}}
-    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-  				{{/if}}
+			</form>
+			{{#if onestop_id}}
+				{{else if hoverStop}}
+					<div class="hover-detail">
+						<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
+						<p class="caption">Click the stop for more information</p>
+					</div>
+				{{else}}
+		    		<p class="caption">Hover on a stop for information</p>
+		    		{{#if mapMoved}}
+	    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+	  				{{/if}}
 			{{/if}}
 		</div>
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
@@ -122,7 +127,6 @@
 	    {{/power-select}}
 	  </div>
 
-
 	  {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 			{{#if served_by}}
@@ -135,19 +139,25 @@
 			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 			  		{{/marker-layer}}
 		  {{/each}}
-		  {{#if onestop_id}}
-			  {{#if isochrone_mode}}
+		  {{#if isochrone_mode}}
+		  	{{#if onestop_id}}
 				  {{#each model.isochrones.features as |isochrone|}}
 				  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
 				  	{{/geojson-layer}}
 			  	{{/each}}
 			  {{/if}}
 		  {{/if}}
+			{{#if isochrones_mode}}
+				{{#each model.isochrones as |isochrone|}}
+					{{#each isochrone.features as |feature|}}
+				  	{{#geojson-layer geoJSON=feature fillColor=feature.properties.fill weight=1 color=feature.properties.fill fillOpacity=feature.properties.fill-opacity}}
+				  	{{/geojson-layer}}
+				  {{/each}}
+				{{/each}}
+		  {{/if}}
 		{{/leaflet-map}}
 	</div>
 </div>
-
-
 
 
 
