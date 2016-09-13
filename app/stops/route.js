@@ -61,6 +61,7 @@ export default Ember.Route.extend(mapBboxRoute, {
         return Ember.RSVP.hash({
           stops: stops,
           onlyStop: onlyStop,
+          url: url,
           isochrones: Ember.$.ajax({ url }).then(function(response){
             var polygons= response.features;
             for (var i = 0; i < (polygons.length-1); i++){
