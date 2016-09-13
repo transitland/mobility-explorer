@@ -2,7 +2,7 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode'],
+	queryParams: ['bbox', 'onestop_id', 'served_by', 'isochrone_mode', 'bus_only'],
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	onestop_id: null,
@@ -11,6 +11,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	isochrone_mode: null,
 	hoverStop: null,
 	place: null,
+	bus_only: null,
 	pedestrianIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'pedestrian');
 	}),
@@ -28,7 +29,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (10, 10)
 	}),
 	highlightedIcon: L.icon({
-		iconUrl: 'assets/images/stop2.png',		
+		iconUrl: 'assets/images/stop2.png',
 		iconSize: (10, 10),
 	}),
 	mapMoved: false,
@@ -87,6 +88,13 @@ export default Ember.Controller.extend(mapBboxController, {
   			this.set('isochrone_mode', null);
   		} else {
   			this.set('isochrone_mode', mode);
+  		}
+		},
+		setBusOnly(){
+  		if (this.get('bus_only') === true){
+  			this.set('bus_only', null);
+  		} else {
+  			this.set('bus_only', true);
   		}
 		}
 	}

@@ -16,10 +16,12 @@
 			  		{{/if}}
 				    <label for="radio-1">walking</label><br>
 			  		{{#if pedestrianIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min walk from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min walk from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min walk from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min walk from stop</div>
+			  			<div class="isochrone-legend-box">
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min walk from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min walk from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min walk from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min walk from stop</div>
+			  			</div>
 			  		{{/if}}
 			  		{{#if bicycleIsochrone}}
 			  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
@@ -28,10 +30,12 @@
 			  		{{/if}}
 				    <label for="radio-2">biking</label><br>
 			  		{{#if bicycleIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min ride from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min ride from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min ride from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min ride from stop</div>
+			  			<div class="isochrone-legend-box">
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min ride from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min ride from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min ride from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min ride from stop</div>
+			  			</div>
 			  		{{/if}}
 			  		{{#if multimodalIsochrone}}
 			  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
@@ -40,11 +44,24 @@
 			  		{{/if}}
 				    <label for="radio-4">transit</label><br>
 			  		{{#if multimodalIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min trip from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min trip from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min trip from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min trip from stop</div>
+			  			<div class="isochrone-legend-box">
+			  			{{#if bus_only}}
+			  				<input type="checkbox" id="check-1" name="bus-only" {{action "setBusOnly"}} checked><label for="check-1">Bus only</label>
+				  		{{else}}
+			  				<input type="checkbox" id="check-1" name="bus-only" {{action "setBusOnly"}}><label for="check-1">Bus only</label>
+				  		{{/if}}
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min trip from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min trip from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min trip from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min trip from stop</div>
+			  			</div>
 			  		{{/if}}
+
+			  		
+
+
+
+
 			  		{{#if autoIsochrone}}
 			  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
 			  		{{else}}
@@ -52,12 +69,13 @@
 			  		{{/if}}
 				    <label for="radio-3">driving</label>
 			  		{{#if autoIsochrone}}
-			  				<div class="isochron-legend" style="color:#50bf40;">15 min drive from stop</div>
-			  				<div class="isochron-legend" style="color:#9fbf40;">30 min drive from stop</div>
-			  				<div class="isochron-legend" style="color:#bf8f40;">45 min drive from stop</div>
-			  				<div class="isochron-legend" style="color:#bf4040;">60 min drive from stop</div>
+			  			<div class="isochrone-legend-box">
+			  				<div class="isochrone-legend" style="color:#50bf40;">15 min drive from stop</div>
+			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min drive from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min drive from stop</div>
+			  				<div class="isochrone-legend" style="color:#bf4040;">60 min drive from stop</div>
+			  			</div>
 			  		{{/if}}
-
 				  </div>
 				</form>
 			{{else if served_by}}
