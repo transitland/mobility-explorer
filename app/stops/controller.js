@@ -28,7 +28,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (10, 10)
 	}),
 	highlightedIcon: L.icon({
-		iconUrl: 'assets/images/stop2.png',		
+		iconUrl: 'assets/images/stop2.png',
 		iconSize: (10, 10),
 	}),
 	mapMoved: false,
