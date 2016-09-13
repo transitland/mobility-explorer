@@ -81,15 +81,12 @@
 				</form>
 			{{/if}}
 			<form>
-				<div class="form-group-header">Show isochrones for:</div>
-				<div class="form-group">
-			  	{{#if isochrones_mode}}
-			  		<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
-			  	{{else}}
-			  		<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
-			  	{{/if}}
-			    <label for="check-2">Walking</label>
-				</div>
+		  	{{#if isochrones_mode}}
+		  		<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
+		  	{{else}}
+		  		<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
+		  	{{/if}}
+	    	<label for="check-2">Areas within a 15-minute walk of stops</label>
 			</form>
 			{{#if onestop_id}}
 				{{else if hoverStop}}
@@ -98,7 +95,7 @@
 						<p class="caption">Click the stop for more information</p>
 					</div>
 				{{else}}
-		    		<p class="caption">Hover on a stop for information</p>
+		    		<p class="caption">Hover over a stop for information</p>
 		    		{{#if mapMoved}}
 	    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 	  				{{/if}}
@@ -150,7 +147,7 @@
 			{{#if isochrones_mode}}
 				{{#each model.isochrones as |isochrone|}}
 					{{#each isochrone.features as |feature|}}
-				  	{{#geojson-layer geoJSON=feature fillColor=feature.properties.fill weight=1 color=feature.properties.fill fillOpacity=feature.properties.fill-opacity}}
+				  	{{#geojson-layer geoJSON=feature fillColor=feature.properties.fill weight=1 color=false fillOpacity=feature.properties.fill-opacity}}
 				  	{{/geojson-layer}}
 				  {{/each}}
 				{{/each}}
