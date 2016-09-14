@@ -13,6 +13,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	style_routes_by: null,
 	selectedRoute: null,
 	place: null,
+	displayStops: false,
 	onlyRoute: Ember.computed('onestop_id', function(){
 		var data = this.get('routes');
 		var onlyRoute = data.get('firstObject');
@@ -148,6 +149,9 @@ export default Ember.Controller.extend(mapBboxController, {
       if (Ember.isBlank(term)) { return []; }
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
+    },
+    displayStops: function(){
+    	this.toggleProperty('displayStops');
     }
   }
 	

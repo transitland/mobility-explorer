@@ -10,8 +10,27 @@
   		{{else}}
 	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
   		{{/if}}
-	  	<br>
-			<p>{{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}}</p>
+
+  		<div>
+	  		<form>
+		  		<div class="form-group-header">RSPs available for route:</div>
+				  <div class="form-group">
+				  		<input type="radio" id="radio-1" name="options">
+				  		<label for="radio-1">rsp 1</label><br>
+				  		<input type="radio" id="radio-2" name="options">
+				  		<label for="radio-2">rsp 2</label><br>
+				  </div>
+				</form>
+			</div>
+	
+	  	{{#if displayStops}}
+	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}}>
+	  	{{else}}
+	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}} checked>
+	  	{{/if}}
+
+
+	  	<label for="check-1">{{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}}</label>
 		{{else if operated_by}}
 			<form>
 				<strong>Operated by:</strong> {{operated_by}}<br>
