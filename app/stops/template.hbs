@@ -80,14 +80,16 @@
 				  </div>
 				</form>
 			{{/if}}
-			<form>
-		  	{{#if isochrones_mode}}
-		  		<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
-		  	{{else}}
-		  		<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
-		  	{{/if}}
-	    	<label for="check-2">Areas within a 15-minute walk of stops</label>
-			</form>
+			{{#unless onestop_id}}
+				<form>
+			  	{{#if isochrones_mode}}
+			  		<input type="checkbox" id="check-1" name="option-two" checked {{action "setIsochronesMode"}}>
+			  	{{else}}
+			  		<input type="checkbox" id="check-1" name="option-two" unchecked {{action "setIsochronesMode"}}>
+			  	{{/if}}
+		    	<label for="check-2">Areas within a 15-minute walk of stops</label>
+				</form>
+			{{/unless}}
 			{{#if onestop_id}}
 				{{else if hoverStop}}
 					<div class="hover-detail">
