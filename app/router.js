@@ -12,7 +12,7 @@ Router.map(function() {
     this.route('routes', function(){
       // future toggles for route line render style:
       this.route('route', { path: "/:route-id" });
-      
+
       this.route('by-frequency');
       this.route('bike-access');
       this.route('wheelchair-access');
@@ -30,6 +30,7 @@ Router.map(function() {
       // routes in use:
       this.route('mode');
       this.route('operator');
+      this.route('route-stop-patterns');
     });
 
     this.route('stops', function(){
