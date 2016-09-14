@@ -12,5 +12,10 @@
 	{{#if route.operated_by_name}}
 		<strong>Operated by:</strong> {{#link-to 'operators' (query-params bbox=bbox onestop_id=route.operated_by_onestop_id) }}{{route.operated_by_name}}<br>{{/link-to}}
 	{{/if}}
-	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
+	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>
+	{{/if}}
+	<strong>Route-stop patterns:</strong>
+	{{#each route.route_stop_patterns_by_onestop_id as |rsp|}}
+		<br>{{rsp}}
+	{{/each}}
 {{/if}}
