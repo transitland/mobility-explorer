@@ -1,15 +1,16 @@
 <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
 	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
   
-  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
-  
-  <div class="expanded-selection">
+    {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
+    <div class="expanded-selection">
+
 		{{#if onestop_id}}
 			{{#if selectedRoute}}
 	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
   		{{else}}
 	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
   		{{/if}}
+
   		<!-- <div>
 	  		<form>
 		  		<div class="form-group-header">RSPs available for route:</div>
@@ -21,31 +22,15 @@
 				  </div>
 				</form>
 			</div> -->
-			<br>
-			<!-- Checkbox to use later with functionality to toggle viewing stops for route within routes route. -->
-	  	<!-- {{#if displayStops}}
+	
+	  	{{#if displayStops}}
 	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}}>
 	  	{{else}}
 	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}} checked>
 	  	{{/if}}
-	  	<label for="check-1"> -->
-	  		{{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}}
-	  	<!-- </label> -->
-	  	<br>
-	  	{{#each route.route_stop_patterns_by_onestop_id as |rsp|}}
-				<br>{{rsp}}
-			{{/each}}
-			{{#power-select
-	      options=route_stop_patterns_by_onestop_ids
-	      selected=route_stop_patterns_by_onestop_id
-				placeholder="Route stop patterns"
-				searchPlaceholder="Type to filter..."
-	      onchange=(action "setRouteStopPattern")
-        onclose=(action "clearRouteStopPattern")
-	      as |route_stop_patterns_by_onestop_id|
-	    }}
-	    	{{route_stop_patterns_by_onestop_id}}
-	    {{/power-select}}
+
+
+	  	<label for="check-1">{{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}}</label>
 		{{else if operated_by}}
 			<form>
 				<strong>Operated by:</strong> {{operated_by}}<br>

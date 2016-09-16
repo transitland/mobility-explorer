@@ -6,10 +6,6 @@ export default Ember.Route.extend(mapBboxRoute, {
     onestop_id: {
       refreshModel: true
     },
-    bbox: {
-      replace: true,
-      refreshModel: true
-    },
     served_by: {
       refreshModel: true
     },
@@ -52,6 +48,7 @@ export default Ember.Route.extend(mapBboxRoute, {
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
+    this.store.unloadAll('data/transitland/route_stop_patterns');
     var self = this;
     return this.store.query('data/transitland/stop', params).then(function(stops) {
       if (stops.get('query.isochrone_mode')){

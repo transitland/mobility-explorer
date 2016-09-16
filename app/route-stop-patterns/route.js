@@ -3,13 +3,11 @@ import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 
 export default Ember.Route.extend(mapBboxRoute, {
   queryParams: {
-    onestop_id: {
-      // replace: true,
+   onestop_id: {
       refreshModel: true
     },
-    bbox: {
-      replace: true,
-      refreshModel: true
+    route_onestop_id: {
+    	refreshModel: true
     }
   },
   setupController: function (controller, model) {
@@ -37,8 +35,8 @@ export default Ember.Route.extend(mapBboxRoute, {
   model: function(params){
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
-    this.store.unloadAll('data/transitland/route');  
-    this.store.unloadAll('data/transitland/route_stop_patterns'); 
-    return this.store.query('data/transitland/operator', params);
+    this.store.unloadAll('data/transitland/route');
+    this.store.unloadAll('data/transitland/route_stop_patterns');
+    return this.store.query('data/transitland/route_stop_patterns', params);
   }
 });

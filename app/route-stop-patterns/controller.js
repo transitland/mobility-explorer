@@ -1,18 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox'],
+	queryParams: ['onestop_id', 'route_onestop_id'],
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
-	queryIsInactive: false,
+	route_onestop_id: null,
 	onestop_id: null,
 	serves: null,
 	bbox: null,
-	operated_by: null,
-	vehicle_type: null,
-	style_routes_by: null,
-	selectedRoute: null,
-	place: null,
-	route_stop_patterns_by_onestop_id: null,
 	displayStops: false,
 	onlyRoute: Ember.computed('onestop_id', function(){
 		var data = this.get('routes');
@@ -23,8 +17,6 @@ export default Ember.Controller.extend({
 			return onlyRoute;
 		}
 	}),
-	hoverRoute: null,
-	unstyledColor: "#6ea0a4",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -54,24 +46,11 @@ export default Ember.Controller.extend({
 			return boundsArray;
 		}
 	}),
-	icon: L.icon({
-		iconUrl: 'assets/images/marker.png',		
-		iconSize: (20, 20)
-	}),
 	routes: Ember.computed('model', function(){
 		var data = this.get('model');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
-	}),
-	route_stop_patterns_by_onestop_ids: Ember.computed ('model', function(){
-		return this.get('model').get('firstObject').get('route_stop_patterns_by_onestop_id');
-	}),
-	routeStyleIsMode: Ember.computed('style_routes_by', function(){
-		return (this.get('style_routes_by') === 'mode');
-	}),
-	routeStyleIsOperator: Ember.computed('style_routes_by', function(){
-		return (this.get('style_routes_by') === 'operator');
 	}),
 	mapMoved: false,
 	mousedOver: false,
@@ -155,13 +134,6 @@ export default Ember.Controller.extend({
     },
     displayStops: function(){
     	this.toggleProperty('displayStops');
-    },
-    setRouteStopPattern: function(selected){
-    	this.set('routeStopPattern', selected);
-    	this.transitionToRoute('route-stop-patterns', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
-    },
-    clearRouteStopPattern: function(){
-    	this.set('routeStopPattern', null);
     }
   }
 	
