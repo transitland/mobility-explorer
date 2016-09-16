@@ -42,7 +42,7 @@
 		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#each model as |route-stop-pattern|}}
-				  {{#polyline-layer locations=route-stop-pattern.location}}
+				  {{#polyline-layer locations=route-stop-pattern.location color="#d4645c" opacity=1}}
 					{{/polyline-layer}}
 				{{/each}}
 		{{/leaflet-map}}

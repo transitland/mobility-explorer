@@ -6,7 +6,7 @@ export default Ember.Route.extend(mapBboxRoute, {
    onestop_id: {
       refreshModel: true
     },
-    route_onestop_id: {
+    route: {
     	refreshModel: true
     }
   },

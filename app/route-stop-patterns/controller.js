@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-	queryParams: ['onestop_id', 'route_onestop_id'],
+	queryParams: ['onestop_id', 'route'],
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
-	route_onestop_id: null,
+	route: null,
 	onestop_id: null,
 	serves: null,
 	bbox: null,
