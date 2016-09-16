@@ -1,0 +1,56 @@
+// loading spinner animation
+@keyframes spinning {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinning {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinning {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+#loading {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 30;
+  &::before {
+    content: ' ';
+    position: fixed;
+    top: 55%;
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+    z-index: 20030;
+    border-radius: 50%;
+    border: 15px solid #ee914b;
+    border-top-color: transparent;
+    color: #fff;
+    animation: spinning 1s infinite linear;
+    -webkit-animation: spinning 1s infinite linear;
+    -moz-animation: spinning 1s infinite linear;
+  }
+  &::after {
+    content: 'Loading';
+    position: fixed;
+    top: calc(55% + 40px);
+    left: calc(50% - 24px);
+  }
+}

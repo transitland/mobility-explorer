@@ -1,6 +1,9 @@
 <div class="col-xs-12 col-sm-12 col-md-3">
+  
+ 
+
   <h2>Mobility Explorer</h2>
-  <div class="btn-group-vertical" role="group">
+  <div class="btn-group-vertical" role="group" >
     {{#link-to 'routes' (query-params bbox=bbox onestop_id=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
     {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
     {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
@@ -20,7 +23,7 @@
       {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
     {{/power-select}}
   </div>
-
+    {{#if currentlyLoading}} {{loading-spinner}}{{/if}}
     {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
       {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
     {{/leaflet-map}}
