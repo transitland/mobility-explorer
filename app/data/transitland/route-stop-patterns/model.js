@@ -23,7 +23,6 @@ var Route_stop_patterns = DS.Model.extend({
 		var coordinates = this.get('geometry')['coordinates'];
 		var coordinatesLength = coordinates.length;
 		var reversedCoordArray = [];
-		
 		for (var i = 0; i < coordinatesLength; i++){
 				var tempCoord = null;
 				var lat = this.get('geometry')['coordinates'][i][0];
@@ -36,14 +35,10 @@ var Route_stop_patterns = DS.Model.extend({
 				coordArray.push(lon);
 				reversedCoordArray.push(coordArray);
 		}
-
 		return reversedCoordArray;
 	}).property('geometry'),
 });
 
 export default Route_stop_patterns;
-
-// Object {type: "LineString", coordinates: Array[67]}
-// Object {type: "MultiLineString", coordinates: Array[2]}
 
 
