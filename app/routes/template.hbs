@@ -6,9 +6,9 @@
   <div class="expanded-selection">
 		{{#if onestop_id}}
 			{{#if selectedRoute}}
-	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
+	  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
   		{{else}}
-	  		{{#route-detail bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
+	  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
   		{{/if}}
   		<!-- <div>
 	  		<form>

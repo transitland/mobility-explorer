@@ -158,7 +158,7 @@ export default Ember.Controller.extend({
     },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);
-    	this.transitionToRoute('route-stop-patterns', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
+    	this.transitionToRoute('route-stop-patterns', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('routeStopPattern')}});
     },
     clearRouteStopPattern: function(){
     	this.set('routeStopPattern', null);
