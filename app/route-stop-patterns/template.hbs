@@ -4,25 +4,32 @@
   {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
   
   <div class="expanded-selection">
-		{{#if onestop_id}}
-			{{#route-detail type="route stop pattern" bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
+
+			{{#each model.traversedByRoute.features as |route|}}
+	  		{{#route-detail bbox=bbox onestop_id=route.properties.onestop_id route=route.properties}}{{/route-detail}}
+  		{{/each}}
 			<br>
-			<!-- Checkbox to use later with functionality to toggle viewing stops for route within routes route. -->
-	  	<!-- {{#if displayStops}}
-	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}}>
-	  	{{else}}
-	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}} checked>
-	  	{{/if}}
-	  	<label for="check-1"> -->
-	  		<!-- {{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}} -->
-	  	<!-- </label> -->
-	  	<br>
-		{{/if}}		
+
+			<div class="form-group">
+		  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
+		  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
+		    <label for="check-1">Show stops served by route</label>
+		  </div>
+
+		  
+
+		  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Route stop patterns ^{{/link-to}}
+	  	
+
+	  
+		
+		
+		
+
+		
 	</div>
   {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
-  
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
-
   {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
@@ -40,11 +47,13 @@
 	    {{/power-select}}
 	  </div>
 		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-				{{#each model as |route-stop-pattern|}}
-				  {{#polyline-layer locations=route-stop-pattern.location color="#d4645c" opacity=1}}
-					{{/polyline-layer}}
+			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
+				
+				{{#each model.traversedByRoute.features as |route|}}
+					{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
+					{{/geojson-layer}}
 				{{/each}}
+		
 		{{/leaflet-map}}
 	</div>
 </div>

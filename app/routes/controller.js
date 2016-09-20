@@ -133,7 +133,7 @@ export default Ember.Controller.extend({
 				"route_path_weight": 2.5
 			});
 		},
-		setOnestopId(route) {
+		setOnestopId: function(route) {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
 			this.set('selectedRoute', route);
@@ -145,10 +145,10 @@ export default Ember.Controller.extend({
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
   	},
-  	clearPlace(){
+  	clearPlace: function(){
   		this.set('place', null);
   	},
-		searchRepo(term) {
+		searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
@@ -158,7 +158,7 @@ export default Ember.Controller.extend({
     },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);
-    	this.transitionToRoute('route-stop-patterns', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('routeStopPattern'), route: this.get('onestop_id')}});
+    	this.transitionToRoute('route-stop-pattern', {queryParams: {bbox: this.get('bbox'), traversed_by: this.get('onestop_id')}});
     },
     clearRouteStopPattern: function(){
     	this.set('routeStopPattern', null);

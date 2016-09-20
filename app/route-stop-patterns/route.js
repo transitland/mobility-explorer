@@ -3,10 +3,8 @@ import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 
 export default Ember.Route.extend(mapBboxRoute, {
   queryParams: {
-   onestop_id: {
-      refreshModel: true
-    },
-    route: {
+  
+    traversed_by: {
     	refreshModel: true
     }
   },
@@ -36,7 +34,32 @@ export default Ember.Route.extend(mapBboxRoute, {
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
-    this.store.unloadAll('data/transitland/route_stop_patterns');
-    return this.store.query('data/transitland/route_stop_patterns', params);
+    this.store.unloadAll('data/transitland/route_stop_pattern');
+    return this.store.query('data/transitland/route_stop_pattern', params).then(function(route_stop_patterns){
+      var firstRsp = route_stop_patterns.get('firstObject');
+      var routeOnestopId = firstRsp.get('route_onestop_id');
+      if (routeOnestopId !== null){
+        if (routeOnestopId.indexOf('r') === 0) {
+          var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
+          url += routeOnestopId;
+          // var traversedByRoute = Ember.$.ajax({ url }).then(function(response){
+          // debugger;
+            
+          // })
+          return Ember.RSVP.hash({
+            route_stop_patterns: route_stop_patterns,
+            traversedByRoute: Ember.$.ajax({ url })
+          });
+        } else {
+          return Ember.RSVP.hash({
+            route_stop_patterns: route_stop_patterns,
+          });
+        }
+      } else {
+        return Ember.RSVP.hash({
+          route_stop_patterns: route_stop_patterns,
+        });
+      }
+    });
   }
 });

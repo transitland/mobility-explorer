@@ -1,22 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-	queryParams: ['onestop_id', 'route'],
+	queryParams: ['traversed_by'],
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
-	route: null,
+	traversed_by: null,
 	onestop_id: null,
 	serves: null,
 	bbox: null,
 	displayStops: false,
-	onlyRoute: Ember.computed('onestop_id', function(){
-		var data = this.get('routes');
-		var onlyRoute = data.get('firstObject');
-		if (this.get('onestop_id') === null){
-			return null
-		} else {
-			return onlyRoute;
-		}
-	}),
+	selectedRsp: null,
+	
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -46,12 +39,7 @@ export default Ember.Controller.extend({
 			return boundsArray;
 		}
 	}),
-	routes: Ember.computed('model', function(){
-		var data = this.get('model');
-		var routes = [];
-		routes = routes.concat(data.map(function(route){return route;}));
-		return routes;
-	}),
+
 	mapMoved: false,
 	mousedOver: false,
 	actions: {
@@ -72,46 +60,7 @@ export default Ember.Controller.extend({
 		mouseOver(){
 			this.set('mousedOver', true);
 		},
-		setRouteStyle(style){
-			if (this.get('style_routes_by') === style){
-  			this.set('style_routes_by', null);
-  		} else {
-  			this.set('style_routes_by', style);
-  		}
-		},
-		setRoute(route){
-			var onestop_id = route.get('id');
-			this.set('onestop_id', onestop_id);
-			this.set('selectedRoute', route);
-		},
-		selectRoute(e){
-			e.target.bringToFront();
-			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
-			});
-		},
-		unselectRoute(e){
-			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
-			});
-		},
-		selectUnstyledRoute(e){
-			e.target.bringToFront();
-			e.target.setStyle({
-				"color":"#d4645c",
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5
-			});
-		},
-		unselectUnstyledRoute(e){
-			e.target.setStyle({
-				"color":"#6ea0a4",
-				"route_path_opacity": 0.75,
-				"route_path_weight": 2.5
-			});
-		},
+		
 		setOnestopId(route) {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
@@ -134,6 +83,9 @@ export default Ember.Controller.extend({
     },
     displayStops: function(){
     	this.toggleProperty('displayStops');
+    },
+    setRsp: function(rsp){
+    	this.set('selectedRsp', rsp);
     }
   }
 	

@@ -4,38 +4,27 @@
   {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
   
   <div class="expanded-selection">
-		{{#if onestop_id}}
+  	{{#if onestop_id}}
 			{{#if selectedRoute}}
 	  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
   		{{else}}
 	  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
   		{{/if}}
-  		<!-- <div>
-	  		<form>
-		  		<div class="form-group-header">RSPs available for route:</div>
-				  <div class="form-group">
-				  		<input type="radio" id="radio-1" name="options">
-				  		<label for="radio-1">rsp 1</label><br>
-				  		<input type="radio" id="radio-2" name="options">
-				  		<label for="radio-2">rsp 2</label><br>
-				  </div>
-				</form>
-			</div> -->
 			<br>
-			<!-- Checkbox to use later with functionality to toggle viewing stops for route within routes route. -->
-	  	<!-- {{#if displayStops}}
-	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}}>
-	  	{{else}}
-	  		<input type="checkbox" id="check-1" name="display-stops" {{action "displayStops"}} checked>
-	  	{{/if}}
-	  	<label for="check-1"> -->
-	  		{{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}}
-	  	<!-- </label> -->
-	  	<br>
-	  	{{#each route.route_stop_patterns_by_onestop_id as |rsp|}}
-				<br>{{rsp}}
-			{{/each}}
-			{{#power-select
+
+			<div class="form-group">
+		  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
+		  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
+		    <label for="check-1">Show stops served by route</label>
+		  </div>
+
+		  
+
+		  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Route stop patterns v{{/link-to}}
+	  	
+	  	<!-- {{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}} -->
+	  
+			<!-- {{#power-select
 	      options=route_stop_patterns_by_onestop_ids
 	      selected=route_stop_patterns_by_onestop_id
 				placeholder="Route stop patterns"
@@ -45,7 +34,7 @@
 	      as |route_stop_patterns_by_onestop_id|
 	    }}
 	    	{{route_stop_patterns_by_onestop_id}}
-	    {{/power-select}}
+	    {{/power-select}} -->
 		{{else if operated_by}}
 			<form>
 				<strong>Operated by:</strong> {{operated_by}}<br>
@@ -82,7 +71,10 @@
 	    }}
 	      {{route.name}} {{route.tags.route_long_name}}
 	    {{/power-select}}
+
+			
 		{{/if}}
+		
 		{{#if routeStyleIsMode}}
 			{{#unless selectedRoute}}
 				<p class="caption">Select mode:</p>
@@ -98,7 +90,7 @@
 		{{#if routeStyleIsOperator}}
 			Operator Key coming soon
 		{{/if}}
-		
+
 		{{#if selectedRoute}}
 		{{else if onlyRoute}}
 		{{else if hoverRoute}}
