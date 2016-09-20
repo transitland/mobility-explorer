@@ -36,16 +36,11 @@ export default Ember.Route.extend(mapBboxRoute, {
     this.store.unloadAll('data/transitland/route');
     this.store.unloadAll('data/transitland/route_stop_pattern');
     return this.store.query('data/transitland/route_stop_pattern', params).then(function(route_stop_patterns){
-      var firstRsp = route_stop_patterns.get('firstObject');
-      var routeOnestopId = firstRsp.get('route_onestop_id');
+      var routeOnestopId = route_stop_patterns.get('query.traversed_by');
       if (routeOnestopId !== null){
         if (routeOnestopId.indexOf('r') === 0) {
           var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
           url += routeOnestopId;
-          // var traversedByRoute = Ember.$.ajax({ url }).then(function(response){
-          // debugger;
-            
-          // })
           return Ember.RSVP.hash({
             route_stop_patterns: route_stop_patterns,
             traversedByRoute: Ember.$.ajax({ url })

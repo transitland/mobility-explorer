@@ -19,7 +19,7 @@ var Route_stop_pattern = DS.Model.extend({
 	trips: DS.attr(),
 	tags: DS.attr(),
 	default_color: "#6ea0a4",
-	path_opacity: 0.75,
+	path_opacity: 0,
 	path_weight: 2.5,
 
 	location: (function(){

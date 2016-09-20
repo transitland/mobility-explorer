@@ -9,7 +9,6 @@ export default Ember.Controller.extend({
 	bbox: null,
 	displayStops: false,
 	selectedRsp: null,
-	
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
 			var defaultBoundsArray = [];
@@ -85,7 +84,12 @@ export default Ember.Controller.extend({
     	this.toggleProperty('displayStops');
     },
     setRsp: function(rsp){
+    	if (this.get('selectedRsp')!== null){
+    		this.get('selectedRsp').set('path_opacity', 0);
+    	};
     	this.set('selectedRsp', rsp);
+    	rsp.set('default_color', 'red');
+    	rsp.set('path_opacity', 1);
     }
   }
 	
