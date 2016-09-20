@@ -20,21 +20,10 @@
 
 		  
 
-		  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Route stop patterns v{{/link-to}}
+		  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}
 	  	
-	  	<!-- {{#link-to 'stops' (query-params bbox=bbox onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}View stops served by route{{/link-to}} -->
+	  	
 	  
-			<!-- {{#power-select
-	      options=route_stop_patterns_by_onestop_ids
-	      selected=route_stop_patterns_by_onestop_id
-				placeholder="Route stop patterns"
-				searchPlaceholder="Type to filter..."
-	      onchange=(action "setRouteStopPattern")
-        onclose=(action "clearRouteStopPattern")
-	      as |route_stop_patterns_by_onestop_id|
-	    }}
-	    	{{route_stop_patterns_by_onestop_id}}
-	    {{/power-select}} -->
 		{{else if operated_by}}
 			<form>
 				<strong>Operated by:</strong> {{operated_by}}<br>

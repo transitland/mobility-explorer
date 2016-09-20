@@ -16,26 +16,22 @@
 		    <label for="check-1">Show stops served by route</label>
 		  </div>
 
-
-		  
-
-		  <div>
-		  	Selected RSP: {{selectedRsp.onestop_id}}
+  		  <div>
 	  		<form>
-		  		<div class="form-group-header">{{#link-to 'routes' (query-params bbox=bbox onestop_id=traversed_by operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Route stop patterns ^{{/link-to}}</div>
+		  		<div class="form-group-header">{{#link-to 'routes' (query-params bbox=bbox onestop_id=traversed_by operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Hide route stop patterns{{/link-to}}</div>
 				  <div class="form-group">
 				  	 {{#each model.route_stop_patterns as |rsp|}}
-		  					<input type="radio" id=rsp name="options" {{action "setRsp" rsp}}>
-				  			<label for=rsp>{{rsp.onestop_id}}</label><br>
+				  	 	{{#if rsp.is_selected}}
+		  					<input type="radio" id=rsp.onestop_id name="options" checked {{action "setRsp" rsp}}>
+		  				{{else}}
+		  					<input type="radio" id=rsp.onestop_id name="options" {{action "setRsp" rsp}}>
+		  				{{/if}}
+				  			<label for=rsp.onestop_id>{{rsp.onestop_id}}</label><br>
 		  				{{/each}}	
 				  </div>
 				</form>
 			</div>
 
-
-
-		 
-		
 	</div>
   {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  

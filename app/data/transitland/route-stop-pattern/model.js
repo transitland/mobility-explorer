@@ -21,6 +21,7 @@ var Route_stop_pattern = DS.Model.extend({
 	default_color: "#6ea0a4",
 	path_opacity: 0,
 	path_weight: 2.5,
+	is_selected: false,
 
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'];

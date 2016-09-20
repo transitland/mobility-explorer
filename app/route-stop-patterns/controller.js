@@ -86,10 +86,12 @@ export default Ember.Controller.extend({
     setRsp: function(rsp){
     	if (this.get('selectedRsp')!== null){
     		this.get('selectedRsp').set('path_opacity', 0);
+    		this.get('selectedRsp').set('is_selected', false);
     	};
     	this.set('selectedRsp', rsp);
     	rsp.set('default_color', 'red');
     	rsp.set('path_opacity', 1);
+    	rsp.set('is_selected', true);
     }
   }
 	
