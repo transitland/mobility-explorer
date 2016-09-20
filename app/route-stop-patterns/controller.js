@@ -84,14 +84,25 @@ export default Ember.Controller.extend({
     	this.toggleProperty('displayStops');
     },
     setRsp: function(rsp){
-    	if (this.get('selectedRsp')!== null){
-    		this.get('selectedRsp').set('path_opacity', 0);
-    		this.get('selectedRsp').set('is_selected', false);
-    	};
-    	this.set('selectedRsp', rsp);
-    	rsp.set('default_color', '#d4645c');
-    	rsp.set('path_opacity', 1);
-    	rsp.set('is_selected', true);
+    	if (this.get('selectedRsp')!== null && this.get('selectedRsp').get('id') === rsp.get('id')){
+  			this.set('selectedRsp', null);
+  			rsp.set('is_selected', false);
+  			rsp.set('default_color', '#6ea0a4');
+    		rsp.set('path_opacity', 0);
+    	} else if (this.get('selectedRsp')!== null){
+  			this.get('selectedRsp').set('path_opacity', 0);
+  			this.get('selectedRsp').set('is_selected', false);
+	    	rsp.set('default_color', '#d4645c');
+	    	rsp.set('path_opacity', 1);
+	    	rsp.set('is_selected', true);
+  			this.set('selectedRsp', rsp);
+  		}
+    	else {
+	    	this.set('selectedRsp', rsp);
+	    	rsp.set('default_color', '#d4645c');
+	    	rsp.set('path_opacity', 1);
+	    	rsp.set('is_selected', true);
+	    }
     }
   }
 	
