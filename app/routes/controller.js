@@ -14,6 +14,20 @@ export default Ember.Controller.extend({
 	place: null,
 	route_stop_patterns_by_onestop_id: null,
 	displayStops: false,
+	stopLocation: Ember.computed(function(){
+		var stops = this.model.stops.features;
+		var coordinates = stops.get('geometry')['coordinates'];
+		
+		var tempCoord = null;
+		var lat = coordinates[0];
+		var lon = coordinates[1];
+		tempCoord = lat;
+		var coordArray = [];
+		coordArray.push(lon);
+		coordArray.push(lat);
+		return coordArray;
+
+	}),
 	onlyRoute: Ember.computed('onestop_id', function(){
 		var data = this.get('routes');
 		var onlyRoute = data.get('firstObject');
@@ -59,7 +73,7 @@ export default Ember.Controller.extend({
 		iconSize: (20, 20)
 	}),
 	routes: Ember.computed('model', function(){
-		var data = this.get('model');
+		var data = this.get('model.routes');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
@@ -155,6 +169,27 @@ export default Ember.Controller.extend({
     },
     displayStops: function(){
     	this.toggleProperty('displayStops');
+  
+			// var stops = this.model.stops.features;
+
+
+
+			// var reversedCoordArray = [];
+			// for (var i = 0; i < stops.length; i++){
+
+			// 	var tempCoord = null;
+			// 	var lat = stops[i].geometry.coordinates[0];
+			// 	var lon = stops[i].geometry.coordinates[1];
+			
+			// 	tempCoord = lat;
+			// 	var coords = stops[i].geometry.coordinates
+			// 	var coordArray = [];
+			// 	coordArray.push(lon);
+			// 	coordArray.push(lat);
+			// 	this.model.stops.features[i].geometry.coordinates = coordArray;
+				
+			
+		
     },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);
