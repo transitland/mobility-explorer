@@ -3,7 +3,6 @@ import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 
 export default Ember.Route.extend(mapBboxRoute, {
   queryParams: {
-  
     traversed_by: {
     	refreshModel: true
     }
@@ -38,14 +37,12 @@ export default Ember.Route.extend(mapBboxRoute, {
     return this.store.query('data/transitland/route_stop_pattern', params).then(function(route_stop_patterns){
       var routeOnestopId = route_stop_patterns.get('query.traversed_by');
       if (routeOnestopId !== null){
-        
           var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
           url += routeOnestopId;
           return Ember.RSVP.hash({
             route_stop_patterns: route_stop_patterns,
             traversedByRoute: Ember.$.ajax({ url })
           });
-       
       } else {
         return Ember.RSVP.hash({
           route_stop_patterns: route_stop_patterns,

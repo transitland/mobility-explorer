@@ -12,8 +12,8 @@
 
 			<div class="form-group">
 		  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
-		  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
-		    <label for="check-1">Show stops served by route</label>
+		  	{{else}}<input type="checkbox" id="check-1" name="option-one" disabled {{action "displayStops"}}>{{/if}}
+		    <label for="check-1">Show stops served by route (*work in progress*)</label>
 		  </div>
 
   		  <div>
