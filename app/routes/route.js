@@ -50,7 +50,7 @@ export default Ember.Route.extend(mapBboxRoute, {
       var firstRoute = routes.get('firstObject');
       var routeOnestopId = firstRoute.get('onestop_id');
       if (firstRoute !== null){
-          var url = 'https://transit.land/api/v1/stops.geojson?&served_by=';
+          var url = 'https://transit.land/api/v1/stops.geojson?served_by=';
           url += routeOnestopId;
           return Ember.RSVP.hash({
             routes: routes,

@@ -168,25 +168,33 @@ export default Ember.Controller.extend({
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     displayStops: function(){
-    	this.toggleProperty('displayStops');
-  
-			// var stops = this.model.stops.features;
+  		// debugger;
+  		if (this.get('displayStops') === false){
+  			if (this.model.stops.features.get('firstObject').icon){
+    			this.set('displayStops', true);
+  			} else {
+					var stops = this.model.stops.features;
+					for (var i = 0; i < stops.length; i++){
+						var tempCoord = null;
+						var lat = stops[i].geometry.coordinates[0];
+						var lon = stops[i].geometry.coordinates[1];
+						tempCoord = lat;
+						var coords = stops[i].geometry.coordinates
+						var coordArray = [];
+						coordArray.push(lon);
+						coordArray.push(lat);
+						this.model.stops.features[i].geometry.coordinates = coordArray;
+						this.model.stops.features[i].icon = L.icon({
+							iconUrl: 'assets/images/stop.png',		
+							iconSize: (10, 10),
+						});
+					}
+	    		this.set('displayStops', true);
+	    	}
+			} else {
+    		this.set('displayStops', false);
+    	}
 
-
-
-			// var reversedCoordArray = [];
-			// for (var i = 0; i < stops.length; i++){
-
-			// 	var tempCoord = null;
-			// 	var lat = stops[i].geometry.coordinates[0];
-			// 	var lon = stops[i].geometry.coordinates[1];
-			
-			// 	tempCoord = lat;
-			// 	var coords = stops[i].geometry.coordinates
-			// 	var coordArray = [];
-			// 	coordArray.push(lon);
-			// 	coordArray.push(lat);
-			// 	this.model.stops.features[i].geometry.coordinates = coordArray;
 				
 			
 		

@@ -16,14 +16,9 @@
 		  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
 		  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
 		    <label for="check-1">Show stops served by route</label>
-		    {{#if displayStops}}true:{{displayStops}}{{else}}false:{{displayStops}}{{/if}}
 		  </div>
-
 		  
-
 		  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}
-	  	
-	  	
 	  
 		{{else if operated_by}}
 			<form>
@@ -133,8 +128,8 @@
 					{{/each}}
 				{{/if}}
 				{{#if displayStops}}
-					{{#each model.stops as |stop|}}
-			  		{{#marker-layer location=stopLocation draggable=false riseOnHover=true riseOffset=1000}}
+					{{#each model.stops.features as |stop|}}
+			  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
 			  		{{/marker-layer}}
 		  		{{/each}}
 		  	{{/if}}
