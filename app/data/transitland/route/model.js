@@ -21,7 +21,6 @@ var Route = DS.Model.extend({
 	default_color: "#6ea0a4",
 	
 	location: (function(){
-		// need to iterate here to get each coordinate array
 		var coordinates = this.get('geometry')['coordinates'][0];
 		var coordinatesLength = coordinates.length;
 		var reversedCoordArray = [];
