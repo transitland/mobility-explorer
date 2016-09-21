@@ -122,14 +122,14 @@ export default Ember.Controller.extend({
 		selectRoute(e){
 			e.target.bringToFront();
 			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
+				"opacity": 1,
+				"weight": 3,
 			});
 		},
 		unselectRoute(e){
 			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
+				"opacity": 1,
+				"weight": 2.5,
 			});
 		},
 		selectUnstyledRoute(e){
@@ -143,8 +143,8 @@ export default Ember.Controller.extend({
 		unselectUnstyledRoute(e){
 			e.target.setStyle({
 				"color":"#6ea0a4",
-				"route_path_opacity": 0.75,
-				"route_path_weight": 2.5
+				"opacity": 0.75,
+				"weight": 2.5
 			});
 		},
 		setOnestopId: function(route) {
