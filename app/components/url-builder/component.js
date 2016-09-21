@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	queryUrl: Ember.computed('bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type', 'served_by', 'url', function(){
+	queryUrl: Ember.computed('bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type', 'served_by', 'url', 'traversed_by', function(){
 		if (this.entity === 'isochrones'){
 			return this.url;
 		} else {

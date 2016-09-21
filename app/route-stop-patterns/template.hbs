@@ -1,0 +1,73 @@
+<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+  
+  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
+  
+  <div class="expanded-selection">
+
+			{{#each model.traversedByRoute.features as |route|}}
+	  		{{#route-detail bbox=bbox onestop_id=route.properties.onestop_id route=route.properties}}{{/route-detail}}
+  		{{/each}}
+			<br>
+
+			<div class="form-group">
+		  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
+		  	{{else}}<input type="checkbox" id="check-1" name="option-one" disabled {{action "displayStops"}}>{{/if}}
+		    <label for="check-1">Show stops served by route (*work in progress*)</label>
+		  </div>
+
+  		  <div>
+	  		<form>
+		  		<div class="form-group-header">{{#link-to 'routes' (query-params bbox=bbox onestop_id=traversed_by operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Hide route stop patterns{{/link-to}}</div>
+				  <div class="form-group">
+				  	 {{#each model.route_stop_patterns as |rsp|}}
+				  	 	{{#if rsp.is_selected}}
+		  					<input type="radio" id=rsp.onestop_id name="options" checked {{action "setRsp" rsp}}>
+		  				{{else}}
+		  					<input type="radio" id=rsp.onestop_id name="options" {{action "setRsp" rsp}}>
+		  				{{/if}}
+				  			<label for=rsp.onestop_id>{{rsp.onestop_id}}</label><br>
+		  				{{/each}}	
+				  </div>
+				</form>
+			</div>
+
+	</div>
+  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
+  {{url-builder entity="route_stop_patterns" server="Transitland" query="results" queryParams=queryParams traversed_by=traversed_by}}
+</div>
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+	<div id="map">
+		<div class="location-search">
+	    {{#power-select
+	      search=(action "searchRepo")
+        renderInPlace=true
+	      selected=place
+	      placeholder="Search for location..."
+	      onchange=(action "setPlace")
+	      as |repo|
+	    }}
+	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+	    {{/power-select}}
+	  </div>
+		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
+				
+				{{#each model.traversedByRoute.features as |route|}}
+					{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
+					{{/geojson-layer}}
+				{{/each}}
+
+				<!-- {{#each selectedRsp as |rsp|}}
+					  {{#polyline-layer locations=rsp.location color="red"}}
+						{{/polyline-layer}}
+				{{/each}} -->
+					{{#each model.route_stop_patterns as |rsp|}}
+						  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity}}
+							{{/polyline-layer}}
+					{{/each}}
+		
+		{{/leaflet-map}}
+	</div>
+</div>
