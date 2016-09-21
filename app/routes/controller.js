@@ -136,8 +136,8 @@ export default Ember.Controller.extend({
 			e.target.bringToFront();
 			e.target.setStyle({
 				"color":"#d4645c",
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5
+				"opacity": 1,
+				"weight": 3
 			});
 		},
 		unselectUnstyledRoute(e){
