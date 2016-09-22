@@ -55,7 +55,7 @@
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
 				
 				{{#each model.traversedByRoute as |route|}}
-					{{#geojson-layer geoJSON=route.as_geojson color="#6ea0a4" opacity=1 weight=2}}
+					{{#geojson-layer geoJSON=route.as_geojson color="#6ea0a4" opacity=1 weight=2 clickable=false}}
 					{{/geojson-layer}}
 				{{/each}}
 

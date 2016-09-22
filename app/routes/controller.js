@@ -139,6 +139,7 @@ export default Ember.Controller.extend({
 				"opacity": 1,
 				"weight": 3
 			});
+			this.set('hoverRoute', )
 		},
 		unselectUnstyledRoute(e){
 			e.target.setStyle({
@@ -168,7 +169,6 @@ export default Ember.Controller.extend({
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     displayStops: function(){
-  		// debugger;
   		if (this.get('displayStops') === false){
   			if (this.model.stops.features.get('firstObject').icon){
     			this.set('displayStops', true);
@@ -194,10 +194,6 @@ export default Ember.Controller.extend({
 			} else {
     		this.set('displayStops', false);
     	}
-
-				
-			
-		
     },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);
