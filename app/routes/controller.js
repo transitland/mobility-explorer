@@ -122,29 +122,30 @@ export default Ember.Controller.extend({
 		selectRoute(e){
 			e.target.bringToFront();
 			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
+				"opacity": 1,
+				"weight": 3,
 			});
 		},
 		unselectRoute(e){
 			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
+				"opacity": 1,
+				"weight": 2.5,
 			});
 		},
 		selectUnstyledRoute(e){
 			e.target.bringToFront();
 			e.target.setStyle({
 				"color":"#d4645c",
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5
+				"opacity": 1,
+				"weight": 3
 			});
+			// this.set('hoverRoute');
 		},
 		unselectUnstyledRoute(e){
 			e.target.setStyle({
 				"color":"#6ea0a4",
-				"route_path_opacity": 0.75,
-				"route_path_weight": 2.5
+				"opacity": 0.75,
+				"weight": 2.5
 			});
 		},
 		setOnestopId: function(route) {
@@ -168,7 +169,6 @@ export default Ember.Controller.extend({
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     displayStops: function(){
-  		// debugger;
   		if (this.get('displayStops') === false){
   			if (this.model.stops.features.get('firstObject').icon){
     			this.set('displayStops', true);
@@ -194,10 +194,6 @@ export default Ember.Controller.extend({
 			} else {
     		this.set('displayStops', false);
     	}
-
-				
-			
-		
     },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);

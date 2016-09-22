@@ -19,24 +19,13 @@ var Route = DS.Model.extend({
 	route_path_opacity: 0.75,
 	route_path_weight: 2.5,
 	default_color: "#6ea0a4",
-	
-	location: (function(){
-		var coordinates = this.get('geometry')['coordinates'][0];
-		var coordinatesLength = coordinates.length;
-		var reversedCoordArray = [];
-		for (var i = 0; i < coordinatesLength; i++){
-			var tempCoord = null;
-			var lat = this.get('geometry')['coordinates'][0][i][0];
-			var lon = this.get('geometry')['coordinates'][0][i][1];
-			tempCoord = lat;
-			lat = lon;
-			lon = tempCoord;
-			var coordArray = [];
-			coordArray.push(lat);
-			coordArray.push(lon);
-			reversedCoordArray.push(coordArray);
+	as_geojson: (function(){
+		return {
+			type: "Feature",
+			geometry: this.get('geometry'),
+			properties: {},
+			id: this.onestop_id
 		}
-		return reversedCoordArray;
 	}).property('geometry'),
 	operator_color: (function(){
 		var str = this.get('operated_by_onestop_id');

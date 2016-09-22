@@ -5,15 +5,15 @@
   
   <div class="expanded-selection">
 
-			{{#each model.traversedByRoute.features as |route|}}
-	  		{{#route-detail bbox=bbox onestop_id=route.properties.onestop_id route=route.properties}}{{/route-detail}}
+			{{#each model.traversedByRoute as |route|}}
+	  		{{#route-detail bbox=bbox onestop_id=route.onestop_id route=route}}{{/route-detail}}
   		{{/each}}
 			<br>
 
 			<div class="form-group">
 		  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
-		  	{{else}}<input type="checkbox" id="check-1" name="option-one" disabled {{action "displayStops"}}>{{/if}}
-		    <label for="check-1">Show stops served by route (*work in progress*)</label>
+		  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
+		    <label for="check-1">Show stops served by route</label>
 		  </div>
 
   		  <div>
@@ -54,19 +54,22 @@
 		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
 				
-				{{#each model.traversedByRoute.features as |route|}}
-					{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
+				{{#each model.traversedByRoute as |route|}}
+					{{#geojson-layer geoJSON=route.as_geojson color="#6ea0a4" opacity=1 weight=2 clickable=false}}
 					{{/geojson-layer}}
 				{{/each}}
 
-				<!-- {{#each selectedRsp as |rsp|}}
-					  {{#polyline-layer locations=rsp.location color="red"}}
+				{{#each model.route_stop_patterns as |rsp|}}
+					  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity}}
 						{{/polyline-layer}}
-				{{/each}} -->
-					{{#each model.route_stop_patterns as |rsp|}}
-						  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity}}
-							{{/polyline-layer}}
-					{{/each}}
+				{{/each}}
+
+				{{#if displayStops}}
+					{{#each model.stopsServedByRoute as |stop|}}
+			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000}}
+			  		{{/marker-layer}}
+		  		{{/each}}
+		  	{{/if}}
 		
 		{{/leaflet-map}}
 	</div>
