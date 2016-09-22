@@ -139,7 +139,6 @@ export default Ember.Controller.extend({
 				"opacity": 1,
 				"weight": 3
 			});
-			this.set('hoverRoute', )
 		},
 		unselectUnstyledRoute(e){
 			e.target.setStyle({
