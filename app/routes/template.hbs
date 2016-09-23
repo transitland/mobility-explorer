@@ -1,4 +1,5 @@
 <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+	{{#if currentlyLoading}} SPINNY {{loading-spinner}} {{/if}}
 	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
   
   {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
