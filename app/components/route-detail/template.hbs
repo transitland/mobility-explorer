@@ -1,6 +1,5 @@
 {{#if route}}
-	Route details:<br>
-	{{#if route.name}}<strong>Name:</strong> {{route.name}}<br>{{/if}}	
+	{{#if route.name}}<strong>Route name:</strong> {{route.name}}<br>{{/if}}	
 	{{#if route.short_name}}<strong>Short name:</strong> {{route.short_name}}<br>{{/if}}
 	{{#if route.onestop_id}}<strong>ID:</strong> {{route.onestop_id}}<br>{{/if}}
 	{{#if route.vehicle_type}}<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>{{/if}}
@@ -12,5 +11,6 @@
 	{{#if route.operated_by_name}}
 		<strong>Operated by:</strong> {{#link-to 'operators' (query-params bbox=bbox onestop_id=route.operated_by_onestop_id) }}{{route.operated_by_name}}<br>{{/link-to}}
 	{{/if}}
-	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>{{/if}}
+	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>
+	{{/if}}
 {{/if}}

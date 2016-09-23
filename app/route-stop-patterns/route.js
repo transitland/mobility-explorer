@@ -3,20 +3,8 @@ import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 
 export default Ember.Route.extend(mapBboxRoute, {
   queryParams: {
-    onestop_id: {
-      refreshModel: true
-    },
-    serves: {
-      refreshModel: true
-    },
-    operated_by: {
-      refreshModel: true
-    },
-    vehicle_type: {
-      refreshModel: true
-    },
-    style_routes_by: {
-      refreshModel: true
+    traversed_by: {
+    	refreshModel: true
     }
   },
   setupController: function (controller, model) {
@@ -45,23 +33,17 @@ export default Ember.Route.extend(mapBboxRoute, {
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
-    this.store.unloadAll('data/transitland/route_stop_pattern'); 
+    this.store.unloadAll('data/transitland/route_stop_pattern');
 
-    var routes = this.store.query('data/transitland/route', params);
+    var route_stop_patterns = this.store.query('data/transitland/route_stop_pattern', params);
+    var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=' + params.traversed_by;
+    var traversedByRoute = this.store.query('data/transitland/route', {onestop_id: params.traversed_by});
+    var stopsServedByRoute = this.store.query('data/transitland/stop', {served_by: params.traversed_by});
 
-    if (params.onestop_id){
-      var url = 'https://transit.land/api/v1/stops.geojson?served_by=' + params.onestop_id;
-      var stops = Ember.$.ajax({ url });
-      return Ember.RSVP.hash({
-        routes: routes,
-        stops: stops
-      });
-    } else {
-      return Ember.RSVP.hash({
-        routes: routes,
-      });
-    }
-    
-
+    return Ember.RSVP.hash({
+      route_stop_patterns: route_stop_patterns,
+      traversedByRoute: traversedByRoute,
+      stopsServedByRoute: stopsServedByRoute
+    });
   }
 });

@@ -1,18 +1,33 @@
 import Ember from 'ember';
-import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
-export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by'],
-	bbox: null,
+export default Ember.Controller.extend({
+	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox'],
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
 	onestop_id: null,
 	serves: null,
+	bbox: null,
 	operated_by: null,
 	vehicle_type: null,
 	style_routes_by: null,
 	selectedRoute: null,
 	place: null,
+	route_stop_patterns_by_onestop_id: null,
+	displayStops: false,
+	stopLocation: Ember.computed(function(){
+		var stops = this.model.stops.features;
+		var coordinates = stops.get('geometry')['coordinates'];
+		
+		var tempCoord = null;
+		var lat = coordinates[0];
+		var lon = coordinates[1];
+		tempCoord = lat;
+		var coordArray = [];
+		coordArray.push(lon);
+		coordArray.push(lat);
+		return coordArray;
+
+	}),
 	onlyRoute: Ember.computed('onestop_id', function(){
 		var data = this.get('routes');
 		var onlyRoute = data.get('firstObject');
@@ -58,10 +73,13 @@ export default Ember.Controller.extend(mapBboxController, {
 		iconSize: (20, 20)
 	}),
 	routes: Ember.computed('model', function(){
-		var data = this.get('model');
+		var data = this.get('model.routes');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
 		return routes;
+	}),
+	route_stop_patterns_by_onestop_ids: Ember.computed ('model', function(){
+		return this.get('model').get('firstObject').get('route_stop_patterns_by_onestop_id');
 	}),
 	routeStyleIsMode: Ember.computed('style_routes_by', function(){
 		return (this.get('style_routes_by') === 'mode');
@@ -104,32 +122,33 @@ export default Ember.Controller.extend(mapBboxController, {
 		selectRoute(e){
 			e.target.bringToFront();
 			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
+				"opacity": 1,
+				"weight": 3,
 			});
 		},
 		unselectRoute(e){
 			e.target.setStyle({
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5,
+				"opacity": 1,
+				"weight": 2.5,
 			});
 		},
 		selectUnstyledRoute(e){
 			e.target.bringToFront();
 			e.target.setStyle({
 				"color":"#d4645c",
-				"route_path_opacity": 1,
-				"route_path_weight": 2.5
+				"opacity": 1,
+				"weight": 3
 			});
+			// this.set('hoverRoute');
 		},
 		unselectUnstyledRoute(e){
 			e.target.setStyle({
 				"color":"#6ea0a4",
-				"route_path_opacity": 0.75,
-				"route_path_weight": 2.5
+				"opacity": 0.75,
+				"weight": 2.5
 			});
 		},
-		setOnestopId(route) {
+		setOnestopId: function(route) {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
 			this.set('selectedRoute', route);
@@ -141,13 +160,47 @@ export default Ember.Controller.extend(mapBboxController, {
   		this.set('bbox', selected.bbox);
   		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
   	},
-  	clearPlace(){
+  	clearPlace: function(){
   		this.set('place', null);
   	},
-		searchRepo(term) {
+		searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
+    },
+    displayStops: function(){
+  		if (this.get('displayStops') === false){
+  			if (this.model.stops.features.get('firstObject').icon){
+    			this.set('displayStops', true);
+  			} else {
+					var stops = this.model.stops.features;
+					for (var i = 0; i < stops.length; i++){
+						var tempCoord = null;
+						var lat = stops[i].geometry.coordinates[0];
+						var lon = stops[i].geometry.coordinates[1];
+						tempCoord = lat;
+						var coords = stops[i].geometry.coordinates
+						var coordArray = [];
+						coordArray.push(lon);
+						coordArray.push(lat);
+						this.model.stops.features[i].geometry.coordinates = coordArray;
+						this.model.stops.features[i].icon = L.icon({
+							iconUrl: 'assets/images/stop.png',		
+							iconSize: (10, 10),
+						});
+					}
+	    		this.set('displayStops', true);
+	    	}
+			} else {
+    		this.set('displayStops', false);
+    	}
+    },
+    setRouteStopPattern: function(selected){
+    	this.set('routeStopPattern', selected);
+    	this.transitionToRoute('route-stop-pattern', {queryParams: {bbox: this.get('bbox'), traversed_by: this.get('onestop_id')}});
+    },
+    clearRouteStopPattern: function(){
+    	this.set('routeStopPattern', null);
     }
   }
 	

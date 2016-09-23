@@ -45,11 +45,6 @@
 				    <label for="radio-4">transit</label><br>
 			  		{{#if multimodalIsochrone}}
 			  			<div class="isochrone-legend-box">
-			  			{{#if bus_only}}
-			  				<input type="checkbox" id="check-1" name="bus-only" {{action "setBusOnly"}} checked><label for="check-1">Bus only</label>
-				  		{{else}}
-			  				<input type="checkbox" id="check-1" name="bus-only" {{action "setBusOnly"}}><label for="check-1">Bus only</label>
-				  		{{/if}}
 			  				<div class="isochrone-legend" style="color:#50bf40;">15 min trip from stop</div>
 			  				<div class="isochrone-legend" style="color:#9fbf40;">30 min trip from stop</div>
 			  				<div class="isochrone-legend" style="color:#bf8f40;">45 min trip from stop</div>
