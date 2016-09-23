@@ -48,6 +48,13 @@ input, button, select, textarea {
 	z-index: 3;
 }
 
+#map-placeholder{
+	background-color: #f8f8f8;
+	height: 100vh;
+  width: 100%;
+  z-index: 30;
+}
+
 .route-style-options{
 	margin-top: 10px;
 	margin-bottom: 10px;
