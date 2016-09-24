@@ -195,6 +195,26 @@ export default Ember.Controller.extend({
     		this.set('displayStops', false);
     	}
     },
+    displaySharedStop: function(){
+  		
+					var stops = this.model.stopServedByRoutes.features;
+					for (var i = 0; i < stops.length; i++){
+						var tempCoord = null;
+						var lat = stops[i].geometry.coordinates[0];
+						var lon = stops[i].geometry.coordinates[1];
+						tempCoord = lat;
+						var coords = stops[i].geometry.coordinates
+						var coordArray = [];
+						coordArray.push(lon);
+						coordArray.push(lat);
+						this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
+						this.model.stopServedByRoutes.features[i].icon = L.icon({
+							iconUrl: 'assets/images/stop.png',		
+							iconSize: (10, 10),
+						});
+					}
+	    		return true;
+    },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);
     	this.transitionToRoute('route-stop-pattern', {queryParams: {bbox: this.get('bbox'), traversed_by: this.get('onestop_id')}});

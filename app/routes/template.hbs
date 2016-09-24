@@ -95,6 +95,7 @@
   {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
   {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
+
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
 	<div id="map">
@@ -128,6 +129,13 @@
 							{{/geojson-layer}}
 					{{/each}}
 				{{/if}}
+				<!-- {{#if displaySharedStop}} -->
+
+					{{#each model.stopServedByRoutes.features as |sharedStop|}}
+			  		{{#marker-layer location=sharedStop.geometry.coordinates icon=sharedStop.icon draggable=false riseOnHover=true riseOffset=1000}}
+			  		{{/marker-layer}}
+		  		{{/each}}
+		  	<!-- {{/if}} -->
 				{{#if displayStops}}
 					{{#each model.stops.features as |stop|}}
 			  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
