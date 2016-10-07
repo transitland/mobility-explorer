@@ -120,7 +120,6 @@ export default Ember.Controller.extend({
 			this.set('selectedRoute', route);
 		},
 		selectRoute(e){
-			debugger;
 			e.target.bringToFront();
 			e.target.setStyle({
 				"color": "white",
