@@ -121,25 +121,29 @@ export default Ember.Controller.extend({
 		},
 		selectRoute(e){
 			e.target.bringToFront();
-			e.target.setStyle({
+			e.target.getLayers()[1].setStyle({
 				"color": "white",
 				"opacity": 1,
 				"weight": 2.5,
 			});
 		},
-		selectRouteBorder(e){
-			// e.target.bringToFront();
-			e.target.setStyle({
-				"opacity": 1,
-			});
+		onEachFeature(feature, layer){
+			layer.setStyle(feature.properties);
+			layer.originalStyle = feature.properties;
 		},
+		
 		unselectRoute(e){
-			// debugger;
-			e.target.setStyle({
-				"color": e.target.options.color,
-				"opacity": .75,
-				"weight": 2.5,
+
+			e.target.eachLayer(function(layer){
+				layer.setStyle(layer.originalStyle);
 			});
+
+			// debugger;
+			// e.target.setStyle({
+			// 	"color": e.target.options.color,
+			// 	"opacity": .75,
+			// 	"weight": 2.5,
+			// });
 		},
 		selectUnstyledRoute(e){
 			e.target.bringToFront();

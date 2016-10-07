@@ -27,6 +27,39 @@ var Route = DS.Model.extend({
 			id: this.onestop_id
 		}
 	}).property('geometry'),
+
+	
+
+	as_geojson_with_outline: (function(){
+		return {
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: "black",
+						weight: 6,
+						opacity: 1
+					},
+					id: this.onestop_id
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('vehicle_type_color'),
+						weight: 5,
+						opacity: 1
+
+					},
+				},
+			]
+		}
+	}).property('geometry'),
+
+
+
 	operator_color: (function(){
 		var str = this.get('operated_by_onestop_id');
 		var hash = 0;

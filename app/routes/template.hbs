@@ -115,9 +115,8 @@
 				{{#if routeStyleIsMode}}
 					{{#each model.routes as |route|}}
 						
-							{{#geojson-layer geoJSON=route.as_geojson color="black" weight=6 opacity=route.route_path_opacity onMouseover=(action "selectRouteBorder")}}
-							{{/geojson-layer}}
-						  {{#geojson-layer geoJSON=route.as_geojson color=route.vehicle_type_color weight=route.route_path_weight opacity=route.route_path_opacity riseOnHover=true onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+							
+						  {{#geojson-layer geoJSON=route.as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 							{{/geojson-layer}}
 						
 					{{/each}}
