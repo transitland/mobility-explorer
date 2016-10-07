@@ -120,15 +120,25 @@ export default Ember.Controller.extend({
 			this.set('selectedRoute', route);
 		},
 		selectRoute(e){
+			debugger;
 			e.target.bringToFront();
 			e.target.setStyle({
+				"color": "white",
 				"opacity": 1,
-				"weight": 3,
+				"weight": 2.5,
+			});
+		},
+		selectRouteBorder(e){
+			// e.target.bringToFront();
+			e.target.setStyle({
+				"opacity": 1,
 			});
 		},
 		unselectRoute(e){
+			// debugger;
 			e.target.setStyle({
-				"opacity": 1,
+				"color": e.target.options.color,
+				"opacity": .75,
 				"weight": 2.5,
 			});
 		},

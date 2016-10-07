@@ -114,16 +114,22 @@
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#if routeStyleIsMode}}
 					{{#each model.routes as |route|}}
-					  {{#geojson-layer geoJSON=route.as_geojson color=route.vehicle_type_color weight=route.route_path_weight opacity=route.route_path_opacity riseOnHover=true onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+						{{#geojson-layer geoJSON=route.as_geojson color="black" weight=6 opacity=route.route_path_opacity onMouseover=(action "selectRouteBorder")}}
+						{{/geojson-layer}}
+					  {{#geojson-layer geoJSON=route.as_geojson color=route.vehicle_type_color weight=route.route_path_weight opacity=route.route_path_opacity riseOnHover=true onMouseover=(action "selectRoute" route) onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 						{{/geojson-layer}}
 					{{/each}}
 				{{else if routeStyleIsOperator}}
 					{{#each model.routes as |route|}}
+						{{#geojson-layer geoJSON=route.as_geojson color="black" weight=6 opacity=route.route_path_opacity }}
+						{{/geojson-layer}}
 					  {{#geojson-layer geoJSON=route.as_geojson color=route.operator_color weight=route.route_path_weight opacity=route.route_path_opacity riseOnHover=true onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 						{{/geojson-layer}}
 					{{/each}}
 				{{else}}
 					{{#each model.routes as |route|}}
+							{{#geojson-layer geoJSON=route.as_geojson color="black" weight=6 opacity=route.route_path_opacity }}
+							{{/geojson-layer}}
 							{{#geojson-layer geoJSON=route.as_geojson color=route.default_color weight=route.route_path_weight opacity=route.route_path_opacity onMouseover=(action "selectUnstyledRoute") onMouseout=(action "unselectUnstyledRoute") onClick=(action "setOnestopId" route)}}
 							{{/geojson-layer}}
 					{{/each}}
