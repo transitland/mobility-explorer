@@ -17,7 +17,6 @@ export default Ember.Controller.extend({
 	stopLocation: Ember.computed(function(){
 		var stops = this.model.stops.features;
 		var coordinates = stops.get('geometry')['coordinates'];
-		
 		var tempCoord = null;
 		var lat = coordinates[0];
 		var lon = coordinates[1];
@@ -26,7 +25,6 @@ export default Ember.Controller.extend({
 		coordArray.push(lon);
 		coordArray.push(lat);
 		return coordArray;
-
 	}),
 	onlyRoute: Ember.computed('onestop_id', function(){
 		var data = this.get('routes');
@@ -37,7 +35,7 @@ export default Ember.Controller.extend({
 			return onlyRoute;
 		}
 	}),
-	hoverRoute: null,
+	hoverId: null,
 	unstyledColor: "#6ea0a4",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
@@ -126,6 +124,7 @@ export default Ember.Controller.extend({
 				"opacity": 1,
 				"weight": 2.5,
 			});
+			this.set('hoverId', (e.target.getLayers()[0].feature.onestop_id));	
 		},
 		onEachFeature(feature, layer){
 			layer.setStyle(feature.properties);
@@ -135,6 +134,7 @@ export default Ember.Controller.extend({
 			e.target.eachLayer(function(layer){
 				layer.setStyle(layer.originalStyle);
 			});
+			this.set('hoverId', null);
 		},
 		setOnestopId: function(route) {
 			var onestopId = route.id;

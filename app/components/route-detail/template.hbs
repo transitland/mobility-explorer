@@ -1,4 +1,6 @@
 {{#if route}}
+					<div class="hover-detail">
+
 	{{#if route.name}}<strong>Route name:</strong> {{route.name}}<br>{{/if}}	
 	{{#if route.short_name}}<strong>Short name:</strong> {{route.short_name}}<br>{{/if}}
 	{{#if route.onestop_id}}<strong>ID:</strong> {{route.onestop_id}}<br>{{/if}}
@@ -13,4 +15,5 @@
 	{{/if}}
 	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>
 	{{/if}}
+</div>
 {{/if}}

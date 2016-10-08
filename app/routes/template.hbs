@@ -1,5 +1,4 @@
 <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
-	{{#if currentlyLoading}} SPINNY {{loading-spinner}} {{/if}}
 	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
   
   {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
@@ -57,12 +56,16 @@
 	    }}
 	      {{route.name}} {{route.tags.route_long_name}}
 	    {{/power-select}}
-
-			
+			{{#each model.routes as |route|}}
+				{{#if (eq hoverId route.onestop_id)}}
+	  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
+		  	{{/if}}
+	  	{{/each}}
 		{{/if}}
 		
 		{{#if routeStyleIsMode}}
-			{{#unless selectedRoute}}
+			{{#unless onestop_id}}
+			{{#unless hoverId}}
 				<p class="caption">Select mode:</p>
 				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='bus')}}<p style="color:red;">Bus</p>{{/link-to}}
 				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='rail')}}<p style="color:blue;">Rail</p>{{/link-to}}
@@ -71,6 +74,7 @@
 				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='ferry')}}<p style="color:purple;">Ferry</p>{{/link-to}}
 				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='cablecar')}}<p style="color:orange;">Cablecar</p>{{/link-to}}
 				<p style="color:grey;">Other</p>
+			{{/unless}}
 			{{/unless}}
 		{{/if}}
 		{{#if routeStyleIsOperator}}

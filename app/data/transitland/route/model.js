@@ -19,7 +19,6 @@ var Route = DS.Model.extend({
 	route_path_opacity: 0.75,
 	route_path_weight: 2.5,
 	default_color: "#6ea0a4",
-	
 	default_as_geojson_with_outline: (function(){
 		return {
 			type: "FeatureCollection",
@@ -32,7 +31,8 @@ var Route = DS.Model.extend({
 						weight: 4,
 						opacity: 1
 					},
-					id: this.onestop_id
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
 				},
 				{
 					type: "Feature",
@@ -41,7 +41,6 @@ var Route = DS.Model.extend({
 						color: this.get('default_color'),
 						weight: 2,
 						opacity: 1
-
 					},
 				},
 			]
@@ -59,7 +58,8 @@ var Route = DS.Model.extend({
 						weight: 4,
 						opacity: 1
 					},
-					id: this.onestop_id
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
 				},
 				{
 					type: "Feature",
@@ -68,7 +68,6 @@ var Route = DS.Model.extend({
 						color: this.get('vehicle_type_color'),
 						weight: 2,
 						opacity: 1
-
 					},
 				},
 			]
@@ -86,7 +85,8 @@ var Route = DS.Model.extend({
 						weight: 4,
 						opacity: 1
 					},
-					id: this.onestop_id
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
 				},
 				{
 					type: "Feature",
@@ -95,7 +95,6 @@ var Route = DS.Model.extend({
 						color: this.get('operator_color'),
 						weight: 2,
 						opacity: 1
-
 					},
 				},
 			]
