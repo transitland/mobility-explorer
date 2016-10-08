@@ -19,14 +19,90 @@ var Route = DS.Model.extend({
 	route_path_opacity: 0.75,
 	route_path_weight: 2.5,
 	default_color: "#6ea0a4",
-	as_geojson: (function(){
+	default_as_geojson_with_outline: (function(){
 		return {
-			type: "Feature",
-			geometry: this.get('geometry'),
-			properties: {},
-			id: this.onestop_id
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: "black",
+						weight: 4,
+						opacity: 1
+					},
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('default_color'),
+						weight: 2,
+						opacity: 1
+					},
+				},
+			]
 		}
 	}).property('geometry'),
+	mode_as_geojson_with_outline: (function(){
+		return {
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: "black",
+						weight: 4,
+						opacity: 1
+					},
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('vehicle_type_color'),
+						weight: 2,
+						opacity: 1
+					},
+				},
+			]
+		}
+	}).property('geometry'),
+	operator_as_geojson_with_outline: (function(){
+		return {
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: "black",
+						weight: 4,
+						opacity: 1
+					},
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('operator_color'),
+						weight: 2,
+						opacity: 1
+					},
+				},
+			]
+		}
+	}).property('geometry'),
+
+
+
 	operator_color: (function(){
 		var str = this.get('operated_by_onestop_id');
 		var hash = 0;
