@@ -48,10 +48,10 @@
 	    {{#power-select
 	      options=routes
 	      selected=route
-				placeholder="List of routes"
+				placeholder="routes"
 				searchPlaceholder="Type to filter..."
 	      onchange=(action "setRoute")
-        onclose=(action "clearPlace")
+        onclose=(action "clearRoute")
 	      as |route|
 	    }}
 	      {{route.name}} {{route.tags.route_long_name}}
@@ -67,12 +67,12 @@
 			{{#unless onestop_id}}
 			{{#unless hoverId}}
 				<p class="caption">Select mode:</p>
-				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='bus')}}<p style="color:red;">Bus</p>{{/link-to}}
-				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='rail')}}<p style="color:blue;">Rail</p>{{/link-to}}
-				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='metro')}}<p style="color:green;">Metro</p>{{/link-to}}
-				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='tram')}}<p style="color:aqua;">Tram</p>{{/link-to}}
-				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='ferry')}}<p style="color:purple;">Ferry</p>{{/link-to}}
-				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='cablecar')}}<p style="color:orange;">Cablecar</p>{{/link-to}}
+				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='bus')}}<p style="color:#8dd3c7;">Bus</p>{{/link-to}}
+				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='rail')}}<p style="color:#b3de69;">Rail</p>{{/link-to}}
+				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='metro')}}<p style="color:#bebada;">Metro</p>{{/link-to}}
+				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='tram')}}<p style="color:#fdb462;">Tram</p>{{/link-to}}
+				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='ferry')}}<p style="color:#fb8072;">Ferry</p>{{/link-to}}
+				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='cablecar')}}<p style="color:#80b1d3;">Cablecar</p>{{/link-to}}
 				<p style="color:grey;">Other</p>
 			{{/unless}}
 			{{/unless}}
@@ -125,7 +125,7 @@
 					{{else if routeStyleIsOperator}}
 						{{#each model.routes as |route|}}
 							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature")}}
-								{{/geojson-layer}}
+							{{/geojson-layer}}
 						{{/each}}
 					{{else}}
 						{{#each model.routes as |route|}}

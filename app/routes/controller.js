@@ -117,6 +117,10 @@ export default Ember.Controller.extend({
 			this.set('onestop_id', onestop_id);
 			this.set('selectedRoute', route);
 		},
+		clearRoute(){
+  		this.set('onestop_id', null);
+			this.set('selectedRoute', null);
+  	},
 		selectRoute(e){
 			e.target.bringToFront();
 			e.target.getLayers()[1].setStyle({
@@ -136,7 +140,6 @@ export default Ember.Controller.extend({
 			layer.originalStyle = feature.properties;
 
 			if (this.get('onestop_id')){
-				console.log(this.get('onestop_id'));
 				layer.setStyle({
 					"opacity": 1,
 				});
