@@ -55,7 +55,7 @@ var Route = DS.Model.extend({
 					geometry: this.get('geometry'),
 					properties: {
 						color: "#666666",
-						weight: 0,
+						weight: 5,
 						opacity: 0
 					},
 					id: this.onestop_id,
@@ -100,9 +100,6 @@ var Route = DS.Model.extend({
 			]
 		}
 	}).property('geometry'),
-
-
-
 	operator_color: (function(){
 		var str = this.get('operated_by_onestop_id');
 		var hash = 0;

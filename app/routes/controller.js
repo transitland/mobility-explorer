@@ -125,14 +125,22 @@ export default Ember.Controller.extend({
 				// "weight": 2.5,
 			});
 			e.target.getLayers()[0].setStyle({
+				"color": "#666666",
 				"opacity": 1,
-				"weight": 6,
+				"weight": 5,
 			});
 			this.set('hoverId', (e.target.getLayers()[0].feature.onestop_id));	
 		},
 		onEachFeature(feature, layer){
 			layer.setStyle(feature.properties);
 			layer.originalStyle = feature.properties;
+
+			if (this.get('onestop_id')){
+				console.log(this.get('onestop_id'));
+				layer.setStyle({
+					"opacity": 1,
+				});
+			}
 		},
 		unselectRoute(e){
 			e.target.eachLayer(function(layer){
