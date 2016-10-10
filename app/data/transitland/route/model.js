@@ -54,7 +54,7 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: "black",
+						color: "#666666",
 						weight: 4,
 						opacity: 1
 					},
