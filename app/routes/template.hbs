@@ -116,28 +116,53 @@
 	  </div>
 		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-				{{#if routeStyleIsMode}}
-					{{#each model.routes as |route|}}	
-						  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-							{{/geojson-layer}}
-					{{/each}}
-				{{else if routeStyleIsOperator}}
-					{{#each model.routes as |route|}}
-						{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-							{{/geojson-layer}}
-					{{/each}}
-				{{else}}
-					{{#each model.routes as |route|}}
-							{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-							{{/geojson-layer}}
-					{{/each}}
-				{{/if}}
-				{{#if displayStops}}
-					{{#each model.stops.features as |stop|}}
-			  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
-			  		{{/marker-layer}}
-		  		{{/each}}
-		  	{{/if}}
+				{{#if onestop_id}}
+			  	{{#if routeStyleIsMode}}
+						{{#each model.routes as |route|}}	
+							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{else if routeStyleIsOperator}}
+						{{#each model.routes as |route|}}
+							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{else}}
+						{{#each model.routes as |route|}}
+								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{/if}}
+					{{#if displayStops}}
+						{{#each model.stops.features as |stop|}}
+				  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+				  		{{/marker-layer}}
+			  		{{/each}}
+			  	{{/if}}
+			  {{else}}
+					{{#if routeStyleIsMode}}
+						{{#each model.routes as |route|}}	
+							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{else if routeStyleIsOperator}}
+						{{#each model.routes as |route|}}
+							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{else}}
+						{{#each model.routes as |route|}}
+								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{/if}}
+					{{#if displayStops}}
+						{{#each model.stops.features as |stop|}}
+				  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+				  		{{/marker-layer}}
+			  		{{/each}}
+			  	{{/if}}
+			  {{/if}}
 		{{/leaflet-map}}
 	</div>
 </div>

@@ -126,7 +126,7 @@ export default Ember.Controller.extend({
 			});
 			e.target.getLayers()[0].setStyle({
 				"opacity": 1,
-				"weight": 4,
+				"weight": 6,
 			});
 			this.set('hoverId', (e.target.getLayers()[0].feature.onestop_id));	
 		},
