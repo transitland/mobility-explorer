@@ -27,7 +27,7 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: "black",
+						color: "#666666",
 						weight: 4,
 						opacity: 1
 					},
@@ -55,8 +55,8 @@ var Route = DS.Model.extend({
 					geometry: this.get('geometry'),
 					properties: {
 						color: "#666666",
-						weight: 4,
-						opacity: 1
+						weight: 0,
+						opacity: 0
 					},
 					id: this.onestop_id,
 					onestop_id: this.get('onestop_id'),
@@ -81,7 +81,7 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: "black",
+						color: "#444444",
 						weight: 4,
 						opacity: 1
 					},
