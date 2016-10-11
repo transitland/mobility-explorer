@@ -18,6 +18,14 @@ var Route = DS.Model.extend({
 	route_stop_patterns_by_onestop_id: DS.attr(),
 	route_path_opacity: 0.75,
 	route_path_weight: 2.5,
+	vehicle_type_color: {
+		'bus' : '#8dd3c7',
+		'rail' : '#b3de69',
+		'metro': '#bebada',
+		'ferry' : '#fb8072',
+		'cablecar' : '#80b1d3',
+		'tram' : '#fdb462'
+	},
 	default_color: "#6ea0a4",
 	default_as_geojson_with_outline: (function(){
 		return {
@@ -27,9 +35,9 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: "black",
-						weight: 4,
-						opacity: 1
+						color: "#444444",
+						weight: 0,
+						opacity: 0
 					},
 					id: this.onestop_id,
 					onestop_id: this.get('onestop_id'),
@@ -39,14 +47,14 @@ var Route = DS.Model.extend({
 					geometry: this.get('geometry'),
 					properties: {
 						color: this.get('default_color'),
-						weight: 2,
+						weight: 2.5,
 						opacity: 1
 					},
 				},
 			]
 		}
 	}).property('geometry'),
-	mode_as_geojson_with_outline: (function(){
+	operator_focus_as_geojson_with_outline: (function(){
 		return {
 			type: "FeatureCollection",
 			features: [
@@ -54,9 +62,9 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: "black",
-						weight: 4,
-						opacity: 1
+						color: "#444444",
+						weight: 0,
+						opacity: 0
 					},
 					id: this.onestop_id,
 					onestop_id: this.get('onestop_id'),
@@ -65,15 +73,47 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: this.get('vehicle_type_color'),
-						weight: 2,
+						color: this.get('operated_by_route_default_color'),
+						weight: 2.5,
 						opacity: 1
 					},
 				},
 			]
 		}
 	}).property('geometry'),
-	operator_as_geojson_with_outline: (function(){
+
+	mode_as_geojson_with_outline: (function(){
+		let lineColor = this.get('vehicle_type_color')[this.get('vehicle_type')];
+		let hexValue = lineColor.split("");
+		hexValue.shift();
+		var hexLetters = {
+			a : 10,
+			b : 11,
+			c : 12,
+			d : 13,
+			e : 14,
+			f : 15, 
+		}
+
+		for (var i = 0; i < 6; i++){
+			let hexDigit = hexValue[i]
+			if (hexDigit >= 0){
+				hexValue[i] = Number.parseInt(hexDigit);
+			} else {
+				hexValue[i] = hexLetters[hexDigit];
+			}
+		}
+
+		let red = (hexValue[0] * 16) + hexValue[1];
+		let green = (hexValue[2] * 16) + hexValue[3];
+		let blue = (hexValue[4] * 16) + hexValue[5];
+		
+		// from turn-by-turn demo:
+		var lum = 0.299 * red + 0.587 * green + 0.114 * blue,
+    is_light = (lum > 0xbb);
+
+    let borderColor = (is_light ? '#666666' : '#f8f8f8');
+
 		return {
 			type: "FeatureCollection",
 			features: [
@@ -81,9 +121,67 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: "black",
-						weight: 4,
+						color: borderColor,
+						weight: 5,
+						opacity: 0
+					},
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('vehicle_type_color')[this.get('vehicle_type')],
+						weight: 3,
 						opacity: 1
+					},
+				},
+			]
+		}
+	}).property('geometry'),
+	operator_as_geojson_with_outline: (function(){
+		let lineColor = this.get('operator_color');
+		let hexValue = lineColor.split("");
+		hexValue.shift();
+		var hexLetters = {
+			a : 10,
+			b : 11,
+			c : 12,
+			d : 13,
+			e : 14,
+			f : 15, 
+		}
+
+		for (var i = 0; i < 6; i++){
+			let hexDigit = hexValue[i]
+			if (hexDigit >= 0){
+				hexValue[i] = Number.parseInt(hexDigit);
+			} else {
+				hexValue[i] = hexLetters[hexDigit];
+			}
+		}
+
+		let red = (hexValue[0] * 16) + hexValue[1];
+		let green = (hexValue[2] * 16) + hexValue[3];
+		let blue = (hexValue[4] * 16) + hexValue[5];
+		
+		// from turn-by-turn demo:
+		var lum = 0.299 * red + 0.587 * green + 0.114 * blue,
+    is_light = (lum > 0xbb);
+
+    let borderColor = (is_light ? '#666666' : '#f8f8f8');
+
+		return {
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: borderColor,
+						weight: 5,
+						opacity: 0
 					},
 					id: this.onestop_id,
 					onestop_id: this.get('onestop_id'),
@@ -93,16 +191,13 @@ var Route = DS.Model.extend({
 					geometry: this.get('geometry'),
 					properties: {
 						color: this.get('operator_color'),
-						weight: 2,
+						weight: 3,
 						opacity: 1
 					},
 				},
 			]
 		}
 	}).property('geometry'),
-
-
-
 	operator_color: (function(){
 		var str = this.get('operated_by_onestop_id');
 		var hash = 0;
@@ -116,23 +211,14 @@ var Route = DS.Model.extend({
 		colorCode = "#" + colorCode;
 		return colorCode;
 	}).property('operated_by_onestop_id'),
-	vehicle_type_color: (function(){
-		if (this.get('vehicle_type') ==='bus') {
-			return 'red';
-		} else if (this.get('vehicle_type') ==='rail') {
-			return 'blue';
-		} else if (this.get('vehicle_type') ==='metro') {
-			return 'green';
-		} else if (this.get('vehicle_type') ==='ferry') {
-			return 'purple';
-		} else if (this.get('vehicle_type') ==='cablecar') {
-			return 'orange';
-		} else if (this.get('vehicle_type') ==='tram') {
-			return 'aqua';
+	
+	operated_by_route_default_color: (function(){
+		if (this.get('color') !== null && this.get('color') !== "ffffff"){
+			return "#" + this.get('color');
 		} else {
-			return 'grey';
+			return "#6ea0a4";
 		}
-	}).property('vehicle_type')
+	}).property('onestop_id')
 
 });
 

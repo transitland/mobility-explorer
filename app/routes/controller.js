@@ -117,18 +117,33 @@ export default Ember.Controller.extend({
 			this.set('onestop_id', onestop_id);
 			this.set('selectedRoute', route);
 		},
+		clearRoute(){
+  		this.set('onestop_id', null);
+			this.set('selectedRoute', null);
+  	},
 		selectRoute(e){
 			e.target.bringToFront();
 			e.target.getLayers()[1].setStyle({
 				"color": "white",
 				"opacity": 1,
-				"weight": 2.5,
+				// "weight": 2.5,
+			});
+			e.target.getLayers()[0].setStyle({
+				"color": "#666666",
+				"opacity": 1,
+				"weight": 5,
 			});
 			this.set('hoverId', (e.target.getLayers()[0].feature.onestop_id));	
 		},
 		onEachFeature(feature, layer){
 			layer.setStyle(feature.properties);
 			layer.originalStyle = feature.properties;
+
+			if (this.get('onestop_id')){
+				layer.setStyle({
+					"opacity": 1,
+				});
+			}
 		},
 		unselectRoute(e){
 			e.target.eachLayer(function(layer){
