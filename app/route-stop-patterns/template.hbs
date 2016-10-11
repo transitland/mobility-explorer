@@ -60,13 +60,13 @@
 				{{/each}}
 
 				{{#each model.route_stop_patterns as |rsp|}}
-					  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity}}
+					  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity clickable=false}}
 						{{/polyline-layer}}
 				{{/each}}
 
 				{{#if displayStops}}
 					{{#each model.stopsServedByRoute as |stop|}}
-			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false riseOnHover=true riseOffset=1000}}
+			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
 			  		{{/marker-layer}}
 		  		{{/each}}
 		  	{{/if}}
