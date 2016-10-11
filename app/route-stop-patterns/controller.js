@@ -59,7 +59,14 @@ export default Ember.Controller.extend({
 		mouseOver(){
 			this.set('mousedOver', true);
 		},
-		
+		onEachFeature(feature, layer){
+			layer.setStyle(feature.properties);	
+			// layer.getLayers()[0].setStyle({
+			// 	"color": "#666666",
+			// 	"opacity": 1,
+			// 	"weight": 5,
+			// });
+		},
 		setOnestopId(route) {
 			var onestopId = route.id;
 			this.set('onestop_id', onestopId);
@@ -92,14 +99,14 @@ export default Ember.Controller.extend({
     	} else if (this.get('selectedRsp')!== null){
   			this.get('selectedRsp').set('path_opacity', 0);
   			this.get('selectedRsp').set('is_selected', false);
-	    	rsp.set('default_color', '#d4645c');
+	    	rsp.set('default_color', '#fff');
 	    	rsp.set('path_opacity', 1);
 	    	rsp.set('is_selected', true);
   			this.set('selectedRsp', rsp);
   		}
     	else {
 	    	this.set('selectedRsp', rsp);
-	    	rsp.set('default_color', '#d4645c');
+	    	rsp.set('default_color', '#fff');
 	    	rsp.set('path_opacity', 1);
 	    	rsp.set('is_selected', true);
 	    }

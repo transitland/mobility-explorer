@@ -198,6 +198,33 @@ var Route = DS.Model.extend({
 			]
 		}
 	}).property('geometry'),
+	rsp_route_as_geojson_with_outline: (function(){
+		return {
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: "#444444",
+						weight: 5,
+						opacity: 1
+					},
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('default_color'),
+						weight: 3,
+						opacity: 1
+					},
+				},
+			]
+		}
+	}).property('geometry'),
 	operator_color: (function(){
 		var str = this.get('operated_by_onestop_id');
 		var hash = 0;

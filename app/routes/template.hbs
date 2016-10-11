@@ -119,17 +119,17 @@
 				{{#if onestop_id}}
 			  	{{#if routeStyleIsMode}}
 						{{#each model.routes as |route|}}	
-							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature")}}
+							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 								{{/geojson-layer}}
 						{{/each}}
 					{{else if routeStyleIsOperator}}
 						{{#each model.routes as |route|}}
-							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature")}}
+							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 							{{/geojson-layer}}
 						{{/each}}
 					{{else}}
 						{{#each model.routes as |route|}}
-								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature")}}
+								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 								{{/geojson-layer}}
 						{{/each}}
 					{{/if}}
