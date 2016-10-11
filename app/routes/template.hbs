@@ -150,6 +150,11 @@
 							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 								{{/geojson-layer}}
 						{{/each}}
+					{{else if operated_by}}
+						{{#each model.routes as |route|}}
+								{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+								{{/geojson-layer}}
+						{{/each}}
 					{{else}}
 						{{#each model.routes as |route|}}
 								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}

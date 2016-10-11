@@ -54,6 +54,33 @@ var Route = DS.Model.extend({
 			]
 		}
 	}).property('geometry'),
+	operator_focus_as_geojson_with_outline: (function(){
+		return {
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: "#444444",
+						weight: 0,
+						opacity: 0
+					},
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('operated_by_route_default_color'),
+						weight: 2.5,
+						opacity: 1
+					},
+				},
+			]
+		}
+	}).property('geometry'),
 
 	mode_as_geojson_with_outline: (function(){
 		let lineColor = this.get('vehicle_type_color')[this.get('vehicle_type')];
@@ -183,7 +210,15 @@ var Route = DS.Model.extend({
 		colorCode.toString();
 		colorCode = "#" + colorCode;
 		return colorCode;
-	}).property('operated_by_onestop_id')
+	}).property('operated_by_onestop_id'),
+	
+	operated_by_route_default_color: (function(){
+		if (this.get('color') !== null && this.get('color') !== "ffffff"){
+			return "#" + this.get('color');
+		} else {
+			return "#6ea0a4";
+		}
+	}).property('onestop_id')
 
 });
 
