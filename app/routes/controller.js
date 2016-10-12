@@ -140,9 +140,7 @@ export default Ember.Controller.extend({
 			layer.originalStyle = feature.properties;
 
 			if (this.get('onestop_id')){
-				layer.setStyle({
-					"opacity": 1,
-				});
+				layer.eachLayer(function(layer){layer.setStyle({"opacity":1})})
 			}
 		},
 		unselectRoute(e){
