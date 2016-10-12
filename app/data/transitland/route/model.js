@@ -16,8 +16,8 @@ var Route = DS.Model.extend({
 	created_at: DS.attr('date'),
 	updated_at: DS.attr('date'),
 	route_stop_patterns_by_onestop_id: DS.attr(),
-	route_path_opacity: 0.75,
-	route_path_weight: 2.5,
+	route_path_opacity: 1,
+	route_path_weight: 3,
 	vehicle_type_color: {
 		'bus' : '#8dd3c7',
 		'rail' : '#b3de69',
@@ -36,7 +36,7 @@ var Route = DS.Model.extend({
 					geometry: this.get('geometry'),
 					properties: {
 						color: "#444444",
-						weight: 0,
+						weight: 5,
 						opacity: 0
 					},
 					id: this.onestop_id,
@@ -47,7 +47,7 @@ var Route = DS.Model.extend({
 					geometry: this.get('geometry'),
 					properties: {
 						color: this.get('default_color'),
-						weight: 2.5,
+						weight: 3,
 						opacity: 1
 					},
 				},
@@ -179,7 +179,7 @@ var Route = DS.Model.extend({
 					type: "Feature",
 					geometry: this.get('geometry'),
 					properties: {
-						color: borderColor,
+						color: "#222222",
 						weight: 5,
 						opacity: 0
 					},
