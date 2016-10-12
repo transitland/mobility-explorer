@@ -17,7 +17,6 @@ export default Ember.Controller.extend({
 	stopLocation: Ember.computed(function(){
 		var stops = this.model.stops.features;
 		var coordinates = stops.get('geometry')['coordinates'];
-		
 		var tempCoord = null;
 		var lat = coordinates[0];
 		var lon = coordinates[1];
@@ -26,7 +25,6 @@ export default Ember.Controller.extend({
 		coordArray.push(lon);
 		coordArray.push(lat);
 		return coordArray;
-
 	}),
 	onlyRoute: Ember.computed('onestop_id', function(){
 		var data = this.get('routes');
@@ -37,7 +35,7 @@ export default Ember.Controller.extend({
 			return onlyRoute;
 		}
 	}),
-	hoverRoute: null,
+	hoverId: null,
 	unstyledColor: "#6ea0a4",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
@@ -119,34 +117,37 @@ export default Ember.Controller.extend({
 			this.set('onestop_id', onestop_id);
 			this.set('selectedRoute', route);
 		},
+		clearRoute(){
+  		this.set('onestop_id', null);
+			this.set('selectedRoute', null);
+  	},
 		selectRoute(e){
 			e.target.bringToFront();
-			e.target.setStyle({
+			e.target.getLayers()[1].setStyle({
+				"color": "white",
 				"opacity": 1,
-				"weight": 3,
+				// "weight": 2.5,
 			});
+			e.target.getLayers()[0].setStyle({
+				"color": "#666666",
+				"opacity": 1,
+				"weight": 5,
+			});
+			this.set('hoverId', (e.target.getLayers()[0].feature.onestop_id));	
+		},
+		onEachFeature(feature, layer){
+			layer.setStyle(feature.properties);
+			layer.originalStyle = feature.properties;
+
+			if (this.get('onestop_id')){
+				layer.eachLayer(function(layer){layer.setStyle({"opacity":1})})
+			}
 		},
 		unselectRoute(e){
-			e.target.setStyle({
-				"opacity": 1,
-				"weight": 2.5,
+			e.target.eachLayer(function(layer){
+				layer.setStyle(layer.originalStyle);
 			});
-		},
-		selectUnstyledRoute(e){
-			e.target.bringToFront();
-			e.target.setStyle({
-				"color":"#d4645c",
-				"opacity": 1,
-				"weight": 3
-			});
-			// this.set('hoverRoute');
-		},
-		unselectUnstyledRoute(e){
-			e.target.setStyle({
-				"color":"#6ea0a4",
-				"opacity": 0.75,
-				"weight": 2.5
-			});
+			this.set('hoverId', null);
 		},
 		setOnestopId: function(route) {
 			var onestopId = route.id;

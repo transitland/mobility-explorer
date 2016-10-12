@@ -18,11 +18,10 @@ var Route_stop_pattern = DS.Model.extend({
 	updated_at: DS.attr('date'),
 	trips: DS.attr(),
 	tags: DS.attr(),
-	default_color: "#6ea0a4",
+	default_color: "#d4645c",
 	path_opacity: 0,
-	path_weight: 2.5,
+	path_weight: 3,
 	is_selected: false,
-
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'];
 		var coordinatesLength = coordinates.length;
