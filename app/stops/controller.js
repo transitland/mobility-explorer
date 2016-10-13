@@ -9,6 +9,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	served_by: null,
 	isochrone_mode: null,
 	isochrones_mode: null,
+  currentlyLoading: Ember.inject.service(),
 	hoverStop: null,
 	place: null,
 	bus_only: null,

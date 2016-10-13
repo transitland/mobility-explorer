@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 Router.map(function() {
     this.route('routes', function(){
       this.route('route', { path: "/:route-id" });
+      this.route('loading');
     });
     this.route('stops', function(){
         this.route('by-frequency');

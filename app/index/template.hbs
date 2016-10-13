@@ -5,6 +5,8 @@
     {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
     {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
   </div>
+    {{#if currentlyLoading.isLoading}}INDEX{{/if}}
+
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
@@ -20,7 +22,6 @@
       {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
     {{/power-select}}
   </div>
-    {{#if currentlyLoading}} {{loading-spinner}}{{/if}}
     {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
       {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
     {{/leaflet-map}}

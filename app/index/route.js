@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
+import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend({
+
+export default Ember.Route.extend(setLoading, {
 	queryParams: {
     bbox: {
       replace: true,
@@ -34,6 +36,14 @@ export default Ember.Route.extend({
 		}
     this._super(controller, model);
 		
+	}
+	actions: {
+	// 	loading(transition, originRoute){
+	//     let controller = this.controllerFor(this.routeName);
+	//     controller.get('currentlyLoading').set('isLoading', true);
+	//     transition.promise.finally(function(){
+	//     });
+	//   }
 	}
 });
 

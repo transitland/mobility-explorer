@@ -6,6 +6,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
+  currentlyLoading: Ember.inject.service(),
 	onestop_id: null,
 	selectedOperator: null,
 	hoverOperator: null,

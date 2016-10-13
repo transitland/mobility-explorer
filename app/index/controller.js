@@ -1,22 +1,18 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
-
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox'],
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	place: null,
-  currentlyLoading: false,
+  currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
 		iconUrl: 'assets/images/marker.png',		
 		iconSize: (20, 20)
 	}),
 
 	actions: {
-    setLoading() {
-      this.set('currentlyLoading', true);
-    },
 		updatebbox(e) {
 			var newbox = e.target.getBounds();
 			this.set('bbox', newbox.toBBoxString());
