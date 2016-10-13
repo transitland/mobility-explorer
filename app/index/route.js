@@ -36,14 +36,8 @@ export default Ember.Route.extend(setLoading, {
 		}
     this._super(controller, model);
 		
-	}
+	},
 	actions: {
-	// 	loading(transition, originRoute){
-	//     let controller = this.controllerFor(this.routeName);
-	//     controller.get('currentlyLoading').set('isLoading', true);
-	//     transition.promise.finally(function(){
-	//     });
-	//   }
 	}
 });
 
