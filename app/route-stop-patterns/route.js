@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
+import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend(mapBboxRoute, {
+export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
     traversed_by: {
     	refreshModel: true
@@ -45,5 +46,8 @@ export default Ember.Route.extend(mapBboxRoute, {
       traversedByRoute: traversedByRoute,
       stopsServedByRoute: stopsServedByRoute
     });
+  },
+  actions:{
+    
   }
 });

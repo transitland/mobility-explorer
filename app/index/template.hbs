@@ -7,22 +7,23 @@
   </div>
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
-  <div id="map">
-  <div class="location-search">
-    {{#power-select
-      search=(action "searchRepo")
-      selected=place
-      placeholder="Search for location..."
-      onchange=(action "setPlace")
-      onclose=(action "clearPlace")
-      as |repo|
-    }}
-      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-    {{/power-select}}
-  </div>
-    {{#if currentlyLoading}} {{loading-spinner}}{{/if}}
-    {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
-      {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-    {{/leaflet-map}}
+  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+    
+      <div class="location-search">
+        {{#power-select
+          search=(action "searchRepo")
+          selected=place
+          placeholder="Search for location..."
+          onchange=(action "setPlace")
+          onclose=(action "clearPlace")
+          as |repo|
+        }}
+          {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+        {{/power-select}}
+      </div>
+      {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
+        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+      {{/leaflet-map}}
   </div>
 </div>

@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
+import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend(mapBboxRoute, {
+export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
     onestop_id: {
       // replace: true,
@@ -40,5 +41,8 @@ export default Ember.Route.extend(mapBboxRoute, {
     this.store.unloadAll('data/transitland/route');  
     this.store.unloadAll('data/transitland/route_stop_pattern'); 
     return this.store.query('data/transitland/operator', params);
+  },
+  actions:{
+    
   }
 });
