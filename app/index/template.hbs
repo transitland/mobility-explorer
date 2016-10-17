@@ -5,29 +5,10 @@
     {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
     {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
   </div>
-    {{#if currentlyLoading.isLoading}}Index{{/if}}
+    {{#if currentlyLoading.isLoading}}Loading...{{/if}}
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
-    {{#if currentlyLoading.isLoading}}
-      <div id="loading-data">
-        <div class="location-search">
-          {{#power-select
-            search=(action "searchRepo")
-            selected=place
-            placeholder="Search for location..."
-            onchange=(action "setPlace")
-            onclose=(action "clearPlace")
-            as |repo|
-          }}
-            {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-          {{/power-select}}
-        </div>
-        {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
-          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-        {{/leaflet-map}}
-      </div>
-    {{else}}
       <div class="location-search">
         {{#power-select
           search=(action "searchRepo")
@@ -43,6 +24,5 @@
       {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
         {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
       {{/leaflet-map}}
-    {{/if}}
   </div>
 </div>

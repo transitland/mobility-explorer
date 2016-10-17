@@ -37,43 +37,42 @@
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
   {{url-builder entity="route_stop_patterns" server="Transitland" query="results" queryParams=queryParams traversed_by=traversed_by}}
    
-  {{#if currentlyLoading.isLoading}}RSP's{{/if}}
+  {{#if currentlyLoading.isLoading}}Loading...{{/if}}
 
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
 	<div id="map">
-		<div class="location-search">
-	    {{#power-select
-	      search=(action "searchRepo")
-        renderInPlace=true
-	      selected=place
-	      placeholder="Search for location..."
-	      onchange=(action "setPlace")
-	      as |repo|
-	    }}
-	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-	    {{/power-select}}
-	  </div>
-		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
-				
-				{{#each model.traversedByRoute as |route|}}
-					{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-					{{/geojson-layer}}
-				{{/each}}
+			<div class="location-search">
+		    {{#power-select
+		      search=(action "searchRepo")
+	        renderInPlace=true
+		      selected=place
+		      placeholder="Search for location..."
+		      onchange=(action "setPlace")
+		      as |repo|
+		    }}
+		      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+		    {{/power-select}}
+		  </div>
+			{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
+					
+					{{#each model.traversedByRoute as |route|}}
+						{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+						{{/geojson-layer}}
+					{{/each}}
 
-				{{#each model.route_stop_patterns as |rsp|}}
-					  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity clickable=false}}
-						{{/polyline-layer}}
-				{{/each}}
+					{{#each model.route_stop_patterns as |rsp|}}
+						  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity clickable=false}}
+							{{/polyline-layer}}
+					{{/each}}
 
-				{{#if displayStops}}
-					{{#each model.stopsServedByRoute as |stop|}}
-			  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
-			  		{{/marker-layer}}
-		  		{{/each}}
-		  	{{/if}}
-		
-		{{/leaflet-map}}
+					{{#if displayStops}}
+						{{#each model.stopsServedByRoute as |stop|}}
+				  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+				  		{{/marker-layer}}
+			  		{{/each}}
+			  	{{/if}}
+			{{/leaflet-map}}
 	</div>
 </div>

@@ -37,30 +37,30 @@
   </div>
   {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
   
-  {{#if currentlyLoading.isLoading}}OPERATORS{{/if}}
+  {{#if currentlyLoading.isLoading}}Loading...{{/if}}
 
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
   <div id="map">
-    <div class="location-search">
-      {{#power-select
-        search=(action "searchRepo")
-        renderInPlace=true
-        selected=place
-        placeholder="Search for location..."
-        onchange=(action "setPlace")
-        onclose=(action "clearPlace")
-        as |repo|
-      }}
-        {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-      {{/power-select}}
-    </div>
-    {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-      {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-      {{#each model as |operator|}}
-        {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
-        {{/polygon-layer}}
-      {{/each}}
-    {{/leaflet-map}}
+      <div class="location-search">
+        {{#power-select
+          search=(action "searchRepo")
+          renderInPlace=true
+          selected=place
+          placeholder="Search for location..."
+          onchange=(action "setPlace")
+          onclose=(action "clearPlace")
+          as |repo|
+        }}
+          {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+        {{/power-select}}
+      </div>
+      {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+        {{#each model as |operator|}}
+          {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
+          {{/polygon-layer}}
+        {{/each}}
+      {{/leaflet-map}}
   </div>
 </div>

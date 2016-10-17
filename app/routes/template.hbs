@@ -100,79 +100,79 @@
   {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
   {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 	
-    {{#if currentlyLoading.isLoading}}ROUTES{{/if}}
+    {{#if currentlyLoading.isLoading}}Loading...{{/if}}
 
 
 </div>
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
 	<div id="map">
-		<div class="location-search">
-	    {{#power-select
-	      search=(action "searchRepo")
-        renderInPlace=true
-	      selected=place
-	      placeholder="Search for location..."
-	      onchange=(action "setPlace")
-	      as |repo|
-	    }}
-	      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-	    {{/power-select}}
-	  </div>
-		{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-				{{#if onestop_id}}
-			  	{{#if routeStyleIsMode}}
-						{{#each model.routes as |route|}}	
-							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-								{{/geojson-layer}}
-						{{/each}}
-					{{else if routeStyleIsOperator}}
-						{{#each model.routes as |route|}}
-							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-							{{/geojson-layer}}
-						{{/each}}
-					{{else}}
-						{{#each model.routes as |route|}}
-								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-								{{/geojson-layer}}
-						{{/each}}
-					{{/if}}
-					{{#if displayStops}}
-						{{#each model.stops.features as |stop|}}
-				  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
-				  		{{/marker-layer}}
-			  		{{/each}}
-			  	{{/if}}
-			  {{else}}
-					{{#if routeStyleIsMode}}
-						{{#each model.routes as |route|}}	
-							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-								{{/geojson-layer}}
-						{{/each}}
-					{{else if routeStyleIsOperator}}
-						{{#each model.routes as |route|}}
-							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-								{{/geojson-layer}}
-						{{/each}}
-					{{else if operated_by}}
-						{{#each model.routes as |route|}}
-								{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-								{{/geojson-layer}}
-						{{/each}}
-					{{else}}
-						{{#each model.routes as |route|}}
-								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-								{{/geojson-layer}}
-						{{/each}}
-					{{/if}}
-					{{#if displayStops}}
-						{{#each model.stops.features as |stop|}}
-				  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
-				  		{{/marker-layer}}
-			  		{{/each}}
-			  	{{/if}}
-			  {{/if}}
-		{{/leaflet-map}}
+			<div class="location-search">
+			    {{#power-select
+			      search=(action "searchRepo")
+		        renderInPlace=true
+			      selected=place
+			      placeholder="Search for location..."
+			      onchange=(action "setPlace")
+			      as |repo|
+			    }}
+			      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+			    {{/power-select}}
+			  </div>
+				{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+						{{#if onestop_id}}
+					  	{{#if routeStyleIsMode}}
+								{{#each model.routes as |route|}}	
+									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+										{{/geojson-layer}}
+								{{/each}}
+							{{else if routeStyleIsOperator}}
+								{{#each model.routes as |route|}}
+									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+									{{/geojson-layer}}
+								{{/each}}
+							{{else}}
+								{{#each model.routes as |route|}}
+										{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+										{{/geojson-layer}}
+								{{/each}}
+							{{/if}}
+							{{#if displayStops}}
+								{{#each model.stops.features as |stop|}}
+						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+						  		{{/marker-layer}}
+					  		{{/each}}
+					  	{{/if}}
+					  {{else}}
+							{{#if routeStyleIsMode}}
+								{{#each model.routes as |route|}}	
+									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+										{{/geojson-layer}}
+								{{/each}}
+							{{else if routeStyleIsOperator}}
+								{{#each model.routes as |route|}}
+									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+										{{/geojson-layer}}
+								{{/each}}
+							{{else if operated_by}}
+								{{#each model.routes as |route|}}
+										{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+										{{/geojson-layer}}
+								{{/each}}
+							{{else}}
+								{{#each model.routes as |route|}}
+										{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+										{{/geojson-layer}}
+								{{/each}}
+							{{/if}}
+							{{#if displayStops}}
+								{{#each model.stops.features as |stop|}}
+						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+						  		{{/marker-layer}}
+					  		{{/each}}
+					  	{{/if}}
+					  {{/if}}
+				{{/leaflet-map}}
 	</div>
 </div>
 {{outlet}}
