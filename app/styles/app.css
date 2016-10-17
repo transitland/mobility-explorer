@@ -54,15 +54,42 @@ input, button, select, textarea {
 	opacity:.2;
 }
 
-.map{
+#map{
 	z-index: 3;
 }
 
-#map-placeholder{
-	background-color: #f8f8f8;
-	height: 100vh;
-  width: 100%;
-  z-index: 30;
+#map-loading{
+	opacity: .5;
+	z-index: 3;
+	/*position: relative;*/
+}
+
+.loading-spinner-03{
+	z-index: 5;
+	opacity: 1;
+	position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  margin: -75px 0 0 -75px;
+  border: 10px solid #d4645c;
+  border-radius: 50%;
+  border-top: 10px solid white;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .route-style-options{

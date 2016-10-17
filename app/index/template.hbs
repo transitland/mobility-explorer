@@ -5,10 +5,11 @@
     {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
     {{#link-to 'operators' (query-params bbox=bbox onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
   </div>
-    {{#if currentlyLoading.isLoading}}Loading...{{/if}}
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
-  <div id="map">
+  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+    
       <div class="location-search">
         {{#power-select
           search=(action "searchRepo")

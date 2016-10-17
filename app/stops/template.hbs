@@ -104,14 +104,10 @@
 	{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
 	
 	{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
-
-    {{#if currentlyLoading.isLoading}}STOPS{{/if}}
-    
-
-
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
-  <div id="map">
+  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
   	<div class="location-search">
 	    {{#power-select
 	      search=(action "searchRepo")
