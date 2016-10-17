@@ -7,6 +7,7 @@ export default Ember.Controller.extend({
 	onestop_id: null,
 	serves: null,
 	bbox: null,
+  currentlyLoading: Ember.inject.service(),
 	displayStops: false,
 	selectedRsp: null,
 	bounds: Ember.computed('bbox', function(){
