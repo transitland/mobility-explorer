@@ -7,23 +7,25 @@
   </div>
 </div>
 <div class="col-xs-12 col-sm-12 col-md-9">
-  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-    
-      <div class="location-search">
-        {{#power-select
-          search=(action "searchRepo")
-          selected=place
-          placeholder="Search for location..."
-          onchange=(action "setPlace")
-          onclose=(action "clearPlace")
-          as |repo|
-        }}
-          {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-        {{/power-select}}
-      </div>
-      {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
-        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-      {{/leaflet-map}}
+  <div class="row">
+    {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+    <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+      
+        <div class="location-search">
+          {{#power-select
+            search=(action "searchRepo")
+            selected=place
+            placeholder="Search for location..."
+            onchange=(action "setPlace")
+            onclose=(action "clearPlace")
+            as |repo|
+          }}
+            {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+          {{/power-select}}
+        </div>
+        {{#leaflet-map bounds=leafletBbox onMoveend=(action "updatebbox")}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+        {{/leaflet-map}}
+    </div>
   </div>
 </div>

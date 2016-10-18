@@ -4,17 +4,16 @@ body {
     z-index: 30;
 }
 
-html, body, #map{
-    height: 100%;
+html, body, #map, #map-loading{
+    height: 100vh;
     width: 100%;
     z-index: 30;
  }
 
 
 .leaflet-container {
-	height: 1000px;
+	height: 100%;
 	width: 100%;
-
 }
 
 input, button, select, textarea {
@@ -52,10 +51,6 @@ input, button, select, textarea {
 	width:100%;
 	height:100%;
 	opacity:.2;
-}
-
-#map{
-	z-index: 3;
 }
 
 #map-loading{
