@@ -50,7 +50,20 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
 
     var routes = this.store.query('data/transitland/route', params);
 
-    if (params.onestop_id){
+    if (params.serves){
+      // var url = 'https://transit.land/api/v1/stops.geojson?onestop_id=' + params.serves;
+      // var stopServedByRoutes = Ember.$.ajax({ url });
+      // return Ember.RSVP.hash({
+      //   routes: routes,
+      //   stopServedByRoutes: stopServedByRoutes
+      // });
+      var stops = this.store.query('data/transitland/stop', {onestop_id: params.serves});
+      return Ember.RSVP.hash({
+        routes: routes,
+        stops: stops
+      });
+      
+    } else if (params.onestop_id){
       var url = 'https://transit.land/api/v1/stops.geojson?served_by=' + params.onestop_id;
       var stops = Ember.$.ajax({ url });
       return Ember.RSVP.hash({

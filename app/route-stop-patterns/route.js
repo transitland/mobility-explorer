@@ -37,7 +37,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     this.store.unloadAll('data/transitland/route_stop_pattern');
 
     var route_stop_patterns = this.store.query('data/transitland/route_stop_pattern', params);
-    var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=' + params.traversed_by;
     var traversedByRoute = this.store.query('data/transitland/route', {onestop_id: params.traversed_by});
     var stopsServedByRoute = this.store.query('data/transitland/stop', {served_by: params.traversed_by});
 

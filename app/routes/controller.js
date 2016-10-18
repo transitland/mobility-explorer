@@ -75,6 +75,7 @@ export default Ember.Controller.extend({
 		var data = this.get('model.routes');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
+		// debugger;
 		return routes;
 	}),
 	route_stop_patterns_by_onestop_ids: Ember.computed ('model', function(){
@@ -196,6 +197,26 @@ export default Ember.Controller.extend({
 			} else {
     		this.set('displayStops', false);
     	}
+    },
+    displaySharedStop: function(){
+  		
+					var stops = this.model.stopServedByRoutes.features;
+					for (var i = 0; i < stops.length; i++){
+						var tempCoord = null;
+						var lat = stops[i].geometry.coordinates[0];
+						var lon = stops[i].geometry.coordinates[1];
+						tempCoord = lat;
+						var coords = stops[i].geometry.coordinates
+						var coordArray = [];
+						coordArray.push(lon);
+						coordArray.push(lat);
+						this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
+						this.model.stopServedByRoutes.features[i].icon = L.icon({
+							iconUrl: 'assets/images/stop.png',		
+							iconSize: (10, 10),
+						});
+					}
+	    		return true;
     },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);
