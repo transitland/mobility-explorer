@@ -51,29 +51,18 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     var routes = this.store.query('data/transitland/route', params);
 
     if (params.serves){
-      var url = 'https://transit.land/api/v1/stops.geojson?onestop_id=' + params.serves;
-      var stopServedByRoutes = Ember.$.ajax({ url }).then(function(){
-        var stops = this.model.stopServedByRoutes.features;
-          for (var i = 0; i < stops.length; i++){
-            var tempCoord = null;
-            var lat = stops[i].geometry.coordinates[0];
-            var lon = stops[i].geometry.coordinates[1];
-            tempCoord = lat;
-            var coords = stops[i].geometry.coordinates
-            var coordArray = [];
-            coordArray.push(lon);
-            coordArray.push(lat);
-            this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
-            this.model.stopServedByRoutes.features[i].icon = L.icon({
-              iconUrl: 'assets/images/stop.png',    
-              iconSize: (10, 10),
-            });
-          }
-      });
+      // var url = 'https://transit.land/api/v1/stops.geojson?onestop_id=' + params.serves;
+      // var stopServedByRoutes = Ember.$.ajax({ url });
+      // return Ember.RSVP.hash({
+      //   routes: routes,
+      //   stopServedByRoutes: stopServedByRoutes
+      // });
+      var stops = this.store.query('data/transitland/stop', {onestop_id: params.serves});
       return Ember.RSVP.hash({
         routes: routes,
-        stopServedByRoutes: stopServedByRoutes
+        stops: stops
       });
+      
     } else if (params.onestop_id){
       var url = 'https://transit.land/api/v1/stops.geojson?served_by=' + params.onestop_id;
       var stops = Ember.$.ajax({ url });

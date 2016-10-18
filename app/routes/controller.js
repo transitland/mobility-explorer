@@ -75,6 +75,7 @@ export default Ember.Controller.extend({
 		var data = this.get('model.routes');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
+		// debugger;
 		return routes;
 	}),
 	route_stop_patterns_by_onestop_ids: Ember.computed ('model', function(){
