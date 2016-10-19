@@ -86,27 +86,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
             return response;
           })
         });
-
-      } else if (stops.get('query.isochrones_mode')){
-        var stopLocations = [];
-        var isochrones = [];
-        stopLocations = stopLocations.concat(stops.map(function(stop){return stop.get('geometry.coordinates')}));
-
-        for (var i = 0; i < stopLocations.length; i++){
-          var url = 'https://valhalla.dev.mapzen.com/isochrone?api_key=valhalla-ThKqdPw&json=';
-          var mode = 'pedestrian';
-          var json = {
-            locations: [{"lat":stopLocations[i][1], "lon":stopLocations[i][0]}],
-            costing: mode,
-            contours: [{"time":15}]
-          };
-          url += escape(JSON.stringify(json));
-          isochrones.push(Ember.$.ajax({ url }));
-        }     
-        return Ember.RSVP.hash({
-          stops: stops,
-          isochrones: Ember.RSVP.all(isochrones)
-        });
       } else {
         var onlyStop = stops.get('firstObject');
         var stopLocation = onlyStop.get('geometry.coordinates');
