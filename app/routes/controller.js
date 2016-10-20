@@ -13,6 +13,16 @@ export default Ember.Controller.extend({
 	style_routes_by: null,
 	selectedRoute: null,
 	place: null,
+	placeholderMessage: Ember.computed(function(){
+		var total = this.model.routes.meta.total;
+		return  total + " routes";
+
+		// if (total > 1){
+		// 	return  total + " routes";
+		// } else if (total === 1) {
+		// 	return total + " route"
+		// }
+	}),
 	route_stop_patterns_by_onestop_id: null,
 	displayStops: false,
 	stopLocation: Ember.computed(function(){
@@ -105,9 +115,7 @@ export default Ember.Controller.extend({
 			}
 		},
 		mouseOver(){
-			this.set('mousedOver', true);
-			// debugger;
-			
+			this.set('mousedOver', true);	
 		},
 		setRouteStyle(style){
 			if (this.get('style_routes_by') === style){
