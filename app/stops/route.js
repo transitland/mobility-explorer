@@ -62,20 +62,91 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           costing: mode,
           costing_options: {"pedestrian":{"use_ferry":0}},
           contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
-          denoise: 0,
+          denoise: .1,
         };
         url += escape(JSON.stringify(json));
         return Ember.RSVP.hash({
           stops: stops,
           onlyStop: onlyStop,
           url: url,
+          // isochrones: Ember.$.ajax({ url }).then(function(response){
+          //   var polygons= response.features;
+          //   for (var i = 0; i < (polygons.length-1); i++){
+          //     if(response.features[i].properties.contour === response.features[i+1].properties.contour) {
+          //       polygons[i].geometry.coordinates.push(polygons[i+1].geometry.coordinates);
+          //     }
+          //   }
+          //   return response;
+          // })
+          
           isochrones: Ember.$.ajax({ url }).then(function(response){
-            var polygons= response.features;
-            for (var i = 0; i < (polygons.length-1); i++){
-              var ring = polygons[i].geometry.coordinates.push(polygons[i+1].geometry.coordinates[0]);
-            }
-            return response;
+           //for each feature
+           for(var i = 0; i < response.features.length-1; i++) {
+             //we need to find the first range of contours features who have different
+             //contour values than the current contour we are on
+             var range_begin = i + 1;
+             var range_end = range_begin;
+
+             while(range_begin < response.features.length-1 && range_end < response.features.length-1) {
+
+              if(response.features[i].properties.contour == response.features[range_begin].properties.contour) {
+                 range_begin++;
+                 range_end = range_begin;
+              } 
+              if(response.features[range_begin].properties.contour == response.features[range_end].properties.contour) {
+                 range_end++;
+              } else {
+                 break;
+              }
+             }
+             //copy this range of features into the current feature as an inner ring
+             //this will make a cut out. TODO: reverse the winding of this inner is more proper
+            for(var f = range_begin; f < range_end; f++)
+              response.features[i].geometry.coordinates.push(response.features[f].geometry.coordinates[0]);
+           }
+           return response;
           })
+          
+          
+          // isochrones: Ember.$.ajax({ url }).then(function(response){
+          //  //for each feature
+          //   var group60 = [];
+          //   var group45 = [];
+          //   var group30 = [];
+          //   var group15 = [];
+          //   for (var i = 0; i < response.features.length-1; i++) {
+          //     //we need to find the first range of contours features who have different
+          //     //contour values than the current contour we are on
+              
+          //     if(response.features[i].properties.contour === response.features[i+1].properties.contour) {
+          //       // response.features[i].geometry.coordinates.push(response.features[i+1].geometry.coordinates[0]);
+          //       if (response.features[i].properties.contour === 60){
+          //         group60.push(response.features[i]);
+          //       } else if (response.features[i].properties.contour === 45){
+          //         group45.push(response.features[i]);
+          //       } else if (response.features[i].properties.contour === 30){
+          //         group30.push(response.features[i]);
+          //       } else if (response.features[i].properties.contour === 15){
+          //         group15.push(response.features[i]);
+          //       }
+          //     } else if (response.features[i].properties.contour !== response.features[i+1].properties.contour){
+          //       if (response.features[i].properties.contour === 60){
+          //         group60.push(response.features[i]);
+          //       } else if (response.features[i].properties.contour === 45){
+          //         group45.push(response.features[i]);
+          //       } else if (response.features[i].properties.contour === 30){
+          //         group30.push(response.features[i]);
+          //       } else if (response.features[i].properties.contour === 15){
+          //         group15.push(response.features[i]);
+          //       }
+          //     }
+          //   }
+          //   for (var i = 0; i < group15.length; i++) {
+          //     console.log("group15" + i);
+          //   }
+
+
+          // })
         });
       } else {
         var onlyStop = stops.get('firstObject');
