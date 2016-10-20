@@ -13,15 +13,13 @@ export default Ember.Controller.extend({
 	style_routes_by: null,
 	selectedRoute: null,
 	place: null,
-	placeholderMessage: Ember.computed(function(){
-		var total = this.model.routes.meta.total;
-		return  total + " routes";
-
-		// if (total > 1){
-		// 	return  total + " routes";
-		// } else if (total === 1) {
-		// 	return total + " route"
-		// }
+	placeholderMessage: Ember.computed('leafletBbox', function(){
+		var total = this.model.routes.get('meta.total');
+		if (total > 1){
+			return  total + " routes";
+		} else if (total === 1) {
+			return total + " route"
+		}
 	}),
 	route_stop_patterns_by_onestop_id: null,
 	displayStops: false,
