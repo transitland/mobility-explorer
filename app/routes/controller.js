@@ -106,6 +106,8 @@ export default Ember.Controller.extend({
 		},
 		mouseOver(){
 			this.set('mousedOver', true);
+			// debugger;
+			
 		},
 		setRouteStyle(style){
 			if (this.get('style_routes_by') === style){
