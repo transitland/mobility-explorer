@@ -232,7 +232,7 @@
 		    {{#power-select
 		      options=routes
 		      selected=route
-					placeholder=placeholderMessage
+					placeholder=placeholderMessageRoutes
 					searchPlaceholder="Type to filter..."
 		      onchange=(action "setRoute")
 	        onclose=(action "clearRoute")
@@ -240,6 +240,18 @@
 		    }}
 		      {{route.name}} {{route.tags.route_long_name}}
 		    {{/power-select}}
+		     {{#power-select
+		      options=routeOperators
+		      selected=operator
+					placeholder=placeholderMessageOperators
+					searchPlaceholder="Type to filter..."
+		      onchange=(action "setOperator")
+	        onclose=(action "clearOperator")
+		      as |operator|
+		    }}
+		      {{operator.name}}
+		    {{/power-select}}
+		    
 				{{#each model.routes as |route|}}
 					{{#if (eq hoverId route.onestop_id)}}
 		  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}

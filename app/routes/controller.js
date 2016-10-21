@@ -13,13 +13,43 @@ export default Ember.Controller.extend({
 	style_routes_by: null,
 	selectedRoute: null,
 	place: null,
-	placeholderMessage: Ember.computed('leafletBbox', function(){
+	placeholderMessageRoutes: Ember.computed('leafletBbox', function(){
 		var total = this.model.routes.get('meta.total');
 		if (total > 1){
 			return  total + " routes";
 		} else if (total === 1) {
 			return total + " route"
 		}
+	}),
+	placeholderMessageOperators: Ember.computed('leafletBbox', function(){
+		var total = this.get('routeOperators').length;
+		if (total > 1){
+			return  total + " operators";
+		} else if (total === 1) {
+			return total + " operator"
+		}
+	}),
+	routeOperators: Ember.computed('leafletBbox', function(){
+		var routesLength = this.get('routes').length;
+		var allRoutes = this.get('routes');
+		var checkList = [];
+		var uniqueOperators = [];
+		for (var i = 0; i < routesLength; i++){
+
+			let operatorName = allRoutes[i].get('operated_by_name');
+			let operatorOnestopid = allRoutes[i].get('operated_by_onestop_id');
+			let operatorColor = allRoutes[i].get('operator_color');
+			if (checkList.indexOf(operatorName) === -1){
+				checkList.push(operatorName);
+				var uniqueOperator = {};
+				uniqueOperator["name"] = operatorName;
+				uniqueOperator["onestopId"] = operatorOnestopid;
+				uniqueOperator["color"] = operatorColor;
+				uniqueOperators.push(uniqueOperator);
+			}
+
+		}
+		return uniqueOperators;
 	}),
 	route_stop_patterns_by_onestop_id: null,
 	displayStops: false,
@@ -131,6 +161,13 @@ export default Ember.Controller.extend({
   		this.set('onestop_id', null);
 			this.set('selectedRoute', null);
   	},
+  	setOperator(operator){
+  		let operatorId = this.get('routeOperators')[operator]
+  		this.set('operated_by', operatorId);
+		},
+		clearOperator(){
+			this.set('operated_by', null);
+		},
 		selectRoute(e){
 			e.target.bringToFront();
 			e.target.getLayers()[1].setStyle({
