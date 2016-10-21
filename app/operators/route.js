@@ -40,6 +40,8 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');  
     this.store.unloadAll('data/transitland/route_stop_pattern'); 
+    params.total=true;
+    
     return this.store.query('data/transitland/operator', params);
   },
   actions:{
