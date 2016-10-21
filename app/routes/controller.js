@@ -62,15 +62,27 @@ export default Ember.Controller.extend({
 		var allRoutes = this.get('routes');
 		var checkList = [];
 		var uniqueModes = [];
+		var modeColors = {
+			"bus": "#8dd3c7",
+			"rail": "#b3de69",
+			"metro": "#bebada",
+			"tram": "#fdb462",
+			"ferry": "#fb8072",
+			"cablecar": "#80b1d3"
+		};
 		for (var i = 0; i < routesLength; i++){
 			let modeName = allRoutes[i].get('vehicle_type');
-			// let modeColor = allRoutes[i].get('operator_color');
+			var modeColor = null;
+			if (modeName in modeColors){
+				modeColor = modeColors[modeName];
+			} else {
+				modeColor = "grey"
+			}
 			if (checkList.indexOf(modeName) === -1){
 				checkList.push(modeName);
 				var uniqueMode = {};
 				uniqueMode["name"] = modeName;
-				// uniqueOperator["onestopId"] = operatorOnestopid;
-				// uniqueOperator["style"] = "background-color:" + operatorColor;
+				uniqueMode["style"] = "background-color:" + modeColor;
 				uniqueModes.push(uniqueMode);
 			}
 		}
@@ -180,9 +192,7 @@ export default Ember.Controller.extend({
 			this.set('selectedRoute', null);
   	},
   	setOperator(operator){
-  		// let operatorId = this.get('routeOperators')[operator]
   		this.set('operated_by', operator.onestopId);
-  		// debugger;
 		},
 		clearOperator(){
 			this.set('operated_by', null);
