@@ -39,6 +39,18 @@ input, button, select, textarea {
 	margin-top: 0;
 }
 
+.legend-options{
+
+}
+.legend-color{
+	display:inline;
+	float:left;
+	/*position: absolute;*/
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+
 .ember-power-select-trigger {
 	border-radius: 0;
 	border: 1px solid #ccc;

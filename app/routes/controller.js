@@ -35,7 +35,6 @@ export default Ember.Controller.extend({
 		var checkList = [];
 		var uniqueOperators = [];
 		for (var i = 0; i < routesLength; i++){
-
 			let operatorName = allRoutes[i].get('operated_by_name');
 			let operatorOnestopid = allRoutes[i].get('operated_by_onestop_id');
 			let operatorColor = allRoutes[i].get('operator_color');
@@ -44,10 +43,9 @@ export default Ember.Controller.extend({
 				var uniqueOperator = {};
 				uniqueOperator["name"] = operatorName;
 				uniqueOperator["onestopId"] = operatorOnestopid;
-				uniqueOperator["color"] = operatorColor;
+				uniqueOperator["style"] = "background-color:" + operatorColor;
 				uniqueOperators.push(uniqueOperator);
 			}
-
 		}
 		return uniqueOperators;
 	}),
@@ -113,17 +111,10 @@ export default Ember.Controller.extend({
 		var data = this.get('model.routes');
 		var routes = [];
 		routes = routes.concat(data.map(function(route){return route;}));
-		// debugger;
 		return routes;
 	}),
 	route_stop_patterns_by_onestop_ids: Ember.computed ('model', function(){
 		return this.get('model').get('firstObject').get('route_stop_patterns_by_onestop_id');
-	}),
-	routeStyleIsMode: Ember.computed('style_routes_by', function(){
-		return (this.get('style_routes_by') === 'mode');
-	}),
-	routeStyleIsOperator: Ember.computed('style_routes_by', function(){
-		return (this.get('style_routes_by') === 'operator');
 	}),
 	mapMoved: false,
 	mousedOver: false,
@@ -244,24 +235,23 @@ export default Ember.Controller.extend({
     	}
     },
     displaySharedStop: function(){
-  		
-					var stops = this.model.stopServedByRoutes.features;
-					for (var i = 0; i < stops.length; i++){
-						var tempCoord = null;
-						var lat = stops[i].geometry.coordinates[0];
-						var lon = stops[i].geometry.coordinates[1];
-						tempCoord = lat;
-						var coords = stops[i].geometry.coordinates
-						var coordArray = [];
-						coordArray.push(lon);
-						coordArray.push(lat);
-						this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
-						this.model.stopServedByRoutes.features[i].icon = L.icon({
-							iconUrl: 'assets/images/stop.png',		
-							iconSize: (10, 10),
-						});
-					}
-	    		return true;
+			var stops = this.model.stopServedByRoutes.features;
+			for (var i = 0; i < stops.length; i++){
+				var tempCoord = null;
+				var lat = stops[i].geometry.coordinates[0];
+				var lon = stops[i].geometry.coordinates[1];
+				tempCoord = lat;
+				var coords = stops[i].geometry.coordinates
+				var coordArray = [];
+				coordArray.push(lon);
+				coordArray.push(lat);
+				this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
+				this.model.stopServedByRoutes.features[i].icon = L.icon({
+					iconUrl: 'assets/images/stop.png',		
+					iconSize: (10, 10),
+				});
+			}
+  		return true;
     },
     setRouteStopPattern: function(selected){
     	this.set('routeStopPattern', selected);
