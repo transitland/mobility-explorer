@@ -29,6 +29,14 @@ export default Ember.Controller.extend({
 			return total + " operator"
 		}
 	}),
+	placeholderMessageModes: Ember.computed('leafletBbox', function(){
+		var total = this.get('routeModes').length;
+		if (total > 1){
+			return  total + " modes";
+		} else if (total === 1) {
+			return total + " mode"
+		}
+	}),
 	routeOperators: Ember.computed('leafletBbox', function(){
 		var routesLength = this.get('routes').length;
 		var allRoutes = this.get('routes');
@@ -48,6 +56,25 @@ export default Ember.Controller.extend({
 			}
 		}
 		return uniqueOperators;
+	}),
+	routeModes: Ember.computed('leafletBbox', function(){
+		var routesLength = this.get('routes').length;
+		var allRoutes = this.get('routes');
+		var checkList = [];
+		var uniqueModes = [];
+		for (var i = 0; i < routesLength; i++){
+			let modeName = allRoutes[i].get('vehicle_type');
+			// let modeColor = allRoutes[i].get('operator_color');
+			if (checkList.indexOf(modeName) === -1){
+				checkList.push(modeName);
+				var uniqueMode = {};
+				uniqueMode["name"] = modeName;
+				// uniqueOperator["onestopId"] = operatorOnestopid;
+				// uniqueOperator["style"] = "background-color:" + operatorColor;
+				uniqueModes.push(uniqueMode);
+			}
+		}
+		return uniqueModes;
 	}),
 	route_stop_patterns_by_onestop_id: null,
 	displayStops: false,
@@ -153,11 +180,18 @@ export default Ember.Controller.extend({
 			this.set('selectedRoute', null);
   	},
   	setOperator(operator){
-  		let operatorId = this.get('routeOperators')[operator]
-  		this.set('operated_by', operatorId);
+  		// let operatorId = this.get('routeOperators')[operator]
+  		this.set('operated_by', operator.onestopId);
+  		// debugger;
 		},
 		clearOperator(){
 			this.set('operated_by', null);
+		},
+		setMode(mode){
+  		this.set('vehicle_type', mode.name);
+		},
+		clearMode(){
+			this.set('vehicle_type', null);
 		},
 		selectRoute(e){
 			e.target.bringToFront();

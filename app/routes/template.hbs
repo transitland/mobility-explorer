@@ -263,26 +263,27 @@
 			     <div class="container"><div class="row"><div class="legend-color" style={{operator.style}}></div>{{operator.name}}</div></div>
 			    {{/power-select}}
 		    {{/if}}
+		    {{#if (eq style_routes_by "mode")}}
+		    	{{#unless vehicle_type}}
+
+				    {{#power-select
+				    	options=routeModes
+				      selected=mode
+							placeholder=placeholderMessageModes
+							searchPlaceholder="Type to filter..."
+				      onchange=(action "setMode")
+			        onclose=(action "clearMode")
+				      as |mode|
+				    }}
+				     <div class="container"><div class="row"><div></div>{{mode.name}}</div></div>
+				    {{/power-select}}
+				  {{/unless}}
+		    {{/if}}
 				{{#each model.routes as |route|}}
 					{{#if (eq hoverId route.onestop_id)}}
 		  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
 			  	{{/if}}
 		  	{{/each}}
-			{{/if}}
-			
-			{{#if (eq style_routes_by "mode")}}
-				{{#unless onestop_id}}
-				{{#unless hoverId}}
-					<p class="caption">Select mode:</p>
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='bus')}}<p style="color:#8dd3c7;">Bus</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='rail')}}<p style="color:#b3de69;">Rail</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='metro')}}<p style="color:#bebada;">Metro</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='tram')}}<p style="color:#fdb462;">Tram</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='ferry')}}<p style="color:#fb8072;">Ferry</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='cablecar')}}<p style="color:#80b1d3;">Cablecar</p>{{/link-to}}
-					<p style="color:grey;">Other</p>
-				{{/unless}}
-				{{/unless}}
 			{{/if}}
 			{{#if selectedRoute}}
 			{{else if onlyRoute}}
