@@ -49,10 +49,10 @@
 						    <label for="check-2">Operator</label>
 						  </div>
 						</form>
-				    {{#power-select
+				   {{#power-select
 				      options=routes
 				      selected=route
-							placeholder=placeholderMessage
+							placeholder=placeholderMessageRoutes
 							searchPlaceholder="Type to filter..."
 				      onchange=(action "setRoute")
 			        onclose=(action "clearRoute")
@@ -66,6 +66,19 @@
 					  	{{/if}}
 				  	{{/each}}
 					{{/if}}
+					{{#if (eq style_routes_by "operator")}}
+				  	{{#power-select
+				    	options=routeOperators
+				      selected=operator
+							placeholder=placeholderMessageOperators
+							searchPlaceholder="Type to filter..."
+				      onchange=(action "setOperator")
+			        onclose=(action "clearOperator")
+				      as |operator|
+				    }}
+				    	<div class="container"><div class="row"><div class="legend-color" style={{operator.style}}></div>{{operator.name}}</div></div>
+				    {{/power-select}}
+			    {{/if}}
 					
 					{{#if (eq style_routes_by "mode")}}
 						{{#unless onestop_id}}
