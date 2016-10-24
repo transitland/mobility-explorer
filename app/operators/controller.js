@@ -11,6 +11,14 @@ export default Ember.Controller.extend(mapBboxController, {
 	selectedOperator: null,
 	hoverOperator: null,
 	place: null,
+	placeholderMessage: Ember.computed('leafletBbox', function(){
+		var total = this.model.get('meta.total');
+		if (total > 1){
+			return  total + " operators";
+		} else if (total === 1) {
+			return total + " operator"
+		}
+	}),
 	onlyOperator: Ember.computed('onestop_id', function(){
 		var data = this.get('operators');
 		var onlyOperator = data.get('firstObject');

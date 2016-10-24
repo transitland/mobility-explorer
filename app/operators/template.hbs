@@ -16,7 +16,7 @@
             {{#power-select
               options=operators
               selected=operator
-              placeholder="List of operators"
+              placeholder=placeholderMessage
               searchPlaceholder="Type to filter..."
               onchange=(action "setOperator")
               as |operator|
@@ -82,7 +82,7 @@
         {{#power-select
           options=operators
           selected=operator
-          placeholder="List of operators"
+          placeholder=placeholderMessage
           searchPlaceholder="Type to filter..."
           onchange=(action "setOperator")
           as |operator|

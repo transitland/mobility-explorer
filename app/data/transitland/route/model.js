@@ -27,6 +27,9 @@ var Route = DS.Model.extend({
 		'tram' : '#fdb462'
 	},
 	default_color: "#6ea0a4",
+	total: (function(){
+		this.get('meta.total');
+	}).property(),
 	default_as_geojson_with_outline: (function(){
 		return {
 			type: "FeatureCollection",

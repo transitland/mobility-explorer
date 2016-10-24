@@ -30,7 +30,7 @@
 
 						  <div class="form-group-header">Style routes by:</div>
 						  <div class="form-group">
-						  	{{#if routeStyleIsMode}}<input type="checkbox" id="check-1" name="option-one" checked>
+						  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
 						  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
 						    <label for="check-1">Mode</label>
 						  </div>
@@ -39,20 +39,20 @@
 						<form>
 						  <div class="form-group-header">Style routes by:</div>
 						  <div class="form-group" {{action "setRouteStyle" "mode"}}>
-						  	{{#if routeStyleIsMode}}<input type="checkbox" id="check-1" name="option-one" checked>
+						  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
 						  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
 						    <label for="check-1">Mode</label>
 						  </div>
 						  <div class="form-group" {{action "setRouteStyle" "operator"}}>
-						    {{#if routeStyleIsOperator}}<input type="checkbox" id="check-2" name="option-two" checked>
+						    {{#if (eq style_routes_by "operator")}}<input type="checkbox" id="check-2" name="option-two" checked>
 						    {{else}}<input type="checkbox" id="check-2" name="option-two">{{/if}}
 						    <label for="check-2">Operator</label>
 						  </div>
 						</form>
-				    {{#power-select
+				   {{#power-select
 				      options=routes
 				      selected=route
-							placeholder="routes"
+							placeholder=placeholderMessageRoutes
 							searchPlaceholder="Type to filter..."
 				      onchange=(action "setRoute")
 			        onclose=(action "clearRoute")
@@ -66,25 +66,34 @@
 					  	{{/if}}
 				  	{{/each}}
 					{{/if}}
-					
-					{{#if routeStyleIsMode}}
-						{{#unless onestop_id}}
-						{{#unless hoverId}}
-							<p class="caption">Select mode:</p>
-							{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='bus')}}<p style="color:#8dd3c7;">Bus</p>{{/link-to}}
-							{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='rail')}}<p style="color:#b3de69;">Rail</p>{{/link-to}}
-							{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='metro')}}<p style="color:#bebada;">Metro</p>{{/link-to}}
-							{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='tram')}}<p style="color:#fdb462;">Tram</p>{{/link-to}}
-							{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='ferry')}}<p style="color:#fb8072;">Ferry</p>{{/link-to}}
-							{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='cablecar')}}<p style="color:#80b1d3;">Cablecar</p>{{/link-to}}
-							<p style="color:grey;">Other</p>
-						{{/unless}}
-						{{/unless}}
-					{{/if}}
-					{{#if routeStyleIsOperator}}
-						Operator Key coming soon
-					{{/if}}
-
+					{{#if (eq style_routes_by "operator")}}
+				  	{{#power-select
+				    	options=routeOperators
+				      selected=operator
+							placeholder=placeholderMessageOperators
+							searchPlaceholder="Type to filter..."
+				      onchange=(action "setOperator")
+			        onclose=(action "clearOperator")
+				      as |operator|
+				    }}
+				    	<div class="container"><div class="row"><div class="legend-color" style={{operator.style}}></div>{{operator.name}}</div></div>
+				    {{/power-select}}
+			    {{/if}}
+					{{#if (eq style_routes_by "mode")}}
+			    	{{#unless vehicle_type}}
+					    {{#power-select
+					    	options=routeModes
+					      selected=mode
+								placeholder=placeholderMessageModes
+								searchPlaceholder="Type to filter..."
+					      onchange=(action "setMode")
+				        onclose=(action "clearMode")
+					      as |mode|
+					    }}
+					     <div class="container"><div class="row"><div class="legend-color" style={{mode.style}}></div>{{mode.name}}</div></div>
+					    {{/power-select}}
+					  {{/unless}}
+			    {{/if}}
 					{{#if selectedRoute}}
 					{{else if onlyRoute}}
 					{{else if hoverRoute}}
@@ -122,12 +131,12 @@
 				{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 						{{#if onestop_id}}
-					  	{{#if routeStyleIsMode}}
+					  	{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 										{{/geojson-layer}}
 								{{/each}}
-							{{else if routeStyleIsOperator}}
+							{{else if (eq style_routes_by "operator")}}
 								{{#each model.routes as |route|}}
 									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 									{{/geojson-layer}}
@@ -145,12 +154,12 @@
 					  		{{/each}}
 					  	{{/if}}
 					  {{else}}
-							{{#if routeStyleIsMode}}
+							{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
 								{{/each}}
-							{{else if routeStyleIsOperator}}
+							{{else if (eq style_routes_by "operator")}}
 								{{#each model.routes as |route|}}
 									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
@@ -211,7 +220,7 @@
 
 				  <div class="form-group-header">Style routes by:</div>
 				  <div class="form-group">
-				  	{{#if routeStyleIsMode}}<input type="checkbox" id="check-1" name="option-one" checked>
+				  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
 				  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
 				    <label for="check-1">Mode</label>
 				  </div>
@@ -220,12 +229,12 @@
 				<form>
 				  <div class="form-group-header">Style routes by:</div>
 				  <div class="form-group" {{action "setRouteStyle" "mode"}}>
-				  	{{#if routeStyleIsMode}}<input type="checkbox" id="check-1" name="option-one" checked>
+				  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
 				  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
 				    <label for="check-1">Mode</label>
 				  </div>
 				  <div class="form-group" {{action "setRouteStyle" "operator"}}>
-				    {{#if routeStyleIsOperator}}<input type="checkbox" id="check-2" name="option-two" checked>
+				    {{#if (eq style_routes_by "operator")}}<input type="checkbox" id="check-2" name="option-two" checked>
 				    {{else}}<input type="checkbox" id="check-2" name="option-two">{{/if}}
 				    <label for="check-2">Operator</label>
 				  </div>
@@ -233,7 +242,7 @@
 		    {{#power-select
 		      options=routes
 		      selected=route
-					placeholder="routes"
+					placeholder=placeholderMessageRoutes
 					searchPlaceholder="Type to filter..."
 		      onchange=(action "setRoute")
 	        onclose=(action "clearRoute")
@@ -241,31 +250,41 @@
 		    }}
 		      {{route.name}} {{route.tags.route_long_name}}
 		    {{/power-select}}
+		    {{#if (eq style_routes_by "operator")}}
+
+			    {{#power-select
+			    	options=routeOperators
+			      selected=operator
+						placeholder=placeholderMessageOperators
+						searchPlaceholder="Type to filter..."
+			      onchange=(action "setOperator")
+		        onclose=(action "clearOperator")
+			      as |operator|
+			    }}
+			     <div class="container"><div class="row"><div class="legend-color" style={{operator.style}}></div>{{operator.name}}</div></div>
+			    {{/power-select}}
+		    {{/if}}
+		    {{#if (eq style_routes_by "mode")}}
+		    	{{#unless vehicle_type}}
+				    {{#power-select
+				    	options=routeModes
+				      selected=mode
+							placeholder=placeholderMessageModes
+							searchPlaceholder="Type to filter..."
+				      onchange=(action "setMode")
+			        onclose=(action "clearMode")
+				      as |mode|
+				    }}
+				     <div class="container"><div class="row"><div class="legend-color" style={{mode.style}}></div>{{mode.name}}</div></div>
+				    {{/power-select}}
+				  {{/unless}}
+		    {{/if}}
 				{{#each model.routes as |route|}}
 					{{#if (eq hoverId route.onestop_id)}}
 		  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
 			  	{{/if}}
 		  	{{/each}}
 			{{/if}}
-			
-			{{#if routeStyleIsMode}}
-				{{#unless onestop_id}}
-				{{#unless hoverId}}
-					<p class="caption">Select mode:</p>
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='bus')}}<p style="color:#8dd3c7;">Bus</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='rail')}}<p style="color:#b3de69;">Rail</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='metro')}}<p style="color:#bebada;">Metro</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='tram')}}<p style="color:#fdb462;">Tram</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='ferry')}}<p style="color:#fb8072;">Ferry</p>{{/link-to}}
-					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type='cablecar')}}<p style="color:#80b1d3;">Cablecar</p>{{/link-to}}
-					<p style="color:grey;">Other</p>
-				{{/unless}}
-				{{/unless}}
-			{{/if}}
-			{{#if routeStyleIsOperator}}
-				Operator Key coming soon
-			{{/if}}
-
 			{{#if selectedRoute}}
 			{{else if onlyRoute}}
 			{{else if hoverRoute}}
@@ -305,12 +324,12 @@
 				{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 						{{#if onestop_id}}
-					  	{{#if routeStyleIsMode}}
+					  	{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 										{{/geojson-layer}}
 								{{/each}}
-							{{else if routeStyleIsOperator}}
+							{{else if (eq style_routes_by "operator")}}
 								{{#each model.routes as |route|}}
 									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 									{{/geojson-layer}}
@@ -328,12 +347,12 @@
 					  		{{/each}}
 					  	{{/if}}
 					  {{else}}
-							{{#if routeStyleIsMode}}
+							{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
 								{{/each}}
-							{{else if routeStyleIsOperator}}
+							{{else if (eq style_routes_by "operator")}}
 								{{#each model.routes as |route|}}
 									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
