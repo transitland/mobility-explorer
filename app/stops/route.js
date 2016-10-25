@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 import setLoading from 'mobility-playground/mixins/set-loading';
+import polygon from 'npm:turf-polygon';
+import difference from 'npm:turf-difference';
 
 export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
@@ -62,17 +64,34 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           costing: mode,
           costing_options: {"pedestrian":{"use_ferry":0}},
           contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
-          denoise: 0,
         };
+        if (json.costing === "multimodal"){
+          json.denoise = .1;
+        }
         url += escape(JSON.stringify(json));
         return Ember.RSVP.hash({
           stops: stops,
           onlyStop: onlyStop,
           url: url,
           isochrones: Ember.$.ajax({ url }).then(function(response){
-            var polygons= response.features;
-            for (var i = 0; i < (polygons.length-1); i++){
-              var ring = polygons[i].geometry.coordinates.push(polygons[i+1].geometry.coordinates[0]);
+            var features = response.features;
+            for(var k = 0; k < features.length; k++) {
+              //find the next set of contours
+              var i = k + 1;
+              while(i < features.length && features[i].properties.contour == features[k].properties.contour)
+                i++;
+              if(i >= features.length)
+              break;
+              //cut this one by all of these smaller contours
+              var outer = polygon(features[k].geometry.coordinates);
+              var contour = features[i].properties.contour;
+              while(i < features.length && contour == features[i].properties.contour) {
+                var inner = polygon(features[i].geometry.coordinates);
+                outer = difference(outer, inner);
+                i++;
+              }
+              //keep it
+              features[k].geometry = outer.geometry;
             }
             return response;
           })
