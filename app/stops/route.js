@@ -64,8 +64,10 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           costing: mode,
           costing_options: {"pedestrian":{"use_ferry":0}},
           contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
-          denoise: .1,
         };
+        if (json.costing === "multimodal"){
+          json.denoise = .1;
+        }
         url += escape(JSON.stringify(json));
         return Ember.RSVP.hash({
           stops: stops,
