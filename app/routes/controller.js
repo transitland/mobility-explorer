@@ -270,7 +270,6 @@ export default Ember.Controller.extend({
 						this.model.stops.features[i].icon = L.divIcon({
 							html:'<div class="svg-wrapper"><span class="stop-num"></span><svg class="svg-stop" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg></div>',
 							className:'svg-stop',
-							// iconSize: '15px'
 						});
 					}
 	    		this.set('displayStops', true);

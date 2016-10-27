@@ -21,12 +21,6 @@ html, body, #map, #map-loading{
 	width: 100%;
 }
 
-.leaflet-marker-icon {
-
-	/*height: 15px;*/
-	/*width: 10px;*/
-}
-
 .svg-stop {
   fill: #d4645c;
   stroke: #b4382f;
@@ -204,7 +198,6 @@ input, button, select, textarea {
 	outline-width: 2px;
 	padding: 10px;
 	margin-bottom: 10px;
-	/*background-color: #6ea0a4;*/
 }
 
 .hover-detail{

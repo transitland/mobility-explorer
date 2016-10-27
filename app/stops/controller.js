@@ -46,16 +46,10 @@ export default Ember.Controller.extend(mapBboxController, {
 			this.set('mousedOver', true);
 		},
 		selectStop(stop){
-			// var previouslySelected = this.get('selectedStop');
-			// if (previouslySelected){
-			// 	previouslySelected.set('icon_class', 'svg-stop');
-			// }
 			this.set('selectedStop', null);
-			// stop.set('icon_class', 'svg-stop-hover');
 			this.set('hoverStop', stop);
 		},
 		unselectStop(stop){
-			// stop.set('icon_class', 'svg-stop');
 			this.set('hoverStop', null);
 		},
 		setOnestopId(stop) {
