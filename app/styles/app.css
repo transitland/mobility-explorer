@@ -34,10 +34,11 @@ html, body, #map, #map-loading{
 }
 
 .svg-stop-rsp{
-	fill: #6ea0a4;
+	fill: white;
   stroke: #4c7679;
   stroke-width: 15%;
-  width: 9px;
+  width: 11px;
+  z-index:900;
 }
 
 .stop-num {

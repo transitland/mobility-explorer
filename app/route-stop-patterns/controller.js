@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
 	bbox: null,
   currentlyLoading: Ember.inject.service(),
 	displayStops: false,
+	displayRspStops: false,
 	selectedRsp: null,
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
@@ -91,25 +92,62 @@ export default Ember.Controller.extend({
     displayStops: function(){
     	this.toggleProperty('displayStops');
     },
+    displayRspStops: function(){
+    	this.toggleProperty('displayRspStops');
+   //  	var stops = this.selectedRsp.get('stop_pattern')
+   //  	var stopsLength = stops.length
+   //  	for (var i = 0; i < stopsLength; i++){ 
+			// 	var stopId = stops[i]; 
+			// 	this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i)
+			// 	// this.store.peekRecord('data/transitland/stop',stopId).set('icon_class', "testtest")
+			// }
+    },
     setRsp: function(rsp){
+    	if (this.get('selectedRsp')!== null){
+    		var stops = this.get('selectedRsp').get('stop_pattern')
+	    	var stopsLength = stops.length
+	    	for (var i = 0; i < stopsLength; i++){ 
+					var stopId = stops[i]; 
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null)
+				}
+    	}
     	if (this.get('selectedRsp')!== null && this.get('selectedRsp').get('id') === rsp.get('id')){
   			this.set('selectedRsp', null);
   			rsp.set('is_selected', false);
   			rsp.set('default_color', '#6ea0a4');
     		rsp.set('path_opacity', 0);
+    		
     	} else if (this.get('selectedRsp')!== null){
+    		for (var i = 0; i < stopsLength; i++){ 
+					var stopId = stops[i]; 
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null)
+				}
   			this.get('selectedRsp').set('path_opacity', 0);
   			this.get('selectedRsp').set('is_selected', false);
 	    	rsp.set('default_color', '#fff');
 	    	rsp.set('path_opacity', 1);
 	    	rsp.set('is_selected', true);
   			this.set('selectedRsp', rsp);
+
+  			var stops = this.selectedRsp.get('stop_pattern')
+	    	var stopsLength = stops.length
+	    	for (var i = 0; i < stopsLength; i++){ 
+					var stopId = stops[i]; 
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1)
+				}
   		}
     	else {
 	    	this.set('selectedRsp', rsp);
 	    	rsp.set('default_color', '#fff');
 	    	rsp.set('path_opacity', 1);
 	    	rsp.set('is_selected', true);
+
+	    	var stops = this.selectedRsp.get('stop_pattern')
+	    	var stopsLength = stops.length
+	    	for (var i = 0; i < stopsLength; i++){ 
+					var stopId = stops[i]; 
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1)
+				}
 	    }
     }
   }
