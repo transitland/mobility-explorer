@@ -103,7 +103,6 @@
 							<p class="caption">Click the route line for more information</p>
 						</div>
 					{{else}}
-						<!-- <p class="caption">Hover on the route line for information</p> -->
 						{{#if mapMoved}}
 			    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 			  		{{/if}}
@@ -182,7 +181,7 @@
 					  		{{/each}}
 					  	{{/if}}
 					  	{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
 				  			{{/marker-layer}}
 							{{/each}}
 					  {{/if}}
@@ -375,7 +374,7 @@
 					  		{{/each}}
 					  	{{/if}}
 					  	{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
 				  			{{/marker-layer}}
 							{{/each}}
 					  {{/if}}

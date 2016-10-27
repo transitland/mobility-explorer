@@ -25,14 +25,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	autoIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'auto');
 	}),
-	icon: L.icon({
-		iconUrl: 'assets/images/stop.png',		
-		iconSize: (10, 10)
-	}),
-	highlightedIcon: L.icon({
-		iconUrl: 'assets/images/stop2.png',
-		iconSize: (10, 10),
-	}),
 	mapMoved: false,
 	mousedOver: false,
 	actions: {
@@ -55,13 +47,9 @@ export default Ember.Controller.extend(mapBboxController, {
 		},
 		selectStop(stop){
 			this.set('selectedStop', null);
-			var highlightedIcon = this.get('highlightedIcon');
-			stop.set('stop_icon', highlightedIcon);
 			this.set('hoverStop', stop);
 		},
 		unselectStop(stop){
-			var icon = this.get('icon');
-			stop.set('stop_icon', icon);
 			this.set('hoverStop', null);
 		},
 		setOnestopId(stop) {

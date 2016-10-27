@@ -72,7 +72,7 @@
 
 							{{#if displayStops}}
 								{{#each model.stopsServedByRoute as |stop|}}
-						  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+						  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
 						  		{{/marker-layer}}
 					  		{{/each}}
 					  	{{/if}}
@@ -150,7 +150,7 @@
 
 						{{#if displayStops}}
 							{{#each model.stopsServedByRoute as |stop|}}
-					  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
 					  		{{/marker-layer}}
 				  		{{/each}}
 				  	{{/if}}
