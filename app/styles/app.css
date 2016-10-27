@@ -21,6 +21,53 @@ html, body, #map, #map-loading{
 	width: 100%;
 }
 
+.leaflet-marker-icon {
+
+	/*height: 15px;*/
+	/*width: 10px;*/
+}
+
+.svg-stop {
+  fill: #d4645c;
+  stroke: #b4382f;
+  stroke-width: 15%;
+  width: 9px;
+}
+
+.svg-stop:hover{
+	fill: white;
+	z-index:900;
+}
+
+.svg-stop-rsp{
+	fill: #6ea0a4;
+  stroke: #4c7679;
+  stroke-width: 15%;
+  width: 9px;
+}
+
+.stop-num {
+   position: absolute;
+   font-size: 10px;
+   z-index: 2;
+}
+
+.svg-wrapper svg {
+  top: 0;
+  left: 0;
+  width: 15px;
+  z-index: 1;
+}
+
+.svg-wrapper {
+	position: relative;
+	text-align: center;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+
 input, button, select, textarea {
 	width: 100%;
 	margin-top: 10px;
