@@ -93,8 +93,8 @@
 							{{/each}}
 
 							{{#each model.route_stop_patterns as |rsp|}}
-								  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity clickable=false}}
-									{{/polyline-layer}}
+								{{#geojson-layer geoJSON=rsp.rsp_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
 							{{/each}}
 
 							{{#if displayStops}}
@@ -199,10 +199,10 @@
 						{{/each}}
 
 						{{#each model.route_stop_patterns as |rsp|}}
-							  {{#polyline-layer locations=rsp.location color=rsp.default_color weight=rsp.path_weight opacity=rsp.path_opacity clickable=false}}
-								{{/polyline-layer}}
+							{{#geojson-layer geoJSON=rsp.rsp_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+							{{/geojson-layer}}
 						{{/each}}
-
+						
 						{{#if displayStops}}
 							{{#each model.stopsServedByRoute as |stop|}}
 					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}

@@ -18,9 +18,8 @@ var Route_stop_pattern = DS.Model.extend({
 	updated_at: DS.attr('date'),
 	trips: DS.attr(),
 	tags: DS.attr(),
-	default_color: "#d4645c",
-	path_opacity: 0,
-	path_weight: 3,
+	default_color: "white",
+	default_opacity: 0,
 	is_selected: false,
 	location: (function(){
 		var coordinates = this.get('geometry')['coordinates'];
@@ -40,6 +39,33 @@ var Route_stop_pattern = DS.Model.extend({
 		}
 		return reversedCoordArray;
 	}).property('geometry'),
+	rsp_as_geojson_with_outline: (function(){
+		return {
+			type: "FeatureCollection",
+			features: [
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: "#444444",
+						weight: 6,
+						opacity: this.get('default_opacity')
+					},
+					id: this.onestop_id,
+					onestop_id: this.get('onestop_id'),
+				},
+				{
+					type: "Feature",
+					geometry: this.get('geometry'),
+					properties: {
+						color: this.get('default_color'),
+						weight: 3,
+						opacity: this.get('default_opacity')
+					},
+				},
+			]
+		}
+	}).property('is_selected'),
 });
 
 export default Route_stop_pattern;
