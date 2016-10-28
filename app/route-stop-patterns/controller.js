@@ -63,11 +63,6 @@ export default Ember.Controller.extend({
 		},
 		onEachFeature(feature, layer){
 			layer.setStyle(feature.properties);	
-			// layer.getLayers()[0].setStyle({
-			// 	"color": "#666666",
-			// 	"opacity": 1,
-			// 	"weight": 5,
-			// });
 		},
 		setOnestopId(route) {
 			var onestopId = route.id;
@@ -91,16 +86,6 @@ export default Ember.Controller.extend({
     },
     displayStops: function(){
     	this.toggleProperty('displayStops');
-    },
-    displayRspStops: function(){
-    	this.toggleProperty('displayRspStops');
-   //  	var stops = this.selectedRsp.get('stop_pattern')
-   //  	var stopsLength = stops.length
-   //  	for (var i = 0; i < stopsLength; i++){ 
-			// 	var stopId = stops[i]; 
-			// 	this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i)
-			// 	// this.store.peekRecord('data/transitland/stop',stopId).set('icon_class', "testtest")
-			// }
     },
     setRsp: function(rsp){
     	if (this.get('selectedRsp')!== null){

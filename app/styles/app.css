@@ -34,24 +34,71 @@ html, body, #map, #map-loading{
 }
 
 .svg-stop-rsp{
-	fill: white;
+	fill: #9dbfc1;
   stroke: #4c7679;
   stroke-width: 15%;
-  width: 11px;
+  width: 9px;
   z-index:900;
 }
 
-.stop-num {
+/*.stop-num {
    position: absolute;
    font-size: 10px;
    z-index: 2;
-}
+}*/
 
 .svg-wrapper svg {
   top: 0;
   left: 0;
-  width: 15px;
+  width: 9px;
   z-index: 1;
+}
+
+.svg-stop-legend {
+  fill: #d4645c;
+  stroke: #b4382f;
+  stroke-width: 15%;
+  width: 9px;
+}
+
+
+
+.svg-wrapper-legend-rsp {
+	position: relative;
+	text-align: center;
+	display:flex;
+	align-items:center;
+	margin-left: 25px;
+	margin-bottom: 15px;
+}
+
+.svg-wrapper-legend-route-only {
+	position: relative;
+	text-align: center;
+	display:flex;
+	align-items:center;
+	margin-left: 25px;
+	margin-bottom: 15px;
+}
+
+.svg-wrapper-legend-route {
+	position: relative;
+	text-align: center;
+	display:flex;
+	align-items:center;
+	margin-left: 25px;
+}
+
+.svg-wrapper-legend-route-only svg{
+	vertical-align: middle;
+}
+
+.svg-wrapper-legend-route svg{
+	vertical-align: middle;
+}
+
+.svg-wrapper-legend-rsp svg{
+	vertical-align: middle;
 }
 
 .svg-wrapper {
@@ -226,3 +273,4 @@ input, button, select, textarea {
   padding: 10px;
   background-color: #f8f8f8;
 }
+
