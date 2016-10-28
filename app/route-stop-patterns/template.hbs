@@ -14,14 +14,41 @@
 				  		{{#route-detail bbox=bbox onestop_id=route.onestop_id route=route}}{{/route-detail}}
 			  		{{/each}}
 						<br>
-
 						<div class="form-group">
 					  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
 					  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
 					    <label for="check-1">Show stops served by route</label>
 					  </div>
-
-			  		  <div>
+					  {{#if displayStops}}
+					  	{{#unless selectedRsp}}
+					  		<div class="svg-wrapper-legend-route-only">
+					  			<row>
+								    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+								    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+								  	</svg> stops visited by route
+									</row>
+								</div>
+							{{/unless}}
+						{{/if}}
+					  {{#if selectedRsp}}
+					  	{{#if displayStops}}
+						  	<div class="svg-wrapper-legend-route">
+						  			<row>
+									    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+									    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+									  	</svg> stops visited by route
+										</row>
+									</div>
+		   					<div class="svg-wrapper-legend-rsp">
+		   						<row>
+								    <svg class="svg-stop-rsp" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+								    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+								  	</svg> stops visited by RSP
+									</row>
+								</div>
+							{{/if}}
+					  {{/if}}
+			  		<div>
 				  		<form>
 					  		<div class="form-group-header">{{#link-to 'routes' (query-params bbox=bbox onestop_id=traversed_by operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Hide route stop patterns{{/link-to}}</div>
 							  <div class="form-group">
@@ -98,7 +125,35 @@
 			  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
 			    <label for="check-1">Show stops served by route</label>
 			  </div>
-
+			  {{#if displayStops}}
+			  	{{#unless selectedRsp}}
+			  		<div class="svg-wrapper-legend-route-only">
+			  			<row>
+						    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+						    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+						  	</svg> stops visited by route
+							</row>
+						</div>
+					{{/unless}}
+				{{/if}}
+			  {{#if selectedRsp}}
+			  	{{#if displayStops}}
+				  	<div class="svg-wrapper-legend-route">
+				  			<row>
+							    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+							    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+							  	</svg> stops visited by route
+								</row>
+							</div>
+   					<div class="svg-wrapper-legend-rsp">
+   						<row>
+						    <svg class="svg-stop-rsp" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+						    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+						  	</svg> stops visited by RSP
+							</row>
+						</div>
+					{{/if}}
+			  {{/if}}
 	  		  <div>
 		  		<form>
 			  		<div class="form-group-header">{{#link-to 'routes' (query-params bbox=bbox onestop_id=traversed_by operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Hide route stop patterns{{/link-to}}</div>
