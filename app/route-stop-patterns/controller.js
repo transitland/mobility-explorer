@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
 	onestop_id: null,
 	serves: null,
 	bbox: null,
-  currentlyLoading: Ember.inject.service(),
+	currentlyLoading: Ember.inject.service(),
 	displayStops: false,
 	displayRspStops: false,
 	selectedRsp: null,
@@ -72,69 +72,66 @@ export default Ember.Controller.extend({
 			this.set('operated_by', null);
 		},
 		setPlace: function(selected){
-  		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
-  	},
-  	clearPlace(){
-  		this.set('place', null);
-  	},
+			this.set('place', selected);
+			this.set('bbox', selected.bbox);
+			this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+		},
+		clearPlace(){
+			this.set('place', null);
+		},
 		searchRepo(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
-      return Ember.$.ajax({ url }).then(json => json.features);
-    },
-    displayStops: function(){
-    	this.toggleProperty('displayStops');
-    },
-    setRsp: function(rsp){
-    	if (this.get('selectedRsp')!== null){
-    		var stops = this.get('selectedRsp').get('stop_pattern')
-	    	var stopsLength = stops.length
-	    	for (var i = 0; i < stopsLength; i++){ 
+			if (Ember.isBlank(term)) { return []; }
+			const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+			return Ember.$.ajax({ url }).then(json => json.features);
+		},
+		displayStops: function(){
+			this.toggleProperty('displayStops');
+		},
+		setRsp: function(rsp){
+			if (this.get('selectedRsp')!== null){
+				var stops = this.get('selectedRsp').get('stop_pattern')
+				var stopsLength = stops.length
+				for (var i = 0; i < stopsLength; i++){ 
 					var stopId = stops[i]; 
 					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null)
 				}
-    	}
-    	if (this.get('selectedRsp')!== null && this.get('selectedRsp').get('id') === rsp.get('id')){
-  			this.set('selectedRsp', null);
-  			rsp.set('is_selected', false);
-  			rsp.set('default_color', '#6ea0a4');
-    		rsp.set('path_opacity', 0);
-    		
-    	} else if (this.get('selectedRsp')!== null){
-    		for (var i = 0; i < stopsLength; i++){ 
+			}
+			if (this.get('selectedRsp')!== null && this.get('selectedRsp').get('id') === rsp.get('id')){
+				this.set('selectedRsp', null);
+				rsp.set('is_selected', false);
+				rsp.set('default_opacity', 0);
+			} else if (this.get('selectedRsp')!== null){
+				var stops = this.get('selectedRsp').get('stop_pattern')
+				var stopsLength = stops.length
+				for (var i = 0; i < stopsLength; i++){ 
 					var stopId = stops[i]; 
 					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null)
 				}
-  			this.get('selectedRsp').set('path_opacity', 0);
-  			this.get('selectedRsp').set('is_selected', false);
-	    	rsp.set('default_color', '#fff');
-	    	rsp.set('path_opacity', 1);
-	    	rsp.set('is_selected', true);
-  			this.set('selectedRsp', rsp);
-
-  			var stops = this.selectedRsp.get('stop_pattern')
-	    	var stopsLength = stops.length
-	    	for (var i = 0; i < stopsLength; i++){ 
+				this.get('selectedRsp').set('default_opacity', 0);
+				
+				rsp.set('default_opacity', 1);
+				this.get('selectedRsp').set('is_selected', false);
+				rsp.set('is_selected', true);
+				this.set('selectedRsp', rsp);
+				stops = this.selectedRsp.get('stop_pattern')
+				stopsLength = stops.length
+				for (var i = 0; i < stopsLength; i++){ 
 					var stopId = stops[i]; 
 					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1)
 				}
-  		}
-    	else {
-	    	this.set('selectedRsp', rsp);
-	    	rsp.set('default_color', '#fff');
-	    	rsp.set('path_opacity', 1);
-	    	rsp.set('is_selected', true);
-
-	    	var stops = this.selectedRsp.get('stop_pattern')
-	    	var stopsLength = stops.length
-	    	for (var i = 0; i < stopsLength; i++){ 
+			}
+			else {
+				this.set('selectedRsp', rsp);
+				rsp.set('is_selected', true);
+				rsp.set('default_opacity', 1);
+				var stops = this.selectedRsp.get('stop_pattern')
+				var stopsLength = stops.length
+				for (var i = 0; i < stopsLength; i++){ 
 					var stopId = stops[i]; 
 					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1)
 				}
-	    }
-    }
-  }
+			}
+		}
+	}
 	
 });
