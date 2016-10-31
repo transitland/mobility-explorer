@@ -63,7 +63,6 @@
 							  </div>
 							</form>
 						</div>
-
 				</div>
 			  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
 			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
@@ -170,6 +169,12 @@
 					</form>
 				</div>
 
+				{{#if hoverStop}}
+					<div class="hover-detail">
+						<div>{{hoverStop.name}}</div>
+						<p class="caption">Click the stop for more information</p>
+					</div>
+				{{/if}}
 		</div>
 	  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
 	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
@@ -205,9 +210,14 @@
 						
 						{{#if displayStops}}
 							{{#each model.stopsServedByRoute as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
 					  		{{/marker-layer}}
 				  		{{/each}}
+
+				  		{{#each model.stops.features as |stop|}}
+						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+						  		{{/marker-layer}}
+					  		{{/each}}
 				  	{{/if}}
 				{{/leaflet-map}}
 		</div>

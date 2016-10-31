@@ -40,7 +40,10 @@ html, body, #map, #map-loading{
   width: 9px;
   z-index:900;
 }
-
+.svg-stop-rsp:hover{
+	fill: white;
+	z-index:900;
+}
 /*.stop-num {
    position: absolute;
    font-size: 10px;

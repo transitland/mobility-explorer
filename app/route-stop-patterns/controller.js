@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
 	bbox: null,
 	currentlyLoading: Ember.inject.service(),
 	displayStops: false,
+	hoverStop: null,
 	displayRspStops: false,
 	selectedRsp: null,
 	bounds: Ember.computed('bbox', function(){
@@ -86,6 +87,21 @@ export default Ember.Controller.extend({
 		},
 		displayStops: function(){
 			this.toggleProperty('displayStops');
+		},
+		selectStop(stop){
+			this.set('hoverStop', stop);
+			// debugger;
+		},
+		unselectStop(stop){
+			this.set('hoverStop', null);
+		},
+		setStopOnestopId(stop) {
+			var onestopId = stop.id;
+			this.set('serves', null);
+			this.set('hoverStop', null);
+			this.set('onestop_id', onestopId);
+			this.set('displayStops', false);
+  		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
 		setRsp: function(rsp){
 			if (this.get('selectedRsp')!== null){
