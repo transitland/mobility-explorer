@@ -13,6 +13,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	hoverStop: null,
 	place: null,
 	bus_only: null,
+	moment: moment(),
 	pedestrianIsochrone: Ember.computed('isochrone_mode', function(){
 		return (this.get('isochrone_mode') === 'pedestrian');
 	}),
@@ -28,6 +29,9 @@ export default Ember.Controller.extend(mapBboxController, {
 	mapMoved: false,
 	mousedOver: false,
 	actions: {
+		change(date){
+			console.log('date: ' + date);
+		},
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
