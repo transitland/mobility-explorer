@@ -79,16 +79,16 @@
 							</form>
 						{{/if}}
 						{{#if onestop_id}}
-							{{else if hoverStop}}
-								<div class="hover-detail">
-									<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
-									<p class="caption">Click the stop for more information</p>
-								</div>
-							{{else}}
-					    		<p class="caption">Hover over a stop for information</p>
-					    		{{#if mapMoved}}
-				    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-				  				{{/if}}
+						{{else if hoverStop}}
+							<div class="hover-detail">
+								<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
+								<p class="caption">Click the stop for more information</p>
+							</div>
+						{{else}}
+				    	<p class="caption">Hover over a stop for information</p>
+				    	{{#if mapMoved}}
+			    			<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+			  			{{/if}}
 						{{/if}}
 					</div>
 			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
@@ -123,10 +123,17 @@
 							{{/geojson-layer}}
 						{{/each}}
 					{{/if}}
-					{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size)  draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
-					  		{{/marker-layer}}
-				  {{/each}}
+					{{#if onestop_id}}
+						{{#each model.stops as |stop|}}
+						  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+						  		{{/marker-layer}}
+					  {{/each}}
+					{{else}}
+						{{#each model.stops as |stop|}}
+						  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+						  		{{/marker-layer}}
+					  {{/each}}
+					{{/if}}
 				  {{#if isochrone_mode}}
 				  	{{#if onestop_id}}
 						  {{#each model.isochrones.features as |isochrone|}}
@@ -217,17 +224,18 @@
 					  </div>
 					</form>
 				{{/if}}
+
 				{{#if onestop_id}}
-					{{else if hoverStop}}
-						<div class="hover-detail">
-							<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
-							<p class="caption">Click the stop for more information</p>
-						</div>
-					{{else}}
-			    		<p class="caption">Hover over a stop for information</p>
-			    		{{#if mapMoved}}
-		    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-		  				{{/if}}
+				{{else if hoverStop}}
+					<div class="hover-detail">
+						<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
+						<p class="caption">Click the stop for more information</p>
+					</div>
+				{{else}}
+	    		<p class="caption">Hover over a stop for information</p>
+	    		{{#if mapMoved}}
+    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+  				{{/if}}
 				{{/if}}
 			</div>
 	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
@@ -262,10 +270,17 @@
 						{{/geojson-layer}}
 					{{/each}}
 				{{/if}}
-				{{#each model.stops as |stop|}}
-				  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
-				  		{{/marker-layer}}
-			  {{/each}}
+				{{#if onestop_id}}
+					{{#each model.stops as |stop|}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+					  		{{/marker-layer}}
+				  {{/each}}
+				{{else}}
+					{{#each model.stops as |stop|}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+					  		{{/marker-layer}}
+				  {{/each}}
+				{{/if}}
 			  {{#if isochrone_mode}}
 			  	{{#if onestop_id}}
 					  {{#each model.isochrones.features as |isochrone|}}

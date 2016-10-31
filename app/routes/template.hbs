@@ -341,7 +341,10 @@
 							{{/if}}
 							{{#if displayStops}}
 								{{#each model.stops.features as |stop|}}
-						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000s}}
+							  		Stop: {{stop.properties.name}}
+							  		<br>Onestop ID: {{stop.properties.onestop_id}}
+							  		<br>{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=stop.properties.onestop_id served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<p>more info...</p>{{/link-to}}
 						  		{{/marker-layer}}
 					  		{{/each}}
 					  	{{/if}}
@@ -369,12 +372,19 @@
 							{{/if}}
 							{{#if displayStops}}
 								{{#each model.stops.features as |stop|}}
-						  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+						  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=true riseOnHover=true riseOffset=1000}}
+				  					test 2
+				  					Stop: {{stop.name}}
+								  	<br>Onestop ID: {{stop.onestop_id}}
+								  	<br>{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=stop.onestop_id served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<p>more info...</p>{{/link-to}}
 				  				{{/marker-layer}}
 					  		{{/each}}
 					  	{{/if}}
 					  	{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000}}
+					  			Stop: {{stop.name}}
+							  	<br>Onestop ID: {{stop.onestop_id}}
+							  	<br>{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=stop.onestop_id served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<p>more info...</p>{{/link-to}}
 				  			{{/marker-layer}}
 							{{/each}}
 					  {{/if}}
