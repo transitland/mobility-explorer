@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
 	vehicle_type: null,
 	style_routes_by: null,
 	selectedRoute: null,
+	hoverStop: null,
 	place: null,
 	placeholderMessageRoutes: Ember.computed('leafletBbox', function(){
 		var total = this.model.routes.get('meta.total');
@@ -111,7 +112,7 @@ export default Ember.Controller.extend({
 			return onlyRoute;
 		}
 	}),
-	hoverId: null,
+	hoverRoute: null,
 	unstyledColor: "#6ea0a4",
 	bounds: Ember.computed('bbox', function(){
 		if (this.get('bbox') === null){
@@ -215,7 +216,7 @@ export default Ember.Controller.extend({
 				"opacity": 1,
 				"weight": 5,
 			});
-			this.set('hoverId', (e.target.getLayers()[0].feature.onestop_id));	
+			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));	
 		},
 		onEachFeature(feature, layer){
 			layer.setStyle(feature.properties);
@@ -229,14 +230,30 @@ export default Ember.Controller.extend({
 			e.target.eachLayer(function(layer){
 				layer.setStyle(layer.originalStyle);
 			});
-			this.set('hoverId', null);
+			this.set('hoverRoute', null);
+		},
+		selectStop(stop){
+			this.set('hoverStop', stop);
+		},
+		unselectStop(stop){
+			this.set('hoverStop', null);
+		},
+		setStopOnestopId(stop) {
+			var onestopId = stop.id;
+			this.set('serves', null);
+			this.set('hoverStop', null);
+			this.set('onestop_id', onestopId);
+			this.set('displayStops', false);
+  		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
 		setOnestopId: function(route) {
 			var onestopId = route.id;
-			this.set('onestop_id', onestopId);
-			this.set('selectedRoute', route);
+			this.set('selectedRoute', null);
 			this.set('serves', null);
 			this.set('operated_by', null);
+			this.set('hoverRoute', null);
+			this.set('displayStops', false);
+			this.set('onestop_id', onestopId);
 		},
 		setPlace: function(selected){
   		this.set('place', selected);
@@ -251,7 +268,7 @@ export default Ember.Controller.extend({
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
-    displayStops: function(){
+    setDisplayStops: function(){
   		if (this.get('displayStops') === false){
   			if (this.model.stops.features.get('firstObject').icon){
     			this.set('displayStops', true);

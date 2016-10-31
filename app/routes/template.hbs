@@ -22,7 +22,7 @@
 					    <label for="check-1">Show stops served by route</label>
 					  </div>
 					  
-					  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}
+					  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}<br>
 				  
 					{{else if operated_by}}
 						<form>
@@ -35,6 +35,11 @@
 						    <label for="check-1">Mode</label>
 						  </div>
 						</form>
+						{{#each model.routes as |route|}}
+							{{#if (eq hoverRoute route.onestop_id)}}
+				  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
+					  	{{/if}}
+				  	{{/each}}
 					{{else}}
 						<form>
 						  <div class="form-group-header">Style routes by:</div>
@@ -61,7 +66,7 @@
 				      {{route.name}} {{route.tags.route_long_name}}
 				    {{/power-select}}
 						{{#each model.routes as |route|}}
-							{{#if (eq hoverId route.onestop_id)}}
+							{{#if (eq hoverRoute route.onestop_id)}}
 				  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
 					  	{{/if}}
 				  	{{/each}}
@@ -204,14 +209,13 @@
 		  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
 	  		{{/if}}
 				<br>
-
 				<div class="form-group">
-			  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
-			  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
+			  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
+			  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
 			    <label for="check-1">Show stops served by route</label>
 			  </div>
 			  
-			  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}
+			  <div>{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}</div><br>
 		  
 			{{else if operated_by}}
 				<form>
@@ -224,6 +228,11 @@
 				    <label for="check-1">Mode</label>
 				  </div>
 				</form>
+				{{#each model.routes as |route|}}
+					{{#if (eq hoverRoute route.onestop_id)}}
+		  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
+			  	{{/if}}
+		  	{{/each}}
 			{{else}}
 				<form>
 				  <div class="form-group-header">Style routes by:</div>
@@ -279,25 +288,25 @@
 				  {{/unless}}
 		    {{/if}}
 				{{#each model.routes as |route|}}
-					{{#if (eq hoverId route.onestop_id)}}
+					{{#if (eq hoverRoute route.onestop_id)}}
 		  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
 			  	{{/if}}
 		  	{{/each}}
 			{{/if}}
-			{{#if selectedRoute}}
-			{{else if onlyRoute}}
-			{{else if hoverRoute}}
+			{{#if hoverStop}}
 				<div class="hover-detail">
-					{{hoverRoute.name}}<br>
-					{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
-					<p class="caption">Click the route line for more information</p>
+					{{#if onestop_id}}
+						<div>{{hoverStop.properties.name}}</div>
+					{{else}}
+						<div>{{hoverStop.name}}</div>
+					{{/if}}
+					<p class="caption">Click the stop for more information</p>
 				</div>
-			{{else}}
-				<!-- <p class="caption">Hover on the route line for information</p> -->
-				{{#if mapMoved}}
-	    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-	  		{{/if}}
 			{{/if}}
+			{{#if mapMoved}}
+    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+  		{{/if}}
+			
 		</div>
 	  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
 	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
@@ -341,10 +350,7 @@
 							{{/if}}
 							{{#if displayStops}}
 								{{#each model.stops.features as |stop|}}
-						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000s}}
-							  		Stop: {{stop.properties.name}}
-							  		<br>Onestop ID: {{stop.properties.onestop_id}}
-							  		<br>{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=stop.properties.onestop_id served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<p>more info...</p>{{/link-to}}
+						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
 						  		{{/marker-layer}}
 					  		{{/each}}
 					  	{{/if}}
@@ -373,19 +379,12 @@
 							{{#if displayStops}}
 								{{#each model.stops.features as |stop|}}
 						  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=true riseOnHover=true riseOffset=1000}}
-				  					test 2
-				  					Stop: {{stop.name}}
-								  	<br>Onestop ID: {{stop.onestop_id}}
-								  	<br>{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=stop.onestop_id served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<p>more info...</p>{{/link-to}}
 				  				{{/marker-layer}}
 					  		{{/each}}
 					  	{{/if}}
 					  	{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000}}
-					  			Stop: {{stop.name}}
-							  	<br>Onestop ID: {{stop.onestop_id}}
-							  	<br>{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=stop.onestop_id served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<p>more info...</p>{{/link-to}}
-				  			{{/marker-layer}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
+					  		{{/marker-layer}}
 							{{/each}}
 					  {{/if}}
 				{{/leaflet-map}}
