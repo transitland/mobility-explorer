@@ -6,6 +6,10 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
     traversed_by: {
     	refreshModel: true
+    },
+    pin: {
+      replace: true,
+      refreshModel: true
     }
   },
   setupController: function (controller, model) {

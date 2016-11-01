@@ -11,6 +11,10 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     bbox: {
       replace: true,
       refreshModel: true
+    },
+    pin: {
+      replace: true,
+      refreshModel: true
     }
   },
   setupController: function (controller, model) {
@@ -41,6 +45,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     this.store.unloadAll('data/transitland/route');  
     this.store.unloadAll('data/transitland/route_stop_pattern'); 
     params.total=true;
+    params.pin=null;
     
     return this.store.query('data/transitland/operator', params);
   },

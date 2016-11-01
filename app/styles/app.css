@@ -147,6 +147,55 @@ input, button, select, textarea {
 	background-image: url(data:image/svg+xml,%3Csvg%20version%3D%271.1%27%20id%3D%27Layer_1%27%20xmln…y1%3D%2710.637%27%20x2%3D%2716.789%27%20y2%3D%2714.173%27/%3E%3C/svg%3E%0A);
 }
 
+.leaflet-bar{
+	box-shadow: none;
+	border: 1px solid #ccc;
+	border-radius: 0;
+}
+.leaflet-bar a:first-child {
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+.leaflet-bar a:last-child{
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.ember-basic-dropdown-trigger{
+	/*background-color: red;*/
+
+}
+
+.fa-trash-o{
+	color:#d4645c;
+	font-size: 16pt;
+	margin-top: 8px;
+	margin-left: 6px;
+	/*margin-right: 5px;*/
+}
+/*.ember-power-select-trigger {
+	border: none;
+}*/
+/*.ember-power-select-placeholder {
+	margin-left: 10px;
+}*/
+.ember-basic-dropdown-trigger-icon{
+	background-color: white;
+	height: 40px;
+	padding: 0;
+	width: 40px;
+	border: 1px solid #ccc;
+	border-right: none;
+	margin-right: 0;
+}
+
+.markerIcon{
+	height: 25px;
+	margin-right: 5px;
+	margin-top: 8px;
+	margin-left: 10px;
+}
+
 .location-search{
 	z-index: 40;
 	margin-top: 10px;
@@ -326,5 +375,9 @@ span.timepicker-minute{
   width: 75%;
   padding: 10px;
   background-color: #f0f0f0;
+  position: relative;
+	text-align: center;
+	/*display:flex;*/
+	align-items:center;
 }
 

@@ -3,9 +3,9 @@
     <div class="row">
       <div id="sidebar" class="collapse in">
 
-				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
 
-			  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
+			  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null pin=pin)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
 			  
 			  <div class="expanded-selection">
 			  	{{#if onestop_id}}
@@ -22,7 +22,7 @@
 					    <label for="check-1">Show stops served by route</label>
 					  </div>
 					  
-					  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}<br>
+					  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)  }}Show route stop patterns{{/link-to}}<br>
 				  
 					{{else if operated_by}}
 						<form>
@@ -113,14 +113,15 @@
 			  		{{/if}}
 					{{/if}}
 				</div>
-			  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
-			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
+			  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
 			  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 			</div>
     <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
 		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 			<div class="location-search">
+
 			    {{#power-select
 			      search=(action "searchRepo")
 		        renderInPlace=true
@@ -190,6 +191,10 @@
 				  			{{/marker-layer}}
 							{{/each}}
 					  {{/if}}
+					  {{#if pin}}
+              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+              {{/marker-layer}}
+            {{/if}}
 				{{/leaflet-map}}
 			</div>
 		</div>
@@ -197,9 +202,9 @@
 	{{outlet}}
 {{else}}
 	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
-		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
 
-	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
+	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
 	  
 	  <div class="expanded-selection">
 	  	{{#if onestop_id}}
@@ -215,7 +220,7 @@
 			    <label for="check-1">Show stops served by route</label>
 			  </div>
 			  
-			  <div>{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Show route stop patterns{{/link-to}}</div><br>
+			  <div>{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)  }}Show route stop patterns{{/link-to}}</div><br>
 		  
 			{{else if operated_by}}
 				<form>
@@ -308,8 +313,8 @@
   		{{/if}}
 			
 		</div>
-	  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
-	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
+	  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
 	  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 
 	{{#if model.stopServedByRoutes}}stopServedByRoutes{{/if}}
@@ -318,17 +323,26 @@
 		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 			<div class="location-search">
-			    {{#power-select
-			      search=(action "searchRepo")
-		        renderInPlace=true
-			      selected=place
-			      placeholder="Search for location..."
-			      onchange=(action "setPlace")
-			      as |repo|
-			    }}
-			      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-			    {{/power-select}}
-			  </div>
+        <div class="row">
+          <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+            {{#if pin}}
+            <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+            {{else}}
+              <img src='assets/images/marker1.png' class="markerIcon"/>
+            {{/if}}
+          </div>
+          {{#power-select
+            search=(action "searchRepo")
+            selected=place
+            placeholder="Search for location..."
+            onchange=(action "setPlace")
+            onclose=(action "clearPlace")
+            as |repo|
+          }}
+            {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+          {{/power-select}}
+        </div>
+			</div>
 				{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 						{{#if onestop_id}}
@@ -387,6 +401,10 @@
 					  		{{/marker-layer}}
 							{{/each}}
 					  {{/if}}
+					  {{#if pin}}
+              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+              {{/marker-layer}}
+            {{/if}}
 				{{/leaflet-map}}
 		</div>
 	</div>

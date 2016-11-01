@@ -8,6 +8,10 @@ export default Ember.Route.extend(setLoading, {
     bbox: {
       replace: true,
       refreshModel: true
+    },
+    pin: {
+    	replace: true,
+    	refreshModel: true
     }
 	},
 	setupController: function (controller, model) {
@@ -41,3 +45,5 @@ export default Ember.Route.extend(setLoading, {
 	}
 });
 
+
+  
