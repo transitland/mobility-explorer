@@ -1,12 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-	queryParams: ['traversed_by'],
+	queryParams: ['traversed_by', 'pin'],
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	traversed_by: null,
 	onestop_id: null,
 	serves: null,
 	bbox: null,
+	pin: null,
 	currentlyLoading: Ember.inject.service(),
 	displayStops: false,
 	hoverStop: null,
@@ -73,6 +74,15 @@ export default Ember.Controller.extend({
 			this.set('operated_by', null);
 		},
 		setPlace: function(selected){
+			 if (selected.geometry){
+        var lng = selected.geometry.coordinates[0];
+        var lat = selected.geometry.coordinates[1];
+        var coordinates = [];
+        coordinates.push(lat);
+        coordinates.push(lng);
+        this.set('mapCenter', coordinates); 
+        this.set('pin', coordinates);
+      }
 			this.set('place', selected);
 			this.set('bbox', selected.bbox);
 			this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
@@ -80,6 +90,19 @@ export default Ember.Controller.extend({
 		clearPlace(){
 			this.set('place', null);
 		},
+		removePin: function(){
+      this.set('pin', null);
+    },
+    dropPin: function(e){
+      console.log(e.latlng);
+      var lat = e.latlng.lat;
+      var lng = e.latlng.lng;
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      this.set('mapCenter', coordinates); 
+      this.set('pin', coordinates);
+    },
 		searchRepo(term) {
 			if (Ember.isBlank(term)) { return []; }
 			const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;

@@ -39,7 +39,8 @@ export default Ember.Controller.extend(mapBboxController, {
 	}),
 	icon: L.icon({
 		iconUrl: 'assets/images/marker.png',		
-		iconSize: (20, 20)
+		iconSize: (20, 20),
+    iconAnchor: [10, 24],
 	}),
 	operators: Ember.computed('model', function(){
 		if (this.get('model') === null){
@@ -97,12 +98,7 @@ export default Ember.Controller.extend(mapBboxController, {
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
-   //  setPlace(selected){
-  	// 	this.set('place', selected);
-  	// 	this.set('bbox', selected.bbox);
-  	// 	this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
-  	// },
-  	setPlace: function(selected){
+   	setPlace: function(selected){
       if (selected.geometry){
         var lng = selected.geometry.coordinates[0];
         var lat = selected.geometry.coordinates[1];
@@ -117,6 +113,19 @@ export default Ember.Controller.extend(mapBboxController, {
   	},
   	clearPlace(){
   		this.set('place', null);
-  	}
+  	},
+  	removePin: function(){
+      this.set('pin', null);
+    },
+  	dropPin: function(e){
+      console.log(e.latlng);
+      var lat = e.latlng.lat;
+      var lng = e.latlng.lng;
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      this.set('mapCenter', coordinates); 
+      this.set('pin', coordinates);
+    }
 	}	
 });

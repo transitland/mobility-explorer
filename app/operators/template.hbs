@@ -44,20 +44,28 @@
       <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
       <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-          <div class="location-search">
-            {{#power-select
-              search=(action "searchRepo")
-              renderInPlace=true
-              selected=place
-              placeholder="Search for location..."
-              onchange=(action "setPlace")
-              onclose=(action "clearPlace")
-              as |repo|
-            }}
-              {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-            {{/power-select}}
+           <div class="location-search">
+              <div class="row">
+                <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                    <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
           </div>
-          {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+          {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
             {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
             {{#each model as |operator|}}
               {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
@@ -111,19 +119,27 @@
     {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
     <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
         <div class="location-search">
-          {{#power-select
-            search=(action "searchRepo")
-            renderInPlace=true
-            selected=place
-            placeholder="Search for location..."
-            onchange=(action "setPlace")
-            onclose=(action "clearPlace")
-            as |repo|
-          }}
-            {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-          {{/power-select}}
-        </div>
-        {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+              <div class="row">
+                <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                    <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
+          </div>
+        {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
           {{#each model as |operator|}}
             {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
