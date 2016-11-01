@@ -51,6 +51,10 @@
       {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
       {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
     </div>
+    {{#if pin}}
+      isochrone interface goes here:
+    {{/if}}
+
   </div>
   <div class="col-xs-9 col-sm-9 col-md-9">
     <div class="row">
