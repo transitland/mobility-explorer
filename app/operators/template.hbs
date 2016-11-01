@@ -69,7 +69,7 @@
   </div>
 {{else}}
   <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
-    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null pin=pin operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
     {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
     {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
     {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Operators</button>{{/link-to}}
@@ -129,6 +129,10 @@
             {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
             {{/polygon-layer}}
           {{/each}}
+          {{#if pin}}
+              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+              {{/marker-layer}}
+            {{/if}}
         {{/leaflet-map}}
     </div>
   </div>

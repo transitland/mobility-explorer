@@ -2,7 +2,16 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id'],
+	queryParams: ['bbox', 'onestop_id','pin'],
+	pin: null,
+	pinLocation: Ember.computed('pin', function(){
+    if (typeof(this.get('pin'))==="string"){
+      var pinArray = this.get('pin').split(',');
+      return pinArray;
+    } else {
+      return this.get('pin');
+    }
+	}),
 	bbox: null,
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
@@ -88,10 +97,23 @@ export default Ember.Controller.extend(mapBboxController, {
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
-    setPlace(selected){
+   //  setPlace(selected){
+  	// 	this.set('place', selected);
+  	// 	this.set('bbox', selected.bbox);
+  	// 	this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  	// },
+  	setPlace: function(selected){
+      if (selected.geometry){
+        var lng = selected.geometry.coordinates[0];
+        var lat = selected.geometry.coordinates[1];
+        var coordinates = [];
+        coordinates.push(lat);
+        coordinates.push(lng);
+        this.set('mapCenter', coordinates); 
+        this.set('pin', coordinates);
+      }
   		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin')}});
   	},
   	clearPlace(){
   		this.set('place', null);
