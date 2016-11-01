@@ -52,7 +52,47 @@
       {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
     </div>
     {{#if pin}}
-      isochrone interface goes here:
+        <form>
+              <div class="form-group-header">View distance you can travel from this stop via:</div>
+              <div class="form-group">
+                {{#if (eq isochrone_mode "pedestrian")}}
+                  <input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
+                {{else}}
+                  <input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
+                {{/if}}
+                <label for="radio-1">walking</label><br>
+                {{#if (eq isochrone_mode "pedestrian")}}
+                  {{isochrone-legend isochrone_mode=isochrone_mode}}
+                {{/if}}
+                {{#if (eq isochrone_mode "bicycle")}}
+                  <input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
+                {{else}}
+                  <input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
+                {{/if}}
+                <label for="radio-2">biking</label><br>
+                {{#if (eq isochrone_mode "bicycle")}}
+                  {{isochrone-legend isochrone_mode=isochrone_mode}}
+                {{/if}}
+                {{#if (eq isochrone_mode "multimodal")}}
+                  <input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
+                {{else}}
+                  <input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
+                {{/if}}
+                <label for="radio-4">transit</label><br>
+                {{#if (eq isochrone_mode "multimodal")}}
+                  {{isochrone-legend isochrone_mode=isochrone_mode}}
+                {{/if}}
+                {{#if (eq isochrone_mode "auto")}}
+                  <input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+                {{else}}
+                  <input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "auto"}}>
+                {{/if}}
+                <label for="radio-3">driving</label>
+                {{#if (eq isochrone_mode "auto")}}
+                  {{isochrone-legend isochrone_mode=isochrone_mode}}
+                {{/if}}
+              </div>
+            </form>
     {{/if}}
 
   </div>

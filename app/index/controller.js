@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
+import polygon from 'npm:turf-polygon';
+import difference from 'npm:turf-difference';
 
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox','pin'],
@@ -31,6 +33,9 @@ export default Ember.Controller.extend(mapBboxController, {
     }
   }),
   zoom: 12,
+  isochrone_mode: null,
+  isochrones: null,
+
 	actions: {
 		updatebbox(e) {
 			var newbox = e.target.getBounds();
@@ -89,6 +94,64 @@ export default Ember.Controller.extend(mapBboxController, {
       coordinates.push(lng);
       this.set('mapCenter', coordinates); 
       this.set('pin', coordinates);
+    },
+    setIsochroneMode: function(mode){
+      if (this.get('isochrone_mode') === mode){
+        this.set('isochrone_mode', null);
+      } else {
+        this.set('isochrone_mode', mode);
+      }
+
+      var pinLocation = this.get('pinLocation');
+      var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
+      var mode = this.get('isochrone_mode');
+      var json = {
+        locations: [{"lat":pinLocation[0], "lon":pinLocation[1]}],
+        costing: mode,
+        costing_options: {"pedestrian":{"use_ferry":0}},
+        contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
+      };
+      var isochrones = null;
+      
+      if (json.costing === "multimodal"){
+        json.denoise = .1;
+      }
+
+      url += escape(JSON.stringify(json));
+
+      var isochronesObject = null;
+      
+      var isochrones = Ember.$.ajax({ url }).then(function(response){
+        var features = response.features;
+        for(var k = 0; k < features.length; k++) {
+          //find the next set of contours
+          var i = k + 1;
+          while(i < features.length && features[i].properties.contour == features[k].properties.contour)
+            i++;
+          if(i >= features.length)
+          break;
+          //cut this one by all of these smaller contours
+          var outer = polygon(features[k].geometry.coordinates);
+          var contour = features[i].properties.contour;
+          while(i < features.length && contour == features[i].properties.contour) {
+            var inner = polygon(features[i].geometry.coordinates);
+            outer = difference(outer, inner);
+            i++;
+          }
+          //keep it
+          features[k].geometry = outer.geometry;
+
+        }     
+
+        this.isochronesObject = features;
+        // debugger;
+
+      });
+        // debugger;
+
+      this.set('isochrones', isochrones);
+        // debugger;
+
     }
   }
 });
