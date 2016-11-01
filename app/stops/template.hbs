@@ -10,6 +10,7 @@
 					  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
 					  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
 					  	<form>
+<<<<<<< HEAD
 					  		<div class="form-group-header">View distance you can travel from this stop via:</div>
 							  <div class="form-group">
 						  		{{#if (eq isochrone_mode "pedestrian")}}
@@ -49,6 +50,73 @@
 						  			{{isochrone-legend isochrone_mode=isochrone_mode}}
 						  		{{/if}}
 							  </div>
+=======
+								<div class="isochrone-detail">
+						  		<div class="form-group-header">View distance you can travel from this stop via:</div>
+								  <div class="form-group">
+								  	{{#if pedestrianIsochrone}}
+								  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
+							  		{{else}}
+							  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
+							  		{{/if}}
+								    <label for="radio-1">walking</label><br>
+							  		{{#if pedestrianIsochrone}}
+							  			<div class="isochrone-legend-box">
+							  				<div class="isochrone-legend" style="color:#50bf40;">15 min walk from stop</div>
+							  				<div class="isochrone-legend" style="color:#9fbf40;">30 min walk from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf8f40;">45 min walk from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf4040;">60 min walk from stop</div>
+							  			</div>
+							  		{{/if}}
+							  		{{#if bicycleIsochrone}}
+							  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
+							  		{{else}}
+							  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
+							  		{{/if}}
+								    <label for="radio-2">biking</label><br>
+							  		{{#if bicycleIsochrone}}
+							  			<div class="isochrone-legend-box">
+							  				<div class="isochrone-legend" style="color:#50bf40;">15 min ride from stop</div>
+							  				<div class="isochrone-legend" style="color:#9fbf40;">30 min ride from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf8f40;">45 min ride from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf4040;">60 min ride from stop</div>
+							  			</div>
+							  		{{/if}}
+							  		{{#if multimodalIsochrone}}
+							  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
+							  		{{else}}
+							  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
+							  		{{/if}}
+								    <label for="radio-4">transit</label><br>
+							  		{{#if multimodalIsochrone}}
+							  			<div class="isochrone-legend-box">
+							  				<div class="isochrone-legend" style="color:#50bf40;">15 min trip from stop</div>
+							  				<div class="isochrone-legend" style="color:#9fbf40;">30 min trip from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf8f40;">45 min trip from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf4040;">60 min trip from stop</div>
+							  			</div>
+							  		{{/if}}
+							  		{{#if autoIsochrone}}
+							  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+							  		{{else}}
+							  			<input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "auto"}}>
+							  		{{/if}}
+								    <label for="radio-3">driving</label>
+							  		{{#if autoIsochrone}}
+							  			<div class="isochrone-legend-box">
+							  				<div class="isochrone-legend" style="color:#50bf40;">15 min drive from stop</div>
+							  				<div class="isochrone-legend" style="color:#9fbf40;">30 min drive from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf8f40;">45 min drive from stop</div>
+							  				<div class="isochrone-legend" style="color:#bf4040;">60 min drive from stop</div>
+							  			</div>
+							  		{{/if}}
+								  </div>
+								  <p class="caption">departure at:</p>
+				  				<div class="datetime-picker">
+						  			{{bs-datetimepicker date=moment isTime=true sideBySide=true}}
+						  		</div>
+								</div>
+>>>>>>> master
 							</form>
 						{{else if served_by}}
 							<form>
@@ -146,8 +214,10 @@
 	    <div class="expanded-selection">
 				{{#if onestop_id}}
 			  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
+
 			  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
 			  	<form>
+					<div class="isochrone-detail">
 			  		<div class="form-group-header">View distance you can travel from this stop via:</div>
 					  <div class="form-group">
 						  {{#if (eq isochrone_mode "pedestrian")}}
@@ -168,25 +238,33 @@
 						  {{#if (eq isochrone_mode "bicycle")}}
 						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
 				  		{{/if}}
-						  {{#if (eq isochrone_mode "multimodal")}}
+						  
+						  {{#if (eq isochrone_mode "auto")}}
+				  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+				  		{{else}}
+				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
+				  		{{/if}}
+					    <label for="radio-3">driving</label><br>
+						  {{#if (eq isochrone_mode "auto")}}
+						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+				  		{{/if}}
+				  		{{#if (eq isochrone_mode "multimodal")}}
 				  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
 				  		{{else}}
 				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
 				  		{{/if}}
-					    <label for="radio-4">transit</label><br>
+					    <label for="radio-4">transit</label>
 						  {{#if (eq isochrone_mode "multimodal")}}
 						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
 				  		{{/if}}
-						  {{#if (eq isochrone_mode "auto")}}
-				  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
-				  		{{else}}
-				  			<input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "auto"}}>
-				  		{{/if}}
-					    <label for="radio-3">driving</label>
-						  {{#if (eq isochrone_mode "auto")}}
-						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-				  		{{/if}}
 					  </div>
+					  {{#if multimodalIsochrone}}
+				  		<p class="caption">departure at:</p>
+				  		<div class="datetime-picker">
+				  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
+				  		</div>
+				  	{{/if}}
+					 	</div>
 					</form>
 				{{else if served_by}}
 					<form>

@@ -305,6 +305,57 @@ input, button, select, textarea {
 	padding: 10px;
 }
 
+.isochrone-detail{
+	background-color: #f0f0f0;
+	padding: 10px;
+}
+
+.isochrone-detail label:before{
+	border-color: #f0f0f0;
+}
+
+.isochrone-detail label{
+	margin-bottom: 0;
+}
+
+.datetime-picker .form-control{
+	margin-top: 0;
+}
+
+.bootstrap-datetimepicker-widget{
+	color: #6ea0a4;
+}
+
+td.day.active.today{
+	background-color: #6ea0a4;
+	border-radius: 0;
+}
+
+td.day.active.today:hover{
+	background-color: #d4645c;
+}
+
+span.timepicker-hour{
+	color:#d4645c;
+}
+span.timepicker-minute{
+	color:#d4645c;
+}
+.bootstrap-datetimepicker-widget .btn{
+	background-color: white;
+	border: none;
+}
+
+.bootstrap-datetimepicker-widget .btn-primary{
+	color: white;
+	background-color: #d4645c;
+}
+
+.input-group-addon {
+	border-radius: 0;
+	background-color: white;
+}
+
 .linebreak-text {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -323,7 +374,7 @@ input, button, select, textarea {
   margin-left: 25px;
   width: 75%;
   padding: 10px;
-  background-color: #f8f8f8;
+  background-color: #f0f0f0;
   position: relative;
 	text-align: center;
 	/*display:flex;*/

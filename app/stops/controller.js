@@ -36,9 +36,13 @@ export default Ember.Controller.extend(mapBboxController, {
   currentlyLoading: Ember.inject.service(),
 	hoverStop: null,
 	place: null,
+	moment: moment(),
 	mapMoved: false,
 	mousedOver: false,
 	actions: {
+		change(date){
+			console.log('date: ' + date);
+		},
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
