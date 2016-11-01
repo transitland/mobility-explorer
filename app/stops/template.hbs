@@ -194,26 +194,13 @@
 				  				<div class="isochrone-legend" style="color:#bf4040;">60 min ride from stop</div>
 				  			</div>
 				  		{{/if}}
-				  		{{#if multimodalIsochrone}}
-				  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
-				  		{{else}}
-				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
-				  		{{/if}}
-					    <label for="radio-4">transit</label><br>
-				  		{{#if multimodalIsochrone}}
-				  			<div class="isochrone-legend-box">
-				  				<div class="isochrone-legend" style="color:#50bf40;">15 min trip from stop</div>
-				  				<div class="isochrone-legend" style="color:#9fbf40;">30 min trip from stop</div>
-				  				<div class="isochrone-legend" style="color:#bf8f40;">45 min trip from stop</div>
-				  				<div class="isochrone-legend" style="color:#bf4040;">60 min trip from stop</div>
-				  			</div>
-				  		{{/if}}
+				  		
 				  		{{#if autoIsochrone}}
-				  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+				  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "auto"}}>
 				  		{{else}}
-				  			<input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "auto"}}>
+				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
 				  		{{/if}}
-					    <label for="radio-3">driving</label>
+					    <label for="radio-4">driving</label><br>
 				  		{{#if autoIsochrone}}
 				  			<div class="isochrone-legend-box">
 				  				<div class="isochrone-legend" style="color:#50bf40;">15 min drive from stop</div>
@@ -222,11 +209,27 @@
 				  				<div class="isochrone-legend" style="color:#bf4040;">60 min drive from stop</div>
 				  			</div>
 				  		{{/if}}
+				  		{{#if multimodalIsochrone}}
+				  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
+				  		{{else}}
+				  			<input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "multimodal"}}>
+				  		{{/if}}
+					    <label for="radio-3">transit</label>
+				  		{{#if multimodalIsochrone}}
+				  			<div class="isochrone-legend-box">
+				  				<div class="isochrone-legend" style="color:#50bf40;">15 min trip from stop</div>
+				  				<div class="isochrone-legend" style="color:#9fbf40;">30 min trip from stop</div>
+				  				<div class="isochrone-legend" style="color:#bf8f40;">45 min trip from stop</div>
+				  				<div class="isochrone-legend" style="color:#bf4040;">60 min trip from stop</div>
+				  			</div>
+				  		{{/if}}
 					  </div>
-			  		<p class="caption">departure at:</p>
-			  		<div class="datetime-picker">
-			  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
-			  		</div>
+					  {{#if multimodalIsochrone}}
+				  		<p class="caption">departure at:</p>
+				  		<div class="datetime-picker">
+				  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
+				  		</div>
+				  	{{/if}}
 					 	</div>
 					</form>
 				{{else if served_by}}
