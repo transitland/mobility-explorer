@@ -150,14 +150,15 @@ input, button, select, textarea {
 .leaflet-bar{
 	box-shadow: none;
 	border: 1px solid #ccc;
+	border-radius: 0;
 }
 .leaflet-bar a:first-child {
-	border-top-right-radius: none;
-	border-top-left-radius: none;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
 }
 .leaflet-bar a:last-child{
-	border-bottom-right-radius: none;
-	border-bottom-left-radius: none;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 .ember-basic-dropdown-trigger{
@@ -323,5 +324,9 @@ input, button, select, textarea {
   width: 75%;
   padding: 10px;
   background-color: #f8f8f8;
+  position: relative;
+	text-align: center;
+	/*display:flex;*/
+	align-items:center;
 }
 

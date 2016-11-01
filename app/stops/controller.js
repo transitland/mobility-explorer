@@ -36,19 +36,6 @@ export default Ember.Controller.extend(mapBboxController, {
   currentlyLoading: Ember.inject.service(),
 	hoverStop: null,
 	place: null,
-	bus_only: null,
-	pedestrianIsochrone: Ember.computed('isochrone_mode', function(){
-		return (this.get('isochrone_mode') === 'pedestrian');
-	}),
-	bicycleIsochrone: Ember.computed('isochrone_mode', function(){
-		return (this.get('isochrone_mode') === 'bicycle');
-	}),
-	multimodalIsochrone: Ember.computed('isochrone_mode', function(){
-		return (this.get('isochrone_mode') === 'multimodal');
-	}),
-	autoIsochrone: Ember.computed('isochrone_mode', function(){
-		return (this.get('isochrone_mode') === 'auto');
-	}),
 	mapMoved: false,
 	mousedOver: false,
 	actions: {
@@ -131,14 +118,6 @@ export default Ember.Controller.extend(mapBboxController, {
   		} else {
   			this.set('isochrones_mode', null);
   		}
-  	},
-		setBusOnly(){
-  		if (this.get('bus_only') === true){
-  			this.set('bus_only', null);
-  		} else {
-  			this.set('bus_only', true);
-
-  		}
-		}
+  	}
 	}
 });
