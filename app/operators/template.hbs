@@ -2,7 +2,6 @@
   <div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
     <div class="row">
       <div id="sidebar" class="collapse in">
-
         {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
         {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
         {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
@@ -39,6 +38,7 @@
             {{/if}}
           {{/if}}
         </div>
+        {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
         {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
       </div>
       <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
@@ -113,6 +113,7 @@
         {{/if}}
       {{/if}}
     </div>
+    {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
     {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
   </div>
   <div class="col-xs-12 col-sm-12 col-md-9">

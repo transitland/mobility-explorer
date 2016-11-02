@@ -78,6 +78,7 @@
 						{{/if}}
 					</div>
 			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+			  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
 
 
 				{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
@@ -155,53 +156,53 @@
 
 			  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
 			  	<form>
-					<div class="isochrone-detail">
-			  		<div class="form-group-header">View distance you can travel from this stop via:</div>
-					  <div class="form-group">
-						  {{#if (eq isochrone_mode "pedestrian")}}
-					  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
-				  		{{else}}
-				  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
-				  		{{/if}}
-					    <label for="radio-1">walking</label><br>
-						  {{#if (eq isochrone_mode "pedestrian")}}
-						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-				  		{{/if}}
-						  {{#if (eq isochrone_mode "bicycle")}}
-				  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
-				  		{{else}}
-				  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
-				  		{{/if}}
-					    <label for="radio-2">biking</label><br>
-						  {{#if (eq isochrone_mode "bicycle")}}
-						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-				  		{{/if}}
-						  
-						  {{#if (eq isochrone_mode "auto")}}
-				  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
-				  		{{else}}
-				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
-				  		{{/if}}
-					    <label for="radio-3">driving</label><br>
-						  {{#if (eq isochrone_mode "auto")}}
-						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-				  		{{/if}}
-				  		{{#if (eq isochrone_mode "multimodal")}}
-				  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
-				  		{{else}}
-				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
-				  		{{/if}}
-					    <label for="radio-4">transit</label>
-						  {{#if (eq isochrone_mode "multimodal")}}
-						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-				  		{{/if}}
-					  </div>
-				  	{{#if (eq isochrone_mode "multimodal")}}
-				  		<p class="caption">departure at:</p>
-				  		<div class="datetime-picker">
-				  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
-				  		</div>
-				  	{{/if}}
+						<div class="isochrone-detail">
+				  		<div class="form-group-header">View distance you can travel from this stop via:</div>
+						  <div class="form-group">
+							  {{#if (eq isochrone_mode "pedestrian")}}
+						  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
+					  		{{else}}
+					  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
+					  		{{/if}}
+						    <label for="radio-1">walking</label><br>
+							  {{#if (eq isochrone_mode "pedestrian")}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+					  		{{/if}}
+							  {{#if (eq isochrone_mode "bicycle")}}
+					  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
+					  		{{else}}
+					  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
+					  		{{/if}}
+						    <label for="radio-2">biking</label><br>
+							  {{#if (eq isochrone_mode "bicycle")}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+					  		{{/if}}
+							  
+							  {{#if (eq isochrone_mode "auto")}}
+					  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+					  		{{else}}
+					  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
+					  		{{/if}}
+						    <label for="radio-3">driving</label><br>
+							  {{#if (eq isochrone_mode "auto")}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+					  		{{/if}}
+					  		{{#if (eq isochrone_mode "multimodal")}}
+					  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
+					  		{{else}}
+					  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
+					  		{{/if}}
+						    <label for="radio-4">transit</label>
+							  {{#if (eq isochrone_mode "multimodal")}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+					  		{{/if}}
+						  </div>
+					  	{{#if (eq isochrone_mode "multimodal")}}
+					  		<p class="caption">departure at:</p>
+					  		<div class="datetime-picker">
+					  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
+					  		</div>
+					  	{{/if}}
 					 	</div>
 					</form>
 				{{else if served_by}}
@@ -227,7 +228,7 @@
 				{{/if}}
 			</div>
 	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
-
+  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
 
 		{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
 		
