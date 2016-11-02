@@ -15,6 +15,7 @@ export default Ember.Controller.extend(mapBboxController, {
       return this.get('pin');
     }
   }),
+	moment: moment(),
   currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
 		iconUrl: 'assets/images/marker1.png',		
@@ -96,6 +97,9 @@ export default Ember.Controller.extend(mapBboxController, {
       } else {
         this.set('isochrone_mode', mode);
       }
-    }
+    },
+    change(date){
+			console.log('date: ' + date);
+		},
   }
 });
