@@ -47,12 +47,22 @@
 {{else}}
   <div id="sidebar" class="collapse in col-xs-3 col-sm-3 col-md-3">
     <h2>Mobility Explorer</h2>
-    <div class="btn-group-vertical" role="group" >
-      {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
-      {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
-      {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
-      {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
-    </div>
+    <div class="panel panel-default" id="data">
+      <div class="panel-heading">Transitland Data</div>
+        <div class="panel-body">
+          <div class="btn-group-vertical" role="group" >
+            {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+            {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+            {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+          </div>
+        </div>
+      </div>
+    <div class="panel panel-default" id="services">
+      <div class="panel-heading">Mobility Services</div>
+        <div class="panel-body">
+          {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
+        </div>
+      </div>
   </div>
   <div class="col-xs-9 col-sm-9 col-md-9">
     <div class="row">

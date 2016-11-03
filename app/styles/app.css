@@ -11,6 +11,43 @@ html, body, #map, #map-loading{
     position: relative;
  }
 
+#data{
+	border: 2px solid #6ea0a4;
+	background-color: #c5d9da;
+	/*margin:none;*/
+}
+
+#data .panel-heading{
+ background-color: #6ea0a4;
+ color: white;
+ border-radius: 0;
+ border: none;
+}
+
+#data .panel-body{
+	/*padding: 1;*/
+
+}
+
+#services{
+	border: 2px solid #d4645c;
+	background-color: #f2d0ce;
+	/*margin:none;*/
+}
+
+#services .panel-heading{
+ background-color: #d4645c;
+ color: white;
+ border-radius: 0;
+ border: none;
+}
+
+#services .btn-transparent-alt{
+	color: #d4645c;
+	outline-color: #d4645c;
+
+}
+
 #sidebar{
 	background-color: white;
 	padding: 15px;
