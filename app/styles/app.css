@@ -30,21 +30,21 @@ html, body, #map, #map-loading{
 }
 
 #services{
-	border: 2px solid #d4645c;
-	background-color: #f2d0ce;
+	border: 2px solid #385d5c;
+	background-color: #c3cece;
 	/*margin:none;*/
 }
 
 #services .panel-heading{
- background-color: #d4645c;
+ background-color: #385d5c;
  color: white;
  border-radius: 0;
  border: none;
 }
 
 #services .btn-transparent-alt{
-	color: #d4645c;
-	outline-color: #d4645c;
+	color: #385d5c;
+	outline-color: #385d5c;
 
 }
 
