@@ -216,7 +216,7 @@
 								  	{{/geojson-layer}}
 							  	{{/each}}
 							  {{/if}}
-	              {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") riseOnHover=true riseOffset=1000}}
+	              {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") onPopupopen=(action "closePopup") riseOnHover=true riseOffset=1000}}
 	              {{/marker-layer}}
 	            {{/if}}
 	          {{/leaflet-map}}
