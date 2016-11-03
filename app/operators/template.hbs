@@ -78,47 +78,59 @@
 {{else}}
   <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
     {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null pin=pin operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
-    {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
-    {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
-    {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Operators</button>{{/link-to}}
-    <div class="expanded-selection">
-      {{#if onestop_id}}
-        {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
-        <p>{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null serves=null operated_by=onestop_id  served_by=null style_routes_by=null) }}View routes served by this operator{{/link-to}}</p><br>
-        <p>{{#link-to 'stops' (query-params bbox=leafletBbox served_by=onestop_id onestop_id=null serves=null operated_by=null isochrone_mode=null) }}View stops served by this operator{{/link-to}}</p>
-      {{else}}
-        {{#power-select
-          options=operators
-          selected=operator
-          placeholder=placeholderMessage
-          searchPlaceholder="Type to filter..."
-          onchange=(action "setOperator")
-          as |operator|
-        }}
-          {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
-        {{/power-select}}
-      {{/if}}
-      
-      {{#if selectedOperator}}
-      {{else if onlyOperator}}
-      {{else if hoverOperator}}
-        <div class="hover-detail">
-          {{hoverOperator.name}}<br>
-          <p class="caption">Click the operator area for more information</p>
+    <div class="panel panel-default" id="data">
+      <div class="panel-heading">Transitland Data</div>
+        <div class="panel-body">
+          <!-- <div class="btn-group-vertical" role="group" > -->
+            {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+            {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+            {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Operators</button>{{/link-to}}
+            <div class="expanded-selection">
+              {{#if onestop_id}}
+                {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+                <p>{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null serves=null operated_by=onestop_id  served_by=null style_routes_by=null) }}View routes served by this operator{{/link-to}}</p><br>
+                <p>{{#link-to 'stops' (query-params bbox=leafletBbox served_by=onestop_id onestop_id=null serves=null operated_by=null isochrone_mode=null) }}View stops served by this operator{{/link-to}}</p>
+              {{else}}
+                {{#power-select
+                  options=operators
+                  selected=operator
+                  placeholder=placeholderMessage
+                  searchPlaceholder="Type to filter..."
+                  onchange=(action "setOperator")
+                  as |operator|
+                }}
+                  {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+                {{/power-select}}
+              {{/if}}
+              
+              {{#if selectedOperator}}
+              {{else if onlyOperator}}
+              {{else if hoverOperator}}
+                <div class="hover-detail">
+                  {{hoverOperator.name}}<br>
+                  <p class="caption">Click the operator area for more information</p>
+                </div>
+              {{else}}
+                <p class="caption">Hover on the operator area for information</p>
+                {{#if mapMoved}}
+                  <button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+                {{/if}}
+              {{/if}}
+            </div>
+          </div>
         </div>
-      {{else}}
-        <p class="caption">Hover on the operator area for information</p>
-        {{#if mapMoved}}
-          <button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-        {{/if}}
-      {{/if}}
+        <div class="panel panel-default" id="services">
+          <div class="panel-heading">Mobility Services</div>
+            <div class="panel-body">
+              {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
+        </div>
+      </div>
     </div>
-    {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
-    {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
-  </div>
-  <div class="col-xs-12 col-sm-12 col-md-9">
-    {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-    <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+            {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
+    
+    <div class="col-xs-12 col-sm-12 col-md-9">
+      {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+      <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
         <div class="location-search">
               <div class="row">
                 <div class="col-md-2 ember-basic-dropdown-trigger-icon">
