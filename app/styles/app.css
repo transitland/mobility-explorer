@@ -21,6 +21,7 @@ html, body, #map, #map-loading{
 	width: 100%;
 }
 
+
 .svg-stop {
   fill: #d4645c;
   stroke: #b4382f;
@@ -152,6 +153,11 @@ input, button, select, textarea {
 	border: 1px solid #ccc;
 	border-radius: 0;
 }
+
+.leaflet-container .leaflet-control-attribution a{
+	margin-right: 35vw;
+}
+
 .leaflet-bar a:first-child {
 	border-top-right-radius: 0;
 	border-top-left-radius: 0;
