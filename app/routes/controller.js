@@ -2,12 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox', 'pin'],
-	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+	bbox: null,
+	leafletBbox: null,
+  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	currentlyLoading: Ember.inject.service(),
 	queryIsInactive: false,
 	onestop_id: null,
 	serves: null,
-	bbox: null,
 	pin: null,
 	pinLocation: Ember.computed('pin', function(){
     if (typeof(this.get('pin'))==="string"){

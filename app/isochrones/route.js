@@ -78,7 +78,8 @@ export default Ember.Route.extend(setLoading, {
 	        for(var k = 0; k < features.length; k++) {
 	          //find the next set of contours
 	          var i = k + 1;
-	          while(i < features.length && features[i].properties.contour == features[k].properties.contour)
+
+	          while(i < features.length && features[i].properties.contour == features[k].properties.contour)  
 	            i++;
 	          if(i >= features.length)
 	          break;
@@ -90,6 +91,7 @@ export default Ember.Route.extend(setLoading, {
 	            outer = difference(outer, inner);
 	            i++;
 	          }
+
 	          //keep it
 	          features[k].geometry = outer.geometry;
 	        }
