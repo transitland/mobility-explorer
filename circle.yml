@@ -16,13 +16,20 @@ dependencies:
     - bower prune && bower install
     - if [ ! -e ~/nvm/v4.5.0/bin/ember ]; then npm install -g ember-cli; else echo "ember-cli seems to be cached"; fi;
 
+# for Precog
+# https://github.com/mapzen/precog/blob/master/README.md#basic-usage
+general:
+  artifacts:
+    - "dist"
+
 database:
   override:
     - echo "we need no database"
 
 test:
   override:
-    - echo "we need no tests"
+    - echo "Let's see if the app will build"
+    - ember build
 
 deployment:
   staging:
