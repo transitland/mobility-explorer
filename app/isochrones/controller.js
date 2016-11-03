@@ -4,9 +4,9 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['onestop_id', 'isochrone_mode', 'pin'],
 	bbox: null,
-	isochrone_mode: null,
-	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
-	place: null,
+	leafletBbox: null,
+  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+  isochrone_mode: null,
   pin: null,
   onestop_id: null,
   pinLocation: Ember.computed('pin', function(){
@@ -17,6 +17,7 @@ export default Ember.Controller.extend(mapBboxController, {
       return this.get('pin');
     }
   }),
+  place: null,
 	moment: moment(),
   currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
@@ -25,29 +26,26 @@ export default Ember.Controller.extend(mapBboxController, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  center: Ember.computed('pin', function(){
-    if (this.get('pin')){
-      return this.get('pinLocation');
-    } else {
-      return this.get('mapCenter');
-    }
-  }),
   zoom: 12,
+  mousedOver: false,
+
 	actions: {
 		updateLeafletBbox(e) {
+      console.log(e)
+      this.set('zoom', e.target._zoom);
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
+      this.set('leafletBounds', leafletBounds)
 		},
-		updatebbox(e) {
-			var bounds = this.get('leafletBbox');
-			this.set('bbox', bounds);
-			this.set('mapMoved', false);
-		},
-		updateMapMoved(){
+		updateMapMoved(e){
+      console.log('updateMapMoved');
 			if (this.get('mousedOver') === true){
 				this.set('mapMoved', true);
 			}
 		},
+    mouseOver(){
+      this.set('mousedOver', true);
+    },
   	searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`;      
@@ -60,39 +58,44 @@ export default Ember.Controller.extend(mapBboxController, {
         var coordinates = [];
         coordinates.push(lat);
         coordinates.push(lng);
-        // this.set('mapCenter', coordinates); 
         this.set('pin', coordinates);
       }
   		this.set('place', selected);
   		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin')}});
+  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin'), isochrone_mode: null}});
   	},
   	clearPlace: function(){
   		this.set('place', null);
   	},
-    removePin: function(){
-      this.set('pin', null);
-    },
     dropPin: function(e){
+      console.log('dropPin');
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;
       var coordinates = [];
       coordinates.push(lat);
       coordinates.push(lng);
-      this.set('mapCenter', coordinates); 
       this.set('pin', coordinates);
+      var bounds = this.get('leafletBbox');
+      this.set('bbox', bounds);
     },
     updatePin: function(e){
-      console.log("update pin");
+      console.log('updatePin');
       var lat = e.target._latlng.lat;
       var lng = e.target._latlng.lng;
       var coordinates = [];
       coordinates.push(lat);
       coordinates.push(lng);
-      this.set('mapCenter', coordinates); 
       this.set('pin', coordinates);
+      var bounds = this.get('leafletBbox');
+      this.set('bbox', bounds);
+    },
+    removePin: function(){
+      console.log('removePin');
+      this.set('pin', null);
+      this.set('isochrone_mode', null);
     },
     setIsochroneMode: function(mode){
+      console.log('setIsochroneMode');
       if (this.get('isochrone_mode') === mode){
         this.set('isochrone_mode', null);
       } else {
