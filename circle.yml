@@ -5,6 +5,7 @@ machine:
 dependencies:
   pre:
     - sudo pip install -U awscli
+    - npm install -g bower
   cache_directories:
     - node_modules
     - bower_components
