@@ -31,14 +31,12 @@ export default Ember.Controller.extend(mapBboxController, {
 
 	actions: {
 		updateLeafletBbox(e) {
-      console.log(e)
       this.set('zoom', e.target._zoom);
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
       this.set('leafletBounds', leafletBounds)
 		},
 		updateMapMoved(e){
-      console.log('updateMapMoved');
 			if (this.get('mousedOver') === true){
 				this.set('mapMoved', true);
 			}
@@ -68,7 +66,6 @@ export default Ember.Controller.extend(mapBboxController, {
   		this.set('place', null);
   	},
     dropPin: function(e){
-      console.log('dropPin');
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;
       var coordinates = [];
@@ -79,7 +76,6 @@ export default Ember.Controller.extend(mapBboxController, {
       this.set('bbox', bounds);
     },
     updatePin: function(e){
-      console.log('updatePin');
       var lat = e.target._latlng.lat;
       var lng = e.target._latlng.lng;
       var coordinates = [];
@@ -90,12 +86,10 @@ export default Ember.Controller.extend(mapBboxController, {
       this.set('bbox', bounds);
     },
     removePin: function(){
-      console.log('removePin');
       this.set('pin', null);
       this.set('isochrone_mode', null);
     },
     setIsochroneMode: function(mode){
-      console.log('setIsochroneMode');
       if (this.get('isochrone_mode') === mode){
         this.set('isochrone_mode', null);
       } else {
