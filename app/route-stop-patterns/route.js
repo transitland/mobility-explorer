@@ -30,8 +30,9 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
       arrayTwo.push(tempArray[2]);
       boundsArray.push(arrayOne);
       boundsArray.push(arrayTwo);
-      controller.set('leafletBbox', boundsArray);
+      controller.set('leafletBounds', boundsArray);
     }
+    controller.set('leafletBbox', controller.get('bbox'));
     this._super(controller, model);
   },
   model: function(params){

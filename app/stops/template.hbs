@@ -110,7 +110,7 @@
           </div>
         </div>
 
-			  {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+			  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 					{{#if served_by}}
 						{{#each model.servedByRoute.features as |route|}}
@@ -259,7 +259,7 @@
         </div>
       </div>
 
-		  {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+		  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 				{{#if served_by}}
 					{{#each model.servedByRoute.features as |route|}}

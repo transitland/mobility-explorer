@@ -83,9 +83,9 @@
 				      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 				    {{/power-select}}
 				  </div>
-					{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-						{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
-							
+					{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+						{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+
 							{{#each model.traversedByRoute as |route|}}
 								{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 								{{/geojson-layer}}
@@ -195,9 +195,9 @@
 			      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 			    {{/power-select}}
 			  </div>
-				{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}	
-						
+				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+
 						{{#each model.traversedByRoute as |route|}}
 							{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 							{{/geojson-layer}}

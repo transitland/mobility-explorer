@@ -134,7 +134,7 @@
 			      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 			    {{/power-select}}
 			  </div>
-				{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}
@@ -345,7 +345,7 @@
           {{/power-select}}
         </div>
 			</div>
-				{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}

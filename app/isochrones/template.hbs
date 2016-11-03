@@ -89,7 +89,22 @@
 	            </div>
             </div>
           </container>
-          {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+          {{#if pin}}
+          	{{#leaflet-map center=center zoom=zoom onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+	          	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+	           	{{#if pin}}
+		            {{#if isochrone_mode}}
+								  {{#each model.isochrones.features as |isochrone|}}
+								  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+								  	{{/geojson-layer}}
+							  	{{/each}}
+							  {{/if}}
+	              {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") riseOnHover=true riseOffset=1000}}
+	              {{/marker-layer}}
+	            {{/if}}
+	          {{/leaflet-map}}
+          {{else}}
+          	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onRemove=(action "removePin") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 	          	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 	            {{#if isochrone_mode}}
 							  {{#each model.isochrones.features as |isochrone|}}
@@ -97,11 +112,8 @@
 							  	{{/geojson-layer}}
 						  	{{/each}}
 						  {{/if}}
-	            {{#if pin}}
-	              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-	              {{/marker-layer}}
-	            {{/if}}
 	          {{/leaflet-map}}
+          {{/if}}
       	</div>
   		</div> 
   </container>
@@ -209,7 +221,7 @@
 	            {{/if}}
 	          {{/leaflet-map}}
           {{else}}
-          	{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onRemove=(action "removePin") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+          	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onRemove=(action "removePin") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 	          	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 	            {{#if isochrone_mode}}
 							  {{#each model.isochrones.features as |isochrone|}}
