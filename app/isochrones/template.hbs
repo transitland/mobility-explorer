@@ -1,0 +1,226 @@
+{{#if media.isMobile}}
+	<container>
+		<div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
+      <div id="sidebar" class="collapse in">
+				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
+				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+				{{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+          {{#link-to 'operators' (query-params bbox=bbox onestop_id=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+          {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=isochrone_mode pin=pin)}}<button class="btn btn-mapzen-alt">Isochrones</button>{{/link-to}}
+	  <div class="expanded-selection">
+	    <form>
+				<div class="isochrone-detail">
+		  		<div class="form-group-header">View distance you can travel from this {{#if pin}}pin{{/if}}{{#if stopmode}}stop{{/if}} via:</div>
+				  <div class="form-group">
+					  {{#if (eq isochrone_mode "pedestrian")}}
+				  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
+			  		{{else}}
+			  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
+			  		{{/if}}
+				    <label for="radio-1">walking</label><br>
+					  {{#if (eq isochrone_mode "pedestrian")}}
+					  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+			  		{{/if}}
+					  {{#if (eq isochrone_mode "bicycle")}}
+			  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
+			  		{{else}}
+			  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
+			  		{{/if}}
+				    <label for="radio-2">biking</label><br>
+					  {{#if (eq isochrone_mode "bicycle")}}
+					  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+			  		{{/if}}
+					  
+					  {{#if (eq isochrone_mode "auto")}}
+			  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+			  		{{else}}
+			  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
+			  		{{/if}}
+				    <label for="radio-3">driving</label><br>
+					  {{#if (eq isochrone_mode "auto")}}
+					  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+			  		{{/if}}
+			  		{{#if (eq isochrone_mode "multimodal")}}
+			  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
+			  		{{else}}
+			  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
+			  		{{/if}}
+				    <label for="radio-4">transit</label>
+					  {{#if (eq isochrone_mode "multimodal")}}
+					  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+			  		{{/if}}
+				  </div>
+			  	{{#if (eq isochrone_mode "multimodal")}}
+			  		<p class="caption">departure at:</p>
+			  		<div class="datetime-picker">
+			  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
+			  		</div>
+			  	{{/if}}
+			 	</div>
+			</form>
+		</div>
+
+        </div>
+      </div>
+      <div class="col-xs-12" style="padding-left:0px;">
+	      {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+	      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+	      <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+          <container class="location-search">
+            <div class="row">
+              <div class="ember-basic-dropdown-trigger-icon col-xs-2">
+                {{#if pin}}
+                  <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                {{else}}
+                  <img src='assets/images/marker1.png' class="markerIcon"/>
+                {{/if}}
+              </div>
+              <div style="width:80%;">
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+	              {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+	              {{/power-select}}
+	            </div>
+            </div>
+          </container>
+          {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+	          	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+	            {{#if isochrone_mode}}
+							  {{#each model.isochrones.features as |isochrone|}}
+							  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+							  	{{/geojson-layer}}
+						  	{{/each}}
+						  {{/if}}
+	            {{#if pin}}
+	              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+	              {{/marker-layer}}
+	            {{/if}}
+	          {{/leaflet-map}}
+      	</div>
+  		</div> 
+  </container>
+{{else}}
+	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
+		{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+		{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
+		{{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+	  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=isochrone_mode pin=pin)}}<button class="btn btn-mapzen-alt">Isochrones</button>{{/link-to}}
+	  <div class="expanded-selection">
+	    <form>
+				<div class="isochrone-detail">
+					{{#if pin}}
+			  		<div class="form-group-header">View distance you can travel from this {{#if pin}}pin{{/if}}{{#if stopmode}}stop{{/if}} via:</div>
+					  <div class="form-group">
+						  {{#if (eq isochrone_mode "pedestrian")}}
+					  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
+				  		{{else}}
+				  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
+				  		{{/if}}
+					    <label for="radio-1">walking</label><br>
+						  {{#if (eq isochrone_mode "pedestrian")}}
+						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+				  		{{/if}}
+						  {{#if (eq isochrone_mode "bicycle")}}
+				  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
+				  		{{else}}
+				  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
+				  		{{/if}}
+					    <label for="radio-2">biking</label><br>
+						  {{#if (eq isochrone_mode "bicycle")}}
+						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+				  		{{/if}}
+						  
+						  {{#if (eq isochrone_mode "auto")}}
+				  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+				  		{{else}}
+				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
+				  		{{/if}}
+					    <label for="radio-3">driving</label><br>
+						  {{#if (eq isochrone_mode "auto")}}
+						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+				  		{{/if}}
+				  		{{#if (eq isochrone_mode "multimodal")}}
+				  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
+				  		{{else}}
+				  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
+				  		{{/if}}
+					    <label for="radio-4">transit</label>
+						  {{#if (eq isochrone_mode "multimodal")}}
+						  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+				  		{{/if}}
+					  </div>
+				  	{{#if (eq isochrone_mode "multimodal")}}
+				  		<p class="caption">departure at:</p>
+				  		<div class="datetime-picker">
+				  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
+				  		</div>
+				  	{{/if}}
+				  {{else}}
+				  	<p class="caption">Choose a starting point by clicking on the map or searching for a location...</p>
+				  {{/if}}
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="col-xs-9 col-sm-9 col-md-9">
+    <div class="row">
+      {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+      <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>        
+          <div class="location-search">
+              <div class="row">
+                <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                  <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
+          </div>
+          {{#if pin}}
+          	{{#leaflet-map center=center zoom=zoom onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+	          	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+	           	{{#if pin}}
+		            {{#if isochrone_mode}}
+								  {{#each model.isochrones.features as |isochrone|}}
+								  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+								  	{{/geojson-layer}}
+							  	{{/each}}
+							  {{/if}}
+	              {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") riseOnHover=true riseOffset=1000}}
+	              {{/marker-layer}}
+	            {{/if}}
+	          {{/leaflet-map}}
+          {{else}}
+          	{{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onRemove=(action "removePin") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+	          	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+	            {{#if isochrone_mode}}
+							  {{#each model.isochrones.features as |isochrone|}}
+							  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+							  	{{/geojson-layer}}
+						  	{{/each}}
+						  {{/if}}
+	          {{/leaflet-map}}
+          {{/if}}
+      </div>
+    </div>
+  </div>
+	
+{{/if}}

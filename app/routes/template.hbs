@@ -22,7 +22,7 @@
 					    <label for="check-1">Show stops served by route</label>
 					  </div>
 					  
-					  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)  }}Show route stop patterns{{/link-to}}<br>
+					  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}<br>
 				  
 					{{else if operated_by}}
 						<form>
@@ -115,6 +115,7 @@
 				</div>
 			  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
 			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
+			  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}  
 			  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 			</div>
     <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
@@ -220,7 +221,7 @@
 			    <label for="check-1">Show stops served by route</label>
 			  </div>
 			  
-			  <div>{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)  }}Show route stop patterns{{/link-to}}</div><br>
+			  <div>{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div><br>
 		  
 			{{else if operated_by}}
 				<form>
@@ -315,6 +316,7 @@
 		</div>
 	  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
 	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
+	  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}  
 	  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 
 	{{#if model.stopServedByRoutes}}stopServedByRoutes{{/if}}

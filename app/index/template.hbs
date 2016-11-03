@@ -7,6 +7,7 @@
           {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
           {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
           {{#link-to 'operators' (query-params bbox=bbox onestop_id=null pin=pin)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+          {{#link-to 'isochrones' (query-params bbox=bbox onestop_id=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
         </div>
       </div>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
@@ -50,51 +51,8 @@
       {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
       {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
       {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
+      {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
     </div>
-    {{#if pin}}
-        <form>
-              <div class="form-group-header">View distance you can travel from this stop via:</div>
-              <div class="form-group">
-                {{#if (eq isochrone_mode "pedestrian")}}
-                  <input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
-                {{else}}
-                  <input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
-                {{/if}}
-                <label for="radio-1">walking</label><br>
-                {{#if (eq isochrone_mode "pedestrian")}}
-                  {{isochrone-legend isochrone_mode=isochrone_mode}}
-                {{/if}}
-                {{#if (eq isochrone_mode "bicycle")}}
-                  <input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
-                {{else}}
-                  <input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
-                {{/if}}
-                <label for="radio-2">biking</label><br>
-                {{#if (eq isochrone_mode "bicycle")}}
-                  {{isochrone-legend isochrone_mode=isochrone_mode}}
-                {{/if}}
-                {{#if (eq isochrone_mode "multimodal")}}
-                  <input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
-                {{else}}
-                  <input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
-                {{/if}}
-                <label for="radio-4">transit</label><br>
-                {{#if (eq isochrone_mode "multimodal")}}
-                  {{isochrone-legend isochrone_mode=isochrone_mode}}
-                {{/if}}
-                {{#if (eq isochrone_mode "auto")}}
-                  <input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
-                {{else}}
-                  <input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "auto"}}>
-                {{/if}}
-                <label for="radio-3">driving</label>
-                {{#if (eq isochrone_mode "auto")}}
-                  {{isochrone-legend isochrone_mode=isochrone_mode}}
-                {{/if}}
-              </div>
-            </form>
-    {{/if}}
-
   </div>
   <div class="col-xs-9 col-sm-9 col-md-9">
     <div class="row">

@@ -20,10 +20,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
        replace: true,
       refreshModel: true,
     },
-    bus_only: {
-      replace: true,
-      refreshModel: true,
-    },
     pin: {
       replace: true,
       refreshModel: true
@@ -102,6 +98,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           })
         });
       } else {
+        // debugger;
         var onlyStop = stops.get('firstObject');
         var stopLocation = onlyStop.get('geometry.coordinates');
         var mode = stops.get('query.isochrone_mode');
