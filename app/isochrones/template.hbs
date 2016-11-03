@@ -198,7 +198,9 @@
                 {{/power-select}}
               </div>
           </div>
-        	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onMouseover=(action "mouseOver") onDragend=(action "updateMapMoved")  onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+
+
+        	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onClick=(action "dropPin")}}
           	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
             {{#if pin}}
 	            {{#if isochrone_mode}}

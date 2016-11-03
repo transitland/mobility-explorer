@@ -26,15 +26,14 @@ export default Ember.Controller.extend(mapBboxController, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  zoom: 12,
+  // zoom: 12,
   mousedOver: false,
 
 	actions: {
 		updateLeafletBbox(e) {
-      this.set('zoom', e.target._zoom);
+      // this.set('zoom', e.target._zoom);
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
-      this.set('leafletBounds', leafletBounds)
 		},
 		updateMapMoved(e){
 			if (this.get('mousedOver') === true){
