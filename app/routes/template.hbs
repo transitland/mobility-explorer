@@ -233,6 +233,19 @@
 				  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
 				    <label for="check-1">Mode</label>
 				  </div>
+				  {{#power-select
+		      options=routes
+		      selected=route
+					placeholder=placeholderMessageRoutes
+					searchPlaceholder="Type to filter..."
+		      onchange=(action "setRoute")
+	        onclose=(action "clearRoute")
+		      as |route|
+		    }}
+		      {{route.name}} {{route.tags.route_long_name}}
+		    {{/power-select}}
+
+			   
 				</form>
 				{{#each model.routes as |route|}}
 					{{#if (eq hoverRoute route.onestop_id)}}
