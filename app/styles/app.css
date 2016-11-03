@@ -154,8 +154,15 @@ input, button, select, textarea {
 	border-radius: 0;
 }
 
+.leaflet-right{
+	left: 44vw;
+	width: 30vw;
+}
+
 .leaflet-container .leaflet-control-attribution a{
-	margin-right: 35vw;
+	/*margin-left: 35vw;*/
+	/*text-align: right;*/
+	/*padding-right: 5px;*/
 }
 
 .leaflet-bar a:first-child {
