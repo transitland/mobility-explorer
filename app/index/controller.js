@@ -24,7 +24,15 @@ export default Ember.Controller.extend(mapBboxController, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  zoom: 12,
+  mapCenter: [43.072963279523,-89.39234018325806],
+  center: Ember.computed('pin', function(){
+    if (this.get('pin')){
+      return this.get('pinLocation');
+    } else {
+      return this.get('mapCenter');
+    }
+  }),
+  zoom: 14,
 	actions: {
 		updatebbox(e) {
 			var newbox = e.target.getBounds();
