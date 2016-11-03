@@ -11,9 +11,31 @@ html, body, #map, #map-loading{
     position: relative;
  }
 
+.site-intro{
+	background-color: #9dbfc1;
+	padding: 10px;
+	color: white;
+	margin-top: 20px;
+}
+
 #sidebar{
 	background-color: white;
 	padding: 15px;
+}
+
+.sidebar-hr{
+	noshade: noshade;
+	align: center;
+	border-top: 2px solid #6ea0a4;
+	height: 0;
+	margin: 25px 0 15px 0;
+}
+
+.sidebar-caption{
+	margin-bottom: 10px;
+	text-align: left;
+	padding: 0;
+
 }
 
 .leaflet-container {
