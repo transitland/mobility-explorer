@@ -4,7 +4,8 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox','pin'],
 	bbox: null,
-	leafletBbox: [[43.053900124340984, -89.46407318115234],[43.10875337930414, -89.32708740234375]],
+  leafletBbox: null,
+  leafletBounds: [[43.053900124340984, -89.46407318115234],[43.10875337930414, -89.32708740234375]],
 	place: null,
   pin: null,
   pinLocation: Ember.computed('pin', function(){
@@ -23,15 +24,7 @@ export default Ember.Controller.extend(mapBboxController, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  mapCenter: [37.778008, -122.431272],
-  center: Ember.computed('pin', function(){
-    if (this.get('pin')){
-      return this.get('pinLocation');
-    } else {
-      return this.get('mapCenter');
-    }
-  }),
-  zoom: 14,
+  zoom: 12,
 	actions: {
 		updatebbox(e) {
 			var newbox = e.target.getBounds();
@@ -49,7 +42,6 @@ export default Ember.Controller.extend(mapBboxController, {
         var coordinates = [];
         coordinates.push(lat);
         coordinates.push(lng);
-        this.set('mapCenter', coordinates); 
         this.set('pin', coordinates);
       }
   		this.set('place', selected);
@@ -87,7 +79,6 @@ export default Ember.Controller.extend(mapBboxController, {
       var coordinates = [];
       coordinates.push(lat);
       coordinates.push(lng);
-      this.set('mapCenter', coordinates); 
       this.set('pin', coordinates);
     },
     setIsochroneMode: function(mode){
