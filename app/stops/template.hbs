@@ -78,7 +78,7 @@
 						{{/if}}
 					</div>
 			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
-			  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
+			  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
 
 
 				{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
@@ -228,7 +228,7 @@
 				{{/if}}
 			</div>
 	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
-  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
+  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
 
 		{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
 		

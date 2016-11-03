@@ -81,7 +81,6 @@ export default Ember.Controller.extend(mapBboxController, {
       this.set('pin', null);
     },
     dropPin: function(e){
-      console.log(e.latlng);
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;
       var coordinates = [];

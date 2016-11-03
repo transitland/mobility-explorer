@@ -2,7 +2,7 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['onestop_id', 'served_by', 'isochrone_mode', 'isochrones_mode', 'bus_only', 'pin'],
+	queryParams: ['onestop_id', 'served_by', 'isochrone_mode', 'pin'],
 	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	onestop_id: null,
 	pin: null,
@@ -41,7 +41,6 @@ export default Ember.Controller.extend(mapBboxController, {
 	mousedOver: false,
 	actions: {
 		change(date){
-			console.log('date: ' + date);
 		},
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
