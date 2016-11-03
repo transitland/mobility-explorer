@@ -64,6 +64,13 @@ export default Ember.Controller.extend(mapBboxController, {
   	clearPlace: function(){
   		this.set('place', null);
   	},
+    closePopup: function(e){
+      // debugger;
+      e.target.closePopup();
+    },
+    removePin: function(){
+      this.set('pin', null);
+    },
     dropPin: function(e){
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;

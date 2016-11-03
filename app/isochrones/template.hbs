@@ -198,11 +198,10 @@
                 {{/power-select}}
               </div>
           </div>
-
-
         	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onClick=(action "dropPin")}}
           	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
             {{#if pin}}
+
 	            {{#if isochrone_mode}}
 							  {{#each model.isochrones.features as |isochrone|}}
 							  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
@@ -216,5 +215,4 @@
       </div>
     </div>
   </div>
-	
 {{/if}}

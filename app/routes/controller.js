@@ -231,6 +231,18 @@ export default Ember.Controller.extend({
 				"weight": 5,
 			});
 			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));	
+		
+
+		},
+		setOnestopId: function(route) {
+			var onestop_id = route.get('id');
+			this.set('onestop_id', onestop_id);
+			this.set('selectedRoute', route);
+			
+			this.set('serves', null);
+			this.set('operated_by', null);
+			this.set('hoverRoute', null);
+			this.set('displayStops', false);
 		},
 		onEachFeature(feature, layer){
 			layer.setStyle(feature.properties);
@@ -259,15 +271,6 @@ export default Ember.Controller.extend({
 			this.set('onestop_id', onestopId);
 			this.set('displayStops', false);
   		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
-		},
-		setOnestopId: function(route) {
-			var onestopId = route.id;
-			this.set('selectedRoute', null);
-			this.set('serves', null);
-			this.set('operated_by', null);
-			this.set('hoverRoute', null);
-			this.set('displayStops', false);
-			this.set('onestop_id', onestopId);
 		},
 		setPlace: function(selected){
 			if (selected.geometry){

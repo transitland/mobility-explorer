@@ -1,19 +1,26 @@
 machine:
   node:
-    version: 0.10.33
+    version: 4.5.0
 
 dependencies:
   pre:
     - sudo pip install -U awscli
+    - npm install -g bower
   cache_directories:
     - node_modules
     - bower_components
-    - ~/nvm/v0.10.33/lib/node_modules/ember-cli
-    - ~/nvm/v0.10.33/bin/ember
+    - ~/nvm/v4.5.0/lib/node_modules/ember-cli
+    - ~/nvm/v4.5.0/bin/ember
   override:
     - npm prune && npm install
     - bower prune && bower install
-    - if [ ! -e ~/nvm/v0.10.33/bin/ember ]; then npm install -g ember-cli; else echo "ember-cli seems to be cached"; fi;
+    - if [ ! -e ~/nvm/v4.5.0/bin/ember ]; then npm install -g ember-cli; else echo "ember-cli seems to be cached"; fi;
+
+# for Precog
+# https://github.com/mapzen/precog/blob/master/README.md#basic-usage
+general:
+  artifacts:
+    - "dist"
 
 database:
   override:
@@ -21,7 +28,8 @@ database:
 
 test:
   override:
-    - echo "we need no tests"
+    - echo "Let's see if the app will build"
+    - ember build
 
 deployment:
   staging:
