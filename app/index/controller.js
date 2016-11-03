@@ -5,7 +5,7 @@ export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox','pin'],
 	bbox: null,
   leafletBbox: null,
-  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+  leafletBounds: [[43.053900124340984, -89.46407318115234],[43.10875337930414, -89.32708740234375]],
 	place: null,
   pin: null,
   pinLocation: Ember.computed('pin', function(){
@@ -24,7 +24,15 @@ export default Ember.Controller.extend(mapBboxController, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  zoom: 12,
+  mapCenter: [43.072963279523,-89.39234018325806],
+  center: Ember.computed('pin', function(){
+    if (this.get('pin')){
+      return this.get('pinLocation');
+    } else {
+      return this.get('mapCenter');
+    }
+  }),
+  zoom: 14,
 	actions: {
 		updatebbox(e) {
 			var newbox = e.target.getBounds();
