@@ -44,36 +44,51 @@ export default Ember.Controller.extend(mapBboxController, {
       return Ember.$.ajax({ url }).then(json => json.features);
     },
   	setPlace: function(selected){
-      if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('pin', coordinates);
-      }
-  		this.set('place', selected);
+    //   this.set('pin', null);
+    //   var lng = selected.geometry.coordinates[0];
+    //   var lat = selected.geometry.coordinates[1];
+    //   var coordinates = [];
+    //   coordinates.push(lat);
+    //   coordinates.push(lng);
+    //   if (selected.geometry){
+    //     if (selected.properties.accuracy === "point"){
+    //       this.set('pin', coordinates);
+    //     }
+    //   }
+    //   this.set('center', coordinates)
+  		// this.set('place', selected);
       
-      var coordinateArray = [];
-      var bboxString = this.get('bbox').toString();
-      var tempArray = [];
-      var boundsArray = [];
+    //   var coordinateArray = [];
+    //   var bboxString = this.get('bbox').toString();
+    //   var tempArray = [];
+    //   var boundsArray = [];
 
-      coordinateArray = bboxString.split(',');
+    //   coordinateArray = bboxString.split(',');
 
-      for (var i = 0; i < coordinateArray.length; i++){
-        tempArray.push(parseFloat(coordinateArray[i]));
-      }
+    //   for (var i = 0; i < coordinateArray.length; i++){
+    //     tempArray.push(parseFloat(coordinateArray[i]));
+    //   }
     
-      var arrayOne = [];
-      var arrayTwo = [];
-      arrayOne.push(tempArray[1]);
-      arrayOne.push(tempArray[0]);
-      arrayTwo.push(tempArray[3]);
-      arrayTwo.push(tempArray[2]);
-      boundsArray.push(arrayOne);
-      boundsArray.push(arrayTwo);
-      this.set('leafletBbox', boundsArray);
+    //   var arrayOne = [];
+    //   var arrayTwo = [];
+    //   arrayOne.push(tempArray[1]);
+    //   arrayOne.push(tempArray[0]);
+    //   arrayTwo.push(tempArray[3]);
+    //   arrayTwo.push(tempArray[2]);
+    //   boundsArray.push(arrayOne);
+    //   boundsArray.push(arrayTwo);
+    //   this.set('leafletBounds', boundsArray);
+
+    this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      
+      this.set('place', selected);
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace: function(){
   		this.set('place', null);

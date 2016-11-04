@@ -273,18 +273,16 @@ export default Ember.Controller.extend({
   		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
 		setPlace: function(selected){
-			if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('mapCenter', coordinates); 
-        this.set('pin', coordinates);
-      }
+   		this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      
   		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace: function(){
   		this.set('place', null);
@@ -295,7 +293,7 @@ export default Ember.Controller.extend({
     },
 		searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`; 
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     setDisplayStops: function(){
