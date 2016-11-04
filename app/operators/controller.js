@@ -96,20 +96,95 @@ export default Ember.Controller.extend(mapBboxController, {
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`; 
       return Ember.$.ajax({ url }).then(json => json.features);
     },
    	setPlace: function(selected){
-      if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('pin', coordinates);
-      }
+
+   	// index: 
+   		this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      
   		this.set('place', selected);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin')}});
+      
+      
+
+			if (selected.geometry){
+        if (selected.properties.accuracy === "point"){
+        	console.log("point")
+          this.set('pin', coordinates);
+      		this.transitionToRoute('index', {queryParams: {pin: this.get('pin')}});
+        } else if (selected.properties.accuracy === "centroid"){
+        	if (selected.bbox){
+        		console.log('bbox')
+        		var coordinateArray = [];
+        		var bbox = selected.bbox;
+			      var bboxString = bbox.toString();
+			      var tempArray = [];
+			      var boundsArray = [];
+
+			      coordinateArray = bboxString.split(',');
+
+			      for (var i = 0; i < coordinateArray.length; i++){
+			        tempArray.push(parseFloat(coordinateArray[i]));
+			      }
+			    
+			      var arrayOne = [];
+			      var arrayTwo = [];
+			      arrayOne.push(tempArray[1]);
+			      arrayOne.push(tempArray[0]);
+			      arrayTwo.push(tempArray[3]);
+			      arrayTwo.push(tempArray[2]);
+			      boundsArray.push(arrayOne);
+			      boundsArray.push(arrayTwo);
+			      this.set('bbox', selected.bbox);
+      			this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), map_center: selected.geometry.coordinates}});
+
+        	}
+        // 	console.log("centroid")
+        // 	console.log(selected.bbox)
+        // 	this.set('pin', null)
+      		// this.transitionToRoute('index', {queryParams: {map_center: coordinates}});
+        }
+      }
+
+    // original:
+    //   if (selected.geometry){
+    //     var lng = selected.geometry.coordinates[0];
+    //     var lat = selected.geometry.coordinates[1];
+    //     var coordinates = [];
+    //     coordinates.push(lat);
+    //     coordinates.push(lng);
+    //     this.set('pin', coordinates);
+    //   }
+  		// this.set('place', selected);
+  		// this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin')}});
+  		
+
+  	// last night:
+  	// this.set('pin', null);
+  	// var lng = selected.geometry.coordinates[0];
+    //   var lat = selected.geometry.coordinates[1];
+    //   var coordinates = [];
+    //   coordinates.push(lat);
+    //   coordinates.push(lng);
+      
+    //   if (selected.properties.accuracy === "point"){
+    //     this.set('pin', coordinates);
+  		// 	this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin')}});
+
+    //   } else {
+    //   	console.log(selected.bbox);
+    //   	this.set('bbox', selected.bbox);
+    //   	this.controlleFor('index').set('center', coordinates)
+    //   	this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+    //   }
+    //   this.set('place', selected);
+
   	},
   	clearPlace(){
   		this.set('place', null);

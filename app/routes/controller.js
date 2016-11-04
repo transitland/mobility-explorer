@@ -295,7 +295,7 @@ export default Ember.Controller.extend({
     },
 		searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`; 
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     setDisplayStops: function(){

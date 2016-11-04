@@ -2,7 +2,7 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox','pin'],
+	queryParams: ['bbox','pin','map_center'],
 	bbox: null,
   leafletBbox: null,
   leafletBounds: [[43.053900124340984, -89.46407318115234],[43.10875337930414, -89.32708740234375]],
@@ -24,12 +24,12 @@ export default Ember.Controller.extend(mapBboxController, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  mapCenter: [43.072963279523,-89.39234018325806],
+  map_center: [43.072963279523,-89.39234018325806],
   center: Ember.computed('pin', function(){
     if (this.get('pin')){
       return this.get('pinLocation');
     } else {
-      return this.get('mapCenter');
+      return this.get('map_center');
     }
   }),
   zoom: 14,
@@ -44,14 +44,18 @@ export default Ember.Controller.extend(mapBboxController, {
       return Ember.$.ajax({ url }).then(json => json.features);
     },
   	setPlace: function(selected){
+      this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
       if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('pin', coordinates);
+        if (selected.properties.accuracy === "point"){
+          this.set('pin', coordinates);
+        }
       }
+      this.set('center', coordinates)
   		this.set('place', selected);
       
       var coordinateArray = [];
@@ -73,7 +77,7 @@ export default Ember.Controller.extend(mapBboxController, {
       arrayTwo.push(tempArray[2]);
       boundsArray.push(arrayOne);
       boundsArray.push(arrayTwo);
-      this.set('leafletBbox', boundsArray);
+      this.set('leafletBounds', boundsArray);
   	},
   	clearPlace: function(){
   		this.set('place', null);
