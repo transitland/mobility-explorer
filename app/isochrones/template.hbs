@@ -114,7 +114,7 @@
 		{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
 		{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
 		{{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
-	  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=isochrone_mode pin=pin)}}<button class="btn btn-mapzen-alt">Isochrones</button>{{/link-to}}
+	  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=isochrone_mode pin=pin departure_time=null)}}<button class="btn btn-mapzen-alt">Isochrones</button>{{/link-to}}
 	  <div class="expanded-selection">
 	    <form>
 				<div class="isochrone-detail">

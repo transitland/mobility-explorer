@@ -14,6 +14,10 @@ export default Ember.Route.extend(setLoading, {
     pin: {
       replace: true,
       refreshModel: true
+    },
+    departure_time: {
+    	replace: true,
+    	refreshModel: true
     }
   },
 	setupController: function (controller, model) {
@@ -67,9 +71,14 @@ export default Ember.Route.extend(setLoading, {
 	      costing_options: {"pedestrian":{"use_ferry":0}},
 	      contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
 	    };
+
 	    if (json.costing === "multimodal"){
 	      json.denoise = .1;
 	    }
+	    if (params.departure_time){
+	    	json.date_time = {"type": 1, "value": params.departure_time};
+	    }
+
 	    url += escape(JSON.stringify(json));
 	    return Ember.RSVP.hash({
 	      url: url,
