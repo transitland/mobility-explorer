@@ -2,13 +2,14 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['onestop_id', 'isochrone_mode', 'pin'],
+	queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time'],
 	bbox: null,
 	leafletBbox: null,
   leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
   isochrone_mode: null,
   pin: null,
   onestop_id: null,
+  departure_time: null,
   pinLocation: Ember.computed('pin', function(){
     if (typeof(this.get('pin'))==="string"){
       var pinArray = this.get('pin').split(',');
@@ -96,6 +97,7 @@ export default Ember.Controller.extend(mapBboxController, {
       this.set('isochrone_mode', null);
     },
     setIsochroneMode: function(mode){
+      this.set('departure_time', null);
       if (this.get('isochrone_mode') === mode){
         this.set('isochrone_mode', null);
       } else {
@@ -103,7 +105,23 @@ export default Ember.Controller.extend(mapBboxController, {
       }
     },
     change(date){
-			console.log('date: ' + date);
+
+      // This is the local date and time at the location.
+      // type:
+      // 0 - Current departure time.
+      // 1 - Specified departure time
+      // 2 - Specified arrival time. Not yet implemented for multimodal costing method.
+      
+      // value:
+      // the date and time is specified in ISO 8601 format (YYYY-MM-DDThh:mm) in 
+      // the local time zone of departure or arrival. For example "2016-07-03T08:06"
+      // ISO 8601 uses the 24-hour clock system. 
+      // A single point in time can be represented by concatenating a complete date expression, 
+      // the letter T as a delimiter, and a valid time expression. For example, "2007-04-05T14:30".
+			
+
+      var newDepartureTime = date.toISOString().slice(0,16);
+      this.set('departure_time', newDepartureTime);
 		},
   }
 });
