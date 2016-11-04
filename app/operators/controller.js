@@ -101,9 +101,6 @@ export default Ember.Controller.extend(mapBboxController, {
       return Ember.$.ajax({ url }).then(json => json.features);
     },
    	setPlace: function(selected){
-   		// madison, wi:
-   		//  lat: 43
-   		//  lng: -89
    		this.set('pin', null);
       var lng = selected.geometry.coordinates[0];
       var lat = selected.geometry.coordinates[1];
@@ -113,48 +110,7 @@ export default Ember.Controller.extend(mapBboxController, {
       
   		this.set('place', selected);
       this.set('pin', coordinates);
-
-			if (selected.geometry){
-        if (selected.properties.accuracy === "point"){
-      		this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
-      		console.log(selected)
-        } else if (selected.properties.accuracy === "centroid"){
-        	if (selected.bbox){
-      	// 		this.set('place', selected);
-      	// 		console.log(this.get('bbox'))
-			  		// this.set('bbox', selected.bbox);
-      	// 		console.log(this.get('bbox'))
-
-			  		// this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
-
-			  		var coordinateArray = [];
-			      var bboxString = this.get('bbox').toString();
-			      var tempArray = [];
-			      var boundsArray = [];
-
-			      coordinateArray = bboxString.split(',');
-
-			      for (var i = 0; i < coordinateArray.length; i++){
-			        tempArray.push(parseFloat(coordinateArray[i]));
-			      }
-			    
-			      var arrayOne = [];
-			      var arrayTwo = [];
-			      arrayOne.push(tempArray[1]);
-			      arrayOne.push(tempArray[0]);
-			      arrayTwo.push(tempArray[3]);
-			      arrayTwo.push(tempArray[2]);
-			      boundsArray.push(arrayOne);
-			      boundsArray.push(arrayTwo);
-
-			      // need to set leafletBounds on index controller here:
-			      this.set('index.controller.leafletBounds', boundsArray);
-
-			  		this.transitionToRoute('index', {queryParams: {bbox: boundsArray}});
-
-        	}
-        }
-      }
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace(){
   		this.set('place', null);

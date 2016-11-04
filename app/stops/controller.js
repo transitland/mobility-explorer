@@ -74,19 +74,18 @@ export default Ember.Controller.extend(mapBboxController, {
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
-    setPlace(selected){
-    	if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('pin', coordinates);
-      }
-    	this.set('place', selected);
-    	this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
-  	},
+    setPlace: function(selected){
+      this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      
+      this.set('place', selected);
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
+    },
   	clearPlace(){
   		this.set('place', null);
   	},

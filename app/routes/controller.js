@@ -273,18 +273,16 @@ export default Ember.Controller.extend({
   		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
 		setPlace: function(selected){
-			if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('mapCenter', coordinates); 
-        this.set('pin', coordinates);
-      }
+   		this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      
   		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace: function(){
   		this.set('place', null);
