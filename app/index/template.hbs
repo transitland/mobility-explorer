@@ -17,7 +17,7 @@
               <div class="row">
                 <div class="ember-basic-dropdown-trigger-icon">
                   {{#if pin}}
-                    <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
                   {{else}}
                     <img src='assets/images/marker1.png' class="markerIcon"/>
                   {{/if}}
@@ -62,7 +62,9 @@
               <div class="row">
                 <div class="col-md-2 ember-basic-dropdown-trigger-icon">
                   {{#if pin}}
-                  <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                  <!-- <div src='assets/images/pin_x1.png' class="pinx" {{action "removePin"}}></div> -->
+                  <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+
                   {{else}}
                     <img src='assets/images/marker1.png' class="markerIcon"/>
                   {{/if}}

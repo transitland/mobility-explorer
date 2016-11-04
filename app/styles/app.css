@@ -179,9 +179,15 @@ input, button, select, textarea {
 
 }
 
-.fa-trash-o{
+/*.fa-trash-o{
 	color:#d4645c;
 	font-size: 16pt;
+	margin-top: 8px;
+	margin-left: 6px;
+	/*margin-right: 5px;*/
+}*/
+.pinx{
+	
 	margin-top: 8px;
 	margin-left: 6px;
 	/*margin-right: 5px;*/
@@ -204,9 +210,16 @@ input, button, select, textarea {
 
 .markerIcon{
 	height: 25px;
-	margin-right: 5px;
+	/*margin-right: 5px;*/
 	margin-top: 8px;
 	margin-left: 10px;
+}
+
+.markerIcon-x{
+	height: 25px;
+	/*margin-right: 7px;*/
+	margin-top: 8px;
+	margin-left: 11px;
 }
 
 .location-search{
