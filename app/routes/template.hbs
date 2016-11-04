@@ -141,7 +141,7 @@
 			    {{/power-select}}
 			  </div>
 				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	
@@ -208,7 +208,7 @@
 	</div>
 	{{outlet}}
 {{else}}
-	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text" id="sidebar">
 		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
 
 	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
@@ -365,7 +365,7 @@
         </div>
 			</div>
 				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	
