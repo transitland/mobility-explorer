@@ -4,6 +4,7 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id','pin'],
 	pin: null,
+	map_center: null,
 	pinLocation: Ember.computed('pin', function(){
     if (typeof(this.get('pin'))==="string"){
       var pinArray = this.get('pin').split(',');
@@ -100,8 +101,9 @@ export default Ember.Controller.extend(mapBboxController, {
       return Ember.$.ajax({ url }).then(json => json.features);
     },
    	setPlace: function(selected){
-
-   	// index: 
+   		// madison, wi:
+   		//  lat: 43
+   		//  lng: -89
    		this.set('pin', null);
       var lng = selected.geometry.coordinates[0];
       var lat = selected.geometry.coordinates[1];
@@ -110,20 +112,23 @@ export default Ember.Controller.extend(mapBboxController, {
       coordinates.push(lng);
       
   		this.set('place', selected);
-      
-      
+      this.set('pin', coordinates);
 
 			if (selected.geometry){
         if (selected.properties.accuracy === "point"){
-        	console.log("point")
-          this.set('pin', coordinates);
-      		this.transitionToRoute('index', {queryParams: {pin: this.get('pin')}});
+      		this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
+      		console.log(selected)
         } else if (selected.properties.accuracy === "centroid"){
         	if (selected.bbox){
-        		console.log('bbox')
-        		var coordinateArray = [];
-        		var bbox = selected.bbox;
-			      var bboxString = bbox.toString();
+      	// 		this.set('place', selected);
+      	// 		console.log(this.get('bbox'))
+			  		// this.set('bbox', selected.bbox);
+      	// 		console.log(this.get('bbox'))
+
+			  		// this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+
+			  		var coordinateArray = [];
+			      var bboxString = this.get('bbox').toString();
 			      var tempArray = [];
 			      var boundsArray = [];
 
@@ -141,50 +146,15 @@ export default Ember.Controller.extend(mapBboxController, {
 			      arrayTwo.push(tempArray[2]);
 			      boundsArray.push(arrayOne);
 			      boundsArray.push(arrayTwo);
-			      this.set('bbox', selected.bbox);
-      			this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), map_center: selected.geometry.coordinates}});
+
+			      // need to set leafletBounds on index controller here:
+			      this.set('index.controller.leafletBounds', boundsArray);
+
+			  		this.transitionToRoute('index', {queryParams: {bbox: boundsArray}});
 
         	}
-        // 	console.log("centroid")
-        // 	console.log(selected.bbox)
-        // 	this.set('pin', null)
-      		// this.transitionToRoute('index', {queryParams: {map_center: coordinates}});
         }
       }
-
-    // original:
-    //   if (selected.geometry){
-    //     var lng = selected.geometry.coordinates[0];
-    //     var lat = selected.geometry.coordinates[1];
-    //     var coordinates = [];
-    //     coordinates.push(lat);
-    //     coordinates.push(lng);
-    //     this.set('pin', coordinates);
-    //   }
-  		// this.set('place', selected);
-  		// this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin')}});
-  		
-
-  	// last night:
-  	// this.set('pin', null);
-  	// var lng = selected.geometry.coordinates[0];
-    //   var lat = selected.geometry.coordinates[1];
-    //   var coordinates = [];
-    //   coordinates.push(lat);
-    //   coordinates.push(lng);
-      
-    //   if (selected.properties.accuracy === "point"){
-    //     this.set('pin', coordinates);
-  		// 	this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin')}});
-
-    //   } else {
-    //   	console.log(selected.bbox);
-    //   	this.set('bbox', selected.bbox);
-    //   	this.controlleFor('index').set('center', coordinates)
-    //   	this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
-    //   }
-    //   this.set('place', selected);
-
   	},
   	clearPlace(){
   		this.set('place', null);

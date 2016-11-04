@@ -12,10 +12,6 @@ export default Ember.Route.extend(setLoading, {
     pin: {
     	replace: true,
     	refreshModel: true
-    },
-    map_center: {
-    	replace: true,
-    	refreshModel: true
     }
 	},
 	setupController: function (controller, model) {

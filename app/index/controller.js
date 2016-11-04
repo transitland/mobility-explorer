@@ -2,7 +2,7 @@ import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 
 export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox','pin','map_center'],
+	queryParams: ['bbox','pin'],
 	bbox: null,
   leafletBbox: null,
   leafletBounds: [[43.053900124340984, -89.46407318115234],[43.10875337930414, -89.32708740234375]],
@@ -24,12 +24,12 @@ export default Ember.Controller.extend(mapBboxController, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  map_center: [43.072963279523,-89.39234018325806],
+  mapCenter: [43.072963279523,-89.39234018325806],
   center: Ember.computed('pin', function(){
     if (this.get('pin')){
       return this.get('pinLocation');
     } else {
-      return this.get('map_center');
+      return this.get('mapCenter');
     }
   }),
   zoom: 14,
