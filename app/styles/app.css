@@ -1,5 +1,6 @@
 body {
     padding: 0;
+    /*padding-top: 56px; */
     margin: 0;
     z-index: 30;
 }
@@ -8,12 +9,18 @@ html, body, #map, #map-loading{
     height: 100vh;
     width: 100vw;
     z-index: 30;
-    position: relative;
- }
+    position: relative;   
+}
+
+.navbar-fixed-top{
+	position: absolute;
+}
 
 #sidebar{
 	background-color: white;
 	padding: 15px;
+	height: 100vh;
+	overflow-y: scroll;
 }
 
 .leaflet-container {
@@ -33,7 +40,6 @@ html, body, #map, #map-loading{
 	fill: white;
 	z-index:900;
 }
-
 .svg-stop-rsp{
 	fill: #9dbfc1;
   stroke: #4c7679;

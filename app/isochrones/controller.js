@@ -29,6 +29,7 @@ export default Ember.Controller.extend(mapBboxController, {
   markerUrl: 'assets/images/marker1.png',
   // zoom: 12,
   mousedOver: false,
+  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
 
 	actions: {
 		updateLeafletBbox(e) {
