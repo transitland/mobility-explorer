@@ -62,6 +62,7 @@ export default Ember.Controller.extend(mapBboxController, {
 		},
 		setOnestopId(stop) {
 			var onestopId = stop.id;
+      this.set('pin', null);
 			this.set('selectedStop', stop);
 			this.set('onestop_id', onestopId);
 			this.set('served_by', null);
