@@ -4,7 +4,6 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 export default Ember.Controller.extend(mapBboxController, {
 	queryParams: ['bbox', 'onestop_id','pin'],
 	pin: null,
-	map_center: null,
 	pinLocation: Ember.computed('pin', function(){
     if (typeof(this.get('pin'))==="string"){
       var pinArray = this.get('pin').split(',');
