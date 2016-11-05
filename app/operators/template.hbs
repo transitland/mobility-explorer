@@ -38,7 +38,7 @@
             {{/if}}
           {{/if}}
         </div>
-        {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
+        {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
         {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
       </div>
       <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
@@ -48,7 +48,7 @@
               <div class="row">
                 <div class="col-md-2 ember-basic-dropdown-trigger-icon">
                   {{#if pin}}
-                    <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                    <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
                   {{else}}
                     <img src='assets/images/marker1.png' class="markerIcon"/>
                   {{/if}}
@@ -66,7 +66,7 @@
               </div>
           </div>
           {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
-            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
             {{#each model as |operator|}}
               {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
               {{/polygon-layer}}
@@ -113,7 +113,7 @@
         {{/if}}
       {{/if}}
     </div>
-    {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
+    {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
     {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
   </div>
   <div class="col-xs-12 col-sm-12 col-md-9">
@@ -123,7 +123,7 @@
               <div class="row">
                 <div class="col-md-2 ember-basic-dropdown-trigger-icon">
                   {{#if pin}}
-                    <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+                    <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
                   {{else}}
                     <img src='assets/images/marker1.png' class="markerIcon"/>
                   {{/if}}
@@ -141,7 +141,7 @@
               </div>
           </div>
         {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
-          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
           {{#each model as |operator|}}
             {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
             {{/polygon-layer}}

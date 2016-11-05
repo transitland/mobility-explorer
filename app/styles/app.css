@@ -1,5 +1,6 @@
 body {
     padding: 0;
+    /*padding-top: 56px; */
     margin: 0;
     z-index: 30;
 }
@@ -8,8 +9,12 @@ html, body, #map, #map-loading{
     height: 100vh;
     width: 100vw;
     z-index: 30;
-    position: relative;
- }
+    position: relative;   
+}
+
+.navbar-fixed-top{
+	position: absolute;
+}
 
 .site-intro{
 	background-color: #9dbfc1;
@@ -21,6 +26,8 @@ html, body, #map, #map-loading{
 #sidebar{
 	background-color: white;
 	padding: 15px;
+	height: 100vh;
+	overflow-y: scroll;
 }
 
 .sidebar-hr{
@@ -55,7 +62,6 @@ html, body, #map, #map-loading{
 	fill: white;
 	z-index:900;
 }
-
 .svg-stop-rsp{
 	fill: #9dbfc1;
   stroke: #4c7679;
@@ -201,9 +207,15 @@ input, button, select, textarea {
 
 }
 
-.fa-trash-o{
+/*.fa-trash-o{
 	color:#d4645c;
 	font-size: 16pt;
+	margin-top: 8px;
+	margin-left: 6px;
+	/*margin-right: 5px;*/
+}*/
+.pinx{
+	
 	margin-top: 8px;
 	margin-left: 6px;
 	/*margin-right: 5px;*/
@@ -226,9 +238,16 @@ input, button, select, textarea {
 
 .markerIcon{
 	height: 25px;
-	margin-right: 5px;
+	/*margin-right: 5px;*/
 	margin-top: 8px;
 	margin-left: 10px;
+}
+
+.markerIcon-x{
+	height: 25px;
+	/*margin-right: 7px;*/
+	margin-top: 8px;
+	margin-left: 11px;
 }
 
 .location-search{
@@ -408,7 +427,7 @@ span.timepicker-minute{
 .isochrone-legend-box {
   margin-left: 25px;
   width: 75%;
-  padding: 10px;
+  padding-right: 10px;
   background-color: #f0f0f0;
   position: relative;
 	text-align: center;

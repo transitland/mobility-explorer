@@ -2,11 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	queryParams: ['traversed_by', 'pin'],
-	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+	bbox: null,
+	leafletBbox: null,
+  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	traversed_by: null,
 	onestop_id: null,
 	serves: null,
-	bbox: null,
 	pin: null,
 	currentlyLoading: Ember.inject.service(),
 	displayStops: false,
@@ -45,6 +46,8 @@ export default Ember.Controller.extend({
 
 	mapMoved: false,
 	mousedOver: false,
+  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
+	
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -104,7 +107,7 @@ export default Ember.Controller.extend({
     },
 		searchRepo(term) {
 			if (Ember.isBlank(term)) { return []; }
-			const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+			const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`; 
 			return Ember.$.ajax({ url }).then(json => json.features);
 		},
 		displayStops: function(){

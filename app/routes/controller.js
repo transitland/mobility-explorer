@@ -2,12 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox', 'pin'],
-	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+	bbox: null,
+	leafletBbox: null,
+  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	currentlyLoading: Ember.inject.service(),
 	queryIsInactive: false,
 	onestop_id: null,
 	serves: null,
-	bbox: null,
 	pin: null,
 	pinLocation: Ember.computed('pin', function(){
     if (typeof(this.get('pin'))==="string"){
@@ -171,6 +172,7 @@ export default Ember.Controller.extend({
 	}),
 	mapMoved: false,
 	mousedOver: false,
+  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -230,6 +232,18 @@ export default Ember.Controller.extend({
 				"weight": 5,
 			});
 			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));	
+		
+
+		},
+		setOnestopId: function(route) {
+			var onestop_id = route.get('id');
+			this.set('onestop_id', onestop_id);
+			this.set('selectedRoute', route);
+			
+			this.set('serves', null);
+			this.set('operated_by', null);
+			this.set('hoverRoute', null);
+			this.set('displayStops', false);
 		},
 		onEachFeature(feature, layer){
 			layer.setStyle(feature.properties);
@@ -259,28 +273,17 @@ export default Ember.Controller.extend({
 			this.set('displayStops', false);
   		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
-		setOnestopId: function(route) {
-			var onestopId = route.id;
-			this.set('selectedRoute', null);
-			this.set('serves', null);
-			this.set('operated_by', null);
-			this.set('hoverRoute', null);
-			this.set('displayStops', false);
-			this.set('onestop_id', onestopId);
-		},
 		setPlace: function(selected){
-			if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('mapCenter', coordinates); 
-        this.set('pin', coordinates);
-      }
+   		this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      
   		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace: function(){
   		this.set('place', null);
@@ -291,7 +294,7 @@ export default Ember.Controller.extend({
     },
 		searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`; 
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     setDisplayStops: function(){

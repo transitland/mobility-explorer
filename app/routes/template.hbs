@@ -30,9 +30,9 @@
 
 						  <div class="form-group-header">Style routes by:</div>
 						  <div class="form-group">
-						  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
-						  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
-						    <label for="check-1">Mode</label>
+						  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
+						  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+						    <label for="radio-1">Mode</label>
 						  </div>
 						</form>
 						{{#each model.routes as |route|}}
@@ -44,14 +44,14 @@
 						<form>
 						  <div class="form-group-header">Style routes by:</div>
 						  <div class="form-group" {{action "setRouteStyle" "mode"}}>
-						  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
-						  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
-						    <label for="check-1">Mode</label>
+						  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
+						  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+						    <label for="radio-1">Mode</label>
 						  </div>
 						  <div class="form-group" {{action "setRouteStyle" "operator"}}>
-						    {{#if (eq style_routes_by "operator")}}<input type="checkbox" id="check-2" name="option-two" checked>
-						    {{else}}<input type="checkbox" id="check-2" name="option-two">{{/if}}
-						    <label for="check-2">Operator</label>
+						    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked>
+						    {{else}}<input type="radio" id="radio-2" name="option-two">{{/if}}
+						    <label for="radio-2">Operator</label>
 						  </div>
 						</form>
 				   {{#power-select
@@ -122,7 +122,13 @@
 		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 			<div class="location-search">
-
+					<div class="col-md-2 ember-basic-dropdown-trigger-icon">
+            {{#if pin}}
+              <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+            {{else}}
+              <img src='assets/images/marker1.png' class="markerIcon"/>
+            {{/if}}
+          </div>
 			    {{#power-select
 			      search=(action "searchRepo")
 		        renderInPlace=true
@@ -135,7 +141,7 @@
 			    {{/power-select}}
 			  </div>
 				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	
@@ -202,7 +208,7 @@
 	</div>
 	{{outlet}}
 {{else}}
-	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text" id="sidebar">
 		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
 
 	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Routes</button>{{/link-to}}
@@ -229,10 +235,23 @@
 
 				  <div class="form-group-header">Style routes by:</div>
 				  <div class="form-group">
-				  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
-				  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
-				    <label for="check-1">Mode</label>
+				  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
+				  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+				    <label for="radio-1">Mode</label>
 				  </div>
+				  {{#power-select
+		      options=routes
+		      selected=route
+					placeholder=placeholderMessageRoutes
+					searchPlaceholder="Type to filter..."
+		      onchange=(action "setRoute")
+	        onclose=(action "clearRoute")
+		      as |route|
+		    }}
+		      {{route.name}} {{route.tags.route_long_name}}
+		    {{/power-select}}
+
+			   
 				</form>
 				{{#each model.routes as |route|}}
 					{{#if (eq hoverRoute route.onestop_id)}}
@@ -243,14 +262,14 @@
 				<form>
 				  <div class="form-group-header">Style routes by:</div>
 				  <div class="form-group" {{action "setRouteStyle" "mode"}}>
-				  	{{#if (eq style_routes_by "mode")}}<input type="checkbox" id="check-1" name="option-one" checked>
-				  	{{else}}<input type="checkbox" id="check-1" name="option-one">{{/if}}
-				    <label for="check-1">Mode</label>
+				  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
+				  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+				    <label for="radio-1">Mode</label>
 				  </div>
 				  <div class="form-group" {{action "setRouteStyle" "operator"}}>
-				    {{#if (eq style_routes_by "operator")}}<input type="checkbox" id="check-2" name="option-two" checked>
-				    {{else}}<input type="checkbox" id="check-2" name="option-two">{{/if}}
-				    <label for="check-2">Operator</label>
+				    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked>
+				    {{else}}<input type="radio" id="radio-2" name="option-two">{{/if}}
+				    <label for="radio-2">Operator</label>
 				  </div>
 				</form>
 		    {{#power-select
@@ -328,7 +347,7 @@
         <div class="row">
           <div class="col-md-2 ember-basic-dropdown-trigger-icon">
             {{#if pin}}
-            <div class='fa fa-fw fa-trash-o' {{action "removePin"}}></div>
+              <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
             {{else}}
               <img src='assets/images/marker1.png' class="markerIcon"/>
             {{/if}}
@@ -346,7 +365,7 @@
         </div>
 			</div>
 				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}	

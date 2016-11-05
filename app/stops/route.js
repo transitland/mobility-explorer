@@ -98,7 +98,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           })
         });
       } else {
-        // debugger;
         var onlyStop = stops.get('firstObject');
         var stopLocation = onlyStop.get('geometry.coordinates');
         var mode = stops.get('query.isochrone_mode');

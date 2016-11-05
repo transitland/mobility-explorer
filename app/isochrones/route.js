@@ -14,6 +14,10 @@ export default Ember.Route.extend(setLoading, {
     pin: {
       replace: true,
       refreshModel: true
+    },
+    departure_time: {
+    	replace: true,
+    	refreshModel: true
     }
   },
 	setupController: function (controller, model) {
@@ -67,9 +71,14 @@ export default Ember.Route.extend(setLoading, {
 	      costing_options: {"pedestrian":{"use_ferry":0}},
 	      contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
 	    };
+
 	    if (json.costing === "multimodal"){
 	      json.denoise = .1;
 	    }
+	    if (params.departure_time){
+	    	json.date_time = {"type": 1, "value": params.departure_time};
+	    }
+
 	    url += escape(JSON.stringify(json));
 	    return Ember.RSVP.hash({
 	      url: url,
@@ -78,7 +87,8 @@ export default Ember.Route.extend(setLoading, {
 	        for(var k = 0; k < features.length; k++) {
 	          //find the next set of contours
 	          var i = k + 1;
-	          while(i < features.length && features[i].properties.contour == features[k].properties.contour)
+
+	          while(i < features.length && features[i].properties.contour == features[k].properties.contour)  
 	            i++;
 	          if(i >= features.length)
 	          break;
@@ -90,6 +100,7 @@ export default Ember.Route.extend(setLoading, {
 	            outer = difference(outer, inner);
 	            i++;
 	          }
+
 	          //keep it
 	          features[k].geometry = outer.geometry;
 	        }

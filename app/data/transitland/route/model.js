@@ -66,7 +66,7 @@ var Route = DS.Model.extend({
 					geometry: this.get('geometry'),
 					properties: {
 						color: "#444444",
-						weight: 0,
+						weight: 5,
 						opacity: 0
 					},
 					id: this.onestop_id,
