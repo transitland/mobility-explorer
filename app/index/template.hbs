@@ -3,6 +3,7 @@
     <div class="row">
       <div id="sidebar-media" class="collapse in">
         <h2>Mobility Explorer</h2>
+        {{text-box route="index"}}
         <div class="btn-group-vertical" role="group" >
           {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
           {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
