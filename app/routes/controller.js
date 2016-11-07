@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
 	selectedRoute: null,
 	hoverStop: null,
 	place: null,
-	placeholderMessageRoutes: Ember.computed('leafletBbox', function(){
+	placeholderMessageRoutes: Ember.computed('bbox', function(){
 		var total = this.model.routes.get('meta.total');
 		if (total > 1){
 			return  total + " routes";
@@ -198,11 +198,6 @@ export default Ember.Controller.extend({
   			this.set('style_routes_by', style);
   		}
 		},
-		setRoute(route){
-			var onestop_id = route.get('id');
-			this.set('onestop_id', onestop_id);
-			this.set('selectedRoute', route);
-		},
 		clearRoute(){
   		this.set('onestop_id', null);
 			this.set('selectedRoute', null);
@@ -239,7 +234,6 @@ export default Ember.Controller.extend({
 			var onestop_id = route.get('id');
 			this.set('onestop_id', onestop_id);
 			this.set('selectedRoute', route);
-			
 			this.set('serves', null);
 			this.set('operated_by', null);
 			this.set('hoverRoute', null);
