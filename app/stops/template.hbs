@@ -1,7 +1,7 @@
 {{#if media.isMobile}}
 	<div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
     <div class="row">
-      <div id="sidebar" class="collapse in">
+      <div id="sidebar-media" class="collapse in">
 				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
 				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
 				{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<button class="btn btn-mapzen-alt">Stops</button>{{/link-to}}

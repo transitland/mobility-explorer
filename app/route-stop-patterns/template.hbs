@@ -1,7 +1,7 @@
 {{#if media.isMobile}}
 	<div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
     <div class="row">
-      <div id="sidebar" class="collapse in">
+      <div id="sidebar-media" class="collapse in">
 
 
 				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
@@ -68,7 +68,7 @@
 			  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}  
 			  {{url-builder entity="route_stop_patterns" server="Transitland" query="results" queryParams=queryParams traversed_by=traversed_by}}
 			</div>
-      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
 			{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 		  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 					<div class="location-search">

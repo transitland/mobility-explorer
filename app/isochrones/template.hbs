@@ -1,7 +1,7 @@
 {{#if media.isMobile}}
 	<container>
 		<div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
-      <div id="sidebar" class="collapse in">
+      <div id="sidebar-media" class="collapse in">
 				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
 				{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
 				{{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
@@ -65,7 +65,7 @@
       </div>
       <div class="col-xs-12" style="padding-left:0px;">
 	      {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-	      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+	      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
 	      <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
           <container class="location-search">
             <div class="row">

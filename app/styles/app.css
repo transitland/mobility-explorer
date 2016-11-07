@@ -30,6 +30,12 @@ html, body, #map, #map-loading{
 	overflow-y: scroll;
 }
 
+#sidebar-media{
+	background-color: white;
+	padding: 15px;
+	/*overflow-y: scroll;*/
+}
+
 .sidebar-hr{
 	noshade: noshade;
 	align: center;

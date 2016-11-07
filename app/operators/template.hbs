@@ -1,7 +1,7 @@
 {{#if media.isMobile}}
   <div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
     <div class="row">
-      <div id="sidebar" class="collapse in">
+      <div id="sidebar-media" class="collapse in">
         {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
         {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
         {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
@@ -41,7 +41,7 @@
         {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
         {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
       </div>
-      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
       <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
            <div class="location-search">
@@ -78,6 +78,9 @@
 {{else}}
   <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
     {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null pin=pin operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+    <p class="site-intro">Learn about multimodal transportation around the world. Search for a place or browse the map, and use the buttons to view transit routes, stops, and operators.</p>
+    <h4>Data</h4>
+    <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
     {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
     {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
     {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Operators</button>{{/link-to}}

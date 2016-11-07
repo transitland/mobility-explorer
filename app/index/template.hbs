@@ -1,7 +1,7 @@
 {{#if media.isMobile}}
   <div class="col-xs-12 col-sm-12 col-md-12">
     <div class="row">
-      <div id="sidebar" class="collapse in">
+      <div id="sidebar-media" class="collapse in">
         <h2>Mobility Explorer</h2>
         <div class="btn-group-vertical" role="group" >
           {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
@@ -11,7 +11,7 @@
         </div>
       </div>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
       <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
           <div class="location-search">
               <div class="row">
@@ -45,9 +45,10 @@
     </div>
   </div>
 {{else}}
-  <div id="sidebar" class="collapse in col-xs-3 col-sm-3 col-md-3">
+  <!-- <div id="sidebar" class="collapse in col-xs-3 col-sm-3 col-md-3"> -->
+  <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
     <h2>Mobility Explorer</h2>
-    <p class="site-intro">Learn about multimodal transportation around the world. Search for a place or browse the map, and use the buttons to view transit routes, stops, and operators.</p>
+    {{text-box route="index"}}
     <h4>Data</h4>
     <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
     <div class="btn-group-vertical" role="group" >
