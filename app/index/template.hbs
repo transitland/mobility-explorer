@@ -5,7 +5,7 @@
         <h2>Mobility Explorer</h2>
         {{text-box route="index"}}
         <div class="btn-group-vertical" role="group" >
-          {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+          {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
           {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
           {{#link-to 'operators' (query-params bbox=bbox onestop_id=null pin=pin)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
           {{#link-to 'isochrones' (query-params bbox=bbox onestop_id=null pin=pin)}}<button class="btn btn-transparent-alt">Isochrones</button>{{/link-to}}
@@ -53,8 +53,9 @@
     <h4>Data</h4>
     <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
     <div class="btn-group-vertical" role="group" >
-      {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin)}}
-      <button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+
+      {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
+
       {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
       {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Operators</button>{{/link-to}}
     </div>
