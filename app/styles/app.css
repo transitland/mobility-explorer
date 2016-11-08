@@ -37,18 +37,17 @@ caption{
 	font-size: 14px;
 }
 
-@media{
+@media(max-width:991px){
 	caption{
 		width: 100vw;
 	}
 	.leaflet-control-attribution{
-		color: red;
-		left: 20vw;
-		width: 90vw;
+		width: 100px;
 	}
 	.leaflet-container .leaflet-control-attribution{
 		font-size: 10px;
-		/*width: 100vw;*/
+		left: 25vw;
+		width: 85vw;
 	}
 }
 
@@ -240,10 +239,11 @@ input, button, select, textarea {
 	width: 30vw;
 }
 
-.leaflet-container .leaflet-control-attribution a{
-	/*margin-left: 35vw;*/
-	/*text-align: right;*/
-	/*padding-right: 5px;*/
+.leaflet-control-attribution{
+	width: 400px;
+}
+.leaflet-container .leaflet-control-attribution{
+	font-size: 10px;
 }
 
 .leaflet-bar a:first-child {
