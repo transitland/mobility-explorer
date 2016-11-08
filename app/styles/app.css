@@ -9,7 +9,49 @@ html, body, #map, #map-loading{
     height: 100vh;
     width: 100vw;
     z-index: 30;
-    position: relative;   
+    position: relative;  
+
+}
+
+h2{
+	font-size: 35px;
+	color: #d4645c;
+	font-weight: 300;
+}
+
+h3, a{
+	color: #d4645c;
+}
+
+h3, a:hover{
+	color: #993434;
+}
+
+h4{
+	color: #d4645c;
+	font-size: 22px;
+	margin-top: 20px;
+}
+
+caption{
+	font-size: 14px;
+}
+
+@media(max-width:991px){
+	caption{
+		width: 100vw;
+	}
+	.leaflet-control-attribution{
+		width: 100px;
+	}
+	.leaflet-container .leaflet-control-attribution{
+		font-size: 10px;
+		left: 25vw;
+		width: 85vw;
+	}
+}
+
+.mapzen-logo{
 }
 
 .navbar-fixed-top{
@@ -21,6 +63,9 @@ html, body, #map, #map-loading{
 	padding: 10px;
 	color: white;
 	margin-top: 20px;
+  font-weight: 300;
+  font-size: 16px;
+
 }
 
 #sidebar{
@@ -41,7 +86,8 @@ html, body, #map, #map-loading{
 	align: center;
 	border-top: 2px solid #6ea0a4;
 	height: 0;
-	margin: 25px 0 15px 0;
+	margin: 20px 0 15px 0;
+
 }
 
 .sidebar-caption{
@@ -193,10 +239,11 @@ input, button, select, textarea {
 	width: 30vw;
 }
 
-.leaflet-container .leaflet-control-attribution a{
-	/*margin-left: 35vw;*/
-	/*text-align: right;*/
-	/*padding-right: 5px;*/
+.leaflet-control-attribution{
+	width: 400px;
+}
+.leaflet-container .leaflet-control-attribution{
+	font-size: 10px;
 }
 
 .leaflet-bar a:first-child {
