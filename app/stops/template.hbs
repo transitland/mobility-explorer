@@ -80,7 +80,7 @@
 										<p class="caption">Click the stop for more information</p>
 									</div>
 								{{else}}
-						    	<p class="caption">Hover over a stop for information</p>
+						    	<p class="caption">Hover over a stop for more information</p>
 						    	{{#if mapMoved}}
 					    			<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 					  			{{/if}}
@@ -240,11 +240,11 @@
 					{{#if onestop_id}}
 					{{else if hoverStop}}
 						<div class="hover-detail">
-							<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
+							<div {{action "setOnestopId" selectedStop}}>Stop name: {{hoverStop.name}}</div>
 							<p class="caption">Click the stop for more information</p>
 						</div>
 					{{else}}
-		    		<p class="caption">Hover over a stop for information</p>
+		    		<p class="caption">Hover over a stop for more information</p>
 		    		{{#if mapMoved}}
 	    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 	  				{{/if}}

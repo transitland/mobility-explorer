@@ -19,11 +19,7 @@ h2{
 	font-weight: 300;
 }
 
-h3, a{
-	color: #d4645c;
-}
-
-h3, a:hover{
+h2:hover{
 	color: #993434;
 }
 

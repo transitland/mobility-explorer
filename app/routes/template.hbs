@@ -335,7 +335,11 @@
 			    {{/if}}
 					{{#each model.routes as |route|}}
 						{{#if (eq hoverRoute route.onestop_id)}}
-			  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
+							<div class="hover-detail">
+								Route name: {{route.name}}<br>
+								Operated by: {{route.operated_by_name}}<br>
+								<p class="caption">Click the stop for more information</p>
+							</div>
 				  	{{/if}}
 			  	{{/each}}
 				{{/if}}
@@ -349,6 +353,9 @@
 						<p class="caption">Click the stop for more information</p>
 					</div>
 				{{/if}}
+				{{#unless hoverRoute}}
+		  			<p class="caption">Hover over a route line for more information</p>
+			  {{/unless}}
 				{{#if mapMoved}}
 	    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 	  		{{/if}}
