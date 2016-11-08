@@ -280,6 +280,9 @@
 		  	{{/each}}
 			{{else}}
 				<form>
+					{{#unless hoverRoute}}
+		  			<p class="caption">Hover over a route line for more information</p>
+			  	{{/unless}}
 					<row>
 				  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
 				  	<!-- <div class="fa fa-question-circle style-routes-by col-md-2"></div> -->
@@ -357,9 +360,9 @@
 						<p class="caption">Click the stop for more information</p>
 					</div>
 				{{/if}}
-				{{#unless hoverRoute}}
+				<!-- {{#unless hoverRoute}}
 		  			<p class="caption">Hover over a route line for more information</p>
-			  {{/unless}}
+			  {{/unless}} -->
 				{{#if mapMoved}}
 	    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 	  		{{/if}}

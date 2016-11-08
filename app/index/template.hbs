@@ -66,8 +66,10 @@
     </div>
     <h2>Mobility Explorer</h2>
     {{text-box route="index"}}
-    <h4>Data</h4>
-    <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
+    <!-- <h4>Fixed route transit</h4> -->
+    <!-- <h4>Public transit network</h4> -->
+    <h4>Visualize public transit networks</h4>
+    <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Transitland highlights the connections that exist between transit datasets</caption>
     <div class="btn-group-vertical" role="group" >
 
       {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
@@ -76,8 +78,15 @@
       {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
     </div>
     <hr class="sidebar-hr">
-    <h4>Services</h4>
-    <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Travel planning services from Mapzen</caption>
+    <!-- <h4>Access analysis</h4>
+    <h4>Accessibility</h4> -->
+    <h4>Analyze access</h4>
+
+    <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <!-- Use Mapzen Mobility services to see how public transit, driving, bicycling, and walking options shape our ability to get around.  -->
+        See how public transit, driving, bicycling, and walking options shape our ability to get around.
+        <!-- Analysis is powered by Mapzen Mobility services, using data from Transitland and OpenStreetMap. -->
+    </caption>
       <div class="btn-group-vertical" role="group" >
       {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     </div>
@@ -100,7 +109,7 @@
                 {{#power-select
                   search=(action "searchRepo")
                   selected=place
-                  placeholder="Search for location..."
+                  placeholder="Find a place using Mapzen Search..."
                   onchange=(action "setPlace")
                   onclose=(action "clearPlace")
                   as |repo|
