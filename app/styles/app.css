@@ -91,10 +91,10 @@ caption{
 
 
 [tooltip]:hover:before {
-    content: attr(tooltip);
     position: absolute;
-    top: 30px;
-    left: 0;
+    content:' ';
+    top: 15px;
+    left: 10px;
     width: 0;
     height: 0;
     opacity: 1;
@@ -103,8 +103,10 @@ caption{
 	  border-bottom: 10px solid #bbb;
 }
 [tooltip]:hover:after{
-	content: "test";
-  width: 200px;
+	/*content: "test";*/
+  content: attr(tooltip);
+
+  width: 250px;
   height: auto;
   position: absolute;
   text-align: left;
@@ -112,10 +114,10 @@ caption{
   font-size: 14px;
   line-height: 1.2em;
   padding: 10px 15px;
-  top: 40px;
-  left: -30px;
+  top: 25px;
+  left: -210px;
   background-color: #bbb;
-  z-index: 10;
+  z-index: 10000;
   -webkit-box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);
   box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);;
 }
