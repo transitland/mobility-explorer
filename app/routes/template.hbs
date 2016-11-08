@@ -34,13 +34,15 @@
 								{{else if operated_by}}
 									<form>
 										<strong>Operated by:</strong> {{operated_by}}<br>
-
-									  <div class="form-group-header">Style routes by:</div>
-											<div class="form-group" {{action "setRouteStyle" "mode"}}>
-										  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
-										  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
-										    <label for="radio-1">Mode</label>
-										  </div>
+									  <row>
+									  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+									  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+									  </row>
+										<div class="form-group" {{action "setRouteStyle" "mode"}}>
+									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
+									  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+									    <label for="radio-1">Mode</label>
+									  </div>
 									</form>
 									{{#each model.routes as |route|}}
 										{{#if (eq hoverRoute route.onestop_id)}}
@@ -49,7 +51,10 @@
 							  	{{/each}}
 								{{else}}
 									<form>
-									  <div class="form-group-header">Style routes by:</div>
+									  <row>
+									  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+									  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+									  </row>
 									  <div class="form-group" {{action "setRouteStyle" "mode"}}>
 									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
 									  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
@@ -254,8 +259,10 @@
 				{{else if operated_by}}
 					<form>
 						<strong>Operated by:</strong> {{operated_by}}<br>
-
-					  <div class="form-group-header">Style routes by:</div>
+						<row>
+					  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+					  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+					  </row>
 					  <div class="form-group" {{action "setRouteStyle" "mode"}}>
 					  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
 					  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
@@ -282,8 +289,7 @@
 				<form>
 					<row>
 				  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
-				  	<!-- <div class="fa fa-question-circle style-routes-by col-md-2"></div> -->
-				  	<div tooltip="test test test test test test testtesttesttesttesttesttesttest testtest test test test v" class="col-md-2"><div class="fa fa-question-circle"></div></div>
+				  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 				  </row>
 				  <div class="form-group" {{action "setRouteStyle" "mode"}}>
 				  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>

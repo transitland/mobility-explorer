@@ -83,18 +83,18 @@ caption{
 
 .fa-question-circle{
 	color: #c4c4c4;
-    float: left;
-    background-position: center center;
-    position: relative;
+	font-size: 18px;
 }
 
-
+.fa-question-circle:hover{
+	color: #898989;
+}
 
 [tooltip]:hover:before {
     position: absolute;
     content:' ';
-    top: 15px;
-    left: 10px;
+    top: 20px;
+    left:12px;
     width: 0;
     height: 0;
     opacity: 1;
@@ -102,11 +102,10 @@ caption{
 	  border-right: 10px solid transparent;
 	  border-bottom: 10px solid #bbb;
 }
-[tooltip]:hover:after{
-	/*content: "test";*/
-  content: attr(tooltip);
 
-  width: 250px;
+[tooltip]:hover:after{
+  content: attr(tooltip);
+  width: 200px;
   height: auto;
   position: absolute;
   text-align: left;
@@ -114,18 +113,12 @@ caption{
   font-size: 14px;
   line-height: 1.2em;
   padding: 10px 15px;
-  top: 25px;
-  left: -210px;
+  top: 30px;
+  left: -160px;
   background-color: #bbb;
-  z-index: 10000;
-  -webkit-box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);
+  z-index: 10;
+  /*-webkit-box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);*/
   box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);;
-}
-
-
-
-.fa-question-circle:hover{
-	color: #898989;
 }
 
 .sidebar-hr{
