@@ -361,13 +361,24 @@
 						  {{/if}}
 				  </div>
 				</form>
+					{{#power-select
+			      options=routes
+			      selected=route
+						placeholder=placeholderMessageRoutes
+						searchPlaceholder="Type to filter..."
+			      onchange=(action "setOnestopId")
+		        onclose=(action "clearRoute")
+			      as |route|
+			    }}
+			      {{route.name}} {{route.tags.route_long_name}}
+			    {{/power-select}}
 		    
 					{{#each model.routes as |route|}}
 						{{#if (eq hoverRoute route.onestop_id)}}
 							<div class="hover-detail">
 								Route name: {{route.name}}<br>
 								Operated by: {{route.operated_by_name}}<br>
-								<p class="caption">Click the stop for more information</p>
+								<p class="caption">Click the route line for more information</p>
 							</div>
 				  	{{/if}}
 			  	{{/each}}
@@ -382,17 +393,7 @@
 						<p class="caption">Click the stop for more information</p>
 					</div>
 				{{/if}}
-				{{#power-select
-		      options=routes
-		      selected=route
-					placeholder=placeholderMessageRoutes
-					searchPlaceholder="Type to filter..."
-		      onchange=(action "setOnestopId")
-	        onclose=(action "clearRoute")
-		      as |route|
-		    }}
-		      {{route.name}} {{route.tags.route_long_name}}
-		    {{/power-select}}
+				
 				{{#unless hoverRoute}}
 		  			<p class="caption">Hover over a route line for more information</p>
 			  {{/unless}}
