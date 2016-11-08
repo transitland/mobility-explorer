@@ -106,6 +106,17 @@
 								    {{/power-select}}
 								  {{/unless}}
 						    {{/if}}
+						    {{#power-select
+							      options=routes
+							      selected=route
+										placeholder=placeholderMessageRoutes
+										searchPlaceholder="Type to filter..."
+							      onchange=(action "setOnestopId")
+						        onclose=(action "clearRoute")
+							      as |route|
+							    }}
+							      {{route.name}} {{route.tags.route_long_name}}
+							    {{/power-select}}
 								{{#if selectedRoute}}
 								{{else if onlyRoute}}
 								{{else if hoverRoute}}
@@ -272,6 +283,19 @@
 			    }}
 			      {{route.name}} {{route.tags.route_long_name}}
 			    {{/power-select}}
+			    {{#if (eq style_routes_by "mode")}}
+					    {{#power-select
+					    	options=routeModes
+					      selected=mode
+								placeholder=placeholderMessageModes
+								searchPlaceholder="Type to filter..."
+					      onchange=(action "setMode")
+				        onclose=(action "clearMode")
+					      as |mode|
+					    }}
+					     <div class="container"><div class="row"><div class="legend-color" style={{mode.style}}></div>{{mode.name}}</div></div>
+					    {{/power-select}}
+			    {{/if}}
 				</form>
 				{{#each model.routes as |route|}}
 					{{#if (eq hoverRoute route.onestop_id)}}
