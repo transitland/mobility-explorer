@@ -36,9 +36,9 @@
 										<strong>Operated by:</strong> {{operated_by}}<br>
 
 									  <div class="form-group-header">Style routes by:</div>
-											<div class="form-group" {{action "setRouteStyle" "mode"}}>
-										  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
-										  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+											<div class="form-group">
+										  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
+										  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
 										    <label for="radio-1">Mode</label>
 										  </div>
 									</form>
@@ -50,9 +50,9 @@
 								{{else}}
 									<form>
 									  <div class="form-group-header">Style routes by:</div>
-									  <div class="form-group" {{action "setRouteStyle" "mode"}}>
-									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
-									  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+									  <div class="form-group">
+									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
+									  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
 									    <label for="radio-1">Mode</label>
 									    <div class="sidebar-dropdown">
 										    {{#if (eq style_routes_by "mode")}}
@@ -77,9 +77,9 @@
 											  {{/if}}
 											</div>
 									  </div>
-									  <div class="form-group" {{action "setRouteStyle" "operator"}}>
-									    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked>
-									    {{else}}<input type="radio" id="radio-2" name="option-two">{{/if}}
+									  <div class="form-group">
+									    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked {{action "setRouteStyle" "operator"}}>
+									    {{else}}<input type="radio" id="radio-2" name="option-two" {{action "setRouteStyle" "operator"}}>{{/if}}
 									    <label for="radio-2">Operator</label>
 									    {{#if (eq style_routes_by "operator")}}
 								    		<div class="sidebar-dropdown">
@@ -270,9 +270,9 @@
 						<strong>Operated by:</strong> {{operated_by}}<br>
 
 					  <div class="form-group-header">Style routes by:</div>
-					  <div class="form-group" {{action "setRouteStyle" "mode"}}>
-					  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
-					  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+					  <div class="form-group">
+					  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
+					  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
 					    <label for="radio-1">Mode</label>
 					  </div>
 					  {{#power-select
@@ -308,11 +308,11 @@
 			{{else}}
 				<form>
 				  <div class="form-group-header">Style routes by:</div>
-				  <div class="form-group" {{action "setRouteStyle" "mode"}}>
+				  <div class="form-group" >
 				  	{{#if (eq style_routes_by "mode")}}
-				  		<input type="radio" id="radio-1" name="option-one" checked>
+				  		<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
 				  	{{else}}
-				  		<input type="radio" id="radio-1" name="option-one">
+				  		<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>
 				  	{{/if}}
 				    <label for="radio-1">Mode</label>
 				    <div class="sidebar-dropdown">
@@ -338,9 +338,9 @@
 						  {{/if}}
 						</div>
 				  </div>
-				  <div class="form-group" {{action "setRouteStyle" "operator"}}>
-				    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked>
-				    {{else}}<input type="radio" id="radio-2" name="option-two">{{/if}}
+				  <div class="form-group" >
+				    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked {{action "setRouteStyle" "operator"}}>
+				    {{else}}<input type="radio" id="radio-2" name="option-two" {{action "setRouteStyle" "operator"}}>{{/if}}
 				    <label for="radio-2">Operator</label>
 						  {{#if (eq style_routes_by "operator")}}
 				    		<div class="sidebar-dropdown">
