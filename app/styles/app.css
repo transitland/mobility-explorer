@@ -137,6 +137,11 @@ caption{
 
 }
 
+.sidebar-dropdown{
+	margin-right: 25px;
+	margin-left: 30px;
+}
+
 .leaflet-container {
 	height: 100%;
 	width: 100%;
