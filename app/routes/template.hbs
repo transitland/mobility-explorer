@@ -9,8 +9,7 @@
         </div>
 				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
         {{text-box route="index"}}
-				<h4>Data</h4>
-          <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
+        {{sidebar-title-transitland}}
             <div class="btn-group-vertical" role="group" >
 						  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null pin=pin)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
 						  
@@ -182,8 +181,7 @@
 						  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}  
 			  		</div>
             <hr class="sidebar-hr">
-            <h4>Services</h4>
-            <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Travel planning services from Mapzen</caption>
+            {{sidebar-title-mobility}}
             <div class="btn-group-vertical" role="group" >
 			  			{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}} 
 			  		</div> 
@@ -287,8 +285,7 @@
     </div>
 		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
 		{{text-box route="index"}}
-		<h4>Data</h4>
-		<caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
+    {{sidebar-title-transitland}}
 		<div class="btn-group-vertical" role="group" >
 
 		  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
@@ -477,8 +474,7 @@
 		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}  
 	  </div>
 		<hr class="sidebar-hr">
-		<h4>Services</h4>
-		<caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Travel planning services from Mapzen</caption>
+		{{sidebar-title-mobility}}
 		<div class="btn-group-vertical" role="group" >
 	  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}  
 	 	 {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
