@@ -77,6 +77,50 @@ caption{
 	/*overflow-y: scroll;*/
 }
 
+.sidebar-header{
+	padding: 0;
+}
+
+.fa-question-circle{
+	color: #c4c4c4;
+	font-size: 18px;
+}
+
+.fa-question-circle:hover{
+	color: #898989;
+}
+
+[tooltip]:hover:before {
+    position: absolute;
+    content:' ';
+    top: 20px;
+    left:12px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+	  border-left: 10px solid transparent;
+	  border-right: 10px solid transparent;
+	  border-bottom: 10px solid #bbb;
+}
+
+[tooltip]:hover:after{
+  content: attr(tooltip);
+  width: 200px;
+  height: auto;
+  position: absolute;
+  text-align: left;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.2em;
+  padding: 10px 15px;
+  top: 30px;
+  left: -160px;
+  background-color: #bbb;
+  z-index: 10;
+  /*-webkit-box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);*/
+  box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);;
+}
+
 .sidebar-hr{
 	noshade: noshade;
 	align: center;
@@ -308,7 +352,7 @@ input, button, select, textarea {
 	z-index: 40;
 	margin-top: 10px;
 	margin-left: 50px;
-	width: 250px;
+	width: 450px;
 	z-index: 2;
 	position: absolute;
 	background-size: 19px 19px;

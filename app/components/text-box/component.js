@@ -3,7 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 	route: null,
 	textOptions: {
-			'index' : 'Learn about multimodal transportation around the world. Search for a place or browse the map, and use the buttons to view transit routes, stops, and operators.',
+			// 'index' : 'Learn about multimodal transportation around the world. Search for a place or browse the map, and use the buttons to view transit routes, stops, and operators.',
+			'index' : 'There are so many ways to get from A to B! Use Mapzen Mobility Explorer to understand transportation networks around the world. Find a place using the search box or browse the map. Use the buttons below to start exploring. Mass-transit data comes from [Transitland]. Pedestrian, bicycle, and auto data comes from [OpenStreetMap]. Analysis is powered by [Mapzen Mobility services] and search is powered by [Mapzen Search].',
 			'routes' : '',
 			'route-stop-patterns' : '',
 			'stops' : '',

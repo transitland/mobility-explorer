@@ -29,7 +29,12 @@
 								    <label for="check-1">Show stops served by route</label>
 								  </div>
 								  
-								  {{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}<br>
+								  
+								  <row>
+								  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
+								  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+								  </row>
+								  <br>
 							  
 								{{else if operated_by}}
 									{{#power-select
@@ -45,35 +50,37 @@
 								  {{/power-select}}
 									<form>
 										<strong>Operated by:</strong> {{operated_by}}<br>
-
-									  <div class="form-group-header">Style routes by:</div>
-											<div class="form-group">
-										  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
-										  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
-										    <label for="radio-1">Mode</label>
-										    <div class="sidebar-dropdown">
-											    {{#if (eq style_routes_by "mode")}}
-											    	{{#unless vehicle_type}}
-													    {{#power-select
-													    	options=routeModes
-													      selected=mode
-																placeholder=placeholderMessageModes
-																searchPlaceholder="Type to filter..."
-													      onchange=(action "setMode")
-												        onclose=(action "clearMode")
-													      as |mode|
-													    }}
-														    <div class="container">
-														    	<div class="row">
-														    		<div class="legend-color" style={{mode.style}}></div>
-														    		{{mode.name}}
-														    	</div>
-														    </div>
-														  {{/power-select}}
-														{{/unless}}
-												  {{/if}}
-												</div>
-										  </div>
+									   	<row>
+										  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+										  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+										  </row>
+										<div class="form-group" {{action "setRouteStyle" "mode"}}>
+									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
+									  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
+									    <label for="radio-1">Mode</label>
+									  </div>
+										  <div class="sidebar-dropdown">
+											  {{#if (eq style_routes_by "mode")}}
+										    	{{#unless vehicle_type}}
+												    {{#power-select
+												    	options=routeModes
+												      selected=mode
+															placeholder=placeholderMessageModes
+															searchPlaceholder="Type to filter..."
+												      onchange=(action "setMode")
+											        onclose=(action "clearMode")
+												      as |mode|
+												    }}
+													    <div class="container">
+													    	<div class="row">
+													    		<div class="legend-color" style={{mode.style}}></div>
+													    		{{mode.name}}
+													    	</div>
+													    </div>
+													  {{/power-select}}
+													{{/unless}}
+												{{/if}}
+											</div>
 									</form>
 									{{#each model.routes as |route|}}
 										{{#if (eq hoverRoute route.onestop_id)}}
@@ -93,7 +100,10 @@
 						      {{route.name}} {{route.tags.route_long_name}}
 							    {{/power-select}}
 									<form>
-									  <div class="form-group-header">Style routes by:</div>
+									  <row>
+									  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+									  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+									  </row>
 									  <div class="form-group">
 									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
 									  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
@@ -297,8 +307,11 @@
 				    <label for="check-1">Show stops served by route</label>
 				  </div>
 				  
-				  <div>{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div><br>
-			  
+				  <row>
+				  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
+				  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+				  </row>
+					<br>			  
 				{{else if operated_by}}
 					{{#power-select
 			      options=routes
@@ -315,7 +328,10 @@
 		  			<p class="caption">Hover over a route line for more information</p>
 						<form>
 							<strong>Operated by:</strong> {{operated_by}}<br>
-						  <div class="form-group-header">Style routes by:</div>
+						  <row>
+						  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+						  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+						  </row>
 						  <div class="form-group">
 						  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
 						  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
@@ -369,7 +385,10 @@
 		    {{#unless hoverRoute}}
 			  	<p class="caption">Hover over a route line for information</p>
 					<form>
-					  <div class="form-group-header">Style routes by:</div>
+					  <row>
+					  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+					  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+					  </row>
 					  <div class="form-group" >
 					  	{{#if (eq style_routes_by "mode")}}
 					  		<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
@@ -452,7 +471,7 @@
 				{{#if mapMoved}}
 	    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 	  		{{/if}}
-				
+			<br>
 			</div>
 		  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
 		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}  
