@@ -70,7 +70,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
       });
       
     } else if (params.onestop_id){
-      var url = 'https://transit.land/api/v1/stops.geojson?served_by=' + params.onestop_id;
+      var url = 'https://transit.land/api/v1/stops.geojson?per_page=false&served_by=' + params.onestop_id;
       var stops = Ember.$.ajax({ url });
       return Ember.RSVP.hash({
         routes: routes,

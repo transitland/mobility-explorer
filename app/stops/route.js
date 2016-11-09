@@ -104,7 +104,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
         var servedBy = stops.get('query.served_by');
         if (servedBy!== null){
           if (servedBy.indexOf('r') === 0) {
-            var url = 'https://transit.land/api/v1/routes.geojson?onestop_id=';
+            var url = 'https://transit.land/api/v1/routes.geojson?per_page=false&onestop_id=';
             url += servedBy;
             return Ember.RSVP.hash({
               stops: stops,
