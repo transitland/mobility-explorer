@@ -174,6 +174,7 @@
 							  {{#if (eq isochrone_mode "pedestrian")}}
 							  {{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
 					  		{{/if}}
+
 							  {{#if (eq isochrone_mode "bicycle")}}
 					  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
 					  		{{else}}
@@ -185,14 +186,15 @@
 					  		{{/if}}
 							  
 							  {{#if (eq isochrone_mode "auto")}}
-					  			<input type="setIsochroneMode" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+					  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
 					  		{{else}}
-					  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
+					  			<input type="radio" id="radio-3" name="options" {{action "setIsochroneMode" "auto"}}>
 					  		{{/if}}
 						    <label for="radio-3">driving</label><br>
 							  {{#if (eq isochrone_mode "auto")}}
 							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
 					  		{{/if}}
+
 					  		{{#if (eq isochrone_mode "multimodal")}}
 					  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
 					  		{{else}}
