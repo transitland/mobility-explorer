@@ -8,7 +8,9 @@
           </div>
         </div>
         {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
-        {{text-box route="index"}}
+        {{#unless textboxIsClosed}}
+          {{text-box route="index" action="setTextBoxClosed"}}
+        {{/unless}}
         {{sidebar-title-transitland}}
             <div class="btn-group-vertical" role="group" >
               {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
@@ -97,7 +99,9 @@
       </div>
     </div>
     {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null pin=pin operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
-    {{text-box route="index"}}
+    {{#unless textboxIsClosed}}
+      {{text-box route="index" action="setTextBoxClosed"}}
+    {{/unless}}
     {{sidebar-title-transitland}}
     <div class="btn-group-vertical" role="group" >
     {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}

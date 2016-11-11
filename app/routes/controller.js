@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(setTextboxClosed, {
 	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox', 'pin'],
 	bbox: null,
 	leafletBbox: null,
@@ -173,6 +174,10 @@ export default Ember.Controller.extend({
 	mapMoved: false,
 	mousedOver: false,
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
+	closeTextbox: Ember.inject.service(),
+  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
+    return this.get('closeTextbox').get('textboxIsClosed');
+  }),
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();

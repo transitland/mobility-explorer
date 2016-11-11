@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
+import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 
-export default Ember.Controller.extend(mapBboxController, {
+export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
 	queryParams: ['bbox','pin'],
 	bbox: null,
   leafletBbox: null,
@@ -17,6 +18,10 @@ export default Ember.Controller.extend(mapBboxController, {
     }
   }),
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
+  closeTextbox: Ember.inject.service(),
+  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
+    return this.get('closeTextbox').get('textboxIsClosed');
+  }),
   currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
 		iconUrl: 'assets/images/marker1.png',		

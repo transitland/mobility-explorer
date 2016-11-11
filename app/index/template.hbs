@@ -8,7 +8,9 @@
           </div>
         </div>
         <h2>Mobility Explorer</h2>
-        {{text-box route="index"}}
+        {{#unless textboxIsClosed}}
+          {{text-box route="index" action="setTextBoxClosed"}}
+        {{/unless}}
         {{sidebar-title-transitland}}
             <div class="btn-group-vertical" role="group" >
               {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
@@ -63,7 +65,9 @@
       </div>
     </div>
     <h2>Mobility Explorer</h2>
-    {{text-box route="index"}}
+    {{#unless textboxIsClosed}}
+      {{text-box route="index" action="setTextBoxClosed"}}
+    {{/unless}}
     {{sidebar-title-transitland}}
     <div class="btn-group-vertical" role="group" >
       {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
