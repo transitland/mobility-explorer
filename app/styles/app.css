@@ -13,6 +13,12 @@ html, body, #map, #map-loading{
 
 }
 
+#map{
+	/*width: 10vw;*/
+	/*overflow: auto;*/
+	/*max-width: 20vw;*/
+}
+
 h2{
 	font-size: 35px;
 	color: #d4645c;
@@ -47,9 +53,6 @@ caption{
 	}
 }
 
-.mapzen-logo{
-}
-
 .navbar-fixed-top{
 	position: absolute;
 }
@@ -64,11 +67,16 @@ caption{
 
 }
 
+.subheading{
+	padding-left:0; 
+	padding-bottom:10px;
+}
+
 #sidebar{
 	background-color: white;
 	padding: 15px;
 	height: 100vh;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 #sidebar-media{
@@ -90,7 +98,8 @@ caption{
 	color: #898989;
 }
 
-[tooltip]:hover:before {
+
+[tooltip]:hover:before{
     position: absolute;
     content:' ';
     top: 20px;

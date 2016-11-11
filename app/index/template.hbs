@@ -56,7 +56,7 @@
     </div>
   </div>
 {{else}}
-  <div id="sidebar" class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+  <div id="sidebar" class="col-md-4">
     <div style="display:flex;justify-content:center;align-items:center;">
       <div style="width:130px;height:40px;">
         <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -76,7 +76,7 @@
       {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     </div>
   </div>
-  <div class="col-xs-9 col-sm-9 col-md-9">
+  <div class="col-md-8">
     <div class="row">
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
       <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>        
