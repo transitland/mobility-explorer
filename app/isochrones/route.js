@@ -84,26 +84,28 @@ export default Ember.Route.extend(setLoading, {
 	      url: url,
 	      isochrones: Ember.$.ajax({ url }).then(function(response){
 	        var features = response.features;
-	        for(var k = 0; k < features.length; k++) {
-	          //find the next set of contours
-	          var i = k + 1;
+	        // debugger;
+	        // for(var k = 0; k < features.length; k++) {
+	        //   //find the next set of contours
+	        //   var i = k + 1;
 
-	          while(i < features.length && features[i].properties.contour == features[k].properties.contour)  
-	            i++;
-	          if(i >= features.length)
-	          break;
-	          //cut this one by all of these smaller contours
-	          var outer = polygon(features[k].geometry.coordinates);
-	          var contour = features[i].properties.contour;
-	          while(i < features.length && contour == features[i].properties.contour) {
-	            var inner = polygon(features[i].geometry.coordinates);
-	            outer = difference(outer, inner);
-	            i++;
-	          }
+	        //   while(i < features.length && features[i].properties.contour == features[k].properties.contour)  
+	        //     i++;
+	        //   if(i >= features.length)
+	        //   break;
+	        //   //cut this one by all of these smaller contours
+	        //   var outer = polygon(features[k].geometry.coordinates);
+	        //   var contour = features[i].properties.contour;
+	        //   while(i < features.length && contour == features[i].properties.contour) {
+	        //     var inner = polygon(features[i].geometry.coordinates);
+	        //     outer = difference(outer, inner);
+	        //     i++;
+	        //   }
 
-	          //keep it
-	          features[k].geometry = outer.geometry;
-	        }
+	        //   //keep it
+	        //   features[k].geometry = outer.geometry;
+	        // }
+	        // debugger;
 	        return response;
 	      })
 	    });

@@ -13,11 +13,6 @@ html, body, #map, #map-loading{
 
 }
 
-#map{
-	/*width: 10vw;*/
-	/*overflow: auto;*/
-	/*max-width: 20vw;*/
-}
 
 h2{
 	font-size: 35px;

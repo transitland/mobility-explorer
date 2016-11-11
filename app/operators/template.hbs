@@ -92,7 +92,7 @@
     </div>
   </div>
 {{else}}
-  <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+  <div class="col-md-4 linebreak-text" id="sidebar">
    <div style="display:flex;justify-content:center;align-items:center;">
       <div style="width:130px;height:40px;">
         <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -147,7 +147,7 @@
         {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
       </div>
     </div>
-  <div class="col-xs-12 col-sm-12 col-md-9">
+  <div class="col-md-8">
     {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
     <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
         <div class="location-search">

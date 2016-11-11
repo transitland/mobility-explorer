@@ -35,6 +35,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
     return this.get('closeTextbox').get('textboxIsClosed');
   }),
+  showIsochroneOne: false,
+  showIsochroneTwo: false,
+  showIsochroneThree: false,
+  showIsochroneFour: false,
 	actions: {
 		updateLeafletBbox(e) {
       // this.set('zoom', e.target._zoom);
@@ -128,5 +132,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
       var newDepartureTime = date.toISOString().slice(0,16);
       this.set('departure_time', newDepartureTime);
 		},
+    setIsochrone: function(isochrone){
+      var string = "showIsochrone" + isochrone;
+      this.toggleProperty(string);
+    }
   }
 });

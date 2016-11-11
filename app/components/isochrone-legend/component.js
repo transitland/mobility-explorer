@@ -11,5 +11,10 @@ export default Ember.Component.extend({
 		} else if (this.get('isochrone_mode') === 'auto'){
 			return "drive"
 		}
-	})
+	}),
+	actions:{
+		displayIsochrone: function(isochrone){
+			this.sendAction('action', isochrone);
+		}
+	}
 });

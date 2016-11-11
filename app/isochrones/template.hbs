@@ -132,7 +132,7 @@
   		</div> 
   </container>
 {{else}}
-	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+	<div class="col-md-4 linebreak-text" id="sidebar">
     <div style="display:flex;justify-content:center;align-items:center;">
       <div style="width:130px;height:40px;">
         <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -166,13 +166,13 @@
 			  		<div class="form-group-header">View distance you can travel from this {{#if pin}}pin{{/if}}{{#if stopmode}}stop{{/if}} via:</div>
 						  <div class="form-group">
 							  {{#if (eq isochrone_mode "pedestrian")}}
-						  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
+						  		<input type="radio" id="radio-1" name="options" checked=showPedestrian {{action "setIsochroneMode" "pedestrian"}}>
 					  		{{else}}
 					  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
 					  		{{/if}}
 						    <label for="radio-1">walking</label><br>
 							  {{#if (eq isochrone_mode "pedestrian")}}
-							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+							  {{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
 					  		{{/if}}
 							  {{#if (eq isochrone_mode "bicycle")}}
 					  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
@@ -181,17 +181,17 @@
 					  		{{/if}}
 						    <label for="radio-2">biking</label><br>
 							  {{#if (eq isochrone_mode "bicycle")}}
-							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
 					  		{{/if}}
 							  
 							  {{#if (eq isochrone_mode "auto")}}
-					  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+					  			<input type="setIsochroneMode" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
 					  		{{else}}
 					  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
 					  		{{/if}}
 						    <label for="radio-3">driving</label><br>
 							  {{#if (eq isochrone_mode "auto")}}
-							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
 					  		{{/if}}
 					  		{{#if (eq isochrone_mode "multimodal")}}
 					  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
@@ -200,7 +200,7 @@
 					  		{{/if}}
 						    <label for="radio-4">transit</label>
 							  {{#if (eq isochrone_mode "multimodal")}}
-							  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
 					  		{{/if}}
 						  </div>
 					  	{{#if (eq isochrone_mode "multimodal")}}
@@ -221,7 +221,7 @@
 		</div>
 		{{#if isochrone_mode}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
 	</div>
-	<div class="col-xs-9 col-sm-9 col-md-9">
+	<div class="col-md-8">
     <div class="row">
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
       <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>        
@@ -249,11 +249,21 @@
         	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onClick=(action "dropPin")}}
           	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
             {{#if pin}}
-	            {{#if isochrone_mode}}
-							  {{#each model.isochrones.features as |isochrone|}}
-							  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
-							  	{{/geojson-layer}}
-						  	{{/each}}
+						  {{#if showIsochroneOne}}
+						  	{{#geojson-layer geoJSON=model.isochrones.features.[3] fillColor=model.isochrones.features.[3].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[3].properties.fill-opacity}}
+							  {{/geojson-layer}}
+						  {{/if}}
+						  {{#if showIsochroneTwo}}
+						  	{{#geojson-layer geoJSON=model.isochrones.features.[2] fillColor=model.isochrones.features.[2].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[2].properties.fill-opacity}}
+							  {{/geojson-layer}}
+						  {{/if}}
+						  {{#if showIsochroneThree}}
+						  	{{#geojson-layer geoJSON=model.isochrones.features.[1] fillColor=model.isochrones.features.[1].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[1].properties.fill-opacity}}
+							  {{/geojson-layer}}
+						  {{/if}}
+						  {{#if showIsochroneFour}}
+						  	{{#geojson-layer geoJSON=model.isochrones.features.[0] fillColor=model.isochrones.features.[0].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[0].properties.fill-opacity}}
+							  {{/geojson-layer}}
 						  {{/if}}
               {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") onRemove=(action "removePin") riseOnHover=true riseOffset=1000}}
               {{/marker-layer}}
