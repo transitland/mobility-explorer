@@ -8,7 +8,9 @@
           </div>
         </div>
 				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
-        {{text-box route="index"}}
+        {{#unless textboxIsClosed}}
+          {{text-box route="index" action="setTextBoxClosed"}}
+        {{/unless}}
         <h4>Data</h4>
         <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
         <div class="btn-group-vertical" role="group" >
@@ -138,7 +140,9 @@
     </div>
 		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
 
-		{{text-box route="index"}}
+		{{#unless textboxIsClosed}}
+      {{text-box route="index" action="setTextBoxClosed"}}
+    {{/unless}}
 		<h4>Data</h4>
 		<caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
 		<div class="btn-group-vertical" role="group" >

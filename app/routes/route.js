@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 import setLoading from 'mobility-playground/mixins/set-loading';
-import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 
-export default Ember.Route.extend(mapBboxRoute, setLoading, setTextboxClosed, {
+export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
     onestop_id: {
       refreshModel: true

@@ -19,6 +19,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   }),
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
   closeTextbox: Ember.inject.service(),
+  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
+    return this.get('closeTextbox').get('textboxIsClosed');
+  }),
   currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
 		iconUrl: 'assets/images/marker1.png',		
@@ -36,9 +39,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   }),
   zoom: 14,
 	actions: {
-    setTextBoxClosed(){
-      console.log("index controller");
-    },
 		updatebbox(e) {
 			var newbox = e.target.getBounds();
 			this.set('bbox', newbox.toBBoxString());

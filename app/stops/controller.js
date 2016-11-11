@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
+import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 
-export default Ember.Controller.extend(mapBboxController, {
+export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
 	queryParams: ['onestop_id', 'served_by', 'isochrone_mode', 'pin', 'bbox'],
   bbox: null,
   leafletBbox: null,
@@ -34,7 +35,11 @@ export default Ember.Controller.extend(mapBboxController, {
 	mapMoved: false,
 	mousedOver: false,
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
-	actions: {
+	closeTextbox: Ember.inject.service(),
+  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
+    return this.get('closeTextbox').get('textboxIsClosed');
+  }),
+  actions: {
 		change(date){
 		},
 		updateLeafletBbox(e) {
