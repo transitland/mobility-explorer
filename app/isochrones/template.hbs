@@ -252,20 +252,36 @@
           	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
             {{#if pin}}
 						  {{#if showIsochroneOne}}
-						  	{{#geojson-layer geoJSON=model.isochrones.features.[3] fillColor=model.isochrones.features.[3].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[3].properties.fill-opacity}}
-							  {{/geojson-layer}}
+						  	{{#each model.isochrones.features as |isochrone|}}
+						  		{{#if (eq isochrone.properties.contour 15)}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+								  	{{/geojson-layer}}
+								  {{/if}}
+								{{/each}}
 						  {{/if}}
 						  {{#if showIsochroneTwo}}
-						  	{{#geojson-layer geoJSON=model.isochrones.features.[2] fillColor=model.isochrones.features.[2].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[2].properties.fill-opacity}}
-							  {{/geojson-layer}}
+						  	{{#each model.isochrones.features as |isochrone|}}
+						  		{{#if (eq isochrone.properties.contour 30)}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+								  	{{/geojson-layer}}
+								  {{/if}}
+								{{/each}}
 						  {{/if}}
 						  {{#if showIsochroneThree}}
-						  	{{#geojson-layer geoJSON=model.isochrones.features.[1] fillColor=model.isochrones.features.[1].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[1].properties.fill-opacity}}
-							  {{/geojson-layer}}
+						  	{{#each model.isochrones.features as |isochrone|}}
+						  		{{#if (eq isochrone.properties.contour 45)}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+								  	{{/geojson-layer}}
+								  {{/if}}
+								{{/each}}
 						  {{/if}}
 						  {{#if showIsochroneFour}}
-						  	{{#geojson-layer geoJSON=model.isochrones.features.[0] fillColor=model.isochrones.features.[0].properties.fill  stroke=false weight=1 fillOpacity=model.isochrones.features.[0].properties.fill-opacity}}
-							  {{/geojson-layer}}
+						  	{{#each model.isochrones.features as |isochrone|}}
+						  		{{#if (eq isochrone.properties.contour 60)}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+								  	{{/geojson-layer}}
+								  {{/if}}
+								{{/each}}
 						  {{/if}}
               {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") onRemove=(action "removePin") riseOnHover=true riseOffset=1000}}
               {{/marker-layer}}
