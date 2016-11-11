@@ -68,7 +68,7 @@ caption{
 	background-color: white;
 	padding: 15px;
 	height: 100vh;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 #sidebar-media{
