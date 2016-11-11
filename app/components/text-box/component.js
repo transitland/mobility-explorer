@@ -13,5 +13,13 @@ export default Ember.Component.extend({
 	},
 	text: Ember.computed('route', function(){
 		return this.get('textOptions')[this.get('route')]
-	})
+	}),
+	actions:{
+		close: function() {
+			console.log('component');
+			this.sendAction();
+		}
+	}
+	
+	
 });

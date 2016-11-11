@@ -101,6 +101,11 @@ caption{
 	color: #898989;
 }
 
+.close-textbox{
+	text-align: right;
+	padding-right: 5px;
+}
+
 
 [tooltip]:hover:before{
     position: absolute;
