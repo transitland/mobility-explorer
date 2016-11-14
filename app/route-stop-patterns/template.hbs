@@ -85,18 +85,27 @@
       <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
 			{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 		  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-					<div class="location-search">
-				    {{#power-select
-				      search=(action "searchRepo")
-			        renderInPlace=true
-				      selected=place
-				      placeholder="Search for location..."
-				      onchange=(action "setPlace")
-				      as |repo|
-				    }}
-				      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-				    {{/power-select}}
-				  </div>
+					<div class="location-search" style="width:225px">
+              <div class="row">
+                <div class="ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
+          </div>
 					{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 						{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 

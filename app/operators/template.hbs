@@ -62,11 +62,11 @@
       <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
       <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-           <div class="location-search">
+           <div class="location-search" style="width:225px">
               <div class="row">
-                <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+                <div class="ember-basic-dropdown-trigger-icon">
                   {{#if pin}}
-                    <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
                   {{else}}
                     <img src='assets/images/marker1.png' class="markerIcon"/>
                   {{/if}}
