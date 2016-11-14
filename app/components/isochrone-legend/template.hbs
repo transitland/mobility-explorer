@@ -1,36 +1,6 @@
 <div class="isochrone-legend-box">
-	{{#if showIsochroneOne}}
-	<input type="checkbox" id="check-1" name="option-one" checked {{action "displayIsochrone" "One"}}>
-	{{else}}
-	<input type="checkbox" id="check-1" name="option-one" {{action "displayIsochrone" "One"}}>
-	{{/if}}
-	<label for="check-1" class="isochrone-legend" style="color:#50bf40;">15 min {{mode}} from stop</label>
-
-	{{#if showIsochroneTwo}}
-	<input type="checkbox" id="check-2" name="option-two" checked {{action "displayIsochrone" "Two"}}>
-	{{else}}
-	<input type="checkbox" id="check-2" name="option-two" {{action "displayIsochrone" "Two"}}>
-	{{/if}}
-	<label for="check-2" class="isochrone-legend" style="color:#9fbf40;">30 min {{mode}} from stop</label>
-	
-	{{#if showIsochroneThree}}
-	<input type="checkbox" id="check-3" name="option-three" checked {{action "displayIsochrone" "Three"}}>
-	{{else}}
-	<input type="checkbox" id="check-3" name="option-three" {{action "displayIsochrone" "Three"}}>
-	{{/if}}
-	<label for="check-3" class="isochrone-legend" style="color:#bf8f40;">45 min {{mode}} from stop</label>
-
-	{{#if showIsochroneFour}}
-	<input type="checkbox" id="check-4" name="option-four" checked {{action "displayIsochrone" "Four"}}>
-	{{else}}
-	<input type="checkbox" id="check-4" name="option-four" {{action "displayIsochrone" "Four"}}>
-	{{/if}}
-	<label for="check-4" style="color:#bf4040;">60 min {{mode}} from stop</label>
-
+	<div class="isochrone-legend" style="color:#4dac26; opacity:.6;">15 min {{mode}} from stop</div>
+	<div class="isochrone-legend" style="color:#b8e186; opacity: 1;">30 min {{mode}} from stop</div>
+	<div class="isochrone-legend" style="color:#a3166d; opacity:.6;">45 min {{mode}} from stop</div>
+	<div class="isochrone-legend" style="color:#d01c8b; opacity:.4;">60 min {{mode}} from stop</div>
 </div>
-
-<!-- <div class="form-group">
-	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
-	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
-  <label for="check-1">Show stops served by route</label>
-</div> -->

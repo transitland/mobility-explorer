@@ -1,3 +1,4 @@
+
 body {
     padding: 0;
     /*padding-top: 56px; */
@@ -325,6 +326,7 @@ input, button, select, textarea {
 	
 	margin-top: 8px;
 	margin-left: 6px;
+	color: black;
 	/*margin-right: 5px;*/
 }
 /*.ember-power-select-trigger {
@@ -485,6 +487,7 @@ input, button, select, textarea {
 
 .bootstrap-datetimepicker-widget{
 	color: #6ea0a4;
+	z-index: 10000;
 }
 
 td.day.active.today{

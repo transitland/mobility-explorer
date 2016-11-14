@@ -7,7 +7,7 @@
             <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
           </div>
         </div>
-				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
+				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin isochrone_mode=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
         {{#unless textboxIsClosed}}
           {{text-box route="index" action="setTextBoxClosed"}}
         {{/unless}}
@@ -172,7 +172,7 @@
 					  		{{/if}}
 						    <label for="radio-1">walking</label><br>
 							  {{#if (eq isochrone_mode "pedestrian")}}
-							  {{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
+							  {{isochrone-legend isochrone_mode=isochrone_mode showIsochrone=showIsochrone action="setIsochrone"}}
 					  		{{/if}}
 
 							  {{#if (eq isochrone_mode "bicycle")}}
@@ -182,7 +182,7 @@
 					  		{{/if}}
 						    <label for="radio-2">biking</label><br>
 							  {{#if (eq isochrone_mode "bicycle")}}
-							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochrone=showIsochrone action="setIsochrone"}}
 					  		{{/if}}
 							  
 							  {{#if (eq isochrone_mode "auto")}}
@@ -192,7 +192,7 @@
 					  		{{/if}}
 						    <label for="radio-3">driving</label><br>
 							  {{#if (eq isochrone_mode "auto")}}
-							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochroneOne=showIsochroneOne showIsochroneTwo=showIsochroneTwo showIsochroneThree=showIsochroneThree showIsochroneFour=showIsochroneFour action="setIsochrone"}}
+							  	{{isochrone-legend isochrone_mode=isochrone_mode showIsochrone=showIsochrone action="setIsochrone"}}
 					  		{{/if}}
 
 					  		{{#if (eq isochrone_mode "multimodal")}}
@@ -251,41 +251,29 @@
         	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onClick=(action "dropPin")}}
           	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
             {{#if pin}}
-						  {{#if showIsochroneOne}}
-						  	{{#each model.isochrones.features as |isochrone|}}
-						  		{{#if (eq isochrone.properties.contour 15)}}
-							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
-								  	{{/geojson-layer}}
-								  {{/if}}
-								{{/each}}
-						  {{/if}}
-						  {{#if showIsochroneTwo}}
-						  	{{#each model.isochrones.features as |isochrone|}}
-						  		{{#if (eq isochrone.properties.contour 30)}}
-							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
-								  	{{/geojson-layer}}
-								  {{/if}}
-								{{/each}}
-						  {{/if}}
-						  {{#if showIsochroneThree}}
-						  	{{#each model.isochrones.features as |isochrone|}}
-						  		{{#if (eq isochrone.properties.contour 45)}}
-							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
-								  	{{/geojson-layer}}
-								  {{/if}}
-								{{/each}}
-						  {{/if}}
-						  {{#if showIsochroneFour}}
+              {{#if isochrone_mode}}
 						  	{{#each model.isochrones.features as |isochrone|}}
 						  		{{#if (eq isochrone.properties.contour 60)}}
-							  		{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor="#d01c8b" fillOpacity=".2" stroke=false}}
 								  	{{/geojson-layer}}
 								  {{/if}}
-								{{/each}}
-						  {{/if}}
-              {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") onRemove=(action "removePin") riseOnHover=true riseOffset=1000}}
+						  		{{#if (eq isochrone.properties.contour 45)}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor="#a3166d"  stroke=false weight=1 fillOpacity=".2"}}
+								  	{{/geojson-layer}}
+								  {{/if}}
+						  		{{#if (eq isochrone.properties.contour 30)}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor="#b8e186" stroke=false weight=1 fillOpacity=".6"}}
+								  	{{/geojson-layer}}
+								  {{/if}}
+						  		{{#if (eq isochrone.properties.contour 15)}}
+							  		{{#geojson-layer geoJSON=isochrone fillColor="#4dac26"  stroke=false weight=1 fillOpacity=".3"}}
+								  	{{/geojson-layer}}
+								  {{/if}}
+								  {{/each}}
+								{{/if}}
+								{{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") onRemove=(action "removePin") riseOnHover=true riseOffset=1000}}
               {{/marker-layer}}
-            {{/if}}
+						  {{/if}}
           {{/leaflet-map}}
       </div>
     </div>

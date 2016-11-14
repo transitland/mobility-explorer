@@ -20,7 +20,7 @@
               <hr class="sidebar-hr">
               {{sidebar-title-mobility}}
               <div class="btn-group-vertical" role="group" >
-                {{#link-to 'isochrones' (query-params bbox=bbox onestop_id=null pin=pin)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+                {{#link-to 'isochrones' (query-params bbox=bbox onestop_id=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
               </div>
             </div>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
@@ -77,7 +77,7 @@
     <hr class="sidebar-hr">
       {{sidebar-title-mobility}}
       <div class="btn-group-vertical" role="group" >
-      {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+      {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     </div>
   </div>
   <div class="col-md-8">
