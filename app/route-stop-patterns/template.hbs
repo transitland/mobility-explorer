@@ -198,6 +198,7 @@
 						  			<label for=rsp.onestop_id>{{rsp.onestop_id}}</label><br>
 				  				{{/each}}	
 						  </div>
+						 
 						</form>
 					</div>
 
@@ -208,12 +209,12 @@
 						</div>
 					{{/if}}
 			</div>
+			{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}} 
 		</div>
 		<hr class="sidebar-hr">
 		{{sidebar-title-mobility}}
-		<div class="btn-group-vertical" role="group" >
-		  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
-		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}  
+		<div class="btn-group-vertical" role="group" > 
 		  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
 		  {{url-builder entity="route_stop_patterns" server="Transitland" query="results" queryParams=queryParams traversed_by=traversed_by}}
 		</div>
