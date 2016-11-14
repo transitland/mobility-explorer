@@ -50,14 +50,13 @@
                   {{/if}}
                 {{/if}}
               </div>
+              {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
             </div>
             <hr class="sidebar-hr">
             {{sidebar-title-mobility}}
             <div class="btn-group-vertical" role="group" >
               {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Show Isochrones</button>{{/link-to}}
-            </div>
-            
-        {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
+            </div>         
       </div>
       <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
@@ -143,12 +142,12 @@
           {{/if}}
         {{/if}}
       </div>
+      {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
       </div>
         <hr class="sidebar-hr">
         {{sidebar-title-mobility}}
         <div class="btn-group-vertical" role="group" >
         {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-        {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
       </div>
     </div>
   <div class="col-md-8">

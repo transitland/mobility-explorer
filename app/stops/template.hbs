@@ -88,6 +88,7 @@
 								{{/if}}
 							</div>
 					  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
+					  {{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
 				   	<hr class="sidebar-hr">
            {{sidebar-title-mobility}}
             <div class="btn-group-vertical" role="group" >
@@ -95,7 +96,7 @@
 			  		</div>
 			  	</div>
 
-				{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
+				
 				
 				{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 			</div>
@@ -252,15 +253,13 @@
 					{{/if}}
 				</div>
 		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
+		  {{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
 		</div>
 		<hr class="sidebar-hr">
 		{{sidebar-title-mobility}}
 		<div class="btn-group-vertical" role="group" >
   		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-  	</div>
-
-		{{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
-		
+  	</div>	
 		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 	</div>
 	<div class="col-md-8">
