@@ -573,10 +573,11 @@ span.timepicker-minute{
 	align-items:center;
 }
 
-.url-builder{
-	font-size:14px;
-	/*color:#d4645c;*/
+.url-builder a{
+	font-size:13px;
 	color:#909090;
+	font-style: italic;
+	font-weight: 500;
 }
 
 .reset-datetime{
