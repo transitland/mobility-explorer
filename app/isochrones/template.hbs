@@ -11,16 +11,14 @@
         {{#unless textboxIsClosed}}
           {{text-box route="index" action="setTextBoxClosed"}}
         {{/unless}}
-        <h4>Data</h4>
-        <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
+        {{sidebar-title-transitland}}
         <div class="btn-group-vertical" role="group" >
 					{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
 					{{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
       		{{#link-to 'operators' (query-params bbox=bbox onestop_id=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
         </div>
         <hr class="sidebar-hr">
-        <h4>Services</h4>
-        <caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Travel planning services from Mapzen</caption>
+          {{sidebar-title-mobility}}
         <div class="btn-group-vertical" role="group" >
       		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=isochrone_mode pin=pin)}}<button class="btn btn-mapzen-alt">Generate Isochrones</button>{{/link-to}}
       		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
@@ -144,18 +142,15 @@
 		{{#unless textboxIsClosed}}
       {{text-box route="index" action="setTextBoxClosed"}}
     {{/unless}}
-		<h4>Data</h4>
-		<caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Open transit data from Transitland</caption>
+    {{sidebar-title-transitland}}
 		<div class="btn-group-vertical" role="group" >
-	
 			{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
 			{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
 			{{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
 
 		</div>
 		<hr class="sidebar-hr">
-		<h4>Services</h4>
-		<caption class="sidebar-caption col-xl-12 col-lg-12 col-md-12 col-sm-12">Travel planning services from Mapzen</caption>
+      {{sidebar-title-mobility}}
 		<div class="btn-group-vertical" role="group" >
 
 

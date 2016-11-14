@@ -63,7 +63,6 @@ export default Ember.Controller.extend(setTextboxClosed, {
 				var uniqueOperator = {};
 				uniqueOperator["name"] = operatorName;
 				uniqueOperator["onestopId"] = operatorOnestopid;
-				// uniqueOperator["style"] = "background-color:" + operatorColor;
 				uniqueOperator["style"] = "color:" + operatorColor;
 				uniqueOperators.push(uniqueOperator);
 			}
