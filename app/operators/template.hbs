@@ -30,7 +30,9 @@
                     onchange=(action "setOperator")
                     as |operator|
                   }}
-                    {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+                    <div style={{operator.style}}>
+                      {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+                    </div>
                   {{/power-select}}
                 {{/if}}
                 
@@ -60,11 +62,11 @@
       <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
       {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
       <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-           <div class="location-search">
+           <div class="location-search" style="width:225px">
               <div class="row">
-                <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+                <div class="ember-basic-dropdown-trigger-icon">
                   {{#if pin}}
-                    <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
                   {{else}}
                     <img src='assets/images/marker1.png' class="markerIcon"/>
                   {{/if}}
@@ -92,7 +94,7 @@
     </div>
   </div>
 {{else}}
-  <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
+  <div class="col-md-4 linebreak-text" id="sidebar">
    <div style="display:flex;justify-content:center;align-items:center;">
       <div style="width:130px;height:40px;">
         <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -121,7 +123,9 @@
             onchange=(action "setOperator")
             as |operator|
           }}
-            {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+            <div style={{operator.style}}>
+              {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+            </div>
           {{/power-select}}
         {{/if}}
         
@@ -147,7 +151,7 @@
         {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
       </div>
     </div>
-  <div class="col-xs-12 col-sm-12 col-md-9">
+  <div class="col-md-8">
     {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
     <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
         <div class="location-search">

@@ -127,6 +127,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
 
       var newDepartureTime = date.toISOString().slice(0,16);
       this.set('departure_time', newDepartureTime);
-		},
+		}
   }
 });

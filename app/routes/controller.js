@@ -63,7 +63,7 @@ export default Ember.Controller.extend(setTextboxClosed, {
 				var uniqueOperator = {};
 				uniqueOperator["name"] = operatorName;
 				uniqueOperator["onestopId"] = operatorOnestopid;
-				uniqueOperator["style"] = "background-color:" + operatorColor;
+				uniqueOperator["style"] = "color:" + operatorColor;
 				uniqueOperators.push(uniqueOperator);
 			}
 		}
@@ -94,7 +94,8 @@ export default Ember.Controller.extend(setTextboxClosed, {
 				checkList.push(modeName);
 				var uniqueMode = {};
 				uniqueMode["name"] = modeName;
-				uniqueMode["style"] = "background-color:" + modeColor;
+				// uniqueMode["style"] = "background-color:" + modeColor;
+				uniqueMode["style"] = "color:" + modeColor;
 				uniqueModes.push(uniqueMode);
 			}
 		}

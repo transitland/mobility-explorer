@@ -24,14 +24,14 @@
 						  		{{/if}}
 									<br>
 
-									<div class="form-group">
-								  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
-								  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
-								    <label for="check-1">Show stops served by route</label>
-								  </div>
+								  <div class="form-group">
+				  				{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
+				  				{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
+				    			<label for="check-1">Show stops served by route</label>
+				  				</div>
 								  
 								  
-								  <row>
+								  <row class="subheading-row">
 								  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
 								  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 								  </row>
@@ -51,7 +51,7 @@
 								  {{/power-select}}
 									<form>
 										<strong>Operated by:</strong> {{operated_by}}<br>
-									   	<row>
+									   	<row class="subheading-row">
 										  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
 										  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 										  </row>
@@ -72,12 +72,7 @@
 											        onclose=(action "clearMode")
 												      as |mode|
 												    }}
-													    <div class="container">
-													    	<div class="row">
-													    		<div class="legend-color" style={{mode.style}}></div>
-													    		{{mode.name}}
-													    	</div>
-													    </div>
+													    <div style={{mode.style}}>{{mode.name}}</div>
 													  {{/power-select}}
 													{{/unless}}
 												{{/if}}
@@ -101,7 +96,7 @@
 						      {{route.name}} {{route.tags.route_long_name}}
 							    {{/power-select}}
 									<form>
-									  <row>
+									  <row class="subheading-row">
 									  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
 									  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 									  </row>
@@ -121,12 +116,7 @@
 											        onclose=(action "clearMode")
 												      as |mode|
 												    }}
-													    <div class="container">
-													    	<div class="row">
-													    		<div class="legend-color" style={{mode.style}}></div>
-													    		{{mode.name}}
-													    	</div>
-													    </div>
+													    <div style={{mode.style}}>{{mode.name}}</div>
 													  {{/power-select}}
 													{{/unless}}
 											  {{/if}}
@@ -147,12 +137,7 @@
 										        onclose=(action "clearOperator")
 											      as |operator|
 												    }}
-													  <div class="container">
-													  	<div class="row">
-													  		<div class="legend-color" style={{operator.style}}></div>	
-																{{operator.name}}
-															</div>
-														</div>
+													  	<div style={{operator.style}}>{{operator.name}}</div>	
 												  {{/power-select}}
 										  	</div>
 										  {{/if}}
@@ -192,25 +177,27 @@
     <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
 		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-			<div class="location-search">
-					<div class="col-md-2 ember-basic-dropdown-trigger-icon">
-            {{#if pin}}
-              <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-            {{else}}
-              <img src='assets/images/marker1.png' class="markerIcon"/>
-            {{/if}}
+			<div class="location-search" style="width:225px">
+              <div class="row">
+                <div class="ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
           </div>
-			    {{#power-select
-			      search=(action "searchRepo")
-		        renderInPlace=true
-			      selected=place
-			      placeholder="Search for location..."
-			      onchange=(action "setPlace")
-			      as |repo|
-			    }}
-			      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-			    {{/power-select}}
-			  </div>
 				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 						{{#if onestop_id}}
@@ -279,7 +266,7 @@
 	</div>
 	{{outlet}}
 {{else}}
-	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text" id="sidebar">
+	<div class="col-md-4 linebreak-text" id="sidebar">
  		<div style="display:flex;justify-content:center;align-items:center;">
       <div style="width:130px;height:40px;">
         <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -308,7 +295,7 @@
 				    <label for="check-1">Show stops served by route</label>
 				  </div>
 				  
-				  <row>
+				  <row class="subheading-row">
 				  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
 				  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 				  </row>
@@ -329,7 +316,7 @@
 		  			<p class="caption">Hover over a route line for more information</p>
 						<form>
 							<strong>Operated by:</strong> {{operated_by}}<br>
-						  <row>
+						  <row class="subheading-row">
 						  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
 						  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 						  </row>
@@ -349,12 +336,7 @@
 							        onclose=(action "clearMode")
 								      as |mode|
 								    }}
-									    <div class="container">
-									    	<div class="row">
-									    		<div class="legend-color" style={{mode.style}}></div>
-									    		{{mode.name}}
-									    	</div>
-									    </div>
+									    <div style={{mode.style}}>{{mode.name}}</div>
 									  {{/power-select}}
 									{{/unless}}
 						  	{{/if}}
@@ -386,7 +368,7 @@
 		    {{#unless hoverRoute}}
 			  	<p class="caption">Hover over a route line for information</p>
 					<form>
-					  <row>
+					  <row class="subheading-row">
 					  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
 					  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 					  </row>
@@ -409,12 +391,7 @@
 							        onclose=(action "clearMode")
 								      as |mode|
 								    }}
-									    <div class="container">
-									    	<div class="row">
-									    		<div class="legend-color" style={{mode.style}}></div>
-									    		{{mode.name}}
-									    	</div>
-									    </div>
+									    <div style={{mode.style}}>{{mode.name}}</div>
 									  {{/power-select}}
 									{{/unless}}
 							  {{/if}}
@@ -435,12 +412,7 @@
 							        onclose=(action "clearOperator")
 								      as |operator|
 									    }}
-										  <div class="container">
-										  	<div class="row">
-										  		<div class="legend-color" style={{operator.style}}></div>	
-													{{operator.name}}
-												</div>
-											</div>
+												<div style={{operator.style}}>{{operator.name}}</div>
 									  {{/power-select}}
 							  	</div>
 							  {{/if}}
@@ -485,7 +457,7 @@
 	 	</div>
 	{{#if model.stopServedByRoutes}}stopServedByRoutes{{/if}}
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+	<div class="col-md-8">
 		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 			<div class="location-search">

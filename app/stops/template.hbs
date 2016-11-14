@@ -81,7 +81,7 @@
 										<p class="caption">Click the stop for more information</p>
 									</div>
 								{{else}}
-						    	<p class="caption">Hover over a stop for more information</p>
+						    	<p class="caption">Click a stop for more information</p>
 						    	{{#if mapMoved}}
 					    			<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 					  			{{/if}}
@@ -102,27 +102,27 @@
 		  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 		  <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
 		  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-		  	<div class="location-search">
-          <div class="row">
-            <div class="col-md-2 ember-basic-dropdown-trigger-icon">
-              {{#if pin}}
-              	<img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-              {{else}}
-                <img src='assets/images/marker1.png' class="markerIcon"/>
-              {{/if}}
-            </div>
-            {{#power-select
-              search=(action "searchRepo")
-              selected=place
-              placeholder="Search for location..."
-              onchange=(action "setPlace")
-              onclose=(action "clearPlace")
-              as |repo|
-            }}
-              {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-            {{/power-select}}
+		  	<div class="location-search" style="width:225px">
+              <div class="row">
+                <div class="ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
           </div>
-        </div>
 
 			  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
@@ -160,12 +160,12 @@
 		</div>
 	</div>
 {{else}}
-	<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
-     <div style="display:flex;justify-content:center;align-items:center;">
-	      <div style="width:130px;height:40px;">
-	        <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-	      </div>
+	<div class="col-md-4 linebreak-text" id="sidebar">
+    <div style="display:flex;justify-content:center;align-items:center;">
+	    <div style="width:130px;height:40px;">
+	      <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
 	    </div>
+	  </div>
 		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
 		{{#unless textboxIsClosed}}
       {{text-box route="index" action="setTextBoxClosed"}}
@@ -263,7 +263,7 @@
 		
 		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-9">
+	<div class="col-md-8">
 	  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 	  	<div class="location-search">

@@ -67,13 +67,14 @@ export default Ember.Route.extend(setLoading, {
 	    var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
 	    var json = {
 	      locations: [{"lat":pinLocation[0], "lon":pinLocation[1]}],
-	      costing: mode,
+	      costing: mode,	      
+	      denoise: .3,
 	      costing_options: {"pedestrian":{"use_ferry":0}},
 	      contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
 	    };
 
 	    if (json.costing === "multimodal"){
-	      json.denoise = .1;
+	      json.denoise = 0;
 	    }
 	    if (params.departure_time){
 	    	json.date_time = {"type": 1, "value": params.departure_time};
@@ -83,27 +84,16 @@ export default Ember.Route.extend(setLoading, {
 	    return Ember.RSVP.hash({
 	      url: url,
 	      isochrones: Ember.$.ajax({ url }).then(function(response){
-	        var features = response.features;
-	        for(var k = 0; k < features.length; k++) {
-	          //find the next set of contours
-	          var i = k + 1;
-
-	          while(i < features.length && features[i].properties.contour == features[k].properties.contour)  
-	            i++;
-	          if(i >= features.length)
-	          break;
-	          //cut this one by all of these smaller contours
-	          var outer = polygon(features[k].geometry.coordinates);
-	          var contour = features[i].properties.contour;
-	          while(i < features.length && contour == features[i].properties.contour) {
-	            var inner = polygon(features[i].geometry.coordinates);
-	            outer = difference(outer, inner);
-	            i++;
-	          }
-
-	          //keep it
-	          features[k].geometry = outer.geometry;
-	        }
+	      	// var unescapedUrl = unescape(this.url);
+	      	// var firstHalf = unescapedUrl.split('"costing":"');
+	      	// var secondHalf = firstHalf[1].split('","costing_options');
+	      	// var mode = secondHalf[0];
+	      	// if (mode === "multimodal"){
+	       //  	var features = response.features;
+	       //  	for (var k = 0; k < features.length; k++) {
+	       //  		// console.log(features[k]);
+	       //  	}
+	      	// }
 	        return response;
 	      })
 	    });
