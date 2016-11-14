@@ -69,6 +69,8 @@ export default Ember.Route.extend(setLoading, {
 	      locations: [{"lat":pinLocation[0], "lon":pinLocation[1]}],
 	      costing: mode,	      
 	      denoise: .3,
+	      polygon: true,
+        generalize: 150,
 	      costing_options: {"pedestrian":{"use_ferry":0}},
 	      contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
 	    };
@@ -84,16 +86,6 @@ export default Ember.Route.extend(setLoading, {
 	    return Ember.RSVP.hash({
 	      url: url,
 	      isochrones: Ember.$.ajax({ url }).then(function(response){
-	      	// var unescapedUrl = unescape(this.url);
-	      	// var firstHalf = unescapedUrl.split('"costing":"');
-	      	// var secondHalf = firstHalf[1].split('","costing_options');
-	      	// var mode = secondHalf[0];
-	      	// if (mode === "multimodal"){
-	       //  	var features = response.features;
-	       //  	for (var k = 0; k < features.length; k++) {
-	       //  		// console.log(features[k]);
-	       //  	}
-	      	// }
 	        return response;
 	      })
 	    });
