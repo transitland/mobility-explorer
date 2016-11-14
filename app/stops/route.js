@@ -23,6 +23,10 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     pin: {
       replace: true,
       refreshModel: true
+    },
+    departure_time: {
+      replace: true,
+      refreshModel: true
     }
   },
   setupController: function (controller, model) {
@@ -63,11 +67,18 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
         var json = {
           locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
           costing: mode,
+          denoise: .3,
           costing_options: {"pedestrian":{"use_ferry":0}},
           contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
         };
         if (json.costing === "multimodal"){
-          json.denoise = .1;
+          json.denoise = 0;
+        }
+        if (json.costing === "multimodal"){
+        json.denoise = 0;
+        }
+        if (params.departure_time){
+          json.date_time = {"type": 1, "value": params.departure_time};
         }
         url += escape(JSON.stringify(json));
         return Ember.RSVP.hash({
@@ -75,25 +86,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           onlyStop: onlyStop,
           url: url,
           isochrones: Ember.$.ajax({ url }).then(function(response){
-            var features = response.features;
-            for(var k = 0; k < features.length; k++) {
-              //find the next set of contours
-              var i = k + 1;
-              while(i < features.length && features[i].properties.contour == features[k].properties.contour)
-                i++;
-              if(i >= features.length)
-              break;
-              //cut this one by all of these smaller contours
-              var outer = polygon(features[k].geometry.coordinates);
-              var contour = features[i].properties.contour;
-              while(i < features.length && contour == features[i].properties.contour) {
-                var inner = polygon(features[i].geometry.coordinates);
-                outer = difference(outer, inner);
-                i++;
-              }
-              //keep it
-              features[k].geometry = outer.geometry;
-            }
             return response;
           })
         });

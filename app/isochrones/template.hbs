@@ -21,7 +21,7 @@
 		          {{sidebar-title-mobility}}
 		        <div class="btn-group-vertical" role="group" >
 		      		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=isochrone_mode pin=pin)}}<button class="btn btn-mapzen-alt">Generate Isochrones</button>{{/link-to}}
-		      		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="isochrones" entity="results" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
+		      		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 		        </div>
 					  <div class="expanded-selection">
 			    <form>
@@ -68,10 +68,19 @@
 							  		{{/if}}
 								  </div>
 							  	{{#if (eq isochrone_mode "multimodal")}}
-							  		<p class="caption">departure at:</p>
-							  		<div class="datetime-picker">
-							  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
-							  		</div>
+							  		{{#if departure_time}}
+								  		<p class="caption">departure at:</p>
+								  		<div class="datetime-picker">
+								  			{{bs-datetimepicker date=departure_time isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+								  		</div>
+								  		<div class="reset-datetime" {{action "resetDepartureTime"}}>
+								  			reset to current date and time <i class="fa fa-undo" aria-hidden="true"></i></div>
+								  	{{else}}
+								  		<p class="caption">departure at:</p>
+								  		<div class="datetime-picker">
+						  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+						  		</div>
+						  	{{/if}}
 							  	{{/if}}
 							  {{else}}
 							  	<p class="caption">See the distance you can travel from a particular point at various time intervals.</p>
@@ -198,10 +207,19 @@
 					  		{{/if}}
 						  </div>
 					  	{{#if (eq isochrone_mode "multimodal")}}
-					  		<p class="caption">departure at:</p>
-					  		<div class="datetime-picker">
-					  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
-					  		</div>
+					  		{{#if departure_time}}
+						  		<p class="caption">departure at:</p>
+						  		<div class="datetime-picker">
+						  			{{bs-datetimepicker date=departure_time isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+						  		</div>
+						  		<div class="reset-datetime" {{action "resetDepartureTime"}}>
+						  			reset to current date and time <i class="fa fa-undo" aria-hidden="true"></i></div>
+						  	{{else}}
+						  		<p class="caption">departure at:</p>
+						  		<div class="datetime-picker">
+						  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+						  		</div>
+						  	{{/if}}
 					  	{{/if}}
 					  {{else}}
 					  	<p class="caption">See the distance you can travel from a particular point at various time intervals.</p>
@@ -213,7 +231,7 @@
 			</div>
 		
 		</div>
-		{{#if isochrone_mode}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="isochrones" entity="results" queryParams=queryParams bbox=bbox}}</div>{{/if}}
+		{{#if isochrone_mode}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
 	</div>
 	<div class="col-md-8">
     <div class="row">

@@ -579,3 +579,12 @@ span.timepicker-minute{
 	color:#909090;
 }
 
+.reset-datetime{
+	color: #d4645c;
+	text-align: right;
+	font-size: 12px;
+	margin-top: 5px;
+	font-style: italic;
+	cursor: pointer;
+}
+
