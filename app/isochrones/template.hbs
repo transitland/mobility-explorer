@@ -133,6 +133,7 @@
   </container>
 {{else}}
 	<div class="col-md-4 linebreak-text" id="sidebar">
+	<!-- <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text" id="sidebar"> -->
     <div style="display:flex;justify-content:center;align-items:center;">
       <div style="width:130px;height:40px;">
         <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -208,7 +209,7 @@
 					  	{{#if (eq isochrone_mode "multimodal")}}
 					  		<p class="caption">departure at:</p>
 					  		<div class="datetime-picker">
-					  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
+					  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
 					  		</div>
 					  	{{/if}}
 					  {{else}}

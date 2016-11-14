@@ -68,6 +68,10 @@ caption{
 	padding-bottom:10px;
 }
 
+.subheading-row{
+	display: flex;
+}
+
 #sidebar{
 	background-color: white;
 	padding: 15px;
@@ -148,8 +152,20 @@ caption{
 }
 
 .sidebar-dropdown{
-	margin-right: 25px;
+	margin-right: 5px;
 	margin-left: 30px;
+}
+.legend-color{
+	/*display:inline;*/
+	/*float:left;*/
+	width: 10px;
+	height: 30px;
+}
+.operator-name{
+	width: 200px;
+}
+.dropdown-row{
+	margin-bottom: 5px;
 }
 
 .leaflet-container {
@@ -266,13 +282,6 @@ input, button, select, textarea {
 	margin-left: 90vw;
 	margin-top: 0;
 }
-.legend-color{
-	display:inline;
-	float:left;
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-}
 
 .ember-power-select-trigger {
 	border-radius: 0;
@@ -311,7 +320,6 @@ input, button, select, textarea {
 }
 
 .ember-basic-dropdown-trigger{
-	/*background-color: red;*/
 
 }
 
@@ -326,7 +334,6 @@ input, button, select, textarea {
 	
 	margin-top: 8px;
 	margin-left: 6px;
-	color: black;
 	/*margin-right: 5px;*/
 }
 /*.ember-power-select-trigger {
@@ -336,6 +343,8 @@ input, button, select, textarea {
 	margin-left: 10px;
 }*/
 .ember-basic-dropdown-trigger-icon{
+	display:inline;
+float:left;
 	background-color: white;
 	height: 40px;
 	padding: 0;
@@ -343,6 +352,13 @@ input, button, select, textarea {
 	border: 1px solid #ccc;
 	border-right: none;
 	margin-right: 0;
+}
+
+#ember-basic-dropdown-trigger-1{
+	padding-left:5px;
+}
+#ember-basic-dropdown-trigger-3{
+	padding-left:5px;
 }
 
 .markerIcon{
@@ -368,7 +384,7 @@ input, button, select, textarea {
 	position: absolute;
 	background-size: 19px 19px;
 	background-position: 3px 14px;
-	padding: 8px 2px 8px 26px;
+	padding: 8px 2px 8px 15px;
 }
 
 #map-loading{
@@ -529,6 +545,8 @@ span.timepicker-minute{
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+  overflow-y: auto
+  height: 100vh;
 }
 .isochrone-legend {
   margin-bottom:0;
