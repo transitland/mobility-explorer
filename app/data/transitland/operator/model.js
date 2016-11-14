@@ -49,7 +49,11 @@ var Operator = DS.Model.extend({
 		colorCode.toString();
 		colorCode = "#" + colorCode;
 		return colorCode;
-	}).property('onestop_id')
+	}).property('onestop_id'),
+	style: (function(){
+		return "color:" + this.get('operator_color');
+	}).property('operator_color')
+
 });
 
 export default Operator;

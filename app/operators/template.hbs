@@ -30,7 +30,9 @@
                     onchange=(action "setOperator")
                     as |operator|
                   }}
-                    {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+                    <div style={{operator.style}}>
+                      {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+                    </div>
                   {{/power-select}}
                 {{/if}}
                 
@@ -121,7 +123,9 @@
             onchange=(action "setOperator")
             as |operator|
           }}
-            {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+            <div style={{operator.style}}>
+              {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+            </div>
           {{/power-select}}
         {{/if}}
         
