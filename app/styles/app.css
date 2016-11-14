@@ -472,15 +472,25 @@ float:left;
 }
 
 .expanded-selection{
+	background-color: #f0f0f0;
+	border: 10px solid white;
 	outline-color: #6ea0a4;
 	outline-style: solid;
 	outline-width: 2px;
 	padding: 10px;
 	margin-bottom: 10px;
+
+}
+.expanded-selection label:before{
+	border-color: #f0f0f0;
+}
+
+.expanded-selection label{
+	margin-bottom: 0;
 }
 
 .hover-detail{
-	background-color: #e6ead2;
+	background-color: #d6d6d6;
 	padding: 10px;
 }
 
@@ -561,5 +571,11 @@ span.timepicker-minute{
 	text-align: center;
 	/*display:flex;*/
 	align-items:center;
+}
+
+.url-builder{
+	font-size:14px;
+	/*color:#d4645c;*/
+	color:#909090;
 }
 
