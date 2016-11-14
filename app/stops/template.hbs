@@ -60,10 +60,19 @@
 								  		{{/if}}
 									  </div>
 								  		{{#if (eq isochrone_mode "multimodal")}}
-											  <p class="caption">departure at:</p>
-							  				<div class="datetime-picker">
-									  			{{bs-datetimepicker date=moment isTime=true sideBySide=true}}
-									  		</div>
+											  {{#if departure_time}}
+								  		<p class="caption">departure at:</p>
+								  		<div class="datetime-picker">
+								  			{{bs-datetimepicker date=departure_time isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+								  		</div>
+								  		<div class="reset-datetime" {{action "resetDepartureTime"}}>
+								  			reset to current date and time <i class="fa fa-undo" aria-hidden="true"></i></div>
+								  	{{else}}
+								  		<p class="caption">departure at:</p>
+								  		<div class="datetime-picker">
+						  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+						  		</div>
+						  	{{/if}}
 									  	{{/if}}
 									</form>
 								{{else if served_by}}
@@ -98,7 +107,7 @@
 
 				
 				
-				{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
+				{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 			</div>
 		  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 		  <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
@@ -223,10 +232,19 @@
 						  		{{/if}}
 							  </div>
 						  	{{#if (eq isochrone_mode "multimodal")}}
+						  		{{#if departure_time}}
 						  		<p class="caption">departure at:</p>
 						  		<div class="datetime-picker">
-						  			{{bs-datetimepicker date=moment isTime=true sideBySide=true showTodayButton=true change=(action 'change')}}
+						  			{{bs-datetimepicker date=departure_time isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
 						  		</div>
+						  		<div class="reset-datetime" {{action "resetDepartureTime"}}>
+						  			reset to current date and time <i class="fa fa-undo" aria-hidden="true"></i></div>
+						  	{{else}}
+						  		<p class="caption">departure at:</p>
+						  		<div class="datetime-picker">
+						  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+						  		</div>
+						  	{{/if}}
 						  	{{/if}}
 						 	</div>
 						</form>
@@ -260,7 +278,7 @@
 		<div class="btn-group-vertical" role="group" >
   		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
   	</div>	
-		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Valhalla" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
+		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 	</div>
 	<div class="col-md-8">
 	  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
@@ -309,9 +327,23 @@
 			  {{#if isochrone_mode}}
 			  	{{#if onestop_id}}
 					  {{#each model.isochrones.features as |isochrone|}}
-					  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
-					  	{{/geojson-layer}}
-				  	{{/each}}
+				  		{{#if (eq isochrone.properties.contour 60)}}
+					  		{{#geojson-layer geoJSON=isochrone fillColor="#d01c8b" fillOpacity=".2" stroke=false}}
+						  	{{/geojson-layer}}
+						  {{/if}}
+				  		{{#if (eq isochrone.properties.contour 45)}}
+					  		{{#geojson-layer geoJSON=isochrone fillColor="#a3166d"  stroke=false weight=1 fillOpacity=".2"}}
+						  	{{/geojson-layer}}
+						  {{/if}}
+				  		{{#if (eq isochrone.properties.contour 30)}}
+					  		{{#geojson-layer geoJSON=isochrone fillColor="#b8e186" stroke=false weight=1 fillOpacity=".6"}}
+						  	{{/geojson-layer}}
+						  {{/if}}
+				  		{{#if (eq isochrone.properties.contour 15)}}
+					  		{{#geojson-layer geoJSON=isochrone fillColor="#4dac26"  stroke=false weight=1 fillOpacity=".3"}}
+						  	{{/geojson-layer}}
+						  {{/if}}
+						{{/each}}
 				  {{/if}}
 			  {{/if}}
 			  {{#if pin}}

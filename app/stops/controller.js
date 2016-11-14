@@ -3,8 +3,9 @@ import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
-	queryParams: ['onestop_id', 'served_by', 'isochrone_mode', 'pin', 'bbox'],
+	queryParams: ['onestop_id', 'served_by', 'isochrone_mode', 'pin', 'bbox', 'departure_time'],
   bbox: null,
+  departure_time: null,
   leafletBbox: null,
   leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
   pin: null,
@@ -119,6 +120,44 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   		} else {
   			this.set('isochrones_mode', null);
   		}
-  	}
+  	},
+    change(date){
+      var dateString = date.toString();
+      var dateArray = dateString.split(" ");
+      var monthString = dateArray[1];
+      var day = dateArray[2];
+      var year = dateArray[3];
+      var timeArray = dateArray[4].split(":");
+      var hour = timeArray[0];
+      var minute = timeArray[1];
+      var month = {
+        'Jan' : '01',
+        'Feb' : '02',
+        'Mar' : '03',
+        'Apr' : '04',
+        'May' : '05',
+        'Jun' : '06',
+        'Jul' : '07',
+        'Aug' : '08',
+        'Sep' : '09',
+        'Oct' : '10',
+        'Nov' : '11',
+        'Dec' : '12'
+      }
+      var newDepartureTime = year + "-" + month[monthString] + "-" + day + "T" + hour + ":" + minute
+
+      // This is the local date and time at the location.  
+      // value:
+      // the date and time is specified in ISO 8601 format (YYYY-MM-DDThh:mm) in 
+      // the local time zone of departure or arrival. For example "2016-07-03T08:06"
+      // ISO 8601 uses the 24-hour clock system. 
+      // A single point in time can be represented by concatenating a complete date expression, 
+      // the letter T as a delimiter, and a valid time expression. For example, "2007-04-05T14:30".
+      
+      this.set('departure_time', newDepartureTime);
+    },
+    resetDepartureTime: function(){
+      this.set('departure_time', null);
+    }
 	}
 });
