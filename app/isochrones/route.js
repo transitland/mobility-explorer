@@ -69,6 +69,8 @@ export default Ember.Route.extend(setLoading, {
 	      locations: [{"lat":pinLocation[0], "lon":pinLocation[1]}],
 	      costing: mode,	      
 	      denoise: .3,
+	      polygons: true,
+        generalize: 50,
 	      costing_options: {"pedestrian":{"use_ferry":0}},
 	      contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
 	    };
