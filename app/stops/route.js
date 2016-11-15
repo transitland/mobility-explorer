@@ -73,9 +73,10 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
         };
         if (json.costing === "multimodal"){
           json.denoise = 0;
-        }
-        if (json.costing === "multimodal"){
-        json.denoise = 0;
+          // default is 2145 or about 1.5 miles for start/end distance:
+          json.transit_start_end_max_distance = 10000; 
+          // default is 800 or 0.5 miles for transfer distance:
+          json.transit_transfer_max_distance = 10000;
         }
         if (params.departure_time){
           json.date_time = {"type": 1, "value": params.departure_time};
