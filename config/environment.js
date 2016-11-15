@@ -54,9 +54,10 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // ENV.googleAnalytics = {
-    //   webPropertyId: 'UA-47035811-4'
-    // };
+    ENV.googleAnalytics = {
+      webPropertyId: 'UA-47035811-1'
+    
+    };
     ENV.baseURL = '/mobility/explorer/';
 
   }
