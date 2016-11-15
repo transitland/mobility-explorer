@@ -67,8 +67,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
         var json = {
           locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
           costing: mode,
-          polygon: true,
-          generalize: 150,
           denoise: .3,
           costing_options: {"pedestrian":{"use_ferry":0}},
           contours: [{"time":15},{"time":30},{"time":45},{"time":60}],

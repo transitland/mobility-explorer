@@ -143,6 +143,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
       this.set('departure_time', newDepartureTime);
 		},
     resetDepartureTime: function(){
+      this.set('moment', moment());
       this.set('departure_time', null);
     }
   }
