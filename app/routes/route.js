@@ -1,15 +1,11 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
+import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend(mapBboxRoute, {
+export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
     onestop_id: {
       refreshModel: true
-    },
-    bbox: {
-      replace: true,
-      refreshModel: true
-
     },
     serves: {
       refreshModel: true
@@ -21,6 +17,9 @@ export default Ember.Route.extend(mapBboxRoute, {
       refreshModel: true
     },
     style_routes_by: {
+    },
+    pin: {
+      replace: true,
       refreshModel: true
     }
   },
@@ -42,14 +41,48 @@ export default Ember.Route.extend(mapBboxRoute, {
       arrayTwo.push(tempArray[2]);
       boundsArray.push(arrayOne);
       boundsArray.push(arrayTwo);
-      controller.set('leafletBbox', boundsArray);
+      controller.set('leafletBounds', boundsArray);
     }
+    controller.set('leafletBbox', controller.get('bbox'));
     this._super(controller, model);
   },
   model: function(params){
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
-    return this.store.query('data/transitland/route', params);
+    this.store.unloadAll('data/transitland/route_stop_pattern'); 
+
+    params.total=true;
+
+    var routes = this.store.query('data/transitland/route', params);
+
+    if (params.serves){
+      // var url = 'https://transit.land/api/v1/stops.geojson?onestop_id=' + params.serves;
+      // var stopServedByRoutes = Ember.$.ajax({ url });
+      // return Ember.RSVP.hash({
+      //   routes: routes,
+      //   stopServedByRoutes: stopServedByRoutes
+      // });
+      var stops = this.store.query('data/transitland/stop', {onestop_id: params.serves});
+      return Ember.RSVP.hash({
+        routes: routes,
+        stops: stops
+      });
+      
+    } else if (params.onestop_id){
+      var url = 'https://transit.land/api/v1/stops.geojson?per_page=false&served_by=' + params.onestop_id;
+      var stops = Ember.$.ajax({ url });
+      return Ember.RSVP.hash({
+        routes: routes,
+        stops: stops
+      });
+    } else {
+      return Ember.RSVP.hash({
+        routes: routes,
+      });
+    }
+  },
+  actions: {
+    
   }
 });

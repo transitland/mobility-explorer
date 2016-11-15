@@ -1,15 +1,35 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
+import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 
-export default Ember.Controller.extend(mapBboxController, {
-	queryParams: ['bbox', 'onestop_id'],
+export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
+	queryParams: ['bbox', 'onestop_id','pin'],
+	pin: null,
+	pinLocation: Ember.computed('pin', function(){
+    if (typeof(this.get('pin'))==="string"){
+      var pinArray = this.get('pin').split(',');
+      return pinArray;
+    } else {
+      return this.get('pin');
+    }
+	}),
 	bbox: null,
-	leafletBbox: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+	leafletBbox: null,
+  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
 	queryIsInactive: false,
+  currentlyLoading: Ember.inject.service(),
 	onestop_id: null,
 	selectedOperator: null,
 	hoverOperator: null,
 	place: null,
+	placeholderMessage: Ember.computed('leafletBbox', function(){
+		var total = this.model.get('meta.total');
+		if (total > 1){
+			return  total + " operators";
+		} else if (total === 1) {
+			return total + " operator"
+		}
+	}),
 	onlyOperator: Ember.computed('onestop_id', function(){
 		var data = this.get('operators');
 		var onlyOperator = data.get('firstObject');
@@ -21,7 +41,8 @@ export default Ember.Controller.extend(mapBboxController, {
 	}),
 	icon: L.icon({
 		iconUrl: 'assets/images/marker.png',		
-		iconSize: (20, 20)
+		iconSize: (20, 20),
+    iconAnchor: [10, 24],
 	}),
 	operators: Ember.computed('model', function(){
 		if (this.get('model') === null){
@@ -35,6 +56,11 @@ export default Ember.Controller.extend(mapBboxController, {
 	}),
 	mapMoved: false,
 	mousedOver: false,
+  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
+	closeTextbox: Ember.inject.service(),
+  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
+    return this.get('closeTextbox').get('textboxIsClosed');
+  }),
 	actions: {
 		setOperator(operator){
 			var onestop_id = operator.get('id');
@@ -76,16 +102,34 @@ export default Ember.Controller.extend(mapBboxController, {
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`; 
       return Ember.$.ajax({ url }).then(json => json.features);
     },
-    setPlace(selected){
+   	setPlace: function(selected){
+   		this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      
   		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace(){
   		this.set('place', null);
-  	}
+  	},
+  	removePin: function(){
+      this.set('pin', null);
+    },
+  	dropPin: function(e){
+      var lat = e.latlng.lat;
+      var lng = e.latlng.lng;
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      this.set('pin', coordinates);
+    }
 	}	
 });

@@ -1,0 +1,263 @@
+{{#if media.isMobile}}
+	<div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
+    <div class="row">
+      <div id="sidebar-media" class="collapse in">
+    		<div style="display:flex;justify-content:center;align-items:center;">
+          <div style="width:130px;height:40px;">
+            <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
+          </div>
+        </div>
+				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+        {{#unless textboxIsClosed}}
+          {{text-box route="index" action="setTextBoxClosed"}}
+        {{/unless}}
+				{{sidebar-title-transitland}}
+            <div class="btn-group-vertical" role="group" >
+						  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
+						  
+						  <div class="expanded-selection">
+
+									{{#each model.traversedByRoute as |route|}}
+							  		{{#route-detail bbox=bbox onestop_id=route.onestop_id route=route}}{{/route-detail}}
+						  		{{/each}}
+									<br>
+									<div class="form-group">
+								  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
+								  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
+								    <label for="check-1">Show stops served by route</label>
+								  </div>
+								  {{#if displayStops}}
+								  	{{#unless selectedRsp}}
+								  		<div class="svg-wrapper-legend-route-only">
+								  			<row>
+											    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+											    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+											  	</svg> stops visited by route
+												</row>
+											</div>
+										{{/unless}}
+									{{/if}}
+								  {{#if selectedRsp}}
+								  	{{#if displayStops}}
+									  	<div class="svg-wrapper-legend-route">
+									  			<row>
+												    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+												    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+												  	</svg> stops visited by route
+													</row>
+												</div>
+					   					<div class="svg-wrapper-legend-rsp">
+					   						<row>
+											    <svg class="svg-stop-rsp" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+											    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+											  	</svg> stops visited by RSP
+												</row>
+											</div>
+										{{/if}}
+								  {{/if}}
+						  		<div>
+							  		<form>
+								  		<div class="form-group-header">{{#link-to 'routes' (query-params bbox=bbox onestop_id=traversed_by operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Hide route stop patterns{{/link-to}}</div>
+										  <div class="form-group">
+										  	 {{#each model.route_stop_patterns as |rsp|}}
+										  	 	{{#if rsp.is_selected}}
+								  					<input type="radio" id=rsp.onestop_id name="options" checked {{action "setRsp" rsp}}>
+								  				{{else}}
+								  					<input type="radio" id=rsp.onestop_id name="options" {{action "setRsp" rsp}}>
+								  				{{/if}}
+										  			<label for=rsp.onestop_id>{{rsp.onestop_id}}</label><br>
+								  				{{/each}}	
+										  </div>
+										</form>
+									</div>
+							</div>
+						  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+						  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}  
+						  {{url-builder entity="route_stop_patterns" server="Transitland" query="results" queryParams=queryParams traversed_by=traversed_by}}
+					 	</div>
+            <hr class="sidebar-hr">
+            {{sidebar-title-mobility}}
+            <div class="btn-group-vertical" role="group" >
+              {{#link-to 'isochrones' (query-params bbox=bbox onestop_id=null pin=pin)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+            </div>  
+			</div>
+      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
+			{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+		  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+					<div class="location-search" style="width:225px">
+              <div class="row">
+                <div class="ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
+          </div>
+					{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+						{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+
+							{{#each model.traversedByRoute as |route|}}
+								{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
+							{{/each}}
+
+							{{#each model.route_stop_patterns as |rsp|}}
+								{{#geojson-layer geoJSON=rsp.rsp_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
+							{{/each}}
+
+							{{#if displayStops}}
+								{{#each model.stopsServedByRoute as |stop|}}
+						  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
+						  		{{/marker-layer}}
+					  		{{/each}}
+					  	{{/if}}
+					{{/leaflet-map}}
+				</div>
+		</div>
+	</div>
+{{else}}
+	<div class="col-md-4 linebreak-text" id="sidebar">
+   	<div style="display:flex;justify-content:center;align-items:center;">
+      <div style="width:130px;height:40px;">
+        <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
+      </div>
+    </div>
+		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+		{{#unless textboxIsClosed}}
+      {{text-box route="index" action="setTextBoxClosed"}}
+    {{/unless}}
+		{{sidebar-title-transitland}}
+		<div class="btn-group-vertical" role="group" >
+		  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
+		  
+		  <div class="expanded-selection">
+
+					{{#each model.traversedByRoute as |route|}}
+			  		{{#route-detail bbox=bbox onestop_id=route.onestop_id route=route}}{{/route-detail}}
+		  		{{/each}}
+					<br>
+
+					<div class="form-group">
+				  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "displayStops"}}>
+				  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "displayStops"}}>{{/if}}
+				    <label for="check-1">Show stops served by route</label>
+				  </div>
+				  {{#if displayStops}}
+				  	{{#unless selectedRsp}}
+				  		<div class="svg-wrapper-legend-route-only">
+				  			<row>
+							    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+							    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+							  	</svg> stops visited by route
+								</row>
+							</div>
+						{{/unless}}
+					{{/if}}
+				  {{#if selectedRsp}}
+				  	{{#if displayStops}}
+					  	<div class="svg-wrapper-legend-route">
+					  			<row>
+								    <svg class="svg-stop-legend" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+								    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+								  	</svg> stops visited by route
+									</row>
+								</div>
+	   					<div class="svg-wrapper-legend-rsp">
+	   						<row>
+							    <svg class="svg-stop-rsp" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve">
+							    <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/>
+							  	</svg> stops visited by RSP
+								</row>
+							</div>
+						{{/if}}
+				  {{/if}}
+		  		  <div>
+			  		<form>
+				  		<div class="form-group-header">{{#link-to 'routes' (query-params bbox=bbox onestop_id=traversed_by operated_by=null serves=null served_by=onestop_id vehicle_type=null isochrone_mode=null)  }}Hide route stop patterns{{/link-to}}</div>
+						  <div class="form-group">
+						  	 {{#each model.route_stop_patterns as |rsp|}}
+						  	 	{{#if rsp.is_selected}}
+				  					<input type="radio" id=rsp.onestop_id name="options" checked {{action "setRsp" rsp}}>
+				  				{{else}}
+				  					<input type="radio" id=rsp.onestop_id name="options" {{action "setRsp" rsp}}>
+				  				{{/if}}
+						  			<label for=rsp.onestop_id>{{rsp.onestop_id}}</label><br>
+				  				{{/each}}	
+						  </div>
+						 
+						</form>
+					</div>
+
+					{{#if hoverStop}}
+						<div class="hover-detail">
+							<div>{{hoverStop.name}}</div>
+							<p class="caption">Click the stop for more information</p>
+						</div>
+					{{/if}}
+			</div>
+			{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}} 
+		  {{url-builder entity="route_stop_patterns" server="Transitland" query="results" queryParams=queryParams traversed_by=traversed_by}}
+		</div>
+		<hr class="sidebar-hr">
+		{{sidebar-title-mobility}}
+		<div class="btn-group-vertical" role="group" > 
+		  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+		</div>
+	</div>
+	<div class="col-md-8">
+		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+				<div class="location-search">
+			    {{#power-select
+			      search=(action "searchRepo")
+		        renderInPlace=true
+			      selected=place
+			      placeholder="Search for location..."
+			      onchange=(action "setPlace")
+			      as |repo|
+			    }}
+			      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+			    {{/power-select}}
+			  </div>
+				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+
+						{{#each model.traversedByRoute as |route|}}
+							{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+							{{/geojson-layer}}
+						{{/each}}
+
+						{{#each model.route_stop_patterns as |rsp|}}
+							{{#geojson-layer geoJSON=rsp.rsp_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+							{{/geojson-layer}}
+						{{/each}}
+						
+						{{#if displayStops}}
+							{{#each model.stopsServedByRoute as |stop|}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
+					  		{{/marker-layer}}
+				  		{{/each}}
+
+				  		{{#each model.stops.features as |stop|}}
+						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+						  		{{/marker-layer}}
+					  		{{/each}}
+				  	{{/if}}
+				{{/leaflet-map}}
+		</div>
+	</div>
+{{/if}}

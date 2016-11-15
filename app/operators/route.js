@@ -1,13 +1,18 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
+import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend(mapBboxRoute, {
+export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
     onestop_id: {
       // replace: true,
       refreshModel: true
     },
     bbox: {
+      replace: true,
+      refreshModel: true
+    },
+    pin: {
       replace: true,
       refreshModel: true
     }
@@ -30,14 +35,22 @@ export default Ember.Route.extend(mapBboxRoute, {
       arrayTwo.push(tempArray[2]);
       boundsArray.push(arrayOne);
       boundsArray.push(arrayTwo);
-      controller.set('leafletBbox', boundsArray);
+      controller.set('leafletBounds', boundsArray);
     }
+    controller.set('leafletBbox', controller.get('bbox'));
     this._super(controller, model);
   },
   model: function(params){
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
-    this.store.unloadAll('data/transitland/route');    
+    this.store.unloadAll('data/transitland/route');  
+    this.store.unloadAll('data/transitland/route_stop_pattern'); 
+    params.total=true;
+    params.pin=null;
+    
     return this.store.query('data/transitland/operator', params);
+  },
+  actions:{
+    
   }
 });

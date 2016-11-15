@@ -1,11 +1,16 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
+import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(setLoading, {
 	queryParams: {
     bbox: {
       replace: true,
       refreshModel: true
+    },
+    pin: {
+    	replace: true,
+    	refreshModel: true
     }
 	},
 	setupController: function (controller, model) {
@@ -29,10 +34,15 @@ export default Ember.Route.extend({
 			arrayTwo.push(tempArray[2]);
 			boundsArray.push(arrayOne);
 			boundsArray.push(arrayTwo);
-			controller.set('leafletBbox', boundsArray);
-
+			controller.set('leafletBounds', boundsArray);
 		}
+    controller.set('leafletBbox', controller.get('bbox'));
     this._super(controller, model);
 		
+	},
+	actions: {
 	}
 });
+
+
+  

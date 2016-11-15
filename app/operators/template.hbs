@@ -1,63 +1,190 @@
-<div class="col-xs-12 col-sm-12 col-md-3 linebreak-text">
-  {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
-  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Routes</button>{{/link-to}}
-  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Stops</button>{{/link-to}}
-  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Operators</button>{{/link-to}}
-  <div class="expanded-selection">
-    {{#if onestop_id}}
-      {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
-      <p>{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null serves=null operated_by=onestop_id  served_by=null style_routes_by=null) }}View routes served by this operator{{/link-to}}</p><br>
-      <p>{{#link-to 'stops' (query-params bbox=leafletBbox served_by=onestop_id onestop_id=null serves=null operated_by=null isochrone_mode=null) }}View stops served by this operator{{/link-to}}</p>
-    {{else}}
-      {{#power-select
-        options=operators
-        selected=operator
-        placeholder="List of operators"
-        searchPlaceholder="Type to filter..."
-        onchange=(action "setOperator")
-        as |operator|
-      }}
-        {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
-      {{/power-select}}
-    {{/if}}
-    
-    {{#if selectedOperator}}
-    {{else if onlyOperator}}
-    {{else if hoverOperator}}
-      <div class="hover-detail">
-        {{hoverOperator.name}}<br>
-        <p class="caption">Click the operator area for more information</p>
+{{#if media.isMobile}}
+  <div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
+    <div class="row">
+      <div id="sidebar-media" class="collapse in">
+         <div style="display:flex;justify-content:center;align-items:center;">
+          <div style="width:130px;height:40px;">
+            <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
+          </div>
+        </div>
+        {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+        {{#unless textboxIsClosed}}
+          {{text-box route="index" action="setTextBoxClosed"}}
+        {{/unless}}
+        {{sidebar-title-transitland}}
+            <div class="btn-group-vertical" role="group" >
+              {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
+              {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+              {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Show Operators</button>{{/link-to}}
+              <div class="expanded-selection">
+                {{#if onestop_id}}
+                  {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+                  <p>{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null serves=null operated_by=onestop_id  served_by=null style_routes_by=null) }}View routes served by this operator{{/link-to}}</p><br>
+                  <p>{{#link-to 'stops' (query-params bbox=leafletBbox served_by=onestop_id onestop_id=null serves=null operated_by=null isochrone_mode=null) }}View stops served by this operator{{/link-to}}</p>
+                {{else}}
+                  {{#power-select
+                    options=operators
+                    selected=operator
+                    placeholder=placeholderMessage
+                    searchPlaceholder="Type to filter..."
+                    onchange=(action "setOperator")
+                    as |operator|
+                  }}
+                    <div style={{operator.style}}>
+                      {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+                    </div>
+                  {{/power-select}}
+                {{/if}}
+                
+                {{#if selectedOperator}}
+                {{else if onlyOperator}}
+                {{else if hoverOperator}}
+                  <div class="hover-detail">
+                    {{hoverOperator.name}}<br>
+                    <p class="caption">Click the operator area for more information</p>
+                  </div>
+                {{else}}
+                  <p class="caption">Hover on the operator area for information</p>
+                  {{#if mapMoved}}
+                    <button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+                  {{/if}}
+                {{/if}}
+              </div>
+              {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
+            </div>
+            <hr class="sidebar-hr">
+            {{sidebar-title-mobility}}
+            <div class="btn-group-vertical" role="group" >
+              {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Show Isochrones</button>{{/link-to}}
+            </div>         
       </div>
-    {{else}}
-      <p class="caption">Hover on the operator area for information</p>
-      {{#if mapMoved}}
-        <button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-      {{/if}}
-    {{/if}}
-  </div>
-  {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
-</div>
-<div class="col-xs-12 col-sm-12 col-md-9">
-  <div id="map">
-    <div class="location-search">
-      {{#power-select
-        search=(action "searchRepo")
-        renderInPlace=true
-        selected=place
-        placeholder="Search for location..."
-        onchange=(action "setPlace")
-        onclose=(action "clearPlace")
-        as |repo|
-      }}
-        {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-      {{/power-select}}
+      <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
+      {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+      <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+           <div class="location-search" style="width:225px">
+              <div class="row">
+                <div class="ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
+          </div>
+          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+            {{#each model as |operator|}}
+              {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
+              {{/polygon-layer}}
+            {{/each}}
+          {{/leaflet-map}}
+      </div>
     </div>
-    {{#leaflet-map bounds=leafletBbox onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-      {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-      {{#each model as |operator|}}
-        {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
-        {{/polygon-layer}}
-      {{/each}}
-    {{/leaflet-map}}
   </div>
-</div>
+{{else}}
+  <div class="col-md-4 linebreak-text" id="sidebar">
+   <div style="display:flex;justify-content:center;align-items:center;">
+      <div style="width:130px;height:40px;">
+        <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
+      </div>
+    </div>
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null pin=pin operated_by=null serves=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+    {{#unless textboxIsClosed}}
+      {{text-box route="index" action="setTextBoxClosed"}}
+    {{/unless}}
+    {{sidebar-title-transitland}}
+    <div class="btn-group-vertical" role="group" >
+    {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
+    {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+    {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Show Operators</button>{{/link-to}}
+      <div class="expanded-selection">
+        {{#if onestop_id}}
+          {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
+          <p>{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null serves=null operated_by=onestop_id served_by=null style_routes_by=null) }}View routes served by this operator{{/link-to}}</p><br>
+          <p>{{#link-to 'stops' (query-params bbox=leafletBbox served_by=onestop_id onestop_id=null serves=null operated_by=null isochrone_mode=null) }}View stops served by this operator{{/link-to}}</p>
+        {{else}}
+          {{#power-select
+            options=operators
+            selected=operator
+            placeholder=placeholderMessage
+            searchPlaceholder="Type to filter..."
+            onchange=(action "setOperator")
+            as |operator|
+          }}
+            <div style={{operator.style}}>
+              {{operator.name}} {{#if operator.short_name}}({{operator.short_name}}){{/if}}
+            </div>
+          {{/power-select}}
+        {{/if}}
+        
+        {{#if selectedOperator}}
+        {{else if onlyOperator}}
+        {{else if hoverOperator}}
+          <div class="hover-detail">
+            {{hoverOperator.name}}<br>
+            <p class="caption">Click the operator area for more information</p>
+          </div>
+        {{else}}
+          <p class="caption">Hover on the operator area for information</p>
+          {{#if mapMoved}}
+            <button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+          {{/if}}
+        {{/if}}
+      </div>
+      {{url-builder entity="operators" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id}}
+      </div>
+        <hr class="sidebar-hr">
+        {{sidebar-title-mobility}}
+        <div class="btn-group-vertical" role="group" >
+        {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+      </div>
+    </div>
+  <div class="col-md-8">
+    {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+    <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+        <div class="location-search">
+              <div class="row">
+                <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+                  {{#if pin}}
+                    <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+                  {{else}}
+                    <img src='assets/images/marker1.png' class="markerIcon"/>
+                  {{/if}}
+                </div>
+                {{#power-select
+                  search=(action "searchRepo")
+                  selected=place
+                  placeholder="Search for location..."
+                  onchange=(action "setPlace")
+                  onclose=(action "clearPlace")
+                  as |repo|
+                }}
+                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+                {{/power-select}}
+              </div>
+          </div>
+        {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+          {{#each model as |operator|}}
+            {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
+            {{/polygon-layer}}
+          {{/each}}
+          {{#if pin}}
+              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+              {{/marker-layer}}
+            {{/if}}
+        {{/leaflet-map}}
+    </div>
+  </div>
+{{/if}}
