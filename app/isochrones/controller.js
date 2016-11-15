@@ -28,7 +28,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
     iconAnchor: [10, 24],
 	}),
   markerUrl: 'assets/images/marker1.png',
-  // zoom: 12,
   mousedOver: false,
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
   closeTextbox: Ember.inject.service(),
@@ -37,7 +36,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   }),
 	actions: {
 		updateLeafletBbox(e) {
-      // this.set('zoom', e.target._zoom);
 			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
 		},
