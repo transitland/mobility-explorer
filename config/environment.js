@@ -36,6 +36,9 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    // ENV.googleAnalytics = {
+    //   webPropertyId: 'UA-47035811-4'
+    // };
     ENV.transitlandDatastoreHost = 'https://dev.transit.land';
 
   }
@@ -47,11 +50,13 @@ module.exports = function(environment) {
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
-
     ENV.APP.rootElement = '#ember-testing';
   }
 
   if (environment === 'production') {
+    // ENV.googleAnalytics = {
+    //   webPropertyId: 'UA-47035811-4'
+    // };
     ENV.baseURL = '/mobility/explorer/';
 
   }
