@@ -64,25 +64,33 @@ export default Ember.Route.extend(setLoading, {
 	    } 
 
 	    var mode = params.isochrone_mode;
-	    var url = 'https://matrix.mapzen.com/isochrone?api_key=matrix-bHS1xBE&json=';
+	    var url = 'https://matrix.mapzen.com/isochrone?api_key=mapzen-jLrDBSP&json=';
+	    var linkUrl = 'https://matrix.mapzen.com/isochrone?json=';
 	    var json = {
 	      locations: [{"lat":pinLocation[0], "lon":pinLocation[1]}],
 	      costing: mode,	      
 	      denoise: .3,
+	      polygons: true,
+        generalize: 50,
 	      costing_options: {"pedestrian":{"use_ferry":0}},
 	      contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
 	    };
 
 	    if (json.costing === "multimodal"){
 	      json.denoise = 0;
+	      // transit_start_end_max_distance default is 2145 or about 1.5 miles for start/end distance:
+	      // transit_transfer_max_distance default is 800 or 0.5 miles for transfer distance:
+	      json.costing_options = {"pedestrian":{"use_ferry":0,"transit_start_end_max_distance":100000,"transit_transfer_max_distance":100000}};
 	    }
 	    if (params.departure_time){
 	    	json.date_time = {"type": 1, "value": params.departure_time};
 	    }
 
 	    url += escape(JSON.stringify(json));
+	    linkUrl += escape(JSON.stringify(json));
 	    return Ember.RSVP.hash({
 	      url: url,
+	      linkUrl: linkUrl,
 	      isochrones: Ember.$.ajax({ url }).then(function(response){
 	      	// var unescapedUrl = unescape(this.url);
 	      	// var firstHalf = unescapedUrl.split('"costing":"');
