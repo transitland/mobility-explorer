@@ -107,7 +107,7 @@
 
 				
 				
-				{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
+				{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 			</div>
 		  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
 		  <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
@@ -278,7 +278,7 @@
 		<div class="btn-group-vertical" role="group" >
   		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
   	</div>	
-		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.url server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
+		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 	</div>
 	<div class="col-md-8">
 	  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
