@@ -8,7 +8,7 @@ export default Ember.Mixin.create({
 
   pageviewToGA: Ember.on('didTransition', function(page, title) {
     var page = page ? page : this.get('url');
-    // page = Ember.getWithDefault(ENV, 'baseURL', '') + page;
+    page = Ember.getWithDefault(ENV, 'baseURL', '') + page;
     var title = title ? title : this.get('url');
 
     if (Ember.get(ENV, 'googleAnalytics.webPropertyId') != null) {
