@@ -63,6 +63,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
         var onlyStop = stops.get('firstObject');
         var stopLocation = onlyStop.get('geometry.coordinates');
         var url = 'https://matrix.mapzen.com/isochrone?api_key=mapzen-jLrDBSP&json=';
+        var linkUrl = 'https://matrix.mapzen.com/isochrone?json=';
         
         var mode = stops.get('query.isochrone_mode');
         var json = {
@@ -84,10 +85,12 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           json.date_time = {"type": 1, "value": params.departure_time};
         }
         url += escape(JSON.stringify(json));
+        linkUrl += escape(JSON.stringify(json));
         return Ember.RSVP.hash({
           stops: stops,
           onlyStop: onlyStop,
           url: url,
+          linkUrl: linkUrl,
           isochrones: Ember.$.ajax({ url }).then(function(response){
             return response;
           })
