@@ -111,7 +111,7 @@ export default Ember.Controller.extend(setTextboxClosed, {
     },
 		searchRepo(term) {
 			if (Ember.isBlank(term)) { return []; }
-			const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`; 
+			const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`; 
 			return Ember.$.ajax({ url }).then(json => json.features);
 		},
 		displayStops: function(){

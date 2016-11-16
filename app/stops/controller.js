@@ -78,7 +78,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
 		},
 		searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&sources=wof&text=${term}`;
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&sources=wof&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     setPlace: function(selected){
