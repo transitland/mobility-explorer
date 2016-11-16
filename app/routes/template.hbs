@@ -32,10 +32,8 @@
 
 
 								  <row class="subheading-row">
-								  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
-								  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route." class="col-md-2"><div class="fa fa-question-circle"></div></div>
-								  </row>
-								  <br>
+									  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}<div class="fa fa-question-circle">{{#popover-on-element class="tooltip-on-sidebar"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}</div></div>
+									</row>
 
 								{{else if operated_by}}
 									{{#power-select
@@ -296,12 +294,9 @@
 				  </div>
 
 				  <row class="subheading-row">
-				  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
-				  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route. Click to learn more." class="col-md-2">
-              <a href="https://transit.land/documentation/datastore/routes-and-route-stop-patterns.html" target="_blank"><div class="fa fa-question-circle"></div></a>
-            </div>
-				  </row>
-					<br>
+					  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}<div class="fa fa-question-circle">{{#popover-on-element class="tooltip-on-sidebar"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}</div></div>
+					</row>
+
 				{{else if operated_by}}
 					{{#power-select
 			      options=routes
