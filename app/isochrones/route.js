@@ -65,6 +65,7 @@ export default Ember.Route.extend(setLoading, {
 
 	    var mode = params.isochrone_mode;
 	    var url = 'https://matrix.mapzen.com/isochrone?api_key=mapzen-jLrDBSP&json=';
+	    var linkUrl = 'https://matrix.mapzen.com/isochrone?json=';
 	    var json = {
 	      locations: [{"lat":pinLocation[0], "lon":pinLocation[1]}],
 	      costing: mode,	      
@@ -86,8 +87,10 @@ export default Ember.Route.extend(setLoading, {
 	    }
 
 	    url += escape(JSON.stringify(json));
+	    linkUrl += escape(JSON.stringify(json));
 	    return Ember.RSVP.hash({
 	      url: url,
+	      linkUrl: linkUrl,
 	      isochrones: Ember.$.ajax({ url }).then(function(response){
 	      	// var unescapedUrl = unescape(this.url);
 	      	// var firstHalf = unescapedUrl.split('"costing":"');
