@@ -14,7 +14,7 @@
         {{sidebar-title-transitland}}
             <div class="btn-group-vertical" role="group" >
 						  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null pin=pin)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
-						  
+
 						  <div class="expanded-selection">
 						  	{{#if onestop_id}}
 									{{#if selectedRoute}}
@@ -29,14 +29,14 @@
 				  				{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
 				    			<label for="check-1">Show stops served by route</label>
 				  				</div>
-								  
-								  
+
+
 								  <row class="subheading-row">
 								  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
 								  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route." class="col-md-2"><div class="fa fa-question-circle"></div></div>
 								  </row>
 								  <br>
-							  
+
 								{{else if operated_by}}
 									{{#power-select
 								      options=routes
@@ -137,7 +137,7 @@
 										        onclose=(action "clearOperator")
 											      as |operator|
 												    }}
-													  	<div style={{operator.style}}>{{operator.name}}</div>	
+													  	<div style={{operator.style}}>{{operator.name}}</div>
 												  {{/power-select}}
 										  	</div>
 										  {{/if}}
@@ -149,7 +149,7 @@
 								  	{{/if}}
 							  	{{/each}}
 								{{/if}}
-						    
+
 								{{#if selectedRoute}}
 								{{else if onlyRoute}}
 								{{else if hoverRoute}}
@@ -166,13 +166,13 @@
 							</div>
 						  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
 						  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
-						  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}  
+						  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 			  		</div>
             <hr class="sidebar-hr">
             {{sidebar-title-mobility}}
             <div class="btn-group-vertical" role="group" >
-			  			{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}} 
-			  		</div> 
+			  			{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+			  		</div>
 			</div>
     <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
 		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
@@ -202,7 +202,7 @@
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}	
+								{{#each model.routes as |route|}}
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 										{{/geojson-layer}}
 								{{/each}}
@@ -225,7 +225,7 @@
 					  	{{/if}}
 					  {{else}}
 							{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}	
+								{{#each model.routes as |route|}}
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
 								{{/each}}
@@ -280,7 +280,7 @@
 		<div class="btn-group-vertical" role="group" >
 
 		  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
-		  
+
 		  <div class="expanded-selection">
 		  	{{#if onestop_id}}
 					{{#if selectedRoute}}
@@ -294,12 +294,14 @@
 				  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
 				    <label for="check-1">Show stops served by route</label>
 				  </div>
-				  
+
 				  <row class="subheading-row">
 				  	<div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}</div>
-				  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route." class="col-md-2"><div class="fa fa-question-circle"></div></div>
+				  	<div tooltip="View the unique combinations of shape lines for trips and stops along this route. Click to learn more." class="col-md-2">
+              <a href="https://transit.land/documentation/datastore/routes-and-route-stop-patterns.html" target="_blank"><div class="fa fa-question-circle"></div></a>
+            </div>
 				  </row>
-					<br>			  
+					<br>
 				{{else if operated_by}}
 					{{#power-select
 			      options=routes
@@ -439,21 +441,21 @@
 						<p class="caption">Click the stop for more details</p>
 					</div>
 				{{/if}}
-				
-				
+
+
 				{{#if mapMoved}}
 	    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
 	  		{{/if}}
 			<br>
 			</div>
 		  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
-		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}  
+		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
 		  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
 	  </div>
 		<hr class="sidebar-hr">
 		{{sidebar-title-mobility}}
 		<div class="btn-group-vertical" role="group" >
-	  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}  
+	  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
 	 	</div>
 	{{#if model.stopServedByRoutes}}stopServedByRoutes{{/if}}
 	</div>
@@ -485,7 +487,7 @@
 					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 						{{#if onestop_id}}
 					  	{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}	
+								{{#each model.routes as |route|}}
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 										{{/geojson-layer}}
 								{{/each}}
@@ -508,7 +510,7 @@
 					  	{{/if}}
 					  {{else}}
 							{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}	
+								{{#each model.routes as |route|}}
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
 								{{/each}}
@@ -519,7 +521,7 @@
 								{{/each}}
 							{{else if operated_by}}
 								{{#if (eq style_routes_by "mode")}}
-									{{#each model.routes as |route|}}	
+									{{#each model.routes as |route|}}
 										  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 											{{/geojson-layer}}
 									{{/each}}
