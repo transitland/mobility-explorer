@@ -21,7 +21,7 @@ Stop details:<br>
 		{{#if stop.tags.zone_id}}<strong>Zone ID:</strong> {{stop.tags.zone_id}}<br>{{/if}}
 		{{#if stop.tags.stop_url}}<strong>URL:</strong> {{stop.tags.stop_url}}<br>{{/if}}
 		{{#if stop.tags.stop_desc}}<strong>Stop description:</strong> {{stop.tags.stop_desc}}<br>{{/if}}
-		{{#if stop.tags.osm_way_id}}<strong>OSM way ID:</strong> {{stop.tags.osm_way_id}}<br>{{/if}}
+		{{#if stop.tags.osm_way_id}}<strong>Nearest street in OpenStreetMap:</strong> <a href="https://www.openstreetmap.org/way/{{stop.tags.osm_way_id}}" target="_blank">Way #{{stop.tags.osm_way_id}} <i class="fa fa-external-link" aria-hidden="true"></i></a><br>{{/if}}
 		{{#if stop.tags.wheelchair_boarding}}<strong>Wheelchair boarding:</strong> {{stop.tags.wheelchair_boarding}}<br>{{/if}}
 		{{#if stop.routes_serving_stop}}<strong>Served by:</strong>
 			<ul>
