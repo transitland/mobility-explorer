@@ -46,6 +46,8 @@
     "ember-power-select": "1.0.0-alpha.8",
     "ember-resolver": "^2.0.3",
     "ember-responsive": "2.0.0",
+    "ember-tether": "0.3.1",
+    "ember-tooltips": "2.4.1",
     "ember-truth-helpers": "1.2.0",
     "eonasdan-bootstrap-datetimepicker-npm": "4.17.37",
     "loader.js": "^4.0.1",
