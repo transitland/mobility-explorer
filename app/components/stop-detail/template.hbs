@@ -1,7 +1,7 @@
 Stop details:<br>
 {{#if stop}}
 	{{#if stop.name}}<strong>Name:</strong> {{stop.name}}<br>{{/if}}
-	{{#if stop.onestop_id}}<strong>ID:</strong> {{stop.onestop_id}}<br>{{/if}}
+	{{#if stop.onestop_id}}<strong>Onestop ID:</strong> {{stop.onestop_id}}<br>{{/if}}
 	{{#if stop.tags.zone_id}}<strong>Zone ID:</strong> {{stop.tags.zone_id}}<br>{{/if}}
 	{{#if stop.tags.stop_url}}<strong>URL:</strong> {{stop.tags.stop_url}}<br>{{/if}}
 	{{#if stop.tags.stop_desc}}<strong>Stop description:</strong> {{stop.tags.stop_desc}}<br>{{/if}}
@@ -17,7 +17,7 @@ Stop details:<br>
 {{else}}
 	{{#each stops as |stop|}}
 		{{#if stop.name}}<strong>Name:</strong> {{stop.name}}<br>{{/if}}
-		{{#if stop.onestop_id}}<strong>ID:</strong> {{stop.onestop_id}}<br>{{/if}}
+		{{#if stop.onestop_id}}<strong>Onestop ID:</strong> {{stop.onestop_id}}<br>{{/if}}
 		{{#if stop.tags.zone_id}}<strong>Zone ID:</strong> {{stop.tags.zone_id}}<br>{{/if}}
 		{{#if stop.tags.stop_url}}<strong>URL:</strong> {{stop.tags.stop_url}}<br>{{/if}}
 		{{#if stop.tags.stop_desc}}<strong>Stop description:</strong> {{stop.tags.stop_desc}}<br>{{/if}}
