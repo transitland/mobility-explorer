@@ -77,6 +77,9 @@ export default Ember.Route.extend(setLoading, {
 
 	    if (json.costing === "multimodal"){
 	      json.denoise = 0;
+	      // transit_start_end_max_distance default is 2145 or about 1.5 miles for start/end distance:
+	      // transit_transfer_max_distance default is 800 or 0.5 miles for transfer distance:
+	      json.costing_options = {"pedestrian":{"use_ferry":0,"transit_start_end_max_distance":100000,"transit_transfer_max_distance":100000}};
 	    }
 	    if (params.departure_time){
 	    	json.date_time = {"type": 1, "value": params.departure_time};
