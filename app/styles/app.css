@@ -90,7 +90,7 @@ caption{
 .fa-question-circle{
 	color: #c4c4c4;
 	font-size: 18px;
-	margin-left: 15px;
+	/*margin-left: 0;*/
 }
 
 #fa-question-circle-detail {
@@ -106,10 +106,15 @@ caption{
 .tooltip-on-sidebar{
 	background-color: #bbb;
 	color: white;
+	/*border: none;*/
+	border: 2px solid #898989;
 	border-radius: 0;
 	text-shadow: none;
-	width: 250px;
+	width: 275px;
 	z-index:900;
+	/*box-shadow: 3px -3px rgba(0, 0, 0, 0.1);*/
+	/*padding-right: 10px;*/
+	/*padding-left: 10px;*/
 }
 
 .close-textbox{
