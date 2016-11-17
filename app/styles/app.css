@@ -303,10 +303,16 @@ input, button, select, textarea {
 }
 
 .leaflet-control-attribution{
-	width: 400px;
 }
+
 .leaflet-container .leaflet-control-attribution{
 	font-size: 10px;
+	/*left: 45vw;*/
+	right: 0;
+	/*width: 45vw;*/
+	width: 500px;
+	margin-right: 30px;
+
 }
 
 .leaflet-bar a:first-child {
