@@ -11,9 +11,7 @@ html, body, #map, #map-loading{
     width: 100vw;
     z-index: 30;
     position: relative;  
-
 }
-
 
 h2{
 	font-size: 35px;
@@ -64,7 +62,7 @@ caption{
 }
 
 .subheading{
-	padding-left:0; 
+	padding-left:5px; 
 	padding-bottom:10px;
 }
 
@@ -92,47 +90,30 @@ caption{
 .fa-question-circle{
 	color: #c4c4c4;
 	font-size: 18px;
+	margin-left: 15px;
+}
+
+#fa-question-circle-detail {
+	color: #9c9c9c;
+	font-size: 18px;
+	margin-left: 10px;
 }
 
 .fa-question-circle:hover{
 	color: #898989;
 }
 
+.tooltip-on-sidebar{
+	background-color: #bbb;
+	color: white;
+	border-radius: 0;
+	text-shadow: none;
+	width: 250px;
+	z-index:900;
+}
+
 .close-textbox{
 	text-align: right;
-	padding-right: 5px;
-}
-
-
-[tooltip]:hover:before{
-    position: absolute;
-    content:' ';
-    top: 20px;
-    left:12px;
-    width: 0;
-    height: 0;
-    opacity: 1;
-	  border-left: 10px solid transparent;
-	  border-right: 10px solid transparent;
-	  border-bottom: 10px solid #bbb;
-}
-
-[tooltip]:hover:after{
-  content: attr(tooltip);
-  width: 200px;
-  height: auto;
-  position: absolute;
-  text-align: left;
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.2em;
-  padding: 10px 15px;
-  top: 30px;
-  left: -160px;
-  background-color: #bbb;
-  z-index: 10;
-  /*-webkit-box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);*/
-  box-shadow: 2px 2px 1px 0 rgba(50,50,50,.75);;
 }
 
 .sidebar-hr{
@@ -151,6 +132,9 @@ caption{
 
 }
 
+.tooltip {
+  pointer-events: all;
+}
 .sidebar-dropdown{
 	margin-right: 5px;
 	margin-left: 30px;
