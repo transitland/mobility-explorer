@@ -3,7 +3,7 @@
 	{{#if route.short_name}}<strong>Short name:</strong> {{route.short_name}}<br>{{/if}}
 	{{#if route.onestop_id}}<strong>Onestop ID:</strong> {{route.onestop_id}}<div class="fa fa-question-circle">{{#popover-on-element class="tooltip-on-sidebar"}}<a href="https://transit.land/documentation/onestop-id-scheme/">Onestop IDs </a>are globally unique identifiers for transit feeds, operators, routes, and stops. Use them to query the Transitland API or use them in your own apps and analyses.{{/popover-on-element}}</div><br>{{/if}}
 	{{#if route.vehicle_type}}<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>{{/if}}
-	{{#if route.tags.route_url}}<strong>URL:</strong><a target="_blank" href="{{route.tags.route_url}}">{{route.tags.route_url}}</a><br>{{/if}}
+	{{#if route.tags.route_url}}<strong>URL:&nbsp;</strong><a target="_blank" href="{{route.tags.route_url}}">{{route.tags.route_url}}</a><br>{{/if}}
 	{{#if route.tags.route_desc}}<strong>Route description:</strong> {{route.tags.route_desc}}<br>{{/if}}
 	{{#if route.tags.route_long_name}}<strong>Long name:</strong> {{route.tags.route_long_name}}<br>{{/if}}
   {{#if route.color}}<strong>Line color:</strong> {{route.color}}<br>{{/if}}
