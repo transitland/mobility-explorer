@@ -33,7 +33,7 @@
 
 								  <row class="subheading-row">
 									  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div></div>
-									  {{#popover-on-element class="tooltip-on-sidebar" hideOn='mouseleave'}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}
+									  {{#popover-on-element class="tooltip-on-sidebar" hideOn="mouseleave"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}
 									</row>
 
 								{{else if operated_by}}
@@ -53,7 +53,7 @@
 									   	<row class="subheading-row">
 												<div class="form-group-header sidebar-header col-md-10">Style routes by:
 												&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
-												{{#popover-on-element class="tooltip-on-sidebar" hideOn='mouseleave'}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
+												{{#popover-on-element class="tooltip-on-sidebar" hideOn="mouseleave"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
 											</row>
 										<div class="form-group" {{action "setRouteStyle" "mode"}}>
 									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
