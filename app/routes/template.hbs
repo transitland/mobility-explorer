@@ -50,9 +50,9 @@
 									<form>
 										<strong>Operated by:</strong> {{operated_by}}<br>
 									   	<row class="subheading-row">
-										  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
-										  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
-										  </row>
+												<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+												<div class="fa fa-question-circle" id="fa-question-circle-detail">{{#popover-on-element class="tooltip-on-sidebar"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}</div>
+											</row>
 										<div class="form-group" {{action "setRouteStyle" "mode"}}>
 									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
 									  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
@@ -95,9 +95,9 @@
 							    {{/power-select}}
 									<form>
 									  <row class="subheading-row">
-									  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
-									  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
-									  </row>
+											<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+											<div class="fa fa-question-circle" id="fa-question-circle-detail">{{#popover-on-element class="tooltip-on-sidebar"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}</div>
+										</row>
 									  <div class="form-group">
 									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
 									  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
@@ -314,9 +314,9 @@
 						<form>
 							<strong>Operated by:</strong> {{operated_by}}<br>
 						  <row class="subheading-row">
-						  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
-						  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
-						  </row>
+								<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+								<div class="fa fa-question-circle" id="fa-question-circle-detail">{{#popover-on-element class="tooltip-on-sidebar"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}</div>
+							</row>
 						  <div class="form-group">
 						  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
 						  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
@@ -366,9 +366,9 @@
 			  	<p class="caption">Hover over a route line for information</p>
 					<form>
 					  <row class="subheading-row">
-					  	<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
-					  	<div tooltip="View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details." class="col-md-2"><div class="fa fa-question-circle"></div></div>
-					  </row>
+							<div class="form-group-header sidebar-header col-md-10">Style routes by:</div>
+							<div class="fa fa-question-circle" id="fa-question-circle-detail">{{#popover-on-element class="tooltip-on-sidebar"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}</div>
+						</row>
 					  <div class="form-group" >
 					  	{{#if (eq style_routes_by "mode")}}
 					  		<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>

@@ -93,6 +93,12 @@ caption{
 	margin-left: 15px;
 }
 
+#fa-question-circle-detail {
+	color: #9c9c9c;
+	font-size: 18px;
+	margin-left: 10px;
+}
+
 .fa-question-circle:hover{
 	color: #898989;
 }
@@ -103,6 +109,7 @@ caption{
 	border-radius: 0;
 	text-shadow: none;
 	width: 250px;
+	z-index:900;
 }
 
 .close-textbox{
