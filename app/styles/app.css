@@ -33,6 +33,10 @@ caption{
 	font-size: 14px;
 }
 
+.isochrone-caption a{
+	color: #9dbfc1;
+}
+
 @media(max-width:991px){
 	caption{
 		width: 100vw;
@@ -59,6 +63,10 @@ caption{
   font-weight: 300;
   font-size: 16px;
 
+}
+
+.site-intro a{
+	color: white;
 }
 
 .subheading{
