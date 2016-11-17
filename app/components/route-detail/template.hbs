@@ -1,19 +1,16 @@
 {{#if route}}
-					<div class="hover-detail">
-
-	{{#if route.name}}<strong>Route name:</strong> {{route.name}}<br>{{/if}}	
+	{{#if route.name}}<strong>Route name:</strong> {{route.name}}<br>{{/if}}
 	{{#if route.short_name}}<strong>Short name:</strong> {{route.short_name}}<br>{{/if}}
-	{{#if route.onestop_id}}<strong>ID:</strong> {{route.onestop_id}}<br>{{/if}}
+	{{#if route.onestop_id}}<strong>Onestop ID:</strong> {{route.onestop_id}}<div class="fa fa-question-circle">{{#popover-on-element class="tooltip-on-sidebar"}}<a href="https://transit.land/documentation/onestop-id-scheme/">Onestop IDs </a>are globally unique identifiers for transit feeds, operators, routes, and stops. Use them to query the Transitland API or use them in your own apps and analyses.{{/popover-on-element}}</div><br>{{/if}}
 	{{#if route.vehicle_type}}<strong>Vehicle type:</strong> {{route.vehicle_type}}<br>{{/if}}
-	{{#if route.color}}<strong>Color:</strong> {{route.color}}<br>{{/if}}
-	{{#if route.tags.route_url}}<strong>URL:</strong><a target="_blank" href="{{route.tags.route_url}}">{{route.tags.route_url}}</a><br>{{/if}}
+	{{#if route.tags.route_url}}<strong>URL:&nbsp;</strong><a target="_blank" href="{{route.tags.route_url}}">{{route.tags.route_url}}</a><br>{{/if}}
 	{{#if route.tags.route_desc}}<strong>Route description:</strong> {{route.tags.route_desc}}<br>{{/if}}
 	{{#if route.tags.route_long_name}}<strong>Long name:</strong> {{route.tags.route_long_name}}<br>{{/if}}
+  {{#if route.color}}<strong>Line color:</strong> {{route.color}}<br>{{/if}}
 	{{#if route.tags.route_text_color}}<strong>Text color:</strong> {{route.tags.route_text_color}}<br>{{/if}}
 	{{#if route.operated_by_name}}
 		<strong>Operated by:</strong> {{#link-to 'operators' (query-params bbox=bbox onestop_id=route.operated_by_onestop_id) }}{{route.operated_by_name}}<br>{{/link-to}}
 	{{/if}}
-	{{#if route.operated_by_onestop_id}}<strong>Operator ID:</strong> {{route.operated_by_onestop_id}}<br>
+	{{#if route.operated_by_onestop_id}}<strong>Operator Onestop ID:</strong> {{route.operated_by_onestop_id}}<br>
 	{{/if}}
-</div>
 {{/if}}
