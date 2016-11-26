@@ -55,7 +55,7 @@ var Route = DS.Model.extend({
 					},
 				},
 			]
-		}
+		};
 	}).property('geometry'),
 	operator_focus_as_geojson_with_outline: (function(){
 		return {
@@ -82,7 +82,7 @@ var Route = DS.Model.extend({
 					},
 				},
 			]
-		}
+		};
 	}).property('geometry'),
 
 	mode_as_geojson_with_outline: (function(){
@@ -95,11 +95,11 @@ var Route = DS.Model.extend({
 			c : 12,
 			d : 13,
 			e : 14,
-			f : 15, 
-		}
+			f : 15,
+		};
 
 		for (var i = 0; i < 6; i++){
-			let hexDigit = hexValue[i]
+			let hexDigit = hexValue[i];
 			if (hexDigit >= 0){
 				hexValue[i] = Number.parseInt(hexDigit);
 			} else {
@@ -110,7 +110,7 @@ var Route = DS.Model.extend({
 		let red = (hexValue[0] * 16) + hexValue[1];
 		let green = (hexValue[2] * 16) + hexValue[3];
 		let blue = (hexValue[4] * 16) + hexValue[5];
-		
+
 		// from turn-by-turn demo:
 		var lum = 0.299 * red + 0.587 * green + 0.114 * blue,
     is_light = (lum > 0xbb);
@@ -141,7 +141,7 @@ var Route = DS.Model.extend({
 					},
 				},
 			]
-		}
+		};
 	}).property('geometry'),
 	operator_as_geojson_with_outline: (function(){
 		let lineColor = this.get('operator_color');
@@ -153,27 +153,17 @@ var Route = DS.Model.extend({
 			c : 12,
 			d : 13,
 			e : 14,
-			f : 15, 
-		}
+			f : 15,
+		};
 
 		for (var i = 0; i < 6; i++){
-			let hexDigit = hexValue[i]
+			let hexDigit = hexValue[i];
 			if (hexDigit >= 0){
 				hexValue[i] = Number.parseInt(hexDigit);
 			} else {
 				hexValue[i] = hexLetters[hexDigit];
 			}
 		}
-
-		let red = (hexValue[0] * 16) + hexValue[1];
-		let green = (hexValue[2] * 16) + hexValue[3];
-		let blue = (hexValue[4] * 16) + hexValue[5];
-		
-		// from turn-by-turn demo:
-		var lum = 0.299 * red + 0.587 * green + 0.114 * blue,
-    is_light = (lum > 0xbb);
-
-    let borderColor = (is_light ? '#666666' : '#f8f8f8');
 
 		return {
 			type: "FeatureCollection",
@@ -199,7 +189,7 @@ var Route = DS.Model.extend({
 					},
 				},
 			]
-		}
+		};
 	}).property('geometry'),
 	rsp_route_as_geojson_with_outline: (function(){
 		return {
@@ -226,7 +216,7 @@ var Route = DS.Model.extend({
 					},
 				},
 			]
-		}
+		};
 	}).property('geometry'),
 	operator_color: (function(){
 		var str = this.get('operated_by_onestop_id');
@@ -241,7 +231,7 @@ var Route = DS.Model.extend({
 		colorCode = "#" + colorCode;
 		return colorCode;
 	}).property('operated_by_onestop_id'),
-	
+
 	operated_by_route_default_color: (function(){
 		if (this.get('color') !== null && this.get('color') !== "ffffff"){
 			return "#" + this.get('color');

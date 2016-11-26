@@ -1,3 +1,5 @@
+/* global L */
+
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
@@ -24,7 +26,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   }),
   currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',		
+		iconUrl: 'assets/images/marker1.png',
 		iconSize: (20, 20),
     iconAnchor: [10, 24],
 	}),
@@ -45,7 +47,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
 		},
   	searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;      
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
   	setPlace: function(selected){
@@ -55,7 +57,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
       var coordinates = [];
       coordinates.push(lat);
       coordinates.push(lng);
-      
+
       this.set('place', selected);
       this.set('pin', coordinates);
       this.set('center', coordinates);

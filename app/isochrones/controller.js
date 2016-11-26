@@ -1,3 +1,5 @@
+/* global moment, L */
+
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
@@ -23,7 +25,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   place: null,
   currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',		
+		iconUrl: 'assets/images/marker1.png',
 		iconSize: (20, 20),
     iconAnchor: [10, 24],
 	}),
@@ -49,7 +51,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
     },
   	searchRepo(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`;      
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`;
       return Ember.$.ajax({ url }).then(json => json.features);
     },
   	setPlace: function(selected){
@@ -71,9 +73,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
     closePopup: function(e){
       // debugger;
       e.target.closePopup();
-    },
-    removePin: function(){
-      this.set('pin', null);
     },
     dropPin: function(e){
       var lat = e.latlng.lat;
@@ -129,17 +128,17 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
         'Oct' : '10',
         'Nov' : '11',
         'Dec' : '12'
-      }
-      var newDepartureTime = year + "-" + month[monthString] + "-" + day + "T" + hour + ":" + minute
+      };
+      var newDepartureTime = year + "-" + month[monthString] + "-" + day + "T" + hour + ":" + minute;
 
-      // This is the local date and time at the location.  
+      // This is the local date and time at the location.
       // value:
-      // the date and time is specified in ISO 8601 format (YYYY-MM-DDThh:mm) in 
+      // the date and time is specified in ISO 8601 format (YYYY-MM-DDThh:mm) in
       // the local time zone of departure or arrival. For example "2016-07-03T08:06"
-      // ISO 8601 uses the 24-hour clock system. 
-      // A single point in time can be represented by concatenating a complete date expression, 
+      // ISO 8601 uses the 24-hour clock system.
+      // A single point in time can be represented by concatenating a complete date expression,
       // the letter T as a delimiter, and a valid time expression. For example, "2007-04-05T14:30".
-      
+
       this.set('departure_time', newDepartureTime);
 		},
     resetDepartureTime: function(){

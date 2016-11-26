@@ -1,8 +1,5 @@
 import Ember from 'ember';
-import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 import setLoading from 'mobility-playground/mixins/set-loading';
-import polygon from 'npm:turf-polygon';
-import difference from 'npm:turf-difference';
 
 
 export default Ember.Route.extend(setLoading, {
@@ -32,7 +29,7 @@ export default Ember.Route.extend(setLoading, {
 			for (var i = 0; i < coordinateArray.length; i++){
 				tempArray.push(parseFloat(coordinateArray[i]));
 			}
-		
+
 			var arrayOne = [];
 			var arrayTwo = [];
 			arrayOne.push(tempArray[1]);
@@ -46,7 +43,7 @@ export default Ember.Route.extend(setLoading, {
 		}
 		controller.set('leafletBbox', controller.get('bbox'));
     this._super(controller, model);
-		
+
 	},
 	model: function(params){
     this.store.unloadAll('data/transitland/operator');
@@ -55,21 +52,20 @@ export default Ember.Route.extend(setLoading, {
     this.store.unloadAll('data/transitland/route_stop_pattern');
 
     if (params.isochrone_mode){
-	    var self = this;
-	    var pinLocation = params.pin;			
+	    var pinLocation = params.pin;
 
 	    if (typeof(pinLocation)==="string"){
 	      var pinArray = pinLocation.split(',');
 	      pinLocation = pinArray;
-	    } 
+	    }
 
 	    var mode = params.isochrone_mode;
 	    var url = 'https://matrix.mapzen.com/isochrone?api_key=mapzen-jLrDBSP&json=';
 	    var linkUrl = 'https://matrix.mapzen.com/isochrone?json=';
 	    var json = {
 	      locations: [{"lat":pinLocation[0], "lon":pinLocation[1]}],
-	      costing: mode,	      
-	      denoise: .3,
+	      costing: mode,
+	      denoise: 0.3,
 	      polygons: true,
         generalize: 50,
 	      costing_options: {"pedestrian":{"use_ferry":0}},
@@ -86,8 +82,8 @@ export default Ember.Route.extend(setLoading, {
 	    	json.date_time = {"type": 1, "value": params.departure_time};
 	    }
 
-	    url += escape(JSON.stringify(json));
-	    linkUrl += escape(JSON.stringify(json));
+	    url = encodeURI(url + JSON.stringify(json));
+	    linkUrl = encodeURI(linkUrl + JSON.stringify(json));
 	    return Ember.RSVP.hash({
 	      url: url,
 	      linkUrl: linkUrl,
@@ -105,12 +101,12 @@ export default Ember.Route.extend(setLoading, {
 	        return response;
 	      })
 	    });
-	  } 
-    
+	  }
+
   },
 	actions: {
 	}
 });
 
 
-  
+
