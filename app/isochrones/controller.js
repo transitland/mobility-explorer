@@ -61,9 +61,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
         coordinates.push(lng);
         this.set('pin', coordinates);
       }
+      // debugger;
   		this.set('place', selected);
   		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin'), isochrone_mode: null}});
+  		this.transitionToRoute('index', {queryParams: {bbox: null, pin: this.get('pin'), isochrone_mode: null}});
   	},
   	clearPlace: function(){
   		this.set('place', null);

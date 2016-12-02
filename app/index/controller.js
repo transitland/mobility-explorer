@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
+import removePin from 'mobility-playground/mixins/shared-actions';
 
-export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
+export default Ember.Controller.extend(mapBboxController, setTextboxClosed, removePin, {
 	queryParams: ['bbox','pin'],
 	bbox: null,
   leafletBbox: null,
@@ -64,9 +65,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
   	clearPlace: function(){
   		this.set('place', null);
   	},
-    removePin: function(){
-      this.set('pin', null);
-    },
+    // removePin: function(){
+    //   this.set('pin', null);
+    // },
     dropPin: function(e){
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;

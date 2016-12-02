@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
+import sharedActions from 'mobility-playground/mixins/shared-actions';
 
-export default Ember.Controller.extend(setTextboxClosed, {
+export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox', 'pin'],
 	bbox: null,
 	leafletBbox: null,
@@ -283,15 +284,15 @@ export default Ember.Controller.extend(setTextboxClosed, {
       
   		this.set('place', selected);
       this.set('pin', coordinates);
+      // this.set('bbox', null);
       this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace: function(){
   		this.set('place', null);
   	},
-  	removePin: function(){
-  		console.log("remove");
-      this.set('pin', null);
-    },
+  	// removePin: function(){
+   //    this.set('pin', null);
+   //  },
 		searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`; 
