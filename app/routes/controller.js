@@ -4,28 +4,15 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox', 'pin'],
-	bbox: null,
-	leafletBbox: null,
-  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
-	currentlyLoading: Ember.inject.service(),
+	
 	queryIsInactive: false,
 	onestop_id: null,
 	serves: null,
-	pin: null,
-	pinLocation: Ember.computed('pin', function(){
-    if (typeof(this.get('pin'))==="string"){
-      var pinArray = this.get('pin').split(',');
-      return pinArray;
-    } else {
-      return this.get('pin');
-    }
-  }),
 	operated_by: null,
 	vehicle_type: null,
 	style_routes_by: null,
 	selectedRoute: null,
 	hoverStop: null,
-	place: null,
 	placeholderMessageRoutes: Ember.computed('bbox', function(){
 		var total = this.model.routes.get('meta.total');
 		if (total > 1){
@@ -161,9 +148,9 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		iconSize: (20, 20),
     iconAnchor: [10, 24]
 	}),
-  zoom: 12,
-	markerUrl: 'assets/images/marker1.png',
-  mapCenter: [37.778008, -122.431272],
+  // zoom: 12,
+	// markerUrl: 'assets/images/marker1.png',
+  // mapCenter: [37.778008, -122.431272],
 	routes: Ember.computed('model', function(){
 		var data = this.get('model.routes');
 		var routes = [];
@@ -175,11 +162,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 	}),
 	mapMoved: false,
 	mousedOver: false,
-  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
-	closeTextbox: Ember.inject.service(),
-  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
-    return this.get('closeTextbox').get('textboxIsClosed');
-  }),
+
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -234,8 +217,6 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				"weight": 5,
 			});
 			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));	
-		
-
 		},
 		setOnestopId: function(route) {
 			var onestop_id = route.get('id');
@@ -274,30 +255,6 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			this.set('displayStops', false);
   		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
-		setPlace: function(selected){
-   		this.set('pin', null);
-      var lng = selected.geometry.coordinates[0];
-      var lat = selected.geometry.coordinates[1];
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-      
-  		this.set('place', selected);
-      this.set('pin', coordinates);
-      // this.set('bbox', null);
-      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
-  	},
-  	clearPlace: function(){
-  		this.set('place', null);
-  	},
-  	// removePin: function(){
-   //    this.set('pin', null);
-   //  },
-		searchRepo: function(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`; 
-      return Ember.$.ajax({ url }).then(json => json.features);
-    },
     setDisplayStops: function(){
   		if (this.get('displayStops') === false){
   			if (this.model.stops.features.get('firstObject').icon){

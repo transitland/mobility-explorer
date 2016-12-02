@@ -1,39 +1,17 @@
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
+import sharedActions from 'mobility-playground/mixins/shared-actions';
 
-export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
+
+export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
 	queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time'],
-	bbox: null,
-	leafletBbox: null,
-  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
-  isochrone_mode: null,
-  pin: null,
+
   onestop_id: null,
   departure_time: null,
   moment: moment(),
-  pinLocation: Ember.computed('pin', function(){
-    if (typeof(this.get('pin'))==="string"){
-      var pinArray = this.get('pin').split(',');
-      return pinArray;
-    } else {
-      return this.get('pin');
-    }
-  }),
-  place: null,
-  currentlyLoading: Ember.inject.service(),
-	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',		
-		iconSize: (20, 20),
-    iconAnchor: [10, 24],
-	}),
-  markerUrl: 'assets/images/marker1.png',
   mousedOver: false,
-  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
-  closeTextbox: Ember.inject.service(),
-  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
-    return this.get('closeTextbox').get('textboxIsClosed');
-  }),
+  
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -47,44 +25,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
     mouseOver(){
       this.set('mousedOver', true);
     },
-  	searchRepo(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`;      
-      return Ember.$.ajax({ url }).then(json => json.features);
-    },
-  	setPlace: function(selected){
-			if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('pin', coordinates);
-      }
-      // debugger;
-  		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: null, pin: this.get('pin'), isochrone_mode: null}});
-  	},
-  	clearPlace: function(){
-  		this.set('place', null);
-  	},
     closePopup: function(e){
-      // debugger;
       e.target.closePopup();
-    },
-    removePin: function(){
-      this.set('pin', null);
-    },
-    dropPin: function(e){
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-      this.set('pin', coordinates);
-      var bounds = this.get('leafletBbox');
-      this.set('bbox', bounds);
     },
     updatePin: function(e){
       var lat = e.target._latlng.lat;
