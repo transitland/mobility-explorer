@@ -9,7 +9,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     },
     pin: {
       replace: true,
-      refreshModel: true
     }
   },
   setupController: function (controller, model) {

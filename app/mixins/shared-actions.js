@@ -12,6 +12,7 @@ export default Ember.Mixin.create({
 	}),
 	leafletBbox: null,
   leafletBounds: [[43.053900124340984, -89.46407318115234],[43.10875337930414, -89.32708740234375]],
+  mapCenter: [43.072963279523,-89.39234018325806],
 	pin: null,
 	pinLocation: Ember.computed('pin', function(){
     if (typeof(this.get('pin'))==="string"){
@@ -34,6 +35,7 @@ export default Ember.Mixin.create({
       coordinates.push(lat);
       coordinates.push(lng);
       this.set('pin', coordinates);
+      this.set('mapCenter', coordinates);
     },
     removePin: function(){
       this.set('pin', null);
@@ -53,6 +55,7 @@ export default Ember.Mixin.create({
       
   		this.set('place', selected);
       this.set('pin', coordinates);
+      this.set('mapCenter', coordinates);
       this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
   	},
   	clearPlace: function(){
