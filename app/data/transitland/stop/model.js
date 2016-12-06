@@ -2,8 +2,6 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 var Stop = DS.Model.extend({
-	// routes: DS.hasMany('data/transitland/route', {async: true}),
-
 	identifiers: DS.attr(),
 	imported_from_feed_onestop_ids: DS.attr('string'),
 	onestop_id: Ember.computed.alias('id'),
@@ -19,7 +17,6 @@ var Stop = DS.Model.extend({
 		return this.get('geometry')['coordinates'].reverse();
 	}).property('geometry'),
 	html:'<div class="svg-wrapper"><span class="stop-num"></span><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg></div>',
-	// icon_class:'svg-stop',
 	icon_class: Ember.computed('rsp_stop_pattern_number', function(){
 		if (this.get('rsp_stop_pattern_number')){
 			return 'svg-stop-rsp';
@@ -28,19 +25,6 @@ var Stop = DS.Model.extend({
 		}
 	}),
 	rsp_stop_pattern_number: null
-	// icon_size: '9px'
-
 });
 
 export default Stop;
-
-// for (var i = 0; i < stopsLength; i++){ 
-// 	var testerStop = stops[i];
-// 	console.log("match? " + stops[i]);
-// 	for (var j = 0; j < stopsLength; j++){ 
-// 		if (stops[j] === testerStop && i !== j){
-// 			console.log("match: " + i + ", " + j);
-// 		}
-		
-// 	}
-// }
