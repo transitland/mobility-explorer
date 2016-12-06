@@ -9,7 +9,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     if (this.get('pin')){
       return this.get('pinLocation');
     } else {
-      console.log("mapCenter: " + this.get('mapCenter'));
       return this.get('mapCenter');
     }
   }),
