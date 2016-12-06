@@ -82,7 +82,6 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				checkList.push(modeName);
 				var uniqueMode = {};
 				uniqueMode["name"] = modeName;
-				// uniqueMode["style"] = "background-color:" + modeColor;
 				uniqueMode["style"] = "color:" + modeColor;
 				uniqueModes.push(uniqueMode);
 			}
@@ -148,9 +147,6 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		iconSize: (20, 20),
     iconAnchor: [10, 24]
 	}),
-  // zoom: 12,
-	// markerUrl: 'assets/images/marker1.png',
-  // mapCenter: [37.778008, -122.431272],
 	routes: Ember.computed('model', function(){
 		var data = this.get('model.routes');
 		var routes = [];
@@ -209,7 +205,6 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			e.target.getLayers()[1].setStyle({
 				"color": "white",
 				"opacity": 1,
-				// "weight": 2.5,
 			});
 			e.target.getLayers()[0].setStyle({
 				"color": "#666666",
