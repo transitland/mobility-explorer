@@ -48,7 +48,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 			this.set('selectedOperator', operator);
 		},
 		updateLeafletBbox(e) {
-			var leafletBounds = e.target.getBounds();
+			var leafletBounds = e.target.getBounds();			
 			this.set('leafletBbox', leafletBounds.toBBoxString());
 		},
 		updatebbox(e) {

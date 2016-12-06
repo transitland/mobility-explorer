@@ -5,12 +5,11 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
 	queryParams: ['bbox','pin'],
-  
-  // mapCenter: [43.072963279523,-89.39234018325806],
   center: Ember.computed('pin', function(){
     if (this.get('pin')){
       return this.get('pinLocation');
     } else {
+      console.log("mapCenter: " + this.get('mapCenter'));
       return this.get('mapCenter');
     }
   }),

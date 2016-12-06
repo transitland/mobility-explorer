@@ -28,7 +28,7 @@ export default Ember.Mixin.create({
   }),
 
 	actions: {
-  	dropPin: function(e){
+    dropPin: function(e){
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;
       var coordinates = [];
@@ -36,31 +36,38 @@ export default Ember.Mixin.create({
       coordinates.push(lng);
       this.set('pin', coordinates);
       this.set('mapCenter', coordinates);
+      this.set('leafletBbox', this.get('bbox'));
     },
     removePin: function(){
+      var pinCoordinateArray = this.get('pin').split(",");
+      pinCoordinateArray[0] = parseFloat(pinCoordinateArray[0]);
+      pinCoordinateArray[1] = parseFloat(pinCoordinateArray[1]);
+      this.set('mapCenter', pinCoordinateArray);
       this.set('pin', null);
     },
- 		searchRepo: function(term) {
+    searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
       const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;      
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     setPlace: function(selected){
-   		this.set('pin', null);
+      this.set('pin', null);
       var lng = selected.geometry.coordinates[0];
       var lat = selected.geometry.coordinates[1];
       var coordinates = [];
       coordinates.push(lat);
       coordinates.push(lng);
-      
-  		this.set('place', selected);
+      this.set('place', selected);
       this.set('pin', coordinates);
       this.set('mapCenter', coordinates);
       this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
-  	},
-  	clearPlace: function(){
-  		this.set('place', null);
-  	}
+    },
+    clearPlace: function(){
+      this.set('place', null);
+    }
 	}
 });
 
+
+// http://localhost:4200/#/?bbox=-89.45343017578125%2C43.04919613169109%2C-89.33120727539062%2C43.09672121379045
+// http://localhost:4200/#/?bbox=-93.17333221435547%2C44.932784957646994%2C-93.05110931396484%2C44.97882455373641&pin=44.955782%2C-93.112241
