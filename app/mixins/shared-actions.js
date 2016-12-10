@@ -1,3 +1,5 @@
+/* global L */
+
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
@@ -6,8 +8,8 @@ export default Ember.Mixin.create({
 	closeTextbox: Ember.inject.service(),
   currentlyLoading: Ember.inject.service(),
 	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',		
-		iconSize: (20, 20),
+		iconUrl: 'assets/images/marker1.png',
+    iconSize: (20, 20),
     iconAnchor: [10, 24],
 	}),
 	leafletBbox: null,

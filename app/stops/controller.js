@@ -7,115 +7,69 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-	queryParams: ['onestop_id', 'served_by', 'isochrone_mode', 'pin', 'bbox', 'departure_time'],
+  queryParams: ['onestop_id', 'served_by', 'isochrone_mode', 'pin', 'bbox', 'departure_time'],
 
   departure_time: null,
   onestop_id: null,
-	pinLocation: Ember.computed('pin', function(){
-    if (typeof(this.get('pin'))==="string"){
-      var pinArray = this.get('pin').split(',');
-      return pinArray;
-    } else {
-      return this.get('pin');
-    }
-  }),
-  place: null,
-  icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',
-		iconSize: (20, 20),
-    iconAnchor: [10, 24],
-	}),
-	markerUrl: 'assets/images/marker1.png',
   zoom: 12,
-	selectedStop: null,
-	served_by: null,
-	isochrone_mode: null,
-	isochrones_mode: null,
+  selectedStop: null,
+  served_by: null,
+  isochrone_mode: null,
+  isochrones_mode: null,
   currentlyLoading: Ember.inject.service(),
-	hoverStop: null,
-	moment: moment(),
-	mapMoved: false,
-	mousedOver: false,
-	
+  hoverStop: null,
+  moment: moment(),
+  mapMoved: false,
+  mousedOver: false,
+  
   actions: {
-		updateLeafletBbox(e) {
-			var leafletBounds = e.target.getBounds();
-			this.set('leafletBbox', leafletBounds.toBBoxString());
-		},
-		updatebbox(e) {
-			var bounds = this.get('leafletBbox');
-			this.set('bbox', bounds);
-			this.set('mapMoved', false);
-		},
-		updateMapMoved(){
-			if (this.get('mousedOver') === true){
-				this.set('mapMoved', true);
-			}
-		},
-		mouseOver(){
-			this.set('mousedOver', true);
-		},
-		selectStop(stop){
-			this.set('selectedStop', null);
-			this.set('hoverStop', stop);
-		},
-		unselectStop(stop){
-			this.set('hoverStop', null);
-		},
-		setOnestopId(stop) {
-			var onestopId = stop.id;
+    updateLeafletBbox(e) {
+      var leafletBounds = e.target.getBounds();
+      this.set('leafletBbox', leafletBounds.toBBoxString());
+    },
+    updatebbox(e) {
+      var bounds = this.get('leafletBbox');
+      this.set('bbox', bounds);
+      this.set('mapMoved', false);
+    },
+    updateMapMoved(){
+      if (this.get('mousedOver') === true){
+        this.set('mapMoved', true);
+      }
+    },
+    mouseOver(){
+      this.set('mousedOver', true);
+    },
+    selectStop(stop){
+      this.set('selectedStop', null);
+      this.set('hoverStop', stop);
+    },
+    unselectStop(stop){
+      this.set('hoverStop', null);
+    },
+    setOnestopId(stop) {
+      var onestopId = stop.id;
       this.set('pin', null);
-			this.set('selectedStop', stop);
-			this.set('onestop_id', onestopId);
-			this.set('served_by', null);
-			this.set('displayIsochrone', false);
-			this.set('isochrones_mode', null);
-		},
-		searchRepo(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&sources=wof&text=${term}`;
-      return Ember.$.ajax({ url }).then(json => json.features);
+      this.set('selectedStop', stop);
+      this.set('onestop_id', onestopId);
+      this.set('served_by', null);
+      this.set('displayIsochrone', false);
+      this.set('isochrones_mode', null);
     },
-    setPlace: function(selected){
-      this.set('pin', null);
-      var lng = selected.geometry.coordinates[0];
-      var lat = selected.geometry.coordinates[1];
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-
-      this.set('place', selected);
-      this.set('pin', coordinates);
-      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
+    setIsochroneMode(mode){
+      if (this.get('isochrone_mode') === mode){
+        this.set('isochrone_mode', null);
+      } else {
+        this.set('isochrone_mode', mode);
+      }
     },
-  	clearPlace(){
-  		this.set('place', null);
-  	},
-  	removePin: function(){
-      this.set('pin', null);
+    setIsochronesMode(){
+      if (this.get('isochrones_mode') === null){
+        this.set('isochrones_mode', true);
+      } else {
+        this.set('isochrones_mode', null);
+      }
     },
-    dropPin: function(e){
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-      this.set('pin', coordinates);
-    },
-  	setIsochroneMode(mode){
-  		if (this.get('isochrone_mode') === mode){
-  			this.set('isochrone_mode', null);
-  		} else {
-  			this.set('isochrone_mode', mode);
-  		}
-		},
-		setIsochronesMode(){
-  		if (this.get('isochrones_mode') === null){
-  			this.set('isochrones_mode', true);
-  		} else {
-  			this.set('isochrones_mode', null);
-  		}
-  	},
     change(date){
       var dateString = date.toString();
       var dateArray = dateString.split(" ");
@@ -141,19 +95,19 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       };
       var newDepartureTime = year + "-" + month[monthString] + "-" + day + "T" + hour + ":" + minute;
 
-      // This is the local date and time at the location.
+      // This is the local date and time at the location.  
       // value:
-      // the date and time is specified in ISO 8601 format (YYYY-MM-DDThh:mm) in
+      // the date and time is specified in ISO 8601 format (YYYY-MM-DDThh:mm) in 
       // the local time zone of departure or arrival. For example "2016-07-03T08:06"
-      // ISO 8601 uses the 24-hour clock system.
-      // A single point in time can be represented by concatenating a complete date expression,
+      // ISO 8601 uses the 24-hour clock system. 
+      // A single point in time can be represented by concatenating a complete date expression, 
       // the letter T as a delimiter, and a valid time expression. For example, "2007-04-05T14:30".
-
+      
       this.set('departure_time', newDepartureTime);
     },
     resetDepartureTime: function(){
       this.set('moment', moment());
       this.set('departure_time', null);
     }
-	}
+  }
 });

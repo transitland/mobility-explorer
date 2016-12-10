@@ -132,7 +132,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			for (var i = 0; i < coordinateArray.length; i++){
 				tempArray.push(parseFloat(coordinateArray[i]));
 			}
-
+		
 			var arrayOne = [];
 			var arrayTwo = [];
 			arrayOne.push(tempArray[1]);
@@ -145,7 +145,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		}
 	}),
 	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',
+		iconUrl: 'assets/images/marker1.png',		
 		iconSize: (20, 20),
     iconAnchor: [10, 24]
 	}),
@@ -177,27 +177,27 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			}
 		},
 		mouseOver(){
-			this.set('mousedOver', true);
+			this.set('mousedOver', true);	
 		},
 		setRouteStyle(style){
 			if (this.get('style_routes_by') === style){
-  			this.set('style_routes_by', null);
-  		} else {
-  			this.set('style_routes_by', style);
-  		}
+				this.set('style_routes_by', null);
+			} else {
+				this.set('style_routes_by', style);
+			}
 		},
 		clearRoute(){
-  		this.set('onestop_id', null);
+			this.set('onestop_id', null);
 			this.set('selectedRoute', null);
-  	},
-  	setOperator(operator){
-  		this.set('operated_by', operator.onestopId);
+		},
+		setOperator(operator){
+			this.set('operated_by', operator.onestopId);
 		},
 		clearOperator(){
 			this.set('operated_by', null);
 		},
 		setMode(mode){
-  		this.set('vehicle_type', mode.name);
+			this.set('vehicle_type', mode.name);
 		},
 		clearMode(){
 			this.set('vehicle_type', null);
@@ -213,7 +213,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				"opacity": 1,
 				"weight": 5,
 			});
-			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));
+			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));	
 		},
 		setOnestopId: function(route) {
 			var onestop_id = route.get('id');
@@ -250,37 +250,13 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			this.set('hoverStop', null);
 			this.set('onestop_id', onestopId);
 			this.set('displayStops', false);
-  		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
+			this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
-		setPlace: function(selected){
-   		this.set('pin', null);
-      var lng = selected.geometry.coordinates[0];
-      var lat = selected.geometry.coordinates[1];
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-
-  		this.set('place', selected);
-      this.set('pin', coordinates);
-      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
-  	},
-  	clearPlace: function(){
-  		this.set('place', null);
-  	},
-  	removePin: function(){
-  		console.log("remove");
-      this.set('pin', null);
-    },
-		searchRepo: function(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;
-      return Ember.$.ajax({ url }).then(json => json.features);
-    },
-    setDisplayStops: function(){
-  		if (this.get('displayStops') === false){
-  			if (this.model.stops.features.get('firstObject').icon){
-    			this.set('displayStops', true);
-  			} else {
+		setDisplayStops: function(){
+			if (this.get('displayStops') === false){
+				if (this.model.stops.features.get('firstObject').icon){
+					this.set('displayStops', true);
+				} else {
 					var stops = this.model.stops.features;
 					for (var i = 0; i < stops.length; i++){
 						var tempCoord = null;
@@ -296,11 +272,11 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 							className:'svg-stop',
 						});
 					}
-	    		this.set('displayStops', true);
-	    	}
+					this.set('displayStops', true);
+				}
 			} else {
-    		this.set('displayStops', false);
-    	}
+				this.set('displayStops', false);
+			}
     },
     displaySharedStop: function(){
 			var stops = this.model.stopServedByRoutes.features;
@@ -314,19 +290,18 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				coordArray.push(lat);
 				this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
 				this.model.stopServedByRoutes.features[i].icon = L.icon({
-					iconUrl: 'assets/images/stop.png',
+					iconUrl: 'assets/images/stop.png',		
 					iconSize: (10, 10),
 				});
 			}
-  		return true;
+			return true;
     },
     setRouteStopPattern: function(selected){
-    	this.set('routeStopPattern', selected);
-    	this.transitionToRoute('route-stop-pattern', {queryParams: {bbox: this.get('bbox'), traversed_by: this.get('onestop_id')}});
+			this.set('routeStopPattern', selected);
+			this.transitionToRoute('route-stop-pattern', {queryParams: {bbox: this.get('bbox'), traversed_by: this.get('onestop_id')}});
     },
     clearRouteStopPattern: function(){
-    	this.set('routeStopPattern', null);
+			this.set('routeStopPattern', null);
     }
-  }
-
+  }	
 });
