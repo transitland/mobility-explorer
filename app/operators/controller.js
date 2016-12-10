@@ -1,3 +1,5 @@
+/* global L */
+
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
@@ -16,27 +18,32 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 		if (total > 1){
 			return  total + " operators";
 		} else if (total === 1) {
-			return total + " operator"
+			return total + " operator";
 		}
 	}),
 	onlyOperator: Ember.computed('onestop_id', function(){
 		var data = this.get('operators');
 		var onlyOperator = data.get('firstObject');
 		if (this.get('onestop_id') === null){
-			return null
+			return null;
 		} else {
 			return onlyOperator;
 		}
 	}),
+	icon: L.icon({
+		iconUrl: 'assets/images/marker.png',
+		iconSize: (20, 20),
+    iconAnchor: [10, 24],
+	}),
 	operators: Ember.computed('model', function(){
 		if (this.get('model') === null){
-			return
+			return;
 		} else {
 			var data = this.get('model');
 			var operators = [];
 			operators = operators.concat(data.map(function(operator){return operator;}));
 			return operators;
-		}	
+		}
 	}),
 	mapMoved: false,
 	mousedOver: false,
@@ -81,4 +88,38 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 			this.set('hoverOperator', null);
 		}
 	}	
+});
+		},
+		searchRepo(term) {
+      if (Ember.isBlank(term)) { return []; }
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;
+      return Ember.$.ajax({ url }).then(json => json.features);
+    },
+   	setPlace: function(selected){
+   		this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+
+  		this.set('place', selected);
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
+  	},
+  	clearPlace(){
+  		this.set('place', null);
+  	},
+  	removePin: function(){
+      this.set('pin', null);
+    },
+  	dropPin: function(e){
+      var lat = e.latlng.lat;
+      var lng = e.latlng.lng;
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+      this.set('pin', coordinates);
+    }
+	}
 });

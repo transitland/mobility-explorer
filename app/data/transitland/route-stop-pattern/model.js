@@ -64,7 +64,7 @@ var Route_stop_pattern = DS.Model.extend({
 					},
 				},
 			]
-		}
+		};
 	}).property('is_selected'),
 });
 

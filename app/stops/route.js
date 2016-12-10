@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 import setLoading from 'mobility-playground/mixins/set-loading';
-import polygon from 'npm:turf-polygon';
-import difference from 'npm:turf-difference';
 
 export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
@@ -56,19 +54,19 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
     this.store.unloadAll('data/transitland/route_stop_pattern');
-    var self = this;
     return this.store.query('data/transitland/stop', params).then(function(stops) {
+      var onlyStop, stopLocation, mode, url;
       if (stops.get('query.isochrone_mode')){
-        var onlyStop = stops.get('firstObject');
-        var stopLocation = onlyStop.get('geometry.coordinates');
-        var url = 'https://matrix.mapzen.com/isochrone?api_key=mapzen-jLrDBSP&json=';
+        onlyStop = stops.get('firstObject');
+        stopLocation = onlyStop.get('geometry.coordinates');
+        url = 'https://matrix.mapzen.com/isochrone?api_key=mapzen-jLrDBSP&json=';
         var linkUrl = 'https://matrix.mapzen.com/isochrone?json=';
-        
-        var mode = stops.get('query.isochrone_mode');
+
+        mode = stops.get('query.isochrone_mode');
         var json = {
           locations: [{"lat":stopLocation[1], "lon":stopLocation[0]}],
           costing: mode,
-          denoise: .3,
+          denoise: 0.3,
           polygons: true,
           generalize: 50,
           costing_options: {"pedestrian":{"use_ferry":0}},
@@ -83,8 +81,8 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
         if (params.departure_time){
           json.date_time = {"type": 1, "value": params.departure_time};
         }
-        url += escape(JSON.stringify(json));
-        linkUrl += escape(JSON.stringify(json));
+        url = encodeURI(url + JSON.stringify(json));
+        linkUrl = encodeURI(linkUrl + JSON.stringify(json));
         return Ember.RSVP.hash({
           stops: stops,
           onlyStop: onlyStop,
@@ -95,13 +93,13 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
           })
         });
       } else {
-        var onlyStop = stops.get('firstObject');
-        var stopLocation = onlyStop.get('geometry.coordinates');
-        var mode = stops.get('query.isochrone_mode');
+        onlyStop = stops.get('firstObject');
+        stopLocation = onlyStop.get('geometry.coordinates');
+        mode = stops.get('query.isochrone_mode');
         var servedBy = stops.get('query.served_by');
         if (servedBy!== null){
           if (servedBy.indexOf('r') === 0) {
-            var url = 'https://transit.land/api/v1/routes.geojson?per_page=false&onestop_id=';
+            url = 'https://transit.land/api/v1/routes.geojson?per_page=false&onestop_id=';
             url += servedBy;
             return Ember.RSVP.hash({
               stops: stops,
@@ -124,7 +122,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     });
   },
   actions: {
-    
+
   }
 
 });
