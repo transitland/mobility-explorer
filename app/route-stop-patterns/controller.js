@@ -29,7 +29,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			for (var i = 0; i < coordinateArray.length; i++){
 				tempArray.push(parseFloat(coordinateArray[i]));
 			}
-
+		
 			var arrayOne = [];
 			var arrayTwo = [];
 			arrayOne.push(tempArray[1]);
@@ -63,7 +63,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			this.set('mousedOver', true);
 		},
 		onEachFeature(feature, layer){
-			layer.setStyle(feature.properties);
+			layer.setStyle(feature.properties);	
 		},
 		setOnestopId(route) {
 			var onestopId = route.id;
@@ -71,40 +71,6 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			this.set('selectedRoute', route);
 			this.set('serves', null);
 			this.set('operated_by', null);
-		},
-		setPlace: function(selected){
-			 if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('mapCenter', coordinates);
-        this.set('pin', coordinates);
-      }
-			this.set('place', selected);
-			this.set('bbox', selected.bbox);
-			this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
-		},
-		clearPlace(){
-			this.set('place', null);
-		},
-		removePin: function(){
-      this.set('pin', null);
-    },
-    dropPin: function(e){
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-      this.set('mapCenter', coordinates);
-      this.set('pin', coordinates);
-    },
-		searchRepo(term) {
-			if (Ember.isBlank(term)) { return []; }
-			const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;
-			return Ember.$.ajax({ url }).then(json => json.features);
 		},
 		displayStops: function(){
 			this.toggleProperty('displayStops');
@@ -121,7 +87,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			this.set('hoverStop', null);
 			this.set('onestop_id', onestopId);
 			this.set('displayStops', false);
-  		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
+			this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
 		setRsp: function(rsp){
       var stops, stopsLength, stopId, i;
