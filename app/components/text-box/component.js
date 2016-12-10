@@ -14,13 +14,13 @@ export default Ember.Component.extend({
 			'isochrones' : ''
 	},
 	text: Ember.computed('route', function(){
-		return this.get('textOptions')[this.get('route')]
+		return this.get('textOptions')[this.get('route')];
 	}),
 	actions:{
 		close: function(){
 			this.sendAction();
 		}
 	}
-	
-	
+
+
 });

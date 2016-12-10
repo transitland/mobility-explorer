@@ -1,3 +1,5 @@
+/* global L */
+
 import Ember from 'ember';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 import sharedActions from 'mobility-playground/mixins/shared-actions';
@@ -18,7 +20,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		if (total > 1){
 			return  total + " routes";
 		} else if (total === 1) {
-			return total + " route"
+			return total + " route";
 		}
 	}),
 	placeholderMessageOperators: Ember.computed('leafletBbox', function(){
@@ -26,7 +28,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		if (total > 1){
 			return  total + " operators";
 		} else if (total === 1) {
-			return total + " operator"
+			return total + " operator";
 		}
 	}),
 	placeholderMessageModes: Ember.computed('leafletBbox', function(){
@@ -34,7 +36,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		if (total > 1){
 			return  total + " modes";
 		} else if (total === 1) {
-			return total + " mode"
+			return total + " mode";
 		}
 	}),
 	routeOperators: Ember.computed('leafletBbox', function(){
@@ -76,7 +78,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			if (modeName in modeColors){
 				modeColor = modeColors[modeName];
 			} else {
-				modeColor = "grey"
+				modeColor = "grey";
 			}
 			if (checkList.indexOf(modeName) === -1){
 				checkList.push(modeName);
@@ -106,7 +108,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		var data = this.get('routes');
 		var onlyRoute = data.get('firstObject');
 		if (this.get('onestop_id') === null){
-			return null
+			return null;
 		} else {
 			return onlyRoute;
 		}
@@ -130,7 +132,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			for (var i = 0; i < coordinateArray.length; i++){
 				tempArray.push(parseFloat(coordinateArray[i]));
 			}
-		
+
 			var arrayOne = [];
 			var arrayTwo = [];
 			arrayOne.push(tempArray[1]);
@@ -143,7 +145,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		}
 	}),
 	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',		
+		iconUrl: 'assets/images/marker1.png',
 		iconSize: (20, 20),
     iconAnchor: [10, 24]
 	}),
@@ -175,7 +177,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			}
 		},
 		mouseOver(){
-			this.set('mousedOver', true);	
+			this.set('mousedOver', true);
 		},
 		setRouteStyle(style){
 			if (this.get('style_routes_by') === style){
@@ -211,7 +213,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				"opacity": 1,
 				"weight": 5,
 			});
-			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));	
+			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));
 		},
 		setOnestopId: function(route) {
 			var onestop_id = route.get('id');
@@ -227,7 +229,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			layer.originalStyle = feature.properties;
 
 			if (this.get('onestop_id')){
-				layer.eachLayer(function(layer){layer.setStyle({"opacity":1})})
+				layer.eachLayer(function(layer){layer.setStyle({"opacity":1});});
 			}
 		},
 		unselectRoute(e){
@@ -250,6 +252,30 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			this.set('displayStops', false);
   		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
+		setPlace: function(selected){
+   		this.set('pin', null);
+      var lng = selected.geometry.coordinates[0];
+      var lat = selected.geometry.coordinates[1];
+      var coordinates = [];
+      coordinates.push(lat);
+      coordinates.push(lng);
+
+  		this.set('place', selected);
+      this.set('pin', coordinates);
+      this.transitionToRoute('index', {queryParams: {pin: this.get('pin'), bbox: null}});
+  	},
+  	clearPlace: function(){
+  		this.set('place', null);
+  	},
+  	removePin: function(){
+  		console.log("remove");
+      this.set('pin', null);
+    },
+		searchRepo: function(term) {
+      if (Ember.isBlank(term)) { return []; }
+      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;
+      return Ember.$.ajax({ url }).then(json => json.features);
+    },
     setDisplayStops: function(){
   		if (this.get('displayStops') === false){
   			if (this.model.stops.features.get('firstObject').icon){
@@ -261,7 +287,6 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 						var lat = stops[i].geometry.coordinates[0];
 						var lon = stops[i].geometry.coordinates[1];
 						tempCoord = lat;
-						var coords = stops[i].geometry.coordinates
 						var coordArray = [];
 						coordArray.push(lon);
 						coordArray.push(lat);
@@ -284,13 +309,12 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				var lat = stops[i].geometry.coordinates[0];
 				var lon = stops[i].geometry.coordinates[1];
 				tempCoord = lat;
-				var coords = stops[i].geometry.coordinates
 				var coordArray = [];
 				coordArray.push(lon);
 				coordArray.push(lat);
 				this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
 				this.model.stopServedByRoutes.features[i].icon = L.icon({
-					iconUrl: 'assets/images/stop.png',		
+					iconUrl: 'assets/images/stop.png',
 					iconSize: (10, 10),
 				});
 			}
@@ -304,5 +328,5 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
     	this.set('routeStopPattern', null);
     }
   }
-	
+
 });

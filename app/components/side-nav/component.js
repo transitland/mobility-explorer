@@ -15,17 +15,17 @@ export default Ember.Component.extend({
   	}
   },
   activeOperatorsRoute: function(){
-  	if (activeRoute === 'operators'){
+  	if (this.activeRoute === 'operators'){
   		return true;
   	}
   },
   activeRoutesRoute: function(){
-  	if(activeRoute === 'routes'){
+  	if(this.activeRoute === 'routes'){
   		return true;
   	}
   },
   activeStopsRoute: function(){
-  	if(activeRoute === 'stops'){
+  	if(this.activeRoute === 'stops'){
   		return true;
   	}
   }
