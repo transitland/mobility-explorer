@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import setLoading from 'mobility-playground/mixins/set-loading';
 
-
 export default Ember.Route.extend(setLoading, {
 	queryParams: {
     isochrone_mode: {
@@ -107,6 +106,3 @@ export default Ember.Route.extend(setLoading, {
 	actions: {
 	}
 });
-
-
-

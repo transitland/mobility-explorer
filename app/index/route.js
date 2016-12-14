@@ -3,10 +3,6 @@ import setLoading from 'mobility-playground/mixins/set-loading';
 
 export default Ember.Route.extend(setLoading, {
 	queryParams: {
-    bbox: {
-      replace: true,
-      refreshModel: true
-    },
     pin: {
     	replace: true,
     }
@@ -41,6 +37,3 @@ export default Ember.Route.extend(setLoading, {
 	actions: {
 	}
 });
-
-
-

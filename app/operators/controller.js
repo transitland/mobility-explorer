@@ -1,14 +1,12 @@
 /* global L */
 
 import Ember from 'ember';
-import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 
-export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-	queryParams: ['bbox', 'onestop_id','pin'],
-	
+export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
+	queryParams: ['onestop_id','pin'],
 	queryIsInactive: false,
 	onestop_id: null,
 	selectedOperator: null,
@@ -38,7 +36,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 			var operators = [];
 			operators = operators.concat(data.map(function(operator){return operator;}));
 			return operators;
-		}	
+		}
 	}),
 	mapMoved: false,
 	mousedOver: false,
@@ -50,7 +48,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 			this.set('selectedOperator', operator);
 		},
 		updateLeafletBbox(e) {
-			var leafletBounds = e.target.getBounds();			
+			var leafletBounds = e.target.getBounds();
 			this.set('leafletBbox', leafletBounds.toBBoxString());
 		},
 		updatebbox(e) {
@@ -82,5 +80,5 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 			operator.set('operator_path_weight', 1.5);
 			this.set('hoverOperator', null);
 		}
-	}	
+	}
 });

@@ -5,8 +5,8 @@ import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
 import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
-	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox', 'pin'],
-	
+	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'pin'],
+
 	queryIsInactive: false,
 	onestop_id: null,
 	serves: null,
@@ -132,7 +132,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			for (var i = 0; i < coordinateArray.length; i++){
 				tempArray.push(parseFloat(coordinateArray[i]));
 			}
-		
+
 			var arrayOne = [];
 			var arrayTwo = [];
 			arrayOne.push(tempArray[1]);
@@ -145,7 +145,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 		}
 	}),
 	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',		
+		iconUrl: 'assets/images/marker1.png',
 		iconSize: (20, 20),
     iconAnchor: [10, 24]
 	}),
@@ -177,7 +177,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 			}
 		},
 		mouseOver(){
-			this.set('mousedOver', true);	
+			this.set('mousedOver', true);
 		},
 		setRouteStyle(style){
 			if (this.get('style_routes_by') === style){
@@ -213,7 +213,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				"opacity": 1,
 				"weight": 5,
 			});
-			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));	
+			this.set('hoverRoute', (e.target.getLayers()[0].feature.onestop_id));
 		},
 		setOnestopId: function(route) {
 			var onestop_id = route.get('id');
@@ -290,7 +290,7 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 				coordArray.push(lat);
 				this.model.stopServedByRoutes.features[i].geometry.coordinates = coordArray;
 				this.model.stopServedByRoutes.features[i].icon = L.icon({
-					iconUrl: 'assets/images/stop.png',		
+					iconUrl: 'assets/images/stop.png',
 					iconSize: (10, 10),
 				});
 			}
@@ -303,5 +303,5 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
     clearRouteStopPattern: function(){
 			this.set('routeStopPattern', null);
     }
-  }	
+  }
 });

@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend(mapBboxRoute, setLoading, {
+export default Ember.Route.extend(setLoading, {
   queryParams: {
     traversed_by: {
     	refreshModel: true
@@ -39,7 +38,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
     this.store.unloadAll('data/transitland/route_stop_pattern');
-    
+
     var route_stop_patterns = this.store.query('data/transitland/route_stop_pattern', params);
     var traversedByRoute = this.store.query('data/transitland/route', {onestop_id: params.traversed_by});
     var stopsServedByRoute = this.store.query('data/transitland/stop', {served_by: params.traversed_by});
@@ -51,6 +50,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     });
   },
   actions:{
-    
+
   }
 });

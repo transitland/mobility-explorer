@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import mapBboxRoute from 'mobility-playground/mixins/map-bbox-route';
 import setLoading from 'mobility-playground/mixins/set-loading';
 
-export default Ember.Route.extend(mapBboxRoute, setLoading, {
+export default Ember.Route.extend(setLoading, {
   queryParams: {
     onestop_id: {
       refreshModel: true
