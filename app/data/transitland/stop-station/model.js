@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import Stop from 'dispatcher/stop/model';
+import Stop from '../stop/model';
 
 function next_fragment(entities, separator) {
   var ids = entities.map(function(i) {return i.id.split(separator)[1]; });
@@ -15,8 +15,8 @@ function next_fragment(entities, separator) {
 }
 
 export default Stop.extend({
-  stop_platforms: DS.hasMany('stop-platform', { modelFor: 'stop-platform', inverse: 'parent_stop'}),
-  stop_egresses:  DS.hasMany('stop-egress', { modelFor: 'stop-egress', inverse: 'parent_stop'}),
+  stop_platforms: DS.hasMany('data/transitland/stop-platform', { inverse: 'parent_stop'}),
+  stop_egresses:  DS.hasMany('data/transitland/stop-egress', { inverse: 'parent_stop'}),
   stationPlatformLines: Ember.computed('geometry', 'stop_platforms.@each.geometry', function() {
     var origin = this.get('coordinates');
     return this.get('stop_platforms').map(function(stop_platform) {

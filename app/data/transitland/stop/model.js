@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-var Stop = DS.Model.extend({
+export default DS.Model.extend({
 	identifiers: DS.attr(),
 	imported_from_feed_onestop_ids: DS.attr('string'),
 	onestop_id: Ember.computed.alias('id'),
@@ -26,5 +26,3 @@ var Stop = DS.Model.extend({
 	}),
 	rsp_stop_pattern_number: null
 });
-
-export default Stop;
