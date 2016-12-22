@@ -2,17 +2,22 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-	identifiers: DS.attr(),
-	imported_from_feed_onestop_ids: DS.attr('string'),
+  // Datastore
+  // created_or_updated_in_changeset: DS.belongsTo('changeset', { async: true }),
 	onestop_id: Ember.computed.alias('id'),
-	geometry: DS.attr(),
 	name: DS.attr('string'),
-	tags: DS.attr(),
-	timezone: DS.attr('string'),
 	created_at: DS.attr('date'),
 	updated_at: DS.attr('date'),
+	geometry: DS.attr(),
+	tags: DS.attr(),
+	timezone: DS.attr('string'),
+	identifiers: DS.attr(),
+	imported_from_feed_onestop_ids: DS.attr('string'),
 	operators_serving_stop: DS.attr(),
 	routes_serving_stop: DS.attr(),
+
+  // Ember
+	rsp_stop_pattern_number: null,
 	location: (function(){
 		return this.get('geometry')['coordinates'].reverse();
 	}).property('geometry'),
@@ -24,5 +29,26 @@ export default DS.Model.extend({
 			return 'svg-stop';
 		}
 	}),
-	rsp_stop_pattern_number: null
+  
+  // Dispatcher
+  coordinates: Ember.computed('geometry', function () {
+    return this.get('geometry').coordinates.slice().reverse();
+  }),
+  setCoordinates: function(value) {
+    this.set('geometry', {type: 'Point', coordinates: value.map(function(c) { return parseFloat(c.toFixed(5)); } ) });
+  },
+  entityType: function() {
+    return 'stop';
+  },
+  toChange: function() {
+    return {
+      onestopId: this.id,
+      name: this.get('name'),
+      timezone: this.get('timezone'),
+      geometry: {
+        type: "Point",
+        coordinates: this.get('geometry').coordinates
+      }
+    };
+  }
 });
