@@ -15,8 +15,8 @@ function next_fragment(entities, separator) {
 }
 
 export default Stop.extend({
-  stop_platforms: DS.hasMany('data/transitland/stop-platform', { inverse: 'parent_stop'}),
-  stop_egresses:  DS.hasMany('data/transitland/stop-egress', { inverse: 'parent_stop'}),
+  stop_platforms: DS.hasMany('data/transitland/stop-platform', { modelFor: 'data/transitland/stop-platform', inverse: 'parent_stop'}),
+  stop_egresses:  DS.hasMany('data/transitland/stop-egress', { modelFor: 'data/transitland/stop-platform', inverse: 'parent_stop'}),
   stationPlatformLines: Ember.computed('geometry', 'stop_platforms.@each.geometry', function() {
     var origin = this.get('coordinates');
     return this.get('stop_platforms').map(function(stop_platform) {

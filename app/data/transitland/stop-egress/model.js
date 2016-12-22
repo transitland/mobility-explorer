@@ -3,7 +3,7 @@ import DS from 'ember-data';
 import Stop from '../stop/model';
 
 export default Stop.extend({
-  parent_stop: DS.belongsTo('data/transitland/stop-platform'),
+  parent_stop: DS.belongsTo('data/transitland/stop-station', { modelFor: 'data/transitland/stop-station' }),
   parent_stop_onestop_id: Ember.computed('parent_stop', {
     get(key) {
       return this.get('parent_stop').get('id');
