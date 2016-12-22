@@ -1,7 +1,7 @@
 import DS from 'ember-data';
-import ApplicationSerializer from '../application/serializer';
+import TransitlandSerializer from "../serializer";
 
-export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+export default TransitlandSerializer.extend(DS.EmbeddedRecordsMixin, {
   primaryKey: 'onestop_id',
   attrs: {
     stop_platforms: {
@@ -10,5 +10,8 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
     stop_egresses: {
       deserialize: 'records'
     }
-  }
+  },
+	modelNameFromPayloadKey: function(payloadKey){
+		return "data/transitland/stop-station";
+	}
 });

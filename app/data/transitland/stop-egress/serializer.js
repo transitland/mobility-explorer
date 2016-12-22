@@ -1,6 +1,6 @@
 import DS from 'ember-data';
-import ApplicationSerializer from '../application/serializer';
+import TransitlandSerializer from "../serializer";
 
-export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+export default TransitlandSerializer.extend(DS.EmbeddedRecordsMixin, {
   primaryKey: 'onestop_id'
 });
