@@ -54,7 +54,7 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
     this.store.unloadAll('data/transitland/route_stop_pattern');
-    return this.store.query('data/transitland/stop', params).then(function(stops) {
+    return this.store.query('data/transitland/stop_station', params).then(function(stops) {
       var onlyStop, stopLocation, mode, url;
       if (stops.get('query.isochrone_mode')){
         onlyStop = stops.get('firstObject');
