@@ -16,7 +16,7 @@ export default DS.Model.extend({
 	operators_serving_stop: DS.attr(),
 	routes_serving_stop: DS.attr(),
 
-  // Ember
+  // Explorer
 	rsp_stop_pattern_number: null,
 	location: (function(){
 		return this.get('geometry')['coordinates'].reverse();
@@ -29,7 +29,7 @@ export default DS.Model.extend({
 			return 'svg-stop';
 		}
 	}),
-  
+
   // Dispatcher
   coordinates: Ember.computed('geometry', function () {
     return this.get('geometry').coordinates.slice().reverse();
