@@ -105,8 +105,8 @@
 			  		</div>
 			  	</div>
 
-				
-				
+
+
 				{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 			</div>
 		  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
@@ -211,7 +211,7 @@
 								  {{#if (eq isochrone_mode "bicycle")}}
 								  	{{isochrone-legend isochrone_mode=isochrone_mode}}
 						  		{{/if}}
-								  
+
 								  {{#if (eq isochrone_mode "auto")}}
 						  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
 						  		{{else}}
@@ -277,7 +277,7 @@
 		{{sidebar-title-mobility}}
 		<div class="btn-group-vertical" role="group" >
   		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-  	</div>	
+  	</div>
 		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="isochrones" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 	</div>
 	<div class="col-md-8">
@@ -307,15 +307,29 @@
 
 		  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+
 				{{#if served_by}}
 					{{#each model.servedByRoute.features as |route|}}
 						{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
 						{{/geojson-layer}}
 					{{/each}}
 				{{/if}}
-				{{#if onestop_id}}
+
+        {{stop-map stops=model.stops}}
+
+				<!-- {{#if onestop_id}}
 					{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+					  		{{#marker-layer
+                  location=stop.location
+                  icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size)
+                  draggable=false
+                  clickable=false
+                  riseOnHover=true
+                  riseOffset=1000
+                  onMouseover=(action "selectStop" stop)
+                  onMouseout=(action "unselectStop" stop)
+                  onClick=(action "setOnestopId" stop)
+                }}
 					  		{{/marker-layer}}
 				  {{/each}}
 				{{else}}
@@ -323,7 +337,8 @@
 					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
 					  		{{/marker-layer}}
 				  {{/each}}
-				{{/if}}
+				{{/if}} -->
+
 			  {{#if isochrone_mode}}
 			  	{{#if onestop_id}}
 					  {{#each model.isochrones.features as |isochrone|}}
@@ -346,10 +361,12 @@
 						{{/each}}
 				  {{/if}}
 			  {{/if}}
+
 			  {{#if pin}}
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}
         {{/if}}
+
 			{{/leaflet-map}}
 		</div>
 	</div>

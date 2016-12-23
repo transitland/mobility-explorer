@@ -1,0 +1,48 @@
+{{#each stops as |stop|}}
+
+  {{#geojson-layer
+    icon=stopStationIcon
+    geoJSON=stop.geometry
+    draggable=false
+    clickable=false
+    riseOnHover=true
+    riseOffset=1000
+    onMouseover=(action "selectStop" stop)
+  }}
+  {{/geojson-layer}}
+
+  {{#each stop.stop_platforms as |stop_platform|}}
+    {{#geojson-layer
+      icon=stopPlatformIcon
+      geoJSON=stop_platform.geometry
+      draggable=false
+      clickable=false
+      riseOnHover=true
+      riseOffset=1000
+      onMouseover=(action "selectStop" stop_platform)
+    }}
+    {{/geojson-layer}}
+  {{/each}}
+
+  {{#each stop.stop_egresses as |stop_egress|}}
+    {{#geojson-layer
+      icon=stopEgressIcon
+      geoJSON=stop_egress.geometry
+      draggable=false
+      clickable=false
+      riseOnHover=true
+      riseOffset=1000
+      onMouseover=(action "selectStop" stop_egress)
+    }}
+    {{/geojson-layer}}
+  {{/each}}
+
+  {{#polygon-layer locations=stop.stationPlatformLines color="red"}}
+    Platforms
+  {{/polygon-layer}}
+
+  {{#polygon-layer locations=stop.stationEgressLines color="blue"}}
+    Egresses
+  {{/polygon-layer}}
+
+{{/each}}
