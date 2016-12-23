@@ -32,15 +32,12 @@ export default Ember.Component.extend({
   bounds: null,
   actions: {
     selectStop(stop) {
-      console.log('selectStop', stop.id);
       this.sendAction('selectStop', stop);
     },
     unselectStop(stop) {
-      console.log('unselectStop', stop.id);
       this.sendAction('unselectStop', stop);
     },
     setOnestopId(stop) {
-      console.log('setOnestopId', stop.id);
       this.sendAction('setOnestopId', stop);
     },
     updateStopLocation(stop, e) {
