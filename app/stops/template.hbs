@@ -315,7 +315,12 @@
 					{{/each}}
 				{{/if}}
 
-        {{stop-map stops=model.stops}}
+        {{stop-map
+          stops=model.stops
+          selectStop="selectStop"
+          unselectStop="unselectStop"
+          setOnestopId="setOnestopId"
+        }}
 
 				<!-- {{#if onestop_id}}
 					{{#each model.stops as |stop|}}
@@ -334,7 +339,17 @@
 				  {{/each}}
 				{{else}}
 					{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+					  		{{#marker-layer
+                  location=stop.location
+                  icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size)
+                  draggable=false
+                  clickable=true
+                  riseOnHover=true
+                  riseOffset=1000
+                  onMouseover=(action "selectStop" stop)
+                  onMouseout=(action "unselectStop" stop)
+                  onClick=(action "setOnestopId" stop)
+                }}
 					  		{{/marker-layer}}
 				  {{/each}}
 				{{/if}} -->
