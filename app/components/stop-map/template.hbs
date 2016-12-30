@@ -1,8 +1,8 @@
 {{#each stops as |stop|}}
 
-  {{#geojson-layer
+  {{#marker-layer
     icon=stopStationIcon
-    geoJSON=stop.geometry
+    location=stop.coordinates
     clickable=true
     draggable=false
     riseOnHover=true
@@ -11,12 +11,12 @@
     onMouseout=(action "unselectStop" stop)
     onClick=(action "setOnestopId" stop)
   }}
-  {{/geojson-layer}}
+  {{/marker-layer}}
 
   {{#each stop.stop_platforms as |stop_platform|}}
-    {{#geojson-layer
-      icon=(div-icon html=stop_platform.html className=stop_platform.icon_class iconSize=stop_platform.icon_size)
-      geoJSON=stop_platform.geometry
+    {{#marker-layer
+      icon=stopPlatformIcon
+      location=stop_platform.coordinates
       clickable=true
       draggable=false
       riseOnHover=true
@@ -25,13 +25,13 @@
       onMouseout=(action "unselectStop" stop_platform)
       onClick=(action "setOnestopId" stop_platform)
     }}
-    {{/geojson-layer}}
+    {{/marker-layer}}
   {{/each}}
 
   {{#each stop.stop_egresses as |stop_egress|}}
-    {{#geojson-layer
-      icon=(div-icon html=stop_egress.html className=stop_egress.icon_class iconSize=stop_egress.icon_size)
-      geoJSON=stop_egress.geometry
+    {{#marker-layer
+      icon=stopEgressIcon
+      location=stop_egress.coordinates
       clickable=true
       draggable=false
       riseOnHover=true
@@ -40,7 +40,7 @@
       onMouseout=(action "unselectStop" stop_egress)
       onClick=(action "setOnestopId" stop_egress)
     }}
-    {{/geojson-layer}}
+    {{/marker-layer}}
   {{/each}}
 
   {{#polygon-layer locations=stop.stationPlatformLines color="red"}}
