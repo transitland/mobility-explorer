@@ -11,6 +11,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 
   onestop_id: null,
   departure_time: null,
+  isochrone_mode: null,
   moment: moment(),
   mousedOver: false,
   
