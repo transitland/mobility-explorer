@@ -98,39 +98,18 @@ export default Ember.Route.extend(setLoading, {
 			// 
 			// re-query for isochrones with any include/exclude selection
 
-			var routesUrl = 'https://transit.land/api/v1/routes?per_page=false&bbox=';
-			var operatorsUrl = 'https://transit.land/api/v1/operators?per_page=false&bbox=';
-			routesUrl += params.bbox;
-			operatorsUrl += params.bbox;
-			var routes = Ember.$.ajax({ routesUrl });
+			// var routesUrl = 'https://transit.land/api/v1/routes?per_page=false&bbox=';
+			// var operatorsUrl = 'https://transit.land/api/v1/operators?per_page=false&bbox=';
+			// routesUrl += params.bbox;
+			// operatorsUrl += params.bbox;
 			var isochrones = Ember.$.ajax({ url });
-			// var operators = Ember.$.ajax({ operatorsUrl });
-			// debugger;
       var operators = this.store.query('data/transitland/operator', {bbox: params.bbox});
-      // debugger
+      var routes = this.store.query('data/transitland/route', {bbox: params.bbox});
 
 			return Ember.RSVP.hash({
-				url: url,
-				// linkUrl: linkUrl,
-				// routesUrl: routesUrl,
-				// localRoutes: routes,
-				operatorsUrl: operatorsUrl,
 				operators: operators,
+				routes: routes,
 				isochrones: isochrones,
-				// isochrones: Ember.$.ajax({ url }).then(function(response){
-
-					// var unescapedUrl = unescape(this.url);
-					// var firstHalf = unescapedUrl.split('"costing":"');
-					// var secondHalf = firstHalf[1].split('","costing_options');
-					// var mode = secondHalf[0];
-					// if (mode === "multimodal"){
-				 //  	var features = response.features;
-				 //  	for (var k = 0; k < features.length; k++) {
-				 //  		// console.log(features[k]);
-				 //  	}
-					// }
-					// return response;
-				// })
 			});
 		}
 

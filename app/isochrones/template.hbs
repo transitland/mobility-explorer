@@ -237,6 +237,9 @@
 
 							<br>
 							Route IDs:
+							{{#each model.routes as |route|}}
+						  	{{route.id}}<br>
+						  {{/each}}
 						</div>
 					{{/if}}
 				</form>
