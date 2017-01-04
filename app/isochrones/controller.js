@@ -52,6 +52,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       } else {
         this.set('isochrone_mode', mode);
       }
+      if (mode === "multimodal"){
+        // debugger;
+      }
     },
     change(date){
       var dateString = date.toString();

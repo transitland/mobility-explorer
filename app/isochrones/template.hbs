@@ -228,6 +228,17 @@
 					 		</div>
 					  {{/if}}
 					</div>
+					{{#if (eq isochrone_mode "multimodal")}}
+						<div>
+							Operator IDs:
+						  {{#each model.operators as |operator|}}
+						  	{{operator.id}}<br>
+						  {{/each}}
+
+							<br>
+							Route IDs:
+						</div>
+					{{/if}}
 				</form>
 
 			</div>
