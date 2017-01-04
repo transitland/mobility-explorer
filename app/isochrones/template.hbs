@@ -24,72 +24,72 @@
 		      		{{#if isochrone_mode}}{{#if onestop_id}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}{{/if}}
 		        </div>
 					  <div class="expanded-selection">
-			    <form>
-						<div class="isochrone-detail">
-							{{#if pin}}
-					  		<div class="form-group-header">View distance you can travel from this {{#if pin}}pin{{/if}}{{#if stopmode}}stop{{/if}} via:</div>
-								  <div class="form-group">
-									  {{#if (eq isochrone_mode "pedestrian")}}
-								  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
-							  		{{else}}
-							  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
-							  		{{/if}}
-								    <label for="radio-1">walking</label><br>
-									  {{#if (eq isochrone_mode "pedestrian")}}
-									  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-							  		{{/if}}
-									  {{#if (eq isochrone_mode "bicycle")}}
-							  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
-							  		{{else}}
-							  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
-							  		{{/if}}
-								    <label for="radio-2">biking</label><br>
-									  {{#if (eq isochrone_mode "bicycle")}}
-									  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-							  		{{/if}}
-									  
-									  {{#if (eq isochrone_mode "auto")}}
-							  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
-							  		{{else}}
-							  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
-							  		{{/if}}
-								    <label for="radio-3">driving</label><br>
-									  {{#if (eq isochrone_mode "auto")}}
-									  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-							  		{{/if}}
-							  		{{#if (eq isochrone_mode "multimodal")}}
-							  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
-							  		{{else}}
-							  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
-							  		{{/if}}
-								    <label for="radio-4">transit</label>
-									  {{#if (eq isochrone_mode "multimodal")}}
-									  	{{isochrone-legend isochrone_mode=isochrone_mode}}
-							  		{{/if}}
-								  </div>
-							  	{{#if (eq isochrone_mode "multimodal")}}
-							  		{{#if departure_time}}
-								  		<p class="caption">departure at:</p>
-								  		<div class="datetime-picker">
-								  			{{bs-datetimepicker date=departure_time isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
-								  		</div>
-								  		<div class="reset-datetime" {{action "resetDepartureTime"}}>
-								  			reset to current date and time <i class="fa fa-undo" aria-hidden="true"></i></div>
-								  	{{else}}
-								  		<p class="caption">departure at:</p>
-								  		<div class="datetime-picker">
-						  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
-						  		</div>
-						  	{{/if}}
+				    <form>
+							<div class="isochrone-detail">
+								{{#if pin}}
+						  		<div class="form-group-header">View distance you can travel from this {{#if pin}}pin{{/if}}{{#if stopmode}}stop{{/if}} via:</div>
+									  <div class="form-group">
+										  {{#if (eq isochrone_mode "pedestrian")}}
+									  		<input type="radio" id="radio-1" name="options" checked {{action "setIsochroneMode" "pedestrian"}}>
+								  		{{else}}
+								  			<input type="radio" id="radio-1" name="options" {{action "setIsochroneMode" "pedestrian"}}>
+								  		{{/if}}
+									    <label for="radio-1">walking</label><br>
+										  {{#if (eq isochrone_mode "pedestrian")}}
+										  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+								  		{{/if}}
+										  {{#if (eq isochrone_mode "bicycle")}}
+								  			<input type="radio" id="radio-2" name="options" checked {{action "setIsochroneMode" "bicycle"}}>
+								  		{{else}}
+								  			<input type="radio" id="radio-2" name="options" {{action "setIsochroneMode" "bicycle"}}>
+								  		{{/if}}
+									    <label for="radio-2">biking</label><br>
+										  {{#if (eq isochrone_mode "bicycle")}}
+										  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+								  		{{/if}}
+										  
+										  {{#if (eq isochrone_mode "auto")}}
+								  			<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
+								  		{{else}}
+								  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "auto"}}>
+								  		{{/if}}
+									    <label for="radio-3">driving</label><br>
+										  {{#if (eq isochrone_mode "auto")}}
+										  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+								  		{{/if}}
+								  		{{#if (eq isochrone_mode "multimodal")}}
+								  			<input type="radio" id="radio-4" name="options" checked {{action "setIsochroneMode" "multimodal"}}>
+								  		{{else}}
+								  			<input type="radio" id="radio-4" name="options" {{action "setIsochroneMode" "multimodal"}}>
+								  		{{/if}}
+									    <label for="radio-4">transit</label>
+										  {{#if (eq isochrone_mode "multimodal")}}
+										  	{{isochrone-legend isochrone_mode=isochrone_mode}}
+								  		{{/if}}
+									  </div>
+								  	{{#if (eq isochrone_mode "multimodal")}}
+								  		{{#if departure_time}}
+									  		<p class="caption">departure at:</p>
+									  		<div class="datetime-picker">
+									  			{{bs-datetimepicker date=departure_time isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+									  		</div>
+									  		<div class="reset-datetime" {{action "resetDepartureTime"}}>
+									  			reset to current date and time <i class="fa fa-undo" aria-hidden="true"></i></div>
+									  	{{else}}
+									  		<p class="caption">departure at:</p>
+									  		<div class="datetime-picker">
+							  			{{bs-datetimepicker date=moment isTime=true sideBySide=false showTodayButton=true change=(action 'change')}}
+							  		</div>
 							  	{{/if}}
-							  {{else}}
-							  	<p class="caption">See the distance you can travel from a particular point at various time intervals.</p>
-							  	<p class="caption">Start by clicking on the map or searching for a location...</p>
-							  {{/if}}
-							</div>
-						</form>
+								  	{{/if}}
+								  {{else}}
+								  	<p class="caption">See the distance you can travel from a particular point at various time intervals.</p>
+								  	<p class="caption">Start by clicking on the map or searching for a location...</p>
+								  {{/if}}
+								</div>
+							</form>
+						</div>
 					</div>
-				</div>
         </div>
       </div>
       <div class="col-xs-12" style="padding-left:0px;">
@@ -230,16 +230,19 @@
 					</div>
 					{{#if (eq isochrone_mode "multimodal")}}
 						<div>
-							Operator IDs:
-						  {{#each model.operators as |operator|}}
-						  	{{operator.id}}<br>
-						  {{/each}}
-
-							<br>
-							Route IDs:
-							{{#each model.routes as |route|}}
-						  	{{route.id}}<br>
-						  {{/each}}
+      	<!-- <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button> -->
+							<button type="button" data-toggle="collapse" data-target="#operator-list">Show operators v</button><br>
+							<div id="operator-list" class="collapse">
+							  {{#each model.operators as |operator|}}
+							  	{{operator.name}}<br>
+							  {{/each}}
+							</div>
+							<button type="button" data-toggle="collapse" data-target="#route-list">Show routes v</button><br>
+							<div id="route-list" class="collapse">
+								{{#each model.routes as |route|}}
+							  	{{route.id}}<br>
+							  {{/each}}
+							</div>
 						</div>
 					{{/if}}
 				</form>

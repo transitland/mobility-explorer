@@ -102,6 +102,9 @@ export default Ember.Route.extend(setLoading, {
 			// var operatorsUrl = 'https://transit.land/api/v1/operators?per_page=false&bbox=';
 			// routesUrl += params.bbox;
 			// operatorsUrl += params.bbox;
+
+			// add include/exclude query params
+
 			var isochrones = Ember.$.ajax({ url });
       var operators = this.store.query('data/transitland/operator', {bbox: params.bbox});
       var routes = this.store.query('data/transitland/route', {bbox: params.bbox});
