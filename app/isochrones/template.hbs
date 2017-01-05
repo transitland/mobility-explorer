@@ -233,8 +233,8 @@
       	<!-- <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button> -->
 							<button type="button" data-toggle="collapse" data-target="#operator-list">Show operators v</button><br>
 							<div id="operator-list" class="collapse in">
-									  		<input type="checkbox" name="include-operator" checked>
-								
+							<!-- <input type="checkbox" name="include-operator" checked> -->
+
 								<table>
 									<tr>
 							      <th style="min-width:5ch;padding-right:5px">Incl.</th>
@@ -244,10 +244,18 @@
 								  {{#each model.operators as |operator|}}
 									  <tr>
 									  	<td class="center-checkbox">
-									  		<input type="checkbox" name="include-operator" checked>
+									  		{{#if (eq exclude operator.id)}}
+									  			<input type="checkbox" name="include-operator">
+									  		{{else}}
+									  			<input type="checkbox" name="include-operator" checked>
+									  		{{/if}}
 									  	</td>
 									  	<td class="center-checkbox">
-									  		<input type="checkbox" name="exclude-operator">
+									  		{{#if (eq exclude operator.id)}}
+									  		<input type="checkbox" name="exclude-operator" {{action "excludeOperators" operator}} checked>
+									  		{{else}}
+									  			<input type="checkbox" name="exclude-operator" {{action "excludeOperators" operator}}>
+									  		{{/if}}
 									  	</td>
 									    <td>{{operator.name}}</td>
 										</tr>

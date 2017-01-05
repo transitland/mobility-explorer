@@ -7,13 +7,15 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-  queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time'],
+  queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time', 'include', 'exclude'],
 
   onestop_id: null,
   departure_time: null,
   isochrone_mode: null,
   moment: moment(),
   mousedOver: false,
+  include: null,
+  exclude: null,
   
   actions: {
     updateLeafletBbox(e) {
@@ -94,6 +96,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     resetDepartureTime: function(){
       this.set('moment', moment());
       this.set('departure_time', null);
+    },
+    includeOperators: function(operator){
+      this.set('include', [operator.id]);
+    },
+    excludeOperators: function(operator){
+      this.set('exclude', [operator.id]);
+
     }
   }
 });
