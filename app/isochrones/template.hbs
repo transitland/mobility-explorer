@@ -232,15 +232,32 @@
 						<div>
       	<!-- <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button> -->
 							<button type="button" data-toggle="collapse" data-target="#operator-list">Show operators v</button><br>
-							<div id="operator-list" class="collapse">
-							  {{#each model.operators as |operator|}}
-							  	{{operator.name}}<br>
-							  {{/each}}
+							<div id="operator-list" class="collapse in">
+									  		<input type="checkbox" name="include-operator" checked>
+								
+								<table>
+									<tr>
+							      <th style="min-width:5ch;padding-right:5px">Incl.</th>
+							      <th style="min-width:5ch;padding-right:5px">Excl.</th>
+							      <th>Operator</th>
+							    </tr>
+								  {{#each model.operators as |operator|}}
+									  <tr>
+									  	<td class="center-checkbox">
+									  		<input type="checkbox" name="include-operator" checked>
+									  	</td>
+									  	<td class="center-checkbox">
+									  		<input type="checkbox" name="exclude-operator">
+									  	</td>
+									    <td>{{operator.name}}</td>
+										</tr>
+								  {{/each}}
+								</table>
 							</div>
 							<button type="button" data-toggle="collapse" data-target="#route-list">Show routes v</button><br>
 							<div id="route-list" class="collapse">
 								{{#each model.routes as |route|}}
-							  	{{route.id}}<br>
+								  {{route.id}}<br>
 							  {{/each}}
 							</div>
 						</div>
