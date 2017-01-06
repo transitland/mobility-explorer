@@ -18,7 +18,7 @@ export default Ember.Route.extend(setLoading, {
 		},
 		include: {
 			replace: true,
-			// refreshModel: true
+			refreshModel: true
 		},
 		exclude: {
 			replace: true,
@@ -85,7 +85,7 @@ export default Ember.Route.extend(setLoading, {
 				// transit_start_end_max_distance default is 2145 or about 1.5 miles for start/end distance:
 				// transit_transfer_max_distance default is 800 or 0.5 miles for transfer distance:
 
-				if (params.exclude) {
+				if (params.exclude.length > 0) {
 					json.costing_options = {
 						"pedestrian":{
 							"use_ferry":0,
@@ -95,10 +95,28 @@ export default Ember.Route.extend(setLoading, {
 						"transit":{
 							"filters":{
 								"operators":{
-									"ids":[
+									"ids":
 										params.exclude
-									],
+									,
 									"action":"exclude"
+								}
+							}
+						}
+					};
+				} else if (params.include.length > 0) {
+					json.costing_options = {
+						"pedestrian":{
+							"use_ferry":0,
+							"transit_start_end_max_distance":100000,
+							"transit_transfer_max_distance":100000
+						},
+						"transit":{
+							"filters":{
+								"operators":{
+									"ids":
+										params.include
+									,
+									"action":"include"
 								}
 							}
 						}
@@ -113,6 +131,7 @@ export default Ember.Route.extend(setLoading, {
 					};
 				}
 			}
+			// debugger;
 			if (params.departure_time){
 				json.date_time = {"type": 1, "value": params.departure_time};
 			}
@@ -123,7 +142,6 @@ export default Ember.Route.extend(setLoading, {
 			// exclude - exclude all of the ids listed in the filter
 			// include - include only the ids listed in the filter
 			// 
-			// use bbox to query for all routes (no operator include/exclude)
 			// if one operator is included: use operator id to query routes
 			// if more than one operator is included: 
 			// if one or more operator is excluded: use operator id to filter out routes by that/those operators
@@ -131,18 +149,15 @@ export default Ember.Route.extend(setLoading, {
 			// if operator is included/excluded:
 			// only show routes for the right operators
 			// 
-			// re-query for isochrones with any include/exclude selection
 
-			// var routesUrl = 'https://transit.land/api/v1/routes?per_page=false&bbox=';
-			// var operatorsUrl = 'https://transit.land/api/v1/operators?per_page=false&bbox=';
-			// routesUrl += params.bbox;
-			// operatorsUrl += params.bbox;
 
-			// add include/exclude query params
 
 			var isochrones = Ember.$.ajax({ url });
       var operators = this.store.query('data/transitland/operator', {bbox: params.bbox});
       var routes = this.store.query('data/transitland/route', {bbox: params.bbox});
+
+ 			// add function to change query for only included operators' routes, if there are any
+ 			// need to be able to incorporate include and exclude
 
 			return Ember.RSVP.hash({
 				operators: operators,

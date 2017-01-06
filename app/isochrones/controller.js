@@ -14,9 +14,29 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   isochrone_mode: null,
   moment: moment(),
   mousedOver: false,
-  include: null,
-  exclude: null,
-  
+  include: [],
+  exclude: [],
+
+  // this iterates through the arrays for the included and excluded query params, and sets the included or excluded 
+  // model attributes for the entities with listed onestopIDs
+  markedIncludedExcluded: false,
+  markIncludedExcluded: Ember.computed('exclude', function(){
+    // if (this.get('markedIncludedExcluded') === true){
+    //   return true;
+    // } else {
+      for (var i = 0; i < this.get('exclude').length; i++){
+        var operator = this.get('exclude')[i];
+        this.store.peekRecord('data/transitland/operator', operator).set('exclude', true);
+      }
+      for (var i = 0; i < this.get('include').length; i++){
+        var operator = this.get('include')[i];
+        this.store.peekRecord('data/transitland/operator', operator).set('include', true);
+      }
+      this.set('markedIncludedExcluded', true);
+      return true;
+    // }
+  }),
+
   actions: {
     updateLeafletBbox(e) {
       var leafletBounds = e.target.getBounds();
@@ -97,12 +117,31 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('moment', moment());
       this.set('departure_time', null);
     },
-    includeOperators: function(operator){
-      this.set('include', [operator.id]);
+    include: function(entity){
+      if (this.get('include').includes(entity.id)){
+        this.get('include').removeObject(entity.id);
+        this.store.peekRecord('data/transitland/operator', entity.id).set('include', false);
+      } else {
+        this.get('include').pushObject(entity.id);
+        this.store.peekRecord('data/transitland/operator', entity.id).set('include', true);
+        if (this.get('exclude').includes(entity.id)){
+          this.get('exclude').removeObject(entity.id);
+          this.store.peekRecord('data/transitland/operator', entity.id).set('exclude', false);
+        }
+      }
     },
-    excludeOperators: function(operator){
-      this.set('exclude', [operator.id]);
-
+    exclude: function(entity){
+      if (this.get('exclude').includes(entity.id)){
+        this.get('exclude').removeObject(entity.id);
+        this.store.peekRecord('data/transitland/operator', entity.id).set('exclude', false);
+      } else {
+        this.get('exclude').pushObject(entity.id);
+        this.store.peekRecord('data/transitland/operator', entity.id).set('exclude', true);
+        if (this.get('include').includes(entity.id)){
+          this.get('include').removeObject(entity.id);
+          this.store.peekRecord('data/transitland/operator', entity.id).set('include', false);
+        }
+      }
     }
   }
 });
