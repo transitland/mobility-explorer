@@ -27,6 +27,8 @@ var Route = DS.Model.extend({
 		'tram' : '#fdb462'
 	},
 	default_color: "#6ea0a4",
+	include: DS.attr('boolean'),
+	exclude: DS.attr('boolean'),
 	total: (function(){
 		this.get('meta.total');
 	}).property(),

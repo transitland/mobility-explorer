@@ -100,38 +100,14 @@ export default Ember.Route.extend(setLoading, {
 				// Once /routes?operated_by= accepts a comma-separated list:
 				// Only query for routes operated by selected operators.
 
-				// "costing_options":{
-				// 	"transit":{
-				// 		"filters":{
-				// 			"routes":{
-				// 				"ids":[
-				// 					"r-dqcj-silver",
-				// 					"r-dqcj-silver",
-				// 				],
-				// 				"action":"exclude"
-				// 			},
-				// 			"operators":{
-				// 				"ids":[
-				// 					"o-dqc-met"
-				// 				],
-				// 				"action":"include"
-				// 			}
-				// 		}
-				// 	}
-				// }
 				json.costing_options.pedestrian = {
-					// "pedestrian":{
 						"use_ferry":0,
 						"transit_start_end_max_distance":100000,
 						"transit_transfer_max_distance":100000
-					// }
 				};
 
 				json.costing_options["transit"]={};
 				json.costing_options.transit["filters"]={}
-				
-				// debugger;
-				// json.costing_options.transit["routes"] =				
 				
 				if (params.include_operators.length > 0) {
 						json.costing_options.transit.filters["operators"] = {

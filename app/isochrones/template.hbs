@@ -230,17 +230,15 @@
 					</div>
 					{{#if (eq isochrone_mode "multimodal")}}
 						<div>
-      	<!-- <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button> -->
-							<button type="button" data-toggle="collapse" data-target="#operator-list">Show operators v</button><br>
-							<div id="operator-list" class="collapse in">
-								<table>
-									<tr>
-							      <th style="min-width:5ch;padding-right:5px">Incl.</th>
-							      <th style="min-width:5ch;padding-right:5px">Excl.</th>
-							      <th>Operator</th>
-							    </tr>
-
-							    {{#if markIncludedExcluded}}
+							{{#if markIncludedExcluded}}
+								<button type="button" data-toggle="collapse" data-target="#operator-list">Show operators v</button><br>
+								<div id="operator-list" class="collapse in">
+									<table>
+										<tr>
+								      <th style="min-width:5ch;padding-right:5px">Incl.</th>
+								      <th style="min-width:5ch;padding-right:5px">Excl.</th>
+								      <th>Operator</th>
+								    </tr>
 									  {{#each model.operators as |operator|}}
 										  <tr>
 										  	<td class="center-checkbox">
@@ -260,41 +258,38 @@
 										    <td>{{operator.name}}</td>
 											</tr>
 									  {{/each}}
-									{{/if}}
-								</table>
-							</div>
-							<button type="button" data-toggle="collapse" data-target="#route-list">Show routes v</button><br>
-							<div id="route-list" class="collapse">
-								<table>
-									<tr>
-							      <th style="min-width:5ch;padding-right:5px">Incl.</th>
-							      <th style="min-width:5ch;padding-right:5px">Excl.</th>
-							      <th>Operator</th>
-							    </tr>
-
-							    {{#if markIncludedExcluded}}
+									</table>
+								</div>
+								<button type="button" data-toggle="collapse" data-target="#route-list">Show routes v</button><br>
+								<div id="route-list" class="collapse in">
+									<table>
+										<tr>
+								      <th style="min-width:5ch;padding-right:5px">Incl.</th>
+								      <th style="min-width:5ch;padding-right:5px">Excl.</th>
+								      <th>Operator</th>
+								    </tr>
 									  {{#each model.routes as |route|}}
 										  <tr>
 										  	<td class="center-checkbox">
 										  		{{#if (eq route.include true)}}
-										  			<input type="checkbox" name="include-route" {{action "include" route}} checked>
+										  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
 										  		{{else}}
-										  			<input type="checkbox" name="include-route" {{action "include" route}}>
+										  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
 										  		{{/if}}
 										  	</td>
 										  	<td class="center-checkbox">
 										  		{{#if (eq route.exclude true)}}
-										  		<input type="checkbox" name="exclude-route" {{action "exclude" route}} checked>
+										  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
 										  		{{else}}
-										  			<input type="checkbox" name="exclude-route" {{action "exclude" route}}>
+										  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
 										  		{{/if}}
 										  	</td>
 										    <td>{{route.name}}</td>
 											</tr>
 									  {{/each}}
-									{{/if}}
-								</table>
-							</div>
+									</table>
+								</div>
+							{{/if}}
 						</div>
 					{{/if}}
 				</form>
