@@ -18,7 +18,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   exclude_operators: [],
   include_routes: [],
   exclude_routes: [],
-
+  
   // this iterates through the arrays for the included and excluded query params, and sets the included or excluded 
   // model attributes for the entities with listed onestopIDs
   markIncludedExcluded: Ember.computed('include_operators', function(){
