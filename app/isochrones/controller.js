@@ -1,89 +1,77 @@
+/* global moment */
+
 import Ember from 'ember';
 import mapBboxController from 'mobility-playground/mixins/map-bbox-controller';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
+import sharedActions from 'mobility-playground/mixins/shared-actions';
 
-export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
-	queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time'],
-	bbox: null,
-	leafletBbox: null,
-  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
-  isochrone_mode: null,
-  pin: null,
+
+export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
+  queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time', 'include_operators', 'exclude_operators', 'include_routes', 'exclude_routes'],
+
   onestop_id: null,
   departure_time: null,
+  isochrone_mode: null,
   moment: moment(),
-  pinLocation: Ember.computed('pin', function(){
-    if (typeof(this.get('pin'))==="string"){
-      var pinArray = this.get('pin').split(',');
-      return pinArray;
-    } else {
-      return this.get('pin');
-    }
-  }),
-  place: null,
-  currentlyLoading: Ember.inject.service(),
-	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',		
-		iconSize: (20, 20),
-    iconAnchor: [10, 24],
-	}),
-  markerUrl: 'assets/images/marker1.png',
   mousedOver: false,
-  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
-  closeTextbox: Ember.inject.service(),
-  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
-    return this.get('closeTextbox').get('textboxIsClosed');
+  include_operators: [],
+  exclude_operators: [],
+  include_routes: [],
+  exclude_routes: [],
+  
+  // this iterates through the arrays for the included and excluded query params, and sets the included or excluded 
+  // model attributes for the entities with listed onestopIDs
+  markIncludedExcluded: Ember.computed('include_operators', function(){
+    if (this.get('exclude_operators').length > 0) {
+      for (var i = 0; i < this.get('exclude_operators').length; i++){
+        var excludeOperator = this.get('exclude_operators')[i];
+        this.store.peekRecord('data/transitland/operator', excludeOperator).set('exclude', true);
+      }
+    }
+
+    if (this.get('include_operators').length > 0) {
+      for (var j = 0; j < this.get('include_operators').length; j++){
+        var includeOperator = this.get('include_operators')[j];
+        this.store.peekRecord('data/transitland/operator', includeOperator).set('include', true);
+      }
+    }
+
+    if (this.get('exclude_routes').length > 0) {
+      for (var k = 0; k < this.get('exclude_routes').length; k++){
+        var excludeRoute = this.get('exclude_routes')[k];
+        this.store.peekRecord('data/transitland/route', excludeRoute).set('exclude', true);
+      }
+    }
+
+    if (this.get('include_routes').length > 0) {
+      for (var l = 0; l < this.get('include_routes').length; l++){
+        var includeRoute = this.get('include_routes')[l];
+        this.store.peekRecord('data/transitland/route', includeRoute).set('include', true);
+      }
+    }
+    return true;
   }),
-	actions: {
-		updateLeafletBbox(e) {
-			var leafletBounds = e.target.getBounds();
-			this.set('leafletBbox', leafletBounds.toBBoxString());
-		},
-		updateMapMoved(e){
-			if (this.get('mousedOver') === true){
-				this.set('mapMoved', true);
-			}
-		},
+
+  // operatorIsIncluded: Ember.computed('inlude_operators', function(){
+  //   console.log('operatorIsIncluded');
+  //   return true;
+  // }),
+
+  actions: {
+    updateLeafletBbox(e) {
+      var leafletBounds = e.target.getBounds();
+      this.set('leafletBbox', leafletBounds.toBBoxString());
+    },
+    updateMapMoved(e){
+      if (this.get('mousedOver') === true){
+        this.set('mapMoved', true);
+      }
+    },
     mouseOver(){
       this.set('mousedOver', true);
     },
-  	searchRepo(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=search-ab7NChg&text=${term}`;      
-      return Ember.$.ajax({ url }).then(json => json.features);
-    },
-  	setPlace: function(selected){
-			if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('pin', coordinates);
-      }
-  		this.set('place', selected);
-  		this.set('bbox', selected.bbox);
-  		this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox'), pin: this.get('pin'), isochrone_mode: null}});
-  	},
-  	clearPlace: function(){
-  		this.set('place', null);
-  	},
     closePopup: function(e){
-      // debugger;
       e.target.closePopup();
-    },
-    removePin: function(){
-      this.set('pin', null);
-    },
-    dropPin: function(e){
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-      this.set('pin', coordinates);
-      var bounds = this.get('leafletBbox');
-      this.set('bbox', bounds);
     },
     updatePin: function(e){
       var lat = e.target._latlng.lat;
@@ -105,6 +93,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
         this.set('isochrone_mode', null);
       } else {
         this.set('isochrone_mode', mode);
+      }
+      if (mode === "multimodal"){
+        // debugger;
       }
     },
     change(date){
@@ -129,8 +120,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
         'Oct' : '10',
         'Nov' : '11',
         'Dec' : '12'
-      }
-      var newDepartureTime = year + "-" + month[monthString] + "-" + day + "T" + hour + ":" + minute
+      };
+      var newDepartureTime = year + "-" + month[monthString] + "-" + day + "T" + hour + ":" + minute;
 
       // This is the local date and time at the location.  
       // value:
@@ -141,10 +132,66 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, {
       // the letter T as a delimiter, and a valid time expression. For example, "2007-04-05T14:30".
       
       this.set('departure_time', newDepartureTime);
-		},
+    },
     resetDepartureTime: function(){
       this.set('moment', moment());
       this.set('departure_time', null);
+    },
+    includeOperator: function(operator){
+      if (this.get('include_operators').includes(operator.id)){
+        this.get('include_operators').removeObject(operator.id);
+        this.store.peekRecord('data/transitland/operator', operator.id).set('include', false);
+      } else {
+        this.get('include_operators').pushObject(operator.id);
+        this.store.peekRecord('data/transitland/operator', operator.id).set('include', true);
+        if (this.get('exclude_operators').includes(operator.id)){
+          this.get('exclude_operators').removeObject(operator.id);
+          this.store.peekRecord('data/transitland/operator', operator.id).set('exclude', false);
+        }
+      }
+      this.get('exclude_operators').clear();
+    },
+    excludeOperator: function(operator){
+      if (this.get('exclude_operators').includes(operator.id)){
+        this.store.peekRecord('data/transitland/operator', operator.id).set('exclude', false);
+        this.get('exclude_operators').removeObject(operator.id);
+      } else {
+        this.store.peekRecord('data/transitland/operator', operator.id).set('exclude', true);
+        this.get('exclude_operators').pushObject(operator.id);
+        if (this.get('include_operators').includes(operator.id)){
+          this.store.peekRecord('data/transitland/operator', operator.id).set('include', false);
+          this.get('include_operators').removeObject(operator.id);
+        }
+      }
+      this.get('include_operators').clear();
+    },
+    includeRoute: function(route){
+      if (this.get('include_routes').includes(route.id)){
+        this.store.peekRecord('data/transitland/route', route.id).set('include', false);
+        this.get('include_routes').removeObject(route.id);
+      } else {
+        this.store.peekRecord('data/transitland/route', route.id).set('include', true);
+        this.get('include_routes').pushObject(route.id);
+        if (this.get('exclude_routes').includes(route.id)){
+          this.store.peekRecord('data/transitland/route', route.id).set('exclude', false);
+          this.get('exclude_routes').removeObject(route.id);
+        }
+      }
+      this.get('exclude_routes').clear();
+    },
+    excludeRoute: function(route){
+      if (this.get('exclude_routes').includes(route.id)){
+        this.get('exclude_routes').removeObject(route.id);
+        this.store.peekRecord('data/transitland/route', route.id).set('exclude', false);
+      } else {
+        this.get('exclude_routes').pushObject(route.id);
+        this.store.peekRecord('data/transitland/route', route.id).set('exclude', true);
+        if (this.get('include_routes').includes(route.id)){
+          this.get('include_routes').removeObject(route.id);
+          this.store.peekRecord('data/transitland/route', route.id).set('include', false);
+        }
+      }
+      this.get('include_routes').clear();
     }
   }
 });

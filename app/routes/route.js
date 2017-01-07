@@ -20,7 +20,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     },
     pin: {
       replace: true,
-      refreshModel: true
     }
   },
   setupController: function (controller, model) {
@@ -50,11 +49,12 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     this.store.unloadAll('data/transitland/operator');
     this.store.unloadAll('data/transitland/stop');
     this.store.unloadAll('data/transitland/route');
-    this.store.unloadAll('data/transitland/route_stop_pattern'); 
+    this.store.unloadAll('data/transitland/route_stop_pattern');
 
     params.total=true;
 
     var routes = this.store.query('data/transitland/route', params);
+    var stops;
 
     if (params.serves){
       // var url = 'https://transit.land/api/v1/stops.geojson?onestop_id=' + params.serves;
@@ -63,15 +63,15 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
       //   routes: routes,
       //   stopServedByRoutes: stopServedByRoutes
       // });
-      var stops = this.store.query('data/transitland/stop', {onestop_id: params.serves});
+      stops = this.store.query('data/transitland/stop', {onestop_id: params.serves});
       return Ember.RSVP.hash({
         routes: routes,
         stops: stops
       });
-      
+
     } else if (params.onestop_id){
       var url = 'https://transit.land/api/v1/stops.geojson?per_page=false&served_by=' + params.onestop_id;
-      var stops = Ember.$.ajax({ url });
+      stops = Ember.$.ajax({ url });
       return Ember.RSVP.hash({
         routes: routes,
         stops: stops
@@ -83,6 +83,6 @@ export default Ember.Route.extend(mapBboxRoute, setLoading, {
     }
   },
   actions: {
-    
+
   }
 });

@@ -1,16 +1,13 @@
 import Ember from 'ember';
 import setTextboxClosed from 'mobility-playground/mixins/set-textbox-closed';
+import sharedActions from 'mobility-playground/mixins/shared-actions';
 
-export default Ember.Controller.extend(setTextboxClosed, {
+export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 	queryParams: ['traversed_by', 'pin'],
-	bbox: null,
-	leafletBbox: null,
-  leafletBounds: [[37.706911598228466, -122.54287719726562],[37.84259697150785, -122.29568481445312]],
+	
 	traversed_by: null,
 	onestop_id: null,
 	serves: null,
-	pin: null,
-	currentlyLoading: Ember.inject.service(),
 	displayStops: false,
 	hoverStop: null,
 	displayRspStops: false,
@@ -44,14 +41,9 @@ export default Ember.Controller.extend(setTextboxClosed, {
 			return boundsArray;
 		}
 	}),
-
 	mapMoved: false,
 	mousedOver: false,
-  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
-	closeTextbox: Ember.inject.service(),
-  textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
-    return this.get('closeTextbox').get('textboxIsClosed');
-  }),
+	
 	actions: {
 		updateLeafletBbox(e) {
 			var leafletBounds = e.target.getBounds();
@@ -80,46 +72,11 @@ export default Ember.Controller.extend(setTextboxClosed, {
 			this.set('serves', null);
 			this.set('operated_by', null);
 		},
-		setPlace: function(selected){
-			 if (selected.geometry){
-        var lng = selected.geometry.coordinates[0];
-        var lat = selected.geometry.coordinates[1];
-        var coordinates = [];
-        coordinates.push(lat);
-        coordinates.push(lng);
-        this.set('mapCenter', coordinates); 
-        this.set('pin', coordinates);
-      }
-			this.set('place', selected);
-			this.set('bbox', selected.bbox);
-			this.transitionToRoute('index', {queryParams: {bbox: this.get('bbox')}});
-		},
-		clearPlace(){
-			this.set('place', null);
-		},
-		removePin: function(){
-      this.set('pin', null);
-    },
-    dropPin: function(e){
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
-      var coordinates = [];
-      coordinates.push(lat);
-      coordinates.push(lng);
-      this.set('mapCenter', coordinates); 
-      this.set('pin', coordinates);
-    },
-		searchRepo(term) {
-			if (Ember.isBlank(term)) { return []; }
-			const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`; 
-			return Ember.$.ajax({ url }).then(json => json.features);
-		},
 		displayStops: function(){
 			this.toggleProperty('displayStops');
 		},
 		selectStop(stop){
 			this.set('hoverStop', stop);
-			// debugger;
 		},
 		unselectStop(stop){
 			this.set('hoverStop', null);
@@ -130,15 +87,16 @@ export default Ember.Controller.extend(setTextboxClosed, {
 			this.set('hoverStop', null);
 			this.set('onestop_id', onestopId);
 			this.set('displayStops', false);
-  		this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
+			this.transitionToRoute('stops', {queryParams: {bbox: this.get('bbox'), onestop_id: this.get('onestop_id')}});
 		},
 		setRsp: function(rsp){
+      var stops, stopsLength, stopId, i;
 			if (this.get('selectedRsp')!== null){
-				var stops = this.get('selectedRsp').get('stop_pattern')
-				var stopsLength = stops.length
-				for (var i = 0; i < stopsLength; i++){ 
-					var stopId = stops[i]; 
-					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null)
+				stops = this.get('selectedRsp').get('stop_pattern');
+				stopsLength = stops.length;
+				for (i = 0; i < stopsLength; i++){
+					stopId = stops[i];
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null);
 				}
 			}
 			if (this.get('selectedRsp')!== null && this.get('selectedRsp').get('id') === rsp.get('id')){
@@ -146,37 +104,35 @@ export default Ember.Controller.extend(setTextboxClosed, {
 				rsp.set('is_selected', false);
 				rsp.set('default_opacity', 0);
 			} else if (this.get('selectedRsp')!== null){
-				var stops = this.get('selectedRsp').get('stop_pattern')
-				var stopsLength = stops.length
-				for (var i = 0; i < stopsLength; i++){ 
-					var stopId = stops[i]; 
-					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null)
+				stops = this.get('selectedRsp').get('stop_pattern');
+				stopsLength = stops.length;
+				for (i = 0; i < stopsLength; i++){
+					stopId = stops[i];
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', null);
 				}
 				this.get('selectedRsp').set('default_opacity', 0);
-				
 				rsp.set('default_opacity', 1);
 				this.get('selectedRsp').set('is_selected', false);
 				rsp.set('is_selected', true);
 				this.set('selectedRsp', rsp);
-				stops = this.selectedRsp.get('stop_pattern')
-				stopsLength = stops.length
-				for (var i = 0; i < stopsLength; i++){ 
-					var stopId = stops[i]; 
-					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1)
+				stops = this.selectedRsp.get('stop_pattern');
+				stopsLength = stops.length;
+				for (i = 0; i < stopsLength; i++){
+					stopId = stops[i];
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1);
 				}
 			}
 			else {
 				this.set('selectedRsp', rsp);
 				rsp.set('is_selected', true);
 				rsp.set('default_opacity', 1);
-				var stops = this.selectedRsp.get('stop_pattern')
-				var stopsLength = stops.length
-				for (var i = 0; i < stopsLength; i++){ 
-					var stopId = stops[i]; 
-					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1)
+				stops = this.selectedRsp.get('stop_pattern');
+				stopsLength = stops.length;
+				for (i = 0; i < stopsLength; i++){
+					stopId = stops[i];
+					this.store.peekRecord('data/transitland/stop',stopId).set('rsp_stop_pattern_number', i+1);
 				}
 			}
 		}
 	}
-	
 });
