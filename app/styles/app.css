@@ -42,6 +42,13 @@ caption{
 	font-size: 14px;
 }
 
+button {
+    background-color: #c4c4c4;
+    border: none;
+    color: white;
+    padding: 10px;
+}
+
 .isochrone-caption a{
 	color: #9dbfc1;
 }
