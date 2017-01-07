@@ -7,32 +7,54 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-  queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time', 'include', 'exclude'],
+  queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time', 'include_operators', 'exclude_operators', 'include_routes', 'exclude_routes'],
 
   onestop_id: null,
   departure_time: null,
   isochrone_mode: null,
   moment: moment(),
   mousedOver: false,
-  include: [],
-  exclude: [],
+  include_operators: [],
+  exclude_operators: [],
+  include_routes: [],
+  exclude_routes: [],
 
   // this iterates through the arrays for the included and excluded query params, and sets the included or excluded 
   // model attributes for the entities with listed onestopIDs
-  markedIncludedExcluded: false,
+  // markedIncludedExcluded: false,
   markIncludedExcluded: Ember.computed('exclude', function(){
     // if (this.get('markedIncludedExcluded') === true){
     //   return true;
     // } else {
-      for (var i = 0; i < this.get('exclude').length; i++){
-        var operator = this.get('exclude')[i];
-        this.store.peekRecord('data/transitland/operator', operator).set('exclude', true);
+      if (this.get('exclude_operators').length > 0) {
+        for (var i = 0; i < this.get('exclude_operators').length; i++){
+          var excludeOperator = this.get('exclude_operators')[i];
+          this.store.peekRecord('data/transitland/operator', excludeOperator).set('exclude', true);
+        }
       }
-      for (var i = 0; i < this.get('include').length; i++){
-        var operator = this.get('include')[i];
-        this.store.peekRecord('data/transitland/operator', operator).set('include', true);
+
+      if (this.get('include_operators').length > 0) {
+        for (var j = 0; j < this.get('include_operators').length; j++){
+          var includeOperator = this.get('include_operators')[j];
+          this.store.peekRecord('data/transitland/operator', includeOperator).set('include', true);
+        }
       }
-      this.set('markedIncludedExcluded', true);
+
+      if (this.get('exclude_routes').length > 0) {
+        for (var k = 0; k < this.get('exclude_routes').length; k++){
+          var excludeRoute = this.get('exclude_routes')[k];
+          this.store.peekRecord('data/transitland/route', excludeRoute).set('exclude', true);
+        }
+      }
+
+      if (this.get('include_routes').length > 0) {
+        for (var l = 0; l < this.get('include_routes').length; l++){
+          var includeRoute = this.get('include_routes')[l];
+          this.store.peekRecord('data/transitland/route', includeRoute).set('include', true);
+        }
+      }
+
+      // this.set('markedIncludedExcluded', true);
       return true;
     // }
   }),
@@ -117,29 +139,55 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('moment', moment());
       this.set('departure_time', null);
     },
-    include: function(entity){
-      if (this.get('include').includes(entity.id)){
-        this.get('include').removeObject(entity.id);
-        this.store.peekRecord('data/transitland/operator', entity.id).set('include', false);
+    includeOperator: function(operator){
+      if (this.get('include_operators').includes(operator.id)){
+        this.get('include_operators').removeObject(operator.id);
+        this.store.peekRecord('data/transitland/operator', operator.id).set('include', false);
       } else {
-        this.get('include').pushObject(entity.id);
-        this.store.peekRecord('data/transitland/operator', entity.id).set('include', true);
-        if (this.get('exclude').includes(entity.id)){
-          this.get('exclude').removeObject(entity.id);
-          this.store.peekRecord('data/transitland/operator', entity.id).set('exclude', false);
+        this.get('include_operators').pushObject(operator.id);
+        this.store.peekRecord('data/transitland/operator', operator.id).set('include', true);
+        if (this.get('exclude_operators').includes(operator.id)){
+          this.get('exclude_operators').removeObject(operator.id);
+          this.store.peekRecord('data/transitland/operator', operator.id).set('exclude', false);
         }
       }
     },
-    exclude: function(entity){
-      if (this.get('exclude').includes(entity.id)){
-        this.get('exclude').removeObject(entity.id);
-        this.store.peekRecord('data/transitland/operator', entity.id).set('exclude', false);
+    excludeOperator: function(operator){
+      if (this.get('exclude_operators').includes(operator.id)){
+        this.get('exclude_operators').removeObject(operator.id);
+        this.store.peekRecord('data/transitland/operator', operator.id).set('exclude', false);
       } else {
-        this.get('exclude').pushObject(entity.id);
-        this.store.peekRecord('data/transitland/operator', entity.id).set('exclude', true);
-        if (this.get('include').includes(entity.id)){
-          this.get('include').removeObject(entity.id);
-          this.store.peekRecord('data/transitland/operator', entity.id).set('include', false);
+        this.get('exclude_operators').pushObject(operator.id);
+        this.store.peekRecord('data/transitland/operator', operator.id).set('exclude', true);
+        if (this.get('include_operators').includes(operator.id)){
+          this.get('include_operators').removeObject(operator.id);
+          this.store.peekRecord('data/transitland/operator', operator.id).set('include', false);
+        }
+      }
+    },
+    includeRoute: function(route){
+      if (this.get('include_routes').includes(route.id)){
+        this.get('include_routes').removeObject(route.id);
+        this.store.peekRecord('data/transitland/route', route.id).set('include', false);
+      } else {
+        this.get('include_routes').pushObject(route.id);
+        this.store.peekRecord('data/transitland/route', route.id).set('include', true);
+        if (this.get('exclude_routes').includes(route.id)){
+          this.get('exclude_routes').removeObject(route.id);
+          this.store.peekRecord('data/transitland/route', route.id).set('exclude', false);
+        }
+      }
+    },
+    excludeRoute: function(route){
+      if (this.get('exclude_routes').includes(route.id)){
+        this.get('exclude_routes').removeObject(route.id);
+        this.store.peekRecord('data/transitland/route', route.id).set('exclude', false);
+      } else {
+        this.get('exclude_routes').pushObject(route.id);
+        this.store.peekRecord('data/transitland/route', route.id).set('exclude', true);
+        if (this.get('include_routes').includes(route.id)){
+          this.get('include_routes').removeObject(route.id);
+          this.store.peekRecord('data/transitland/route', route.id).set('include', false);
         }
       }
     }

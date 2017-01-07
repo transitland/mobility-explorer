@@ -245,16 +245,16 @@
 										  <tr>
 										  	<td class="center-checkbox">
 										  		{{#if (eq operator.include true)}}
-										  			<input type="checkbox" name="include-operator" {{action "include" operator}} checked>
+										  			<input type="checkbox" name="include-operator" {{action "includeOperator" operator}} checked>
 										  		{{else}}
-										  			<input type="checkbox" name="include-operator" {{action "include" operator}}>
+										  			<input type="checkbox" name="include-operator" {{action "includeOperator" operator}}>
 										  		{{/if}}
 										  	</td>
 										  	<td class="center-checkbox">
 										  		{{#if (eq operator.exclude true)}}
-										  		<input type="checkbox" name="exclude-operator" {{action "exclude" operator}} checked>
+										  		<input type="checkbox" name="exclude-operator" {{action "excludeOperator" operator}} checked>
 										  		{{else}}
-										  			<input type="checkbox" name="exclude-operator" {{action "exclude" operator}}>
+										  			<input type="checkbox" name="exclude-operator" {{action "excludeOperator" operator}}>
 										  		{{/if}}
 										  	</td>
 										    <td>{{operator.name}}</td>

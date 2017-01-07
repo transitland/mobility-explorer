@@ -16,14 +16,23 @@ export default Ember.Route.extend(setLoading, {
 			replace: true,
 			refreshModel: true
 		},
-		include: {
+		include_operators: {
 			replace: true,
 			refreshModel: true
 		},
-		exclude: {
+		exclude_operators: {
+			replace: true,
+			refreshModel: true
+		},
+		include_routes: {
+			replace: true,
+			refreshModel: true
+		},
+		exclude_routes: {
 			replace: true,
 			refreshModel: true
 		}
+
 	},
 	setupController: function (controller, model) {
 		if (controller.get('bbox') !== null){
@@ -85,79 +94,89 @@ export default Ember.Route.extend(setLoading, {
 				// transit_start_end_max_distance default is 2145 or about 1.5 miles for start/end distance:
 				// transit_transfer_max_distance default is 800 or 0.5 miles for transfer distance:
 
-				if (params.exclude.length > 0) {
-					json.costing_options = {
-						"pedestrian":{
-							"use_ferry":0,
-							"transit_start_end_max_distance":100000,
-							"transit_transfer_max_distance":100000
-						},
-						"transit":{
-							"filters":{
-								"operators":{
-									"ids":
-										params.exclude
-									,
-									"action":"exclude"
-								}
-							}
-						}
-					};
-				} else if (params.include.length > 0) {
-					json.costing_options = {
-						"pedestrian":{
-							"use_ferry":0,
-							"transit_start_end_max_distance":100000,
-							"transit_transfer_max_distance":100000
-						},
-						"transit":{
-							"filters":{
-								"operators":{
-									"ids":
-										params.include
-									,
-									"action":"include"
-								}
-							}
-						}
-					};
-				} else {
-					json.costing_options = {
-						"pedestrian":{
-							"use_ferry":0,
-							"transit_start_end_max_distance":100000,
-							"transit_transfer_max_distance":100000
-						}
+				// exclude - exclude all of the ids listed in the filter
+				// include - include only the ids listed in the filter
+
+				// Once /routes?operated_by= accepts a comma-separated list:
+				// Only query for routes operated by selected operators.
+
+				// "costing_options":{
+				// 	"transit":{
+				// 		"filters":{
+				// 			"routes":{
+				// 				"ids":[
+				// 					"r-dqcj-silver",
+				// 					"r-dqcj-silver",
+				// 				],
+				// 				"action":"exclude"
+				// 			},
+				// 			"operators":{
+				// 				"ids":[
+				// 					"o-dqc-met"
+				// 				],
+				// 				"action":"include"
+				// 			}
+				// 		}
+				// 	}
+				// }
+				json.costing_options.pedestrian = {
+					// "pedestrian":{
+						"use_ferry":0,
+						"transit_start_end_max_distance":100000,
+						"transit_transfer_max_distance":100000
+					// }
+				};
+
+				json.costing_options["transit"]={};
+				json.costing_options.transit["filters"]={}
+				
+				// debugger;
+				// json.costing_options.transit["routes"] =				
+				
+				if (params.include_operators.length > 0) {
+						json.costing_options.transit.filters["operators"] = {
+							"ids": params.include_operators,
+							"action":"include"
+						};
+				} else if (params.exclude_operators.length > 0) {
+					json.costing_options.transit.filters["operators"] = {
+						"ids": params.exclude_operators,
+						"action":"exclude"
 					};
 				}
-			}
-			// debugger;
-			if (params.departure_time){
-				json.date_time = {"type": 1, "value": params.departure_time};
+
+
+				if (params.include_routes.length > 0) {
+						json.costing_options.transit.filters["routes"] = {
+							"ids": params.include_routes,
+							"action":"include"
+						};
+				} else if (params.exclude_routes.length > 0) {
+						json.costing_options.transit.filters["routes"] = {
+							"ids": params.exclude_routes,
+							"action":"exclude"
+						};
+				} 
+
+				if (params.departure_time){
+					json.date_time = {"type": 1, "value": params.departure_time};
+				}
 			}
 
 			url = encodeURI(url + JSON.stringify(json));
 			linkUrl = encodeURI(linkUrl + JSON.stringify(json));
 
-			// exclude - exclude all of the ids listed in the filter
-			// include - include only the ids listed in the filter
-			// 
-			// if one operator is included: use operator id to query routes
-			// if more than one operator is included: 
-			// if one or more operator is excluded: use operator id to filter out routes by that/those operators
-			// 
-			// if operator is included/excluded:
-			// only show routes for the right operators
-			// 
-
-
-
 			var isochrones = Ember.$.ajax({ url });
       var operators = this.store.query('data/transitland/operator', {bbox: params.bbox});
-      var routes = this.store.query('data/transitland/route', {bbox: params.bbox});
+      var routes;
 
- 			// add function to change query for only included operators' routes, if there are any
- 			// need to be able to incorporate include and exclude
+			if (params.include_operators.length === 1){
+				// change routes query to be only for that operator's routes
+				var operator = params.include_operators[0];
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: operator});
+			} else {
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox});
+			}
 
 			return Ember.RSVP.hash({
 				operators: operators,
