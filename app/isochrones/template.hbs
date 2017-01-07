@@ -87,6 +87,124 @@
 								  	<p class="caption">Start by clicking on the map or searching for a location...</p>
 								  {{/if}}
 								</div>
+								{{#if (eq isochrone_mode "multimodal")}}
+						<div>
+							{{#if markIncludedExcluded}}
+								<button type="button" data-toggle="collapse" data-target="#operator-list">Include or exclude operators &#8597;</button><br>
+								<div id="operator-list" class="collapse">
+									<div class="caption">Include one or more operators to see isochrones that use only the selected operator(s).<br>
+										<br>
+										Exclude one or more operators to see isochones that do not include the selected operator(s).<br><br>
+									</div>
+									<table>
+										<tr>
+								      <th style="min-width:5ch;padding-right:5px">Incl.</th>
+								      <th style="min-width:5ch;padding-right:5px">Excl.</th>
+								      <th>Operator</th>
+								    </tr>
+									  {{#each model.operators as |operator|}}
+										  <tr>
+										  	<td class="center-checkbox">
+										  		{{#if (eq operator.include true)}}
+										  			<input type="checkbox" name="include-operator" {{action "includeOperator" operator}} checked>
+										  		{{else}}
+										  			<input type="checkbox" name="include-operator" {{action "includeOperator" operator}}>
+										  		{{/if}}
+										  	</td>
+										  	<td class="center-checkbox">
+										  		{{#if (eq operator.exclude true)}}
+										  		<input type="checkbox" name="exclude-operator" {{action "excludeOperator" operator}} checked>
+										  		{{else}}
+										  			<input type="checkbox" name="exclude-operator" {{action "excludeOperator" operator}}>
+										  		{{/if}}
+										  	</td>
+										    <td>{{operator.name}}</td>
+											</tr>
+									  {{/each}}
+									</table>
+								</div>
+								<button type="button" data-toggle="collapse" data-target="#route-list">Include or exclude routes &#8597;</button><br>
+								<div id="route-list" class="collapse">
+									<div class="caption">Include one or more routes to see isochrones that use only the selected route(s).<br>
+										<br>
+										Exclude one or more routes to see isochrones that do not use the selected route(s).<br><br>
+									</div>
+									<table>
+										<tr>
+								      <th style="min-width:5ch;padding-right:5px">Incl.</th>
+								      <th style="min-width:5ch;padding-right:5px">Excl.</th>
+								      <th>Operator</th>
+								    </tr>
+								    {{#if (gt exclude_operators.length 0)}}
+									  	{{#each model.routes as |route|}}
+											  {{#unless (array-contains exclude_operators route.operated_by_onestop_id)}}
+												  <tr>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.include true)}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.exclude true)}}
+												  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												    <td>{{route.name}}</td>
+													</tr>
+												{{/unless}}
+											{{/each}}
+										{{else if (gt include_operators.length 0)}}
+									  	{{#each model.routes as |route|}}
+											  {{#if (array-contains include_operators route.operated_by_onestop_id)}}
+												  <tr>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.include true)}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.exclude true)}}
+												  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												    <td>{{route.name}}</td>
+													</tr>
+												{{/if}}
+										  {{/each}}
+										{{else if (eq include_operators.length exclude_operators.length)}}
+											{{#each model.routes as |route|}}
+												  <tr>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.include true)}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.exclude true)}}
+												  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												    <td>{{route.name}}</td>
+													</tr>
+										  {{/each}}
+										{{/if}}
+									</table>
+								</div>
+							{{/if}}
+						</div>
+					{{/if}}
 							</form>
 						</div>
 					</div>
@@ -231,8 +349,12 @@
 					{{#if (eq isochrone_mode "multimodal")}}
 						<div>
 							{{#if markIncludedExcluded}}
-								<button type="button" data-toggle="collapse" data-target="#operator-list">Show operators v</button><br>
-								<div id="operator-list" class="collapse in">
+								<button type="button" data-toggle="collapse" data-target="#operator-list">Include or exclude operators &#8597;</button><br>
+								<div id="operator-list" class="collapse">
+									<div class="caption">Include one or more operators to see isochrones that use only the selected operator(s).<br>
+										<br>
+										Exclude one or more operators to see isochones that do not include the selected operator(s).<br><br>
+									</div>
 									<table>
 										<tr>
 								      <th style="min-width:5ch;padding-right:5px">Incl.</th>
@@ -260,8 +382,12 @@
 									  {{/each}}
 									</table>
 								</div>
-								<button type="button" data-toggle="collapse" data-target="#route-list">Show routes v</button><br>
-								<div id="route-list" class="collapse in">
+								<button type="button" data-toggle="collapse" data-target="#route-list">Include or exclude routes &#8597;</button><br>
+								<div id="route-list" class="collapse">
+									<div class="caption">Include one or more routes to see isochrones that use only the selected route(s).<br>
+										<br>
+										Exclude one or more routes to see isochrones that do not use the selected route(s).<br><br>
+									</div>
 									<table>
 										<tr>
 								      <th style="min-width:5ch;padding-right:5px">Incl.</th>
@@ -339,9 +465,7 @@
 						</div>
 					{{/if}}
 				</form>
-
 			</div>
-		
 		</div>
 		{{#if isochrone_mode}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
 	</div>
