@@ -268,25 +268,71 @@
 								      <th style="min-width:5ch;padding-right:5px">Excl.</th>
 								      <th>Operator</th>
 								    </tr>
-									  {{#each model.routes as |route|}}
-										  <tr>
-										  	<td class="center-checkbox">
-										  		{{#if (eq route.include true)}}
-										  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
-										  		{{else}}
-										  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
-										  		{{/if}}
-										  	</td>
-										  	<td class="center-checkbox">
-										  		{{#if (eq route.exclude true)}}
-										  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
-										  		{{else}}
-										  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
-										  		{{/if}}
-										  	</td>
-										    <td>{{route.name}}</td>
-											</tr>
-									  {{/each}}
+								    {{#if (gt exclude_operators.length 0)}}
+									  	{{#each model.routes as |route|}}
+											  {{#unless (array-contains exclude_operators route.operated_by_onestop_id)}}
+												  <tr>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.include true)}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.exclude true)}}
+												  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												    <td>{{route.name}}</td>
+													</tr>
+												{{/unless}}
+											{{/each}}
+										{{else if (gt include_operators.length 0)}}
+									  	{{#each model.routes as |route|}}
+											  {{#if (array-contains include_operators route.operated_by_onestop_id)}}
+												  <tr>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.include true)}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.exclude true)}}
+												  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												    <td>{{route.name}}</td>
+													</tr>
+												{{/if}}
+										  {{/each}}
+										{{else if (eq include_operators.length exclude_operators.length)}}
+											{{#each model.routes as |route|}}
+												  <tr>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.include true)}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="include-route" {{action "includeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												  	<td class="center-checkbox">
+												  		{{#if (eq route.exclude true)}}
+												  		<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}} checked>
+												  		{{else}}
+												  			<input type="checkbox" name="exclude-route" {{action "excludeRoute" route}}>
+												  		{{/if}}
+												  	</td>
+												    <td>{{route.name}}</td>
+													</tr>
+										  {{/each}}
+										{{/if}}
 									</table>
 								</div>
 							{{/if}}
