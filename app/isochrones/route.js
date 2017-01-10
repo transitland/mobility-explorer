@@ -158,6 +158,7 @@ export default Ember.Route.extend(setLoading, {
 				operators: operators,
 				routes: routes,
 				isochrones: isochrones,
+				linkUrl: linkUrl
 			});
 		}
 
