@@ -146,10 +146,16 @@ export default Ember.Route.extend(setLoading, {
       var operators = this.store.query('data/transitland/operator', {bbox: params.bbox});
       var routes;
 
-			if (params.include_operators.length === 1){
-				// change routes query to be only for that operator's routes
-				var operator = params.include_operators[0];
-				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: operator});
+			if (params.include_operators.length > 0){
+				// change routes query to be only for the selected operator(s) routes
+				var includeOperators = "";
+				for (var j = 0; j < params.include_operators.length; j++){
+					if (j > 0){
+						includeOperators += ","
+					}
+					includeOperators += params.include_operators[j]
+				}
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: includeOperators});
 			} else {
 				routes = this.store.query('data/transitland/route', {bbox: params.bbox});
 			}
