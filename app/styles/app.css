@@ -29,12 +29,8 @@ h4{
 	margin-top: 20px;
 }
 
-input[type=checkbox] {
-    opacity: 1;
-}
-
 .center-checkbox {
-    padding-bottom: 20px;
+    padding: 10px 0;
 
 }
 
