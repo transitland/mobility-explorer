@@ -52,11 +52,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     return true;
   }),
 
-  // operatorIsIncluded: Ember.computed('inlude_operators', function(){
-  //   console.log('operatorIsIncluded');
-  //   return true;
-  // }),
-
   actions: {
     updateLeafletBbox(e) {
       var leafletBounds = e.target.getBounds();
@@ -93,9 +88,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('isochrone_mode', null);
       } else {
         this.set('isochrone_mode', mode);
-      }
-      if (mode === "multimodal"){
-        // debugger;
       }
     },
     change(date){
