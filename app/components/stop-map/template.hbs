@@ -1,0 +1,54 @@
+{{#each stops as |stop|}}
+
+  {{#marker-layer
+    icon=stopStationIcon
+    location=stop.coordinates
+    clickable=true
+    draggable=false
+    riseOnHover=true
+    riseOffset=1000
+    onMouseover=(action "selectStop" stop)
+    onMouseout=(action "unselectStop" stop)
+    onClick=(action "setOnestopId" stop)
+  }}
+  {{/marker-layer}}
+
+  {{#each stop.stop_platforms as |stop_platform|}}
+    {{#marker-layer
+      icon=stopPlatformIcon
+      location=stop_platform.coordinates
+      clickable=true
+      draggable=false
+      riseOnHover=true
+      riseOffset=1000
+      onMouseover=(action "selectStop" stop_platform)
+      onMouseout=(action "unselectStop" stop_platform)
+      onClick=(action "setOnestopId" stop_platform)
+    }}
+    {{/marker-layer}}
+  {{/each}}
+
+  {{#each stop.stop_egresses as |stop_egress|}}
+    {{#marker-layer
+      icon=stopEgressIcon
+      location=stop_egress.coordinates
+      clickable=true
+      draggable=false
+      riseOnHover=true
+      riseOffset=1000
+      onMouseover=(action "selectStop" stop_egress)
+      onMouseout=(action "unselectStop" stop_egress)
+      onClick=(action "setOnestopId" stop_egress)
+    }}
+    {{/marker-layer}}
+  {{/each}}
+
+  {{#polygon-layer locations=stop.stationPlatformLines color="red"}}
+    Platforms
+  {{/polygon-layer}}
+
+  {{#polygon-layer locations=stop.stationEgressLines color="blue"}}
+    Egresses
+  {{/polygon-layer}}
+
+{{/each}}
