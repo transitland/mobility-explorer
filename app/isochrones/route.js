@@ -31,6 +31,10 @@ export default Ember.Route.extend(setLoading, {
 		exclude_routes: {
 			replace: true,
 			refreshModel: true
+		},
+		stop: {
+			replace: true,
+			refreshModel: true
 		}
 
 	},
