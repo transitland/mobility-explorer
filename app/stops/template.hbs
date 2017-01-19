@@ -189,8 +189,13 @@
 				  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
 
 				  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
-				  	<form>
-							<div class="isochrone-detail">
+				  	{{#if onestop_id}}
+							{{#each model.stops as |stop|}}
+				  			<p>{{#link-to 'isochrones' (query-params serves=null bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=stop.geometry.coordinates) }}View isochrones for this stop{{/link-to}}</p>
+				  		{{/each}}
+				  	{{/if}}
+				  	<!-- <form> -->
+							<!-- <div class="isochrone-detail">
 					  		<div class="form-group-header">View distance you can travel from this stop via:</div>
 							  <div class="form-group">
 								  {{#if (eq isochrone_mode "pedestrian")}}
@@ -247,7 +252,7 @@
 						  	{{/if}}
 						  	{{/if}}
 						 	</div>
-						</form>
+						</form> -->
 					{{else if served_by}}
 						<form>
 						  <div class="form-group-header">Stops served by:</div>
@@ -324,7 +329,7 @@
 					  		{{/marker-layer}}
 				  {{/each}}
 				{{/if}}
-			  {{#if isochrone_mode}}
+			  <!-- {{#if isochrone_mode}}
 			  	{{#if onestop_id}}
 					  {{#each model.isochrones.features as |isochrone|}}
 				  		{{#if (eq isochrone.properties.contour 60)}}
@@ -345,7 +350,7 @@
 						  {{/if}}
 						{{/each}}
 				  {{/if}}
-			  {{/if}}
+			  {{/if}} -->
 			  {{#if pin}}
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}
