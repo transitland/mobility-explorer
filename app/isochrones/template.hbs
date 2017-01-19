@@ -220,53 +220,53 @@
 							{{/if}}
 						</div>
 					{{/if}}
-							</form>
-						</div>
-					</div>
-        </div>
-      </div>
-      <div class="col-xs-12" style="padding-left:0px;">
-      	<button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
-	      {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-	      
-	      <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-          <div class="location-search" style="width:225px">
-              <div class="row">
-                <div class="ember-basic-dropdown-trigger-icon">
-                  {{#if pin}}
-                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-                  {{else}}
-                    <img src='assets/images/marker1.png' class="markerIcon"/>
-                  {{/if}}
-                </div>
-                {{#power-select
-                  search=(action "searchRepo")
-                  selected=place
-                  placeholder="Find a place using Mapzen Search..."
-                  onchange=(action "setPlace")
-                  onclose=(action "clearPlace")
-                  as |repo|
-                }}
-                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-                {{/power-select}}
-              </div>
-          </div>
-          	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onClick=(action "dropPin")}}
-          	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+					{{#if isochrone_mode}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
+				</form>
+			</div>
+		</div>
+  </div>
+</div>
+<div class="col-xs-12" style="padding-left:0px;">
+	<button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
+  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+  
+  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+    <div class="location-search" style="width:225px">
+        <div class="row">
+          <div class="ember-basic-dropdown-trigger-icon">
             {{#if pin}}
-	            {{#if isochrone_mode}}
-							  {{#each model.isochrones.features as |isochrone|}}
-							  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
-							  	{{/geojson-layer}}
-						  	{{/each}}
-						  {{/if}}
-              {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") onRemove=(action "removePin") riseOnHover=true riseOffset=1000}}
-              {{/marker-layer}}
+             <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+            {{else}}
+              <img src='assets/images/marker1.png' class="markerIcon"/>
             {{/if}}
-          {{/leaflet-map}}
-     			
-      	</div>
-  		</div> 
+          </div>
+          {{#power-select
+            search=(action "searchRepo")
+            selected=place
+            placeholder="Find a place using Mapzen Search..."
+            onchange=(action "setPlace")
+            onclose=(action "clearPlace")
+            as |repo|
+          }}
+            {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+          {{/power-select}}
+        </div>
+    </div>
+  	{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onClick=(action "dropPin")}}
+  	{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+    {{#if pin}}
+      {{#if isochrone_mode}}
+			  {{#each model.isochrones.features as |isochrone|}}
+			  	{{#geojson-layer geoJSON=isochrone fillColor=isochrone.properties.fill  stroke=false weight=1 fillOpacity=isochrone.properties.fill-opacity}}
+			  	{{/geojson-layer}}
+		  	{{/each}}
+		  {{/if}}
+      {{#marker-layer location=pinLocation icon=icon draggable=true onDragend=(action "updatePin") onRemove=(action "removePin") riseOnHover=true riseOffset=1000}}
+      {{/marker-layer}}
+    {{/if}}
+  {{/leaflet-map}}
+	</div>
+</div> 
 {{else}}
 	<div class="col-md-4 linebreak-text" id="sidebar">
 	<!-- <div class="col-xs-12 col-sm-12 col-md-3 linebreak-text" id="sidebar"> -->

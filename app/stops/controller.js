@@ -22,11 +22,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   mapMoved: false,
   mousedOver: false,
   stopCoordinates: Ember.computed('onestop_id', function(){
-    console.log('test');
+    var stopLocation = this.model.onlyStop.get('geometry.coordinates');
+    var lat = stopLocation[0];
+    var lng = stopLocation[1];
+    var coordinates = [];
+    coordinates.push(lng);
+    coordinates.push(lat);
+    return coordinates;
   }),
-
-
-  // {{stop.geometry.coordinates}}
   
   actions: {
     updateLeafletBbox(e) {
