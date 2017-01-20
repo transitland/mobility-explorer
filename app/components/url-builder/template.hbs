@@ -1,1 +1,5 @@
-<div class="url-builder"><a target="_blank" href="{{queryUrl}}">See the {{server}} API request for these results  <i class="fa fa-external-link" aria-hidden="true"></i></a></div>
+<div class="url-builder"><a target="_blank" href="{{queryUrl}}">See the {{server}} API request for these results  <i class="fa fa-external-link" aria-hidden="true"></i></a><br>
+{{#if (not-eq entity "isochrones")}}
+<a target="_blank" href="{{geoJsonUrl}}">See these results in geoJSON format <i class="fa fa-external-link" aria-hidden="true"></i></a>
+{{/if}}
+</div>
