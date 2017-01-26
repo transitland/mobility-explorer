@@ -111,7 +111,7 @@ export default Ember.Route.extend(setLoading, {
 				};
 
 				json.costing_options["transit"]={};
-				json.costing_options.transit["filters"]={}
+				json.costing_options.transit["filters"]={};
 				
 				if (params.include_operators.length > 0) {
 						json.costing_options.transit.filters["operators"] = {
@@ -155,14 +155,15 @@ export default Ember.Route.extend(setLoading, {
 				var includeOperators = "";
 				for (var j = 0; j < params.include_operators.length; j++){
 					if (j > 0){
-						includeOperators += ","
+						includeOperators += ",";
 					}
-					includeOperators += params.include_operators[j]
+					includeOperators += params.include_operators[j];
 				}
-				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: includeOperators});
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: includeOperators, exclude_geometry: true});
 			} else {
-				routes = this.store.query('data/transitland/route', {bbox: params.bbox});
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, exclude_geometry: true});
 			}
+
 
 			return Ember.RSVP.hash({
 				operators: operators,
