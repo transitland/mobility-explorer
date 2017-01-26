@@ -159,10 +159,11 @@ export default Ember.Route.extend(setLoading, {
 					}
 					includeOperators += params.include_operators[j]
 				}
-				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: includeOperators});
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: includeOperators, exclude_geometry: true});
 			} else {
-				routes = this.store.query('data/transitland/route', {bbox: params.bbox});
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, exclude_geometry: true});
 			}
+
 
 			return Ember.RSVP.hash({
 				operators: operators,
