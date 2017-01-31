@@ -159,9 +159,9 @@ export default Ember.Route.extend(setLoading, {
 					}
 					includeOperators += params.include_operators[j];
 				}
-				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: includeOperators, exclude_geometry: true});
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, operated_by: includeOperators, include_geometry: false});
 			} else {
-				routes = this.store.query('data/transitland/route', {bbox: params.bbox, exclude_geometry: true});
+				routes = this.store.query('data/transitland/route', {bbox: params.bbox, include_geometry: false});
 			}
 
 
