@@ -1,7 +1,5 @@
-
 body {
     padding: 0;
-    /*padding-top: 56px; */
     margin: 0;
     z-index: 30;
 }
@@ -102,7 +100,6 @@ button {
 #sidebar-media{
 	background-color: white;
 	padding: 15px;
-	/*overflow-y: scroll;*/
 }
 
 .sidebar-header{
@@ -112,7 +109,6 @@ button {
 .fa-question-circle{
 	color: #c4c4c4;
 	font-size: 18px;
-	/*margin-left: 0;*/
 }
 
 #fa-question-circle-detail {
@@ -128,15 +124,11 @@ button {
 .tooltip-on-sidebar{
 	background-color: #bbb;
 	color: white;
-	/*border: none;*/
 	border: 2px solid #898989;
 	border-radius: 0;
 	text-shadow: none;
 	width: 275px;
 	z-index:900;
-	/*box-shadow: 3px -3px rgba(0, 0, 0, 0.1);*/
-	/*padding-right: 10px;*/
-	/*padding-left: 10px;*/
 }
 
 .close-textbox{
@@ -167,8 +159,6 @@ button {
 	margin-left: 30px;
 }
 .legend-color{
-	/*display:inline;*/
-	/*float:left;*/
 	width: 10px;
 	height: 30px;
 }
@@ -207,11 +197,6 @@ button {
 	fill: white;
 	z-index:900;
 }
-/*.stop-num {
-   position: absolute;
-   font-size: 10px;
-   z-index: 2;
-}*/
 
 .svg-wrapper svg {
   top: 0;
@@ -226,8 +211,6 @@ button {
   stroke-width: 15%;
   width: 9px;
 }
-
-
 
 .svg-wrapper-legend-rsp {
 	position: relative;
@@ -275,7 +258,6 @@ button {
 	align-items:center;
 }
 
-
 input, button, select, textarea {
 	width: 100%;
 	margin-top: 10px;
@@ -319,9 +301,7 @@ input, button, select, textarea {
 
 .leaflet-container .leaflet-control-attribution{
 	font-size: 10px;
-	/*left: 45vw;*/
 	right: 0;
-	/*width: 45vw;*/
 	width: 500px;
 	margin-right: 30px;
 
@@ -340,25 +320,13 @@ input, button, select, textarea {
 
 }
 
-/*.fa-trash-o{
-	color:#d4645c;
-	font-size: 16pt;
-	margin-top: 8px;
-	margin-left: 6px;
-	/*margin-right: 5px;*/
-}*/
+
 .pinx{
 	
 	margin-top: 8px;
 	margin-left: 6px;
-	/*margin-right: 5px;*/
 }
-/*.ember-power-select-trigger {
-	border: none;
-}*/
-/*.ember-power-select-placeholder {
-	margin-left: 10px;
-}*/
+
 .ember-basic-dropdown-trigger-icon{
 	display:inline;
 float:left;
@@ -380,14 +348,12 @@ float:left;
 
 .markerIcon{
 	height: 25px;
-	/*margin-right: 5px;*/
 	margin-top: 8px;
 	margin-left: 10px;
 }
 
 .markerIcon-x{
 	height: 25px;
-	/*margin-right: 7px;*/
 	margin-top: 8px;
 	margin-left: 11px;
 }
@@ -586,7 +552,6 @@ span.timepicker-minute{
   background-color: #f0f0f0;
   position: relative;
 	text-align: center;
-	/*display:flex;*/
 	align-items:center;
 }
 
@@ -605,4 +570,7 @@ span.timepicker-minute{
 	font-style: italic;
 	cursor: pointer;
 }
+
+
+
 
