@@ -179,6 +179,13 @@ button {
 .leaflet-container {
   height: 100%;
   width: 100%;
+
+  .leaflet-control-attribution {
+    font-size: 10px;
+    margin-right: 30px;
+    right: 0;
+    width: 500px;
+  }
 }
 
 .svg-stop {
@@ -290,13 +297,27 @@ input, button, select, textarea {
   background-size: 19px 19px;
   border: 1px solid #ccc;
   border-radius: 0;
+  height: 40px;
+  margin-bottom: 10px;
   padding: 8px 2px 8px 26px;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .leaflet-bar {
   border: 1px solid #ccc;
   border-radius: 0;
   box-shadow: none;
+
+  a:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  a:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 
 .leaflet-right {
@@ -304,91 +325,74 @@ input, button, select, textarea {
   width: 30vw;
 }
 
-.leaflet-container .leaflet-control-attribution {
-	font-size: 10px;
-	right: 0;
-	width: 500px;
-	margin-right: 30px;
-}
-
-.leaflet-bar a:first-child {
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
-}
-
-.leaflet-bar a:last-child {
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
 .pinx {
-	margin-top: 8px;
-	margin-left: 6px;
+  margin-top: 8px;
+  margin-left: 6px;
 }
 
 .ember-basic-dropdown-trigger-icon {
-	display:inline;
-	float:left;
-	background-color: white;
-	height: 40px;
-	padding: 0;
-	width: 40px;
-	border: 1px solid #ccc;
-	border-right: none;
-	margin-right: 0;
+  background-color: #FFFFFF;
+  border: 1px solid #ccc;
+  border-right: 0;
+  display: inline;
+  float: left;
+  height: 40px;
+  margin-right: 0;
+  padding: 0;
+  width: 40px;
 }
 
 #ember-basic-dropdown-trigger-1 {
-	padding-left:5px;
+  padding-left: 5px;
 }
+
 #ember-basic-dropdown-trigger-3 {
-	padding-left:5px;
+  padding-left: 5px;
 }
 
 .markerIcon {
-	height: 25px;
-	margin-top: 8px;
-	margin-left: 10px;
+  height: 25px;
+  margin-left: 10px;
+  margin-top: 8px;
 }
 
 .markerIcon-x {
-	height: 25px;
-	margin-top: 8px;
-	margin-left: 11px;
+  height: 25px;
+  margin-left: 11px;
+  margin-top: 8px;
 }
 
 .location-search {
-	z-index: 40;
-	margin-top: 10px;
-	margin-left: 50px;
-	width: 450px;
-	z-index: 2;
-	position: absolute;
-	background-size: 19px 19px;
-	background-position: 3px 14px;
-	padding: 8px 2px 8px 15px;
+  background-position: 3px 14px;
+  background-size: 19px 19px;
+  margin-left: 50px;
+  margin-top: 10px;
+  padding: 8px 2px 8px 15px;
+  position: absolute;
+  width: 450px;
+  z-index: 2;
 }
 
 #map-loading {
-	opacity: .5;
-	z-index: 3;
-	position: relative;
+  opacity: .5;
+  position: relative;
+  z-index: 3;
 }
 
 .loading-spinner-03 {
-	z-index: 5;
-	opacity: 1;
-	position: absolute;
-  left: 45%;
-  top: 50%;
-  margin: auto;
-  border: 10px solid #d4645c;
-  border-radius: 50%;
-  border-top: 10px solid white;
-  width: 70px;
-  height: 70px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 1s linear infinite;
+  border: 10px solid #d4645c;
+  border-radius: 50%;
+  border-top: 10px solid #FFFFFF;
+  height: 70px;
+  left: 45%;
+  margin: auto;
+  opacity: 1;
+  position: absolute;
+  top: 50%;
+  width: 70px;
+  z-index: 5;
 }
 
 @-webkit-keyframes spin {
@@ -402,87 +406,84 @@ input, button, select, textarea {
 }
 
 .route-style-options {
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-.ember-power-select-trigger {
-	border-radius: 0;
-	height: 40px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	margin-bottom: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .btn-mapzen-alt {
-	outline-color: #6ea0a4;
-	outline-style: solid;
-	outline-width: 2px;
-	background-color: #6ea0a4;
-	margin: 0;
+  outline-color: #6ea0a4;
+  outline-style: solid;
+  outline-width: 2px;
+  background-color: #6ea0a4;
+  margin: 0;
 }
 
 .btn-mapzen-alt-style {
-	color: #FFFFFF;
-	outline-color: #d4645c;
-	outline-style: solid;
-	outline-width: 2px;
-	background-color: #d4645c;
+  color: #FFFFFF;
+  outline-color: #d4645c;
+  outline-style: solid;
+  outline-width: 2px;
+  background-color: #d4645c;
 }
 
 .btn-transparent-alt {
-	color: #6ea0a4;
-	background-color: white;
-	outline-color: #6ea0a4;
-	outline-style: solid;
-	outline-width: 2px;
-	margin-bottom: 10px;
-	margin-top: 0;
+  color: #6ea0a4;
+  background-color: #FFFFFF;
+  outline-color: #6ea0a4;
+  outline-style: solid;
+  outline-width: 2px;
+  margin-bottom: 10px;
+  margin-top: 0;
 }
 
 .btn-transparent-alt-style {
-	color: #d4645c;
-	background-color: white;
-	outline-color: #d4645c;
-	outline-style: solid;
-	outline-width: 2px;
-	margin-bottom: 10px;
-	margin-top: 0;
+  color: #d4645c;
+  background-color: #FFFFFF;
+  outline-color: #d4645c;
+  outline-style: solid;
+  outline-width: 2px;
+  margin-bottom: 10px;
+  margin-top: 0;
 }
+
 .btn-group-vertical {
-	width: 100%;
+  width: 100%;
 }
 
 .expanded-selection {
-	background-color: #f0f0f0;
-	border: 10px solid white;
-	outline-color: #6ea0a4;
-	outline-style: solid;
-	outline-width: 2px;
-	padding: 10px;
-	margin-bottom: 10px;
-	label {
-		margin-bottom: 0;
-	}
-	label:before{
-		border-color: #f0f0f0;
-	}
+  background-color: #f0f0f0;
+  border: 10px solid #FFFFFF;
+  outline-color: #6ea0a4;
+  outline-style: solid;
+  outline-width: 2px;
+  padding: 10px;
+  margin-bottom: 10px;
+  
+  label {
+    margin-bottom: 0;
+  }
+
+  label:before {
+    border-color: #f0f0f0;
+  }
 }
 
 .hover-detail {
-	background-color: #d6d6d6;
-	padding: 10px;
+  background-color: #d6d6d6;
+  padding: 10px;
 }
 
 .isochrone-detail {
-	background-color: #f0f0f0;
-	padding: 10px;
-	label {
-		margin-bottom: 0;
-	}
-	label:before {
-		border-color: #f0f0f0;
-	}
+  background-color: #f0f0f0;
+  padding: 10px;
+
+  label {
+    margin-bottom: 0;
+  }
+
+  label:before {
+    border-color: #f0f0f0;
+  }
 }
 
 .datetime-picker .form-control {
@@ -490,17 +491,17 @@ input, button, select, textarea {
 }
 
 .bootstrap-datetimepicker-widget {
-	color: #6ea0a4;
-	z-index: 10000;
+  color: #6ea0a4;
+  z-index: 10000;
 }
 
 td.day.active.today {
-	background-color: #6ea0a4;
-	border-radius: 0;
+  background-color: #6ea0a4;
+  border-radius: 0;
 }
 
 td.day.active.today:hover {
-	background-color: #d4645c;
+  background-color: #d4645c;
 }
 
 .timepicker-hour {
@@ -512,61 +513,62 @@ td.day.active.today:hover {
 }
 
 .bootstrap-datetimepicker-widget {
-	.btn {
-		background-color: white;
-		border: none;
-	}
-	.btn-primary {
-		color: white;
-		background-color: #d4645c;
-	}
+  .btn {
+    background-color: #FFFFFF;
+    border: 0;
+  }
+
+  .btn-primary {
+    color: #FFFFFF;
+    background-color: #d4645c;
+  }
 }
 
 .input-group-addon {
-	border-radius: 0;
-	background-color: white;
+  border-radius: 0;
+  background-color: #FFFFFF;
 }
 
 .linebreak-text {
+  height: 100vh;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  -ms-word-break: break-all;
-  word-break: break-word;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
   hyphens: auto;
   overflow-y: auto;
-  height: 100vh;
+  -ms-word-break: break-all;
+  word-break: break-word;
 }
 
 .isochrone-legend {
-  margin-bottom:0;
+  margin-bottom: 0;
   margin-top: 0;
 }
 
 .isochrone-legend-box {
-  margin-left: 25px;
-  width: 75%;
-  padding-right: 10px;
+  align-items: center;
   background-color: #f0f0f0;
+  margin-left: 25px;
+  padding-right: 10px;
   position: relative;
-	text-align: center;
-	align-items:center;
+  text-align: center;
+  width: 75%;
 }
 
-.url-builder a{
-	font-size:13px;
-	color:#909090;
-	font-style: italic;
-	font-weight: 500;
+.url-builder a {
+  color:#909090;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 500;
 }
 
-.reset-datetime{
-	color: #d4645c;
-	text-align: right;
-	font-size: 12px;
-	margin-top: 5px;
-	font-style: italic;
-	cursor: pointer;
+.reset-datetime {
+  color: #d4645c;
+  cursor: pointer;
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 5px;
+  text-align: right;
 }
