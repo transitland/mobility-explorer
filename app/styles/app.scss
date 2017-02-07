@@ -7,14 +7,12 @@ $mapzen-yellow: #e6ead2;
 $mapzen-dark-red: #993434;
 $mapzen-dark-blue: #385d5c;
 $explorer-bluegreen: #9dbfc1;
-$white: #FFFFFF;
+$white: #fff;
 $lightest-grey: #f0f0f0;
 $lightest-grey-hover-detail: #d6d6d6;
 $light-grey: #c4c4c4;
 $medium-grey: #9c9c9c;
 $dark-grey: #898989;
-
-
 
 body {
   margin: 0;
@@ -132,8 +130,7 @@ button {
 }
 
 #fa-question-circle-detail {
-  color: $light-grey;
-  font-size: 18px;
+  @extend .fa-question-circle;
   margin-left: 10px;
 }
 
@@ -224,7 +221,7 @@ button {
 }
 
 .svg-stop-rsp:hover {
-	fill: $white;
+  fill: $white;
   z-index: 900;
 }
 
@@ -248,19 +245,6 @@ button {
 	}
 }
 
-.svg-wrapper-legend-route-only {
-  align-items: center;
-  display: flex;
-  margin-bottom: 15px;
-  margin-left: 25px;
-  position: relative;
-  text-align: center;
-
-  svg {
-    vertical-align: middle;
-  }
-}
-
 .svg-wrapper-legend-route {
   align-items: center;
   display: flex;
@@ -271,6 +255,11 @@ button {
   svg {
     vertical-align: middle;
 	}
+}
+
+.svg-wrapper-legend-route-only {
+  @extend .svg-wrapper-legend-route;
+  margin-bottom: 15px;
 }
 
 .svg-wrapper {
@@ -373,7 +362,7 @@ input, button, select, textarea {
 
 .markerIcon-x {
   height: 25px;
-  margin-left: 11px;
+  margin-left: 10px;
   margin-top: 8px;
 }
 
