@@ -1,4 +1,4 @@
-<div id="sidebar" class="col-md-2">
+<div id="sidebar" class="collapse in col-md-4">
   <div style="display:flex;justify-content:center;align-items:center;">
     <div style="width:130px;height:40px;">
       <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -23,6 +23,12 @@
 <div class="col-md-8">
   <div class="row">
     {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+    
+    {{#if media.isMobile}}
+    <!-- test collapsed class name to hide/show toggle button -->
+    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+    {{/if}}
+
     <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>        
         <div class="location-search">
             <div class="row">
@@ -36,7 +42,7 @@
               {{#power-select
                 search=(action "searchRepo")
                 selected=place
-                placeholder="Find a place using Mapzen Search..."
+                placeholder=searchbarContent
                 onchange=(action "setPlace")
                 onclose=(action "clearPlace")
                 as |repo|

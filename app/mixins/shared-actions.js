@@ -28,6 +28,13 @@ export default Ember.Mixin.create({
   textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
     return this.get('closeTextbox').get('textboxIsClosed');
   }),
+  searchbarContent: Ember.computed(function(){
+    if (this.media.isMobile){
+      return "Find a place"
+    } else {
+      return "Find a place using Mapzen Search";
+    }
+  }),
 
 	actions: {
     dropPin: function(e){
