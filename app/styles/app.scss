@@ -197,7 +197,6 @@ button {
     }
   }
 }
-
 .svg-stop {
   fill: $mapzen-red;
   stroke: $mapzen-dark-red;
@@ -286,7 +285,7 @@ input, button, select, textarea {
   border: 0;
   color: $mapzen-blue;
   height: 35px;
-  margin-left: 90vw;
+  margin-left: 85%;
   margin-top: 0;
   position: absolute;
   width: 35px;
@@ -319,6 +318,12 @@ input, button, select, textarea {
   a:last-child {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+  }
+}
+
+.leaflet-touch{
+  .leaflet-bar{
+    display: none;
   }
 }
 
@@ -373,9 +378,10 @@ input, button, select, textarea {
   position: absolute;
   width: 450px;
   z-index: 2;
-  
+
   @media screen and (orientation:portrait){
-    width: 60%;
+    width: 70%;
+    margin-left: 3%;
   }
 }
 
