@@ -1,361 +1,38 @@
-{{#if media.isMobile}}
-	<div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
-    <div class="row">
-      <div id="sidebar-media" class="collapse in">
-    		<div style="display:flex;justify-content:center;align-items:center;">
-          <div style="width:130px;height:40px;">
-            <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-          </div>
-        </div>
-				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
-        {{#unless textboxIsClosed}}
-          {{text-box route="index" action="setTextBoxClosed"}}
-        {{/unless}}
-        {{sidebar-title-transitland}}
-            <div class="btn-group-vertical" role="group" >
-						  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null pin=pin)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
-
-						  <div class="expanded-selection">
-						  	{{#if onestop_id}}
-									{{#if selectedRoute}}
-							  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
-						  		{{else}}
-							  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
-						  		{{/if}}
-									<br>
-
-								  <div class="form-group">
-				  				{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
-				  				{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
-				    			<label for="check-1">Show stops served by route</label>
-				  				</div>
-
-
-								  <row class="subheading-row">
-									  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div></div>
-									  {{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}
-									</row>
-
-								{{else if operated_by}}
-									{{#power-select
-								      options=routes
-								      selected=route
-											placeholder=placeholderMessageRoutes
-											searchPlaceholder="Type to filter..."
-								      onchange=(action "setOnestopId")
-							        onclose=(action "clearRoute")
-								      as |route|
-								    }}
-							      {{route.name}} {{route.tags.route_long_name}}
-								  {{/power-select}}
-									<form>
-										<strong>Operated by:</strong> {{operated_by}}<br>
-									   	<row class="subheading-row">
-												<div class="form-group-header sidebar-header col-md-10">Style routes by:
-												&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
-												{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
-											</row>
-										<div class="form-group" {{action "setRouteStyle" "mode"}}>
-									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked>
-									  	{{else}}<input type="radio" id="radio-1" name="option-one">{{/if}}
-									    <label for="radio-1">Mode</label>
-									  </div>
-										  <div class="sidebar-dropdown">
-											  {{#if (eq style_routes_by "mode")}}
-										    	{{#unless vehicle_type}}
-												    {{#power-select
-												    	options=routeModes
-												      selected=mode
-															placeholder=placeholderMessageModes
-															searchPlaceholder="Type to filter..."
-												      onchange=(action "setMode")
-											        onclose=(action "clearMode")
-												      as |mode|
-												    }}
-													    <div style={{mode.style}}>{{mode.name}}</div>
-													  {{/power-select}}
-													{{/unless}}
-												{{/if}}
-											</div>
-									</form>
-									{{#each model.routes as |route|}}
-										{{#if (eq hoverRoute route.onestop_id)}}
-							  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
-								  	{{/if}}
-							  	{{/each}}
-								{{else}}
-									{{#power-select
-							      options=routes
-							      selected=route
-										placeholder=placeholderMessageRoutes
-										searchPlaceholder="Type to filter..."
-							      onchange=(action "setOnestopId")
-						        onclose=(action "clearRoute")
-							      as |route|
-							    }}
-						      {{route.name}} {{route.tags.route_long_name}}
-							    {{/power-select}}
-									<form>
-									  <row class="subheading-row">
-											<div class="form-group-header sidebar-header col-md-10">Style routes by:
-											&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
-											{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
-										</row>
-									  <div class="form-group">
-									  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
-									  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
-									    <label for="radio-1">Mode</label>
-									    <div class="sidebar-dropdown">
-										    {{#if (eq style_routes_by "mode")}}
-										    	{{#unless vehicle_type}}
-												    {{#power-select
-												    	options=routeModes
-												      selected=mode
-															placeholder=placeholderMessageModes
-															searchPlaceholder="Type to filter..."
-												      onchange=(action "setMode")
-											        onclose=(action "clearMode")
-												      as |mode|
-												    }}
-													    <div style={{mode.style}}>{{mode.name}}</div>
-													  {{/power-select}}
-													{{/unless}}
-											  {{/if}}
-											</div>
-									  </div>
-									  <div class="form-group">
-									    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked {{action "setRouteStyle" "operator"}}>
-									    {{else}}<input type="radio" id="radio-2" name="option-two" {{action "setRouteStyle" "operator"}}>{{/if}}
-									    <label for="radio-2">Operator</label>
-									    {{#if (eq style_routes_by "operator")}}
-								    		<div class="sidebar-dropdown">
-												  {{#power-select
-											    	options=routeOperators
-											      selected=operator
-														placeholder=placeholderMessageOperators
-														searchPlaceholder="Type to filter..."
-											      onchange=(action "setOperator")
-										        onclose=(action "clearOperator")
-											      as |operator|
-												    }}
-													  	<div style={{operator.style}}>{{operator.name}}</div>
-												  {{/power-select}}
-										  	</div>
-										  {{/if}}
-									  </div>
-									</form>
-									{{#each model.routes as |route|}}
-										{{#if (eq hoverRoute route.onestop_id)}}
-							  			{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=route}}{{/route-detail}}
-								  	{{/if}}
-							  	{{/each}}
-								{{/if}}
-
-								{{#if selectedRoute}}
-								{{else if onlyRoute}}
-								{{else if hoverRoute}}
-									<div class="hover-detail">
-										{{hoverRoute.name}}<br>
-										{{#if hoverRoute.operated_by_name}}{{hoverRoute.operated_by_name}}<br>{{/if}}
-										<p class="caption">Click the route line for more details</p>
-									</div>
-								{{else}}
-									{{#if mapMoved}}
-						    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-						  		{{/if}}
-								{{/if}}
-							</div>
-						  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null pin=pin served_by=null operated_by=null serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
-						  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
-						  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
-			  		</div>
-            <hr class="sidebar-hr">
-            {{sidebar-title-mobility}}
-            <div class="btn-group-vertical" role="group" >
-			  			{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-			  		</div>
-			</div>
-    <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
-		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-			<div class="location-search" style="width:225px">
-              <div class="row">
-                <div class="ember-basic-dropdown-trigger-icon">
-                  {{#if pin}}
-                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-                  {{else}}
-                    <img src='assets/images/marker1.png' class="markerIcon"/>
-                  {{/if}}
-                </div>
-                {{#power-select
-                  search=(action "searchRepo")
-                  selected=place
-                  placeholder="Find a place using Mapzen Search..."
-                  onchange=(action "setPlace")
-                  onclose=(action "clearPlace")
-                  as |repo|
-                }}
-                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-                {{/power-select}}
-              </div>
-          </div>
-				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-						{{#if onestop_id}}
-					  	{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}
-									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{else if (eq style_routes_by "operator")}}
-								{{#each model.routes as |route|}}
-									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-									{{/geojson-layer}}
-								{{/each}}
-							{{else}}
-								{{#each model.routes as |route|}}
-										{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{/if}}
-							{{#if displayStops}}
-								{{#each model.stops.features as |stop|}}
-						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
-						  		{{/marker-layer}}
-					  		{{/each}}
-					  	{{/if}}
-					  {{else}}
-							{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}
-									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{else if (eq style_routes_by "operator")}}
-								{{#each model.routes as |route|}}
-									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{else if operated_by}}
-								{{#each model.routes as |route|}}
-										{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{else}}
-								{{#each model.routes as |route|}}
-										{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{/if}}
-							{{#if displayStops}}
-								{{#each model.stops.features as |stop|}}
-						  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=false riseOnHover=true riseOffset=1000}}
-				  				{{/marker-layer}}
-					  		{{/each}}
-					  	{{/if}}
-					  	{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000}}
-				  			{{/marker-layer}}
-							{{/each}}
-					  {{/if}}
-					  {{#if pin}}
-              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-              {{/marker-layer}}
-            {{/if}}
-				{{/leaflet-map}}
-			</div>
-		</div>
-	</div>
-	{{outlet}}
-{{else}}
-	<div class="col-md-4 linebreak-text" id="sidebar">
- 		<div style="display:flex;justify-content:center;align-items:center;">
-      <div style="width:130px;height:40px;">
-        <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-      </div>
+<div class="col-md-4 linebreak-text" id="sidebar">
+		<div style="display:flex;justify-content:center;align-items:center;">
+    <div style="width:130px;height:40px;">
+      <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
     </div>
-		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
-		{{#unless textboxIsClosed}}
-      {{text-box route="index" action="setTextBoxClosed"}}
-    {{/unless}}
-    {{sidebar-title-transitland}}
-		<div class="btn-group-vertical" role="group" >
+  </div>
+	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
+	{{#unless textboxIsClosed}}
+    {{text-box route="index" action="setTextBoxClosed"}}
+  {{/unless}}
+  {{sidebar-title-transitland}}
+	<div class="btn-group-vertical" role="group" >
 
-		  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
+	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
 
-		  <div class="expanded-selection">
-		  	{{#if onestop_id}}
-					{{#if selectedRoute}}
-			  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
-		  		{{else}}
-			  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
-		  		{{/if}}
-					<br>
-					<div class="form-group">
-				  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
-				  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
-				    <label for="check-1">Show stops served by route</label>
-				  </div>
+	  <div class="expanded-selection">
+	  	{{#if onestop_id}}
+				{{#if selectedRoute}}
+		  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=selectedRoute}}{{/route-detail}}
+	  		{{else}}
+		  		{{#route-detail type="route" bbox=bbox onestop_id=onestop_id route=onlyRoute}}{{/route-detail}}
+	  		{{/if}}
+				<br>
+				<div class="form-group">
+			  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
+			  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
+			    <label for="check-1">Show stops served by route</label>
+			  </div>
 
-				  <row class="subheading-row">
-					  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div></div>
-					  {{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}
-					</row>
+			  <row class="subheading-row">
+				  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div></div>
+				  {{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}
+				</row>
 
-				{{else if operated_by}}
-					{{#power-select
-			      options=routes
-			      selected=route
-						placeholder=placeholderMessageRoutes
-						searchPlaceholder="Type to filter..."
-			      onchange=(action "setOnestopId")
-		        onclose=(action "clearRoute")
-			      as |route|
-			    }}
-			      {{route.name}} {{route.tags.route_long_name}}
-			    {{/power-select}}
-			    {{#unless hoverRoute}}
-		  			<p class="caption">Hover over a route line for more information</p>
-						<form>
-							<strong>Operated by:</strong> {{operated_by}}<br>
-						  <row class="subheading-row">
-								<div class="form-group-header sidebar-header col-md-10">Style routes by:
-								&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
-								{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
-							</row>
-						  <div class="form-group">
-						  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
-						  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
-						    <label for="radio-1">Mode</label>
-						    <div class="sidebar-dropdown">
-						    {{#if (eq style_routes_by "mode")}}
-						    	{{#unless vehicle_type}}
-								    {{#power-select
-								    	options=routeModes
-								      selected=mode
-											placeholder=placeholderMessageModes
-											searchPlaceholder="Type to filter..."
-								      onchange=(action "setMode")
-							        onclose=(action "clearMode")
-								      as |mode|
-								    }}
-									    <div style={{mode.style}}>{{mode.name}}</div>
-									  {{/power-select}}
-									{{/unless}}
-						  	{{/if}}
-							</div>
-						</div>
-					</form>
-			  {{/unless}}
-				{{#each model.routes as |route|}}
-					{{#if (eq hoverRoute route.onestop_id)}}
-						<div class="hover-detail">
-							Route name: {{route.name}}<br>
-							Operated by: {{route.operated_by_name}}<br>
-							<p class="caption">Click the route line for more details</p>
-						</div>
-			  	{{/if}}
-		  	{{/each}}
-			{{else}}
+			{{else if operated_by}}
 				{{#power-select
 		      options=routes
 		      selected=route
@@ -368,193 +45,248 @@
 		      {{route.name}} {{route.tags.route_long_name}}
 		    {{/power-select}}
 		    {{#unless hoverRoute}}
-			  	<p class="caption">Hover over a route line for information</p>
+	  			<p class="caption">Hover over a route line for more information</p>
 					<form>
+						<strong>Operated by:</strong> {{operated_by}}<br>
 					  <row class="subheading-row">
 							<div class="form-group-header sidebar-header col-md-10">Style routes by:
 							&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
 							{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
 						</row>
-					  <div class="form-group" >
-					  	{{#if (eq style_routes_by "mode")}}
-					  		<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
-					  	{{else}}
-					  		<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>
-					  	{{/if}}
+					  <div class="form-group">
+					  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
+					  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
 					    <label for="radio-1">Mode</label>
 					    <div class="sidebar-dropdown">
-						    {{#if (eq style_routes_by "mode")}}
-						    	{{#unless vehicle_type}}
-								    {{#power-select
-								    	options=routeModes
-								      selected=mode
-											placeholder=placeholderMessageModes
-											searchPlaceholder="Type to filter..."
-								      onchange=(action "setMode")
-							        onclose=(action "clearMode")
-								      as |mode|
-								    }}
-									    <div style={{mode.style}}>{{mode.name}}</div>
-									  {{/power-select}}
-									{{/unless}}
-							  {{/if}}
-							</div>
-					  </div>
-					  <div class="form-group" >
-					    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked {{action "setRouteStyle" "operator"}}>
-					    {{else}}<input type="radio" id="radio-2" name="option-two" {{action "setRouteStyle" "operator"}}>{{/if}}
-					    <label for="radio-2">Operator</label>
-							  {{#if (eq style_routes_by "operator")}}
-					    		<div class="sidebar-dropdown">
-									  {{#power-select
-								    	options=routeOperators
-								      selected=operator
-											placeholder=placeholderMessageOperators
-											searchPlaceholder="Type to filter..."
-								      onchange=(action "setOperator")
-							        onclose=(action "clearOperator")
-								      as |operator|
-									    }}
-												<div style={{operator.style}}>{{operator.name}}</div>
-									  {{/power-select}}
-							  	</div>
-							  {{/if}}
-						  </div>
-						</form>
-					{{/unless}}
-					{{#each model.routes as |route|}}
-						{{#if (eq hoverRoute route.onestop_id)}}
-							<div class="hover-detail">
-								Route name: {{route.name}}<br>
-								Operated by: {{route.operated_by_name}}<br>
-								<p class="caption">Click the route line for more details</p>
-							</div>
-				  	{{/if}}
-			  	{{/each}}
-				{{/if}}
-				{{#if hoverStop}}
-					<div class="hover-detail">
-						{{#if onestop_id}}
-							<div>{{hoverStop.properties.name}}</div>
-						{{else}}
-							<div>{{hoverStop.name}}</div>
-						{{/if}}
-						<p class="caption">Click the stop for more details</p>
-					</div>
-				{{/if}}
-
-
-				{{#if mapMoved}}
-	    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-	  		{{/if}}
-			<br>
-			</div>
-		  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
-		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
-		  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
-	  </div>
-		<hr class="sidebar-hr">
-		{{sidebar-title-mobility}}
-		<div class="btn-group-vertical" role="group" >
-	  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-	 	</div>
-	{{#if model.stopServedByRoutes}}stopServedByRoutes{{/if}}
-	</div>
-	<div class="col-md-8">
-		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-			<div class="location-search">
-        <div class="row">
-          <div class="col-md-2 ember-basic-dropdown-trigger-icon">
-            {{#if pin}}
-              <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-            {{else}}
-              <img src='assets/images/marker1.png' class="markerIcon"/>
-            {{/if}}
-          </div>
-          {{#power-select
-            search=(action "searchRepo")
-            selected=place
-            placeholder="Find a place using Mapzen Search..."
-            onchange=(action "setPlace")
-            onclose=(action "clearPlace")
-            as |repo|
-          }}
-            {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-          {{/power-select}}
-        </div>
-			</div>
-				{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-						{{#if onestop_id}}
-					  	{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}
-									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{else if (eq style_routes_by "operator")}}
-								{{#each model.routes as |route|}}
-									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-									{{/geojson-layer}}
-								{{/each}}
-							{{else}}
-								{{#each model.routes as |route|}}
-										{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{/if}}
-							{{#if displayStops}}
-								{{#each model.stops.features as |stop|}}
-						  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
-						  		{{/marker-layer}}
-					  		{{/each}}
+					    {{#if (eq style_routes_by "mode")}}
+					    	{{#unless vehicle_type}}
+							    {{#power-select
+							    	options=routeModes
+							      selected=mode
+										placeholder=placeholderMessageModes
+										searchPlaceholder="Type to filter..."
+							      onchange=(action "setMode")
+						        onclose=(action "clearMode")
+							      as |mode|
+							    }}
+								    <div style={{mode.style}}>{{mode.name}}</div>
+								  {{/power-select}}
+								{{/unless}}
 					  	{{/if}}
-					  {{else}}
+						</div>
+					</div>
+				</form>
+		  {{/unless}}
+			{{#each model.routes as |route|}}
+				{{#if (eq hoverRoute route.onestop_id)}}
+					<div class="hover-detail">
+						Route name: {{route.name}}<br>
+						Operated by: {{route.operated_by_name}}<br>
+						<p class="caption">Click the route line for more details</p>
+					</div>
+		  	{{/if}}
+	  	{{/each}}
+		{{else}}
+			{{#power-select
+	      options=routes
+	      selected=route
+				placeholder=placeholderMessageRoutes
+				searchPlaceholder="Type to filter..."
+	      onchange=(action "setOnestopId")
+        onclose=(action "clearRoute")
+	      as |route|
+	    }}
+	      {{route.name}} {{route.tags.route_long_name}}
+	    {{/power-select}}
+	    {{#unless hoverRoute}}
+		  	<p class="caption">Hover over a route line for information</p>
+				<form>
+				  <row class="subheading-row">
+						<div class="form-group-header sidebar-header col-md-10">Style routes by:
+						&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
+						{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
+					</row>
+				  <div class="form-group" >
+				  	{{#if (eq style_routes_by "mode")}}
+				  		<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
+				  	{{else}}
+				  		<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>
+				  	{{/if}}
+				    <label for="radio-1">Mode</label>
+				    <div class="sidebar-dropdown">
+					    {{#if (eq style_routes_by "mode")}}
+					    	{{#unless vehicle_type}}
+							    {{#power-select
+							    	options=routeModes
+							      selected=mode
+										placeholder=placeholderMessageModes
+										searchPlaceholder="Type to filter..."
+							      onchange=(action "setMode")
+						        onclose=(action "clearMode")
+							      as |mode|
+							    }}
+								    <div style={{mode.style}}>{{mode.name}}</div>
+								  {{/power-select}}
+								{{/unless}}
+						  {{/if}}
+						</div>
+				  </div>
+				  <div class="form-group" >
+				    {{#if (eq style_routes_by "operator")}}<input type="radio" id="radio-2" name="option-two" checked {{action "setRouteStyle" "operator"}}>
+				    {{else}}<input type="radio" id="radio-2" name="option-two" {{action "setRouteStyle" "operator"}}>{{/if}}
+				    <label for="radio-2">Operator</label>
+						  {{#if (eq style_routes_by "operator")}}
+				    		<div class="sidebar-dropdown">
+								  {{#power-select
+							    	options=routeOperators
+							      selected=operator
+										placeholder=placeholderMessageOperators
+										searchPlaceholder="Type to filter..."
+							      onchange=(action "setOperator")
+						        onclose=(action "clearOperator")
+							      as |operator|
+								    }}
+											<div style={{operator.style}}>{{operator.name}}</div>
+								  {{/power-select}}
+						  	</div>
+						  {{/if}}
+					  </div>
+					</form>
+				{{/unless}}
+				{{#each model.routes as |route|}}
+					{{#if (eq hoverRoute route.onestop_id)}}
+						<div class="hover-detail">
+							Route name: {{route.name}}<br>
+							Operated by: {{route.operated_by_name}}<br>
+							<p class="caption">Click the route line for more details</p>
+						</div>
+			  	{{/if}}
+		  	{{/each}}
+			{{/if}}
+			{{#if hoverStop}}
+				<div class="hover-detail">
+					{{#if onestop_id}}
+						<div>{{hoverStop.properties.name}}</div>
+					{{else}}
+						<div>{{hoverStop.name}}</div>
+					{{/if}}
+					<p class="caption">Click the stop for more details</p>
+				</div>
+			{{/if}}
+
+
+			{{#if mapMoved}}
+    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+  		{{/if}}
+		<br>
+		</div>
+	  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
+	  {{url-builder entity="routes" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id serves=serves operated_by=operated_by vehicle_type=vehicle_type}}
+  </div>
+	<hr class="sidebar-hr">
+	{{sidebar-title-mobility}}
+	<div class="btn-group-vertical" role="group" >
+  	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+ 	</div>
+{{#if model.stopServedByRoutes}}stopServedByRoutes{{/if}}
+</div>
+<div class="col-md-8">
+	{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+  {{#if media.isMobile}}
+    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+  {{/if}}  
+		<div class="location-search">
+      <div class="row">
+        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+          {{#if pin}}
+            <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+          {{else}}
+            <img src='assets/images/marker1.png' class="markerIcon"/>
+          {{/if}}
+        </div>
+        {{#power-select
+          search=(action "searchRepo")
+          selected=place
+          placeholder="Find a place using Mapzen Search..."
+          onchange=(action "setPlace")
+          onclose=(action "clearPlace")
+          as |repo|
+        }}
+          {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+        {{/power-select}}
+      </div>
+		</div>
+			{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+					{{#if onestop_id}}
+				  	{{#if (eq style_routes_by "mode")}}
+							{{#each model.routes as |route|}}
+								  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+									{{/geojson-layer}}
+							{{/each}}
+						{{else if (eq style_routes_by "operator")}}
+							{{#each model.routes as |route|}}
+								{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
+							{{/each}}
+						{{else}}
+							{{#each model.routes as |route|}}
+									{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+									{{/geojson-layer}}
+							{{/each}}
+						{{/if}}
+						{{#if displayStops}}
+							{{#each model.stops.features as |stop|}}
+					  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
+					  		{{/marker-layer}}
+				  		{{/each}}
+				  	{{/if}}
+				  {{else}}
+						{{#if (eq style_routes_by "mode")}}
+							{{#each model.routes as |route|}}
+								  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+									{{/geojson-layer}}
+							{{/each}}
+						{{else if (eq style_routes_by "operator")}}
+							{{#each model.routes as |route|}}
+								{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+									{{/geojson-layer}}
+							{{/each}}
+						{{else if operated_by}}
 							{{#if (eq style_routes_by "mode")}}
 								{{#each model.routes as |route|}}
 									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
 								{{/each}}
-							{{else if (eq style_routes_by "operator")}}
-								{{#each model.routes as |route|}}
-									{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{else if operated_by}}
-								{{#if (eq style_routes_by "mode")}}
-									{{#each model.routes as |route|}}
-										  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-											{{/geojson-layer}}
-									{{/each}}
-								{{else}}
-									{{#each model.routes as |route|}}
-											{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-											{{/geojson-layer}}
-									{{/each}}
-								{{/if}}
 							{{else}}
 								{{#each model.routes as |route|}}
-										{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+										{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 										{{/geojson-layer}}
 								{{/each}}
 							{{/if}}
-							{{#if displayStops}}
-								{{#each model.stops.features as |stop|}}
-						  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=true riseOnHover=true riseOffset=1000}}
-				  				{{/marker-layer}}
-					  		{{/each}}
-					  	{{/if}}
-					  	{{#each model.stops as |stop|}}
-					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
-					  		{{/marker-layer}}
+						{{else}}
+							{{#each model.routes as |route|}}
+									{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+									{{/geojson-layer}}
 							{{/each}}
-					  {{/if}}
-					  {{#if pin}}
-              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-              {{/marker-layer}}
-            {{/if}}
-				{{/leaflet-map}}
-		</div>
+						{{/if}}
+						{{#if displayStops}}
+							{{#each model.stops.features as |stop|}}
+					  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=true riseOnHover=true riseOffset=1000}}
+			  				{{/marker-layer}}
+				  		{{/each}}
+				  	{{/if}}
+				  	{{#each model.stops as |stop|}}
+				  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
+				  		{{/marker-layer}}
+						{{/each}}
+				  {{/if}}
+				  {{#if pin}}
+            {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+            {{/marker-layer}}
+          {{/if}}
+			{{/leaflet-map}}
 	</div>
-	{{outlet}}
-{{/if}}
+</div>
