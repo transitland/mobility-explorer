@@ -28,13 +28,13 @@ html, body, #map, #map-loading {
 }
 
 h2 {
-  color: $mapzen-red;
+  color: $mapzen-blue;
   font-size: 35px;
   font-weight: 300;
 }
 
 h2:hover {
-	color: $mapzen-dark-red;
+	color: $explorer-bluegreen;
 }
 
 h4 {
@@ -82,10 +82,12 @@ button {
 .site-intro {
   background-color: $explorer-bluegreen;
   color: $white;
+  width: 100%;
   font-size: 16px;
   font-weight: 300;
-  margin-top: 20px;
+  /*margin-top: 50px;*/
   padding: 10px;
+  z-index: 3;
 
   a {
     color: $white;
@@ -116,8 +118,9 @@ button {
   padding: 15px;
 
   @media screen and (orientation:portrait){
-    overflow-y: auto;
-    height: 100vh;
+    /*overflow-y: auto;*/
+    /*height: max-content;*/
+    height: fit-content;
 
     width:100%;
   }
