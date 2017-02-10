@@ -1,4 +1,4 @@
-<div class="col-md-4 linebreak-text" id="sidebar">
+<div class="col-md-4" id="sidebar">
   <div style="display:flex;justify-content:center;align-items:center;">
     <div style="width:130px;height:40px;">
       <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -84,7 +84,6 @@
 					  </div>
 					</form>
 				{{/if}}
-
 				{{#if onestop_id}}
 				{{else if hoverStop}}
 					<div class="hover-detail">
@@ -92,7 +91,7 @@
 						<p class="caption">Click the stop for more information</p>
 					</div>
 				{{else}}
-	    		<p class="caption">Hover over a stop for more information</p>
+	    		<p class="caption">{{stopSelectContent}}</p>
 	    		{{#if mapMoved}}
     				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
   				{{/if}}
@@ -126,7 +125,7 @@
         {{#power-select
           search=(action "searchRepo")
           selected=place
-          placeholder="Search for location..."
+          placeholder=searchbarContent
           onchange=(action "setPlace")
           onclose=(action "clearPlace")
           as |repo|

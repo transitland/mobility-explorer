@@ -1,4 +1,4 @@
-<div class="col-md-4 linebreak-text" id="sidebar">
+<div class="col-md-4" id="sidebar">
 		<div style="display:flex;justify-content:center;align-items:center;">
     <div style="width:130px;height:40px;">
       <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -45,7 +45,7 @@
 		      {{route.name}} {{route.tags.route_long_name}}
 		    {{/power-select}}
 		    {{#unless hoverRoute}}
-	  			<p class="caption">Hover over a route line for more information</p>
+	  			<p class="caption">{{routeSelectContent}}</p>
 					<form>
 						<strong>Operated by:</strong> {{operated_by}}<br>
 					  <row class="subheading-row">
@@ -99,7 +99,7 @@
 	      {{route.name}} {{route.tags.route_long_name}}
 	    {{/power-select}}
 	    {{#unless hoverRoute}}
-		  	<p class="caption">Hover over a route line for information</p>
+		  	<p class="caption">{{routeSelectContent}}</p>
 				<form>
 				  <row class="subheading-row">
 						<div class="form-group-header sidebar-header col-md-10">Style routes by:
@@ -209,7 +209,7 @@
         {{#power-select
           search=(action "searchRepo")
           selected=place
-          placeholder="Find a place using Mapzen Search..."
+          placeholder=searchbarContent
           onchange=(action "setPlace")
           onclose=(action "clearPlace")
           as |repo|

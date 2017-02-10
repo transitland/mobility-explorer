@@ -1,4 +1,4 @@
-<div class="col-md-4 linebreak-text" id="sidebar">
+<div class="col-md-4" id="sidebar">
  <div style="display:flex;justify-content:center;align-items:center;">
     <div style="width:130px;height:40px;">
       <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
@@ -41,7 +41,7 @@
           <p class="caption">Click the operator area for more information</p>
         </div>
       {{else}}
-        <p class="caption">Hover on the operator area for information</p>
+        <p class="caption">{{operatorSelectContent}}</p>
         {{#if mapMoved}}
           <button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
         {{/if}}
@@ -73,7 +73,7 @@
               {{#power-select
                 search=(action "searchRepo")
                 selected=place
-                placeholder="Find a place using Mapzen Search..."
+                placeholder=searchbarContent
                 onchange=(action "setPlace")
                 onclose=(action "clearPlace")
                 as |repo|
