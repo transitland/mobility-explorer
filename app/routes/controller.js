@@ -15,6 +15,13 @@ export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 	style_routes_by: null,
 	selectedRoute: null,
 	hoverStop: null,
+	routeSelectContent: Ember.computed(function(){
+    if (this.media.isMobile){
+      return ""
+    } else {
+      return "Hover over a route line for information";
+    }
+  }),
 	placeholderMessageRoutes: Ember.computed('bbox', function(){
 		var total = this.model.routes.get('meta.total');
 		if (total > 1){
