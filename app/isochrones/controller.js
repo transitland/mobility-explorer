@@ -7,7 +7,7 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-  queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time', 'include_operators', 'exclude_operators', 'include_routes', 'exclude_routes'],
+  queryParams: ['onestop_id', 'isochrone_mode', 'pin', 'departure_time', 'include_operators', 'exclude_operators', 'include_routes', 'exclude_routes', 'stop'],
 
   onestop_id: null,
   departure_time: null,
@@ -18,6 +18,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   exclude_operators: [],
   include_routes: [],
   exclude_routes: [],
+  stop: null,
   
   // this iterates through the arrays for the included and excluded query params, and sets the included or excluded 
   // model attributes for the entities with listed onestopIDs
