@@ -52,6 +52,7 @@
     "ember-tooltips": "2.4.1",
     "ember-truth-helpers": "1.2.0",
     "eonasdan-bootstrap-datetimepicker-npm": "4.17.37",
+    "gpx-parse": "^0.10.4",
     "loader.js": "^4.0.1",
     "moment": "2.15.2",
     "moment-timezone": "0.5.7",
