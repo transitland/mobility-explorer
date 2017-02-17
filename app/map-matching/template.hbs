@@ -119,10 +119,15 @@
               {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
               {{/marker-layer}}
             {{/if}}
-            <!-- {{#each model.trace as |trace|}}
-                  {{#path-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-                  {{/path-layer}}
-              {{/each}} -->
+          
+            {{#each model.trace as |trace|}}
+              {{#polyline-layer locations=model.gpx weight=1}}
+              {{/polyline-layer}}
+            {{/each}}
+            {{#each model.trace as |trace|}}
+              {{#polyline-layer locations=model.locations weight=2 color="red"}}
+              {{/polyline-layer}}
+            {{/each}}
           {{/leaflet-map}}
       </div>
     </div>
