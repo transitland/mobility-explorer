@@ -15,11 +15,27 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   zoom: 14,
+  activeTrace: null,
+  showMapMatch: false,
  
   actions: {
     updatebbox(e) {
       var newbox = e.target.getBounds();
       this.set('bbox', newbox.toBBoxString());
+    },
+
+    setTrace(trace){
+      this.set('activeTrace', trace.name);
+      this.set('showMapMatch', false);
+      console.log(this.get('activeTrace'))
+    },
+    
+    setShowMapMatch(){
+      if (this.get('showMapMatch')){
+        this.set('showMapMatch', false);
+      } else {
+        this.set('showMapMatch', true);
+      }
     }
   }
 });

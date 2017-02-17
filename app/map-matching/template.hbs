@@ -21,10 +21,29 @@
     {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     {{#link-to 'map-matching' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-mapzen-alt">Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
-      sample gpx traces<br>
-      {{#each model.traces as |trace|}}
-        name: {{trace.name}}<br>
-      {{/each}}
+      <h4>Sample GPX Traces</h4>
+      {{#power-select
+          options=model.traces
+          placeholder="Select a sample GPX trace..."
+          searchPlaceholder="Type to filter..."
+          onchange=(action "setTrace")
+          as |trace|
+        }}
+          {{trace.name}}
+        {{/power-select}}
+        {{#if activeTrace}}
+          {{activeTrace}}
+        {{/if}}
+        <form>
+          {{#if activeTrace}}
+            {{#if showMapMatch}}
+              <input type="radio" id="radio-1" name="options" checked=showMapMatch {{action "setShowMapMatch"}}>
+            {{else}}
+              <input type="radio" id="radio-1" name="options" {{action "setShowMapMatch"}}>
+            {{/if}}
+            <label for="radio-1">Show map match</label><br>
+          {{/if}}
+        </form>
     </div>
   </div>
 </div>
@@ -62,15 +81,17 @@
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}
         {{/if}}
-    
-        {{#each model.traces as |trace|}}
-          {{#polyline-layer locations=trace.gpx weight=1}}
-          {{/polyline-layer}}
-        {{/each}}
-        {{#each model.traces as |trace|}}
-          {{#polyline-layer locations=trace.locations weight=1 color="red"}}
-          {{/polyline-layer}}
-        {{/each}}
+        
+          {{#each model.traces as |trace|}}
+            {{#if (eq activeTrace trace.name)}}
+              {{#polyline-layer locations=trace.gpx weight=1}}
+              {{/polyline-layer}}
+              {{#if showMapMatch}}
+                {{#polyline-layer locations=trace.locations weight=1 color="red"}}
+                {{/polyline-layer}}
+              {{/if}}
+            {{/if}}
+          {{/each}}
       {{/leaflet-map}}
     </div>
   </div>
