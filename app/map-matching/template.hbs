@@ -41,6 +41,9 @@
             <label for="radio-1">Show map match</label><br>
           {{/if}}
         </form>
+        {{#each model.traces as |trace|}}
+          <button class="btn btn-mapzen" {{action "showInfo" trace}}>test</button>
+        {{/each}}
     </div>
   </div>
 </div>
@@ -84,7 +87,7 @@
               {{#polyline-layer locations=trace.gpx weight=2}}
               {{/polyline-layer}}
               {{#if showMapMatch}}
-                {{#polyline-layer locations=trace.locations weight=2 color="red"}}
+                {{#polyline-layer locations=trace.traceRoute.responseJSON.trip.locations weight=2 color="red"}}
                 {{/polyline-layer}}
               {{/if}}
             {{/if}}

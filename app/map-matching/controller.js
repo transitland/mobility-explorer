@@ -24,7 +24,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return "Select a sample GPX trace...";
     }
   }),
- 
+
   actions: {
     updatebbox(e) {
       var newbox = e.target.getBounds();
@@ -42,6 +42,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       } else {
         this.set('showMapMatch', true);
       }
+    },
+    showInfo(model){
+      console.log(model.traceRoute);
     }
   }
 });
