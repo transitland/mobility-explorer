@@ -17,6 +17,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   zoom: 14,
   activeTrace: null,
   showMapMatch: false,
+  gpxPlaceholder: Ember.computed('activeTrace', function(){
+    if (this.get('activeTrace')){
+      return this.get('activeTrace');
+    } else {
+      return "Select a sample GPX trace...";
+    }
+  }),
  
   actions: {
     updatebbox(e) {
@@ -27,7 +34,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     setTrace(trace){
       this.set('activeTrace', trace.name);
       this.set('showMapMatch', false);
-      console.log(this.get('activeTrace'))
     },
     
     setShowMapMatch(){

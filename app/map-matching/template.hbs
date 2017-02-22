@@ -24,16 +24,13 @@
       <h4>Sample GPX Traces</h4>
       {{#power-select
           options=model.traces
-          placeholder="Select a sample GPX trace..."
+          placeholder=gpxPlaceholder
           searchPlaceholder="Type to filter..."
           onchange=(action "setTrace")
           as |trace|
         }}
           {{trace.name}}
         {{/power-select}}
-        {{#if activeTrace}}
-          {{activeTrace}}
-        {{/if}}
         <form>
           {{#if activeTrace}}
             {{#if showMapMatch}}
@@ -84,10 +81,10 @@
         
           {{#each model.traces as |trace|}}
             {{#if (eq activeTrace trace.name)}}
-              {{#polyline-layer locations=trace.gpx weight=1}}
+              {{#polyline-layer locations=trace.gpx weight=2}}
               {{/polyline-layer}}
               {{#if showMapMatch}}
-                {{#polyline-layer locations=trace.locations weight=1 color="red"}}
+                {{#polyline-layer locations=trace.locations weight=2 color="red"}}
                 {{/polyline-layer}}
               {{/if}}
             {{/if}}
