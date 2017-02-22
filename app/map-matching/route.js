@@ -51,7 +51,7 @@ export default Ember.Route.extend(setLoading, {
 			}
 		];
 
-		var url = 'http://valhalla.mapzen.com/trace_route?json=';
+		var url = 'http://valhalla.mapzen.com/trace_route?';
   	// switch url to prod when it's ready:
   	// var url = 'https://matrix.mapzen.com/trace_rotue?api_key=mapzen-jLrDBSP&json=';
 		// var linkUrl = 'https://matrix.mapzen.com/trace_route?json=';
@@ -119,7 +119,7 @@ export default Ember.Route.extend(setLoading, {
 		}
 
 	  	url = (url + json);
-			test = Ember.$.ajax({ type:"POST", url });
+			var test = Ember.$.ajax({ type:"POST", url:'http://valhalla.mapzen.com/trace_route?', data:json });
 
 
 
