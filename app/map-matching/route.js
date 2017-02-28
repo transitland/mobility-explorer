@@ -1,12 +1,10 @@
 import Ember from 'ember';
 import setLoading from 'mobility-playground/mixins/set-loading';
-import xml2js from 'npm:xml2js';
 
 export default Ember.Route.extend(setLoading, {
 	queryParams: {
 	},
 
-	// init function setting up data for gpx (everything from Model hook besides ajax calls)
 	setupController: function (controller, model) {
 		if (controller.get('bbox') !== null){
 			var coordinateArray = [];
@@ -33,7 +31,6 @@ export default Ember.Route.extend(setLoading, {
 		}
 		controller.set('leafletBbox', controller.get('bbox'));
 		this._super(controller, model);
-
 	},
 	model: function(params){
 		this.store.unloadAll('data/transitland/operator');
