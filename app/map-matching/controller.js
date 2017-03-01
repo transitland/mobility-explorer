@@ -93,7 +93,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       trace.controller = this;
       trace.traceRoute = Ember.$.ajax({ 
         type:"POST", 
-        url:'http://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
+        url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
         data:json 
       }).then(function(response){
         var encodedPolyline = response.trip.legs[0].shape;
