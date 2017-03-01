@@ -9,7 +9,7 @@ import polylineEncoded from 'npm:polyline-encoded';
 
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-  queryParams: ['bbox','pin'],
+  queryParams: ['bbox','pin','trace'],
   center: Ember.computed('pin', function(){
     if (this.get('pin')){
       return this.get('pinLocation');
@@ -18,11 +18,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   zoom: 14,
-  activeTrace: null,
+  // activeTrace: null,
+  trace: null,
   showMapMatch: false,
-  gpxPlaceholder: Ember.computed('activeTrace', function(){
-    if (this.get('activeTrace')){
-      return this.get('activeTrace');
+  gpxPlaceholder: Ember.computed('trace', function(){
+    if (this.get('trace')){
+      return this.get('trace');
     } else {
       return "Select a sample GPX trace...";
     }
@@ -73,15 +74,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('bbox', newbox.toBBoxString());
     },
 
-    setTrace(trace){
-      this.set('activeTrace', trace.name);
+    setTrace(gpxTrace){
+      this.set('trace', gpxTrace.name);
       this.set('showMapMatch', false);
+      this.set('pin', null);
 
       // var linkUrl = 'http://valhalla.mapzen.com/trace_route?';
     
       var json = {
         "shape":[],
-        "costing":trace.costing,
+        "costing":gpxTrace.costing,
         // "shape_match":"walk_or_snap",
         "shape_match":"map_snap",
         "filters":{"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
@@ -89,12 +91,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 
       var gpxObj;
 
-      xml2js.parseString(trace.xml, function (err, result){
+      xml2js.parseString(gpxTrace.xml, function (err, result){
         gpxObj = result.gpx.trk;
       });
 
       gpxObj[0].trkseg[0].trkpt.map(function(coord){
-        trace.gpx.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
+        gpxTrace.gpx.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
         json.shape.push({"lat":coord.$.lat,"lon":coord.$.lon});
       });
 
@@ -102,16 +104,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 
       var bounds;
      
-      trace.controller = this;
-      trace.traceRoute = Ember.$.ajax({ 
+      gpxTrace.controller = this;
+      gpxTrace.traceRoute = Ember.$.ajax({ 
         type:"POST", 
         url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
         data:json 
       }).then(function(response){
         var encodedPolyline = response.trip.legs[0].shape;
-        trace.polyline = L.polyline(L.PolylineUtil.decode(encodedPolyline, 6));
-        bounds = trace.polyline.getBounds();
-        trace.controller.set('center', bounds.getCenter());
+        gpxTrace.polyline = L.polyline(L.PolylineUtil.decode(encodedPolyline, 6));
+        bounds = gpxTrace.polyline.getBounds();
+        gpxTrace.controller.set('center', bounds.getCenter());
       });
     },
     

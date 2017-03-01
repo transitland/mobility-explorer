@@ -3,6 +3,10 @@ import setLoading from 'mobility-playground/mixins/set-loading';
 
 export default Ember.Route.extend(setLoading, {
 	queryParams: {
+		trace: {
+			replace: true,
+			refreshModel: false
+		}
 	},
 
 	setupController: function (controller, model) {
