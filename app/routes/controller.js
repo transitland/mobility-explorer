@@ -6,7 +6,6 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 
 export default Ember.Controller.extend(setTextboxClosed, sharedActions, {
 	queryParams: ['onestop_id', 'serves', 'operated_by', 'vehicle_type', 'style_routes_by', 'bbox', 'pin'],
-	
 	queryIsInactive: false,
 	onestop_id: null,
 	serves: null,
