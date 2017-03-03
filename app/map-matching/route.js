@@ -118,6 +118,8 @@ export default Ember.Route.extend(setLoading, {
 				url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
 				data:json 
 			}).then(function(response){
+				// return this when decoding polyline in controller:
+				// return response.trip.legs[0].shape;
 				var encodedPolyline = response.trip.legs[0].shape;
 				return L.PolylineUtil.decode(encodedPolyline, 6);
 			});

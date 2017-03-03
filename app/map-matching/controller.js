@@ -11,6 +11,11 @@ import polylineEncoded from 'npm:polyline-encoded';
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
   queryParams: ['bbox','pin','trace'],
   center: Ember.computed('trace', function(){
+    // to get center from new gpx:
+    // var encodedPolyline = this.model.traceRouteRequest;
+    // var decodedPolyline = L.Polyline(L.PolylineUtil.decode(encodedPolyline, 6));
+    // var bounds = decodedPolyline.getBounds();
+    
     return this.model.gpxTrace ? this.model.gpxTrace.center : this.get('mapCenter');
   }),
   zoom: 14,
@@ -23,7 +28,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return "Select a sample GPX trace...";
     }
   }),
-
+ 
   actions: {
     updatebbox(e) {
       var newbox = e.target.getBounds();
@@ -31,8 +36,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
 
     setTrace(trace){
-      console.log(trace);
-      this.set('trace', trace);
+      this.set('showMapMatch', false);
+      this.set('center', trace.center);
+      this.set('trace', trace.name);
     },
     
     setShowMapMatch(){
