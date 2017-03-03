@@ -10,6 +10,7 @@ export default Ember.Route.extend(setLoading, {
 	},
 
 	setupController: function (controller, model) {
+		console.log('map-matching.index setupController');
 		if (controller.get('bbox') !== null){
 			var coordinateArray = [];
 			var bboxString = controller.get('bbox');
@@ -37,6 +38,8 @@ export default Ember.Route.extend(setLoading, {
 		this._super(controller, model);
 	},
 	model: function(params){
+		console.log('map-matching.index model');
+		console.log('model params:', params);
 		this.store.unloadAll('data/transitland/operator');
 		this.store.unloadAll('data/transitland/stop');
 		this.store.unloadAll('data/transitland/route');
