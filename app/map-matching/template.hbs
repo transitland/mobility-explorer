@@ -23,7 +23,7 @@
     <div class="expanded-selection">
       <h4>Sample GPX Traces</h4>
       {{#power-select
-          options=gpxTraces
+          options=model.gpxTraces
           placeholder=gpxPlaceholder
           searchPlaceholder="Type to filter..."
           onchange=(action "setTrace")
@@ -78,17 +78,15 @@
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}
         {{/if}}
-        
-        {{#each gpxTraces as |gpxTrace|}}
-          {{#if (eq trace gpxTrace.name)}}
-            {{#polyline-layer locations=gpxTrace.gpx weight=2}}
+        {{#if trace}}
+          {{#polyline-layer locations=model.gpxTrace.coordinates weight=2}}
+          {{/polyline-layer}}
+          {{#if showMapMatch}}
+            {{#polyline-layer locations=model.traceRouteRequest weight=2 color="red"}}
             {{/polyline-layer}}
-            {{#if showMapMatch}}
-              {{#polyline-layer locations=gpxTrace.polyline._latlngs weight=2 color="red"}}
-              {{/polyline-layer}}
-            {{/if}}
           {{/if}}
-        {{/each}}
+        {{/if}}
+
       {{/leaflet-map}}
     </div>
   </div>
