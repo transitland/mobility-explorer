@@ -39,6 +39,8 @@
               <input type="radio" id="radio-1" name="options" {{action "setShowMapMatch" trace}}>
             {{/if}}
             <label for="radio-1">Show map match</label><br>
+            <button {{action "showAttributes"}}>See Route Segment Attributes</button>
+            {{#if showAttributes}}SHOW{{/if}}
           {{/if}}
         </form>
     </div>
@@ -82,7 +84,7 @@
           {{#polyline-layer locations=model.gpxTrace.coordinates weight=2}}
           {{/polyline-layer}}
           {{#if showMapMatch}}
-            {{#polyline-layer locations=model.traceRouteRequest weight=2 color="red"}}
+            {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=2 color="red"}}
             {{/polyline-layer}}
           {{/if}}
         {{/if}}
