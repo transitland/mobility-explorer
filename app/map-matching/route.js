@@ -111,56 +111,47 @@ export default Ember.Route.extend(setLoading, {
 				"costing": gpxTrace.costing,
 				// "shape_match":"walk_or_snap",
 				"shape_match": "map_snap",
-				"filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
+				// "filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
 			};
 
 			gpxTrace.coordinates.map(function(coord){
 				routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
 			});
 
-			routeJson = JSON.stringify(routeJson);
-
 			// trace_route request
 			mapMatchRequests = Ember.$.ajax({ 
 				type:"POST", 
 				url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
-				data:routeJson 
+				data:JSON.stringify(routeJson) 
 			})
 			.then(function(response){
-				response.encodedPolyline = response.trip.legs[0].shape;
-				response.decodedPolyline = L.PolylineUtil.decode(response.encodedPolyline, 6);
-				return response;
-			})
-			.then(function(response){
-					// Build the trace_attribute request
-					var encodedPolyline = response.encodedPolyline;
-					var attributesJson = {
-						"encoded_polyline": encodedPolyline,
-						"costing": gpxTrace.costing,
-						"shape_match": "map_snap",
-						"filters":{"attributes":["edge.weighted_grade", "shape"],"action":"include"}
-					};
-						
-					attributesJson = JSON.stringify(attributesJson);
+				var encodedPolyline = response.trip.legs[0].shape;
+				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 
-					// trace_attribute request
-					response.attributes = Ember.$.ajax({
-						type:"POST", 
-						url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&', 
-						data:attributesJson
-					})
-					return response;
+				// Build the trace_attribute request
+				var attributesJson = {
+					"encoded_polyline": encodedPolyline,
+					"costing": gpxTrace.costing,
+					"shape_match": "walk_or_snap",
+					// "filters":{"attributes":["edge.weighted_grade", "shape"],"action":"include"}
+				};
+				var attributesRequest = Ember.$.ajax({
+					type: "POST",
+					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
+					data: JSON.stringify(attributesJson)
+				});
+				return Ember.RSVP.hash({
+					decodedPolyline: decodedPolyline,
+					attributesRequest: attributesRequest
+				});
 			})
 		}
-		
-
     // Issue promise with both gpxTrace model and trace_route request
 		return Ember.RSVP.hash({
 			gpxTraces: fixtures,
 			gpxTrace: gpxTrace,
 			mapMatchRequests: mapMatchRequests
 		})
-
 	},
 
 	actions: {

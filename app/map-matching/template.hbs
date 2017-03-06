@@ -92,6 +92,12 @@
             {{/polyline-layer}}
           {{/if}}
         {{/if}}
+        {{#polyline-layer locations=testLine color="purple" weight=5}}
+        {{/polyline-layer}}
+        {{#each traceAttributeSegments as |segment|}}
+          {{#polyline-layer locations=segment.coordinates weight=3 color=segment.color onMouseover=(action "printSegment" segment)}}
+          {{/polyline-layer}}
+        {{/each}}
 
       {{/leaflet-map}}
     </div>
