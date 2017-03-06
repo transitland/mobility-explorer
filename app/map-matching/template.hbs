@@ -40,7 +40,11 @@
             {{/if}}
             <label for="radio-1">Show map match</label><br>
             <button {{action "showAttributes"}}>See Route Segment Attributes</button>
-            {{#if showAttributes}}SHOW{{/if}}
+            {{#if showAttributes}}
+              {{#each edges as |edge|}}
+                {{edge.weighted_grade}}
+              {{/each}}
+            {{/if}}
           {{/if}}
         </form>
     </div>

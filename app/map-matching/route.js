@@ -11,7 +11,7 @@ export default Ember.Route.extend(setLoading, {
 		},
 		showAttributes: {
 			replace: true,
-			refreshModel: true
+			refreshModel: false
 		}
 	},
 
@@ -138,6 +138,7 @@ export default Ember.Route.extend(setLoading, {
 						"encoded_polyline": encodedPolyline,
 						"costing": gpxTrace.costing,
 						"shape_match": "map_snap",
+						"filters":{"attributes":["edge.weighted_grade", "shape"],"action":"include"}
 					};
 						
 					attributesJson = JSON.stringify(attributesJson);
@@ -148,10 +149,10 @@ export default Ember.Route.extend(setLoading, {
 						url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&', 
 						data:attributesJson
 					})
-
 					return response;
 			})
 		}
+		
 
     // Issue promise with both gpxTrace model and trace_route request
 		return Ember.RSVP.hash({

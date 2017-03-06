@@ -21,7 +21,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   zoom: 14,
   trace: null,
   showMapMatch: false,
-  showAttributes: false,
+  showAttributes: null,
   gpxPlaceholder: Ember.computed('trace', function(){
     if (this.get('trace')){
       return this.get('trace');
@@ -29,6 +29,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return "Select a sample GPX trace...";
     }
   }),
+  edges: null,
  
   actions: {
     updatebbox(e) {
@@ -51,8 +52,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
 
     showAttributes(){
+      this.set('edges', this.model.mapMatchRequests.attributes.responseJSON.edges)
+      console.log(this.model.mapMatchRequests.attributes.responseJSON)
       if (this.get('showAttributes')){
-        this.set('showAttributes', false);
+        this.set('showAttributes', null);
       } else {
         this.set('showAttributes', true);
       }
