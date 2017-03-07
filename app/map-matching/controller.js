@@ -30,25 +30,36 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   edges: null,
-  testLine: Ember.computed('trace', function(){
-    var shape = this.model.mapMatchRequests.attributesRequest.shape;
-    return L.PolylineUtil.decode(shape, 6);
-    // debugger;
-  }),
+  // testLine: Ember.computed('trace', function(){
+  //   var shape = this.model.mapMatchRequests.attributesRequest.shape;
+  //   return L.PolylineUtil.decode(shape, 6);
+  //   // debugger;
+  // }),
   traceAttributeSegments: Ember.computed('trace', function() {
-    console.log('traceAttributeSegments');
     var points = L.PolylineUtil.decode(this.model.mapMatchRequests.attributesRequest.shape, 6);
     var edges = this.model.mapMatchRequests.attributesRequest.edges;
     var edgeCoordinates = [];
-    // console.log(edgeCoordinates)
-    var edgeMap = edges.map(function(edge) {
-      var edgeCoordinates = points.slice(edge.begin_shape_index, edge.end_shape_index + 1)
-      return {
-        coordinates: edgeCoordinates,
-        color: "red"
+
+    for (var i = 0; i < edges.length; i++){
+      var begin = edges[i].begin_shape_index;
+      var end =  edges[i].end_shape_index;
+      var pointsSlice = points.slice(begin, end+1);
+      var weightedGrade = edges[i].weighted_grade;
+      var weightedColor;
+      console.log(weightedGrade)
+      if (weightedGrade < 0) {
+        weightedColor = "green"
+      } else if ( 0 < weightedGrade){
+        weightedColor = "red"
       }
-    });
-    return edgeMap   
+
+      edgeCoordinates.push({
+        coordinates: pointsSlice,
+        color: weightedColor,
+        id: i
+      })
+    }
+    return edgeCoordinates;
   }),
  
   actions: {
@@ -79,10 +90,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       } else {
         this.set('showAttributes', true);
       }
-    },
-
-    printSegment(segment){
-      console.log(segment.coordinates)
     }
   }
 });

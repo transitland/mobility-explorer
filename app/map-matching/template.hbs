@@ -92,10 +92,10 @@
             {{/polyline-layer}}
           {{/if}}
         {{/if}}
-        {{#polyline-layer locations=testLine color="purple" weight=5}}
-        {{/polyline-layer}}
+        <!-- {{#polyline-layer locations=testLine color="purple" weight=5}}
+        {{/polyline-layer}} -->
         {{#each traceAttributeSegments as |segment|}}
-          {{#polyline-layer locations=segment.coordinates weight=3 color=segment.color onMouseover=(action "printSegment" segment)}}
+          {{#polyline-layer locations=segment.coordinates color=segment.color weight=3 opacity=1}}
           {{/polyline-layer}}
         {{/each}}
 
