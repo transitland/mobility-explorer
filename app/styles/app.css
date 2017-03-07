@@ -455,6 +455,7 @@ float:left;
 	outline-width: 2px;
 	background-color: #6ea0a4;
 	margin: 0;
+	border-radius: 0;
 }
 
 .btn-mapzen-alt-style {
@@ -604,5 +605,9 @@ span.timepicker-minute{
 	margin-top: 5px;
 	font-style: italic;
 	cursor: pointer;
+}
+
+.mapzen-logo {
+   background-image: url('https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png');
 }
 
