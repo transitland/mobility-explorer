@@ -84,21 +84,30 @@
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}
         {{/if}}
-        {{#if trace}}
+       <!--  {{#if trace}}
           {{#polyline-layer locations=model.gpxTrace.coordinates weight=2}}
           {{/polyline-layer}}
           {{#if showMapMatch}}
             {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=2 color="red"}}
             {{/polyline-layer}}
           {{/if}}
-        {{/if}}
-        <!-- {{#polyline-layer locations=testLine color="purple" weight=5}}
-        {{/polyline-layer}} -->
+        {{/if}} -->
         {{#each traceAttributeSegments as |segment|}}
-          {{#polyline-layer locations=segment.coordinates color=segment.color weight=3 opacity=1}}
+          {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
           {{/polyline-layer}}
         {{/each}}
-
+        {{#each traceAttributeSegments as |segment|}}
+          {{#polyline-layer locations=segment.coordinates color="white" weight=10 opacity=0.5}}
+          {{/polyline-layer}}
+        {{/each}}
+        {{#each traceAttributeSegments as |segment|}}
+          {{#polyline-layer locations=segment.coordinates color="white" weight=6 opacity=1}}
+          {{/polyline-layer}}
+        {{/each}}
+        {{#each traceAttributeSegments as |segment|}}
+          {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1}}
+          {{/polyline-layer}}
+        {{/each}}
       {{/leaflet-map}}
     </div>
   </div>

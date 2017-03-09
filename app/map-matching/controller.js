@@ -22,6 +22,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   trace: null,
   showMapMatch: false,
   showAttributes: null,
+  styleAttribute: "weighted_grade",
+  // styleAttribute: "speed",
   gpxPlaceholder: Ember.computed('trace', function(){
     if (this.get('trace')){
       return this.get('trace');
@@ -30,35 +32,100 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   edges: null,
-  // testLine: Ember.computed('trace', function(){
-  //   var shape = this.model.mapMatchRequests.attributesRequest.shape;
-  //   return L.PolylineUtil.decode(shape, 6);
-  //   // debugger;
-  // }),
+  
   traceAttributeSegments: Ember.computed('trace', function() {
     var points = L.PolylineUtil.decode(this.model.mapMatchRequests.attributesRequest.shape, 6);
     var edges = this.model.mapMatchRequests.attributesRequest.edges;
     var edgeCoordinates = [];
+    var attributeArray = [];
+    var attributeArraySum = 0;
 
     for (var i = 0; i < edges.length; i++){
+      var attribute;
+      // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
+      if (this.get('styleAttribute') === 'weighted_grade') {
+        var weightedGrade = edges[i].weighted_grade;
+        if (edges[i].max_upward_grade !== 0 && edges[i].max_downward_grade !== 0) {
+          attribute = edges[i].weighted_grade;
+        } else if (edges[i].max_upward_grade !== 0) {
+          attribute = edges[i].max_upward_grade;
+        } else if (edges[i].max_downward_grade !== 0) {
+          attribute = edges[i].max_downward_grade; 
+        }
+      } else {
+        // set attribute to the value for the selected attribute
+        attribute = edges[i][this.get('styleAttribute')];
+      }
+      // add attribute to attributeArray
+      attributeArray.push(attribute);
+      // increment attributeArraySum, to use to find average later
+      attributeArraySum = attributeArraySum + attribute;
+    }
+    // sort attributeArray in ascending order
+    attributeArray.sort(function(a,b){return a - b})
+    // find the minimum value in attributeArray
+    var attributeArrayMin = attributeArray[0]
+    // find the maximum value in attributeArray
+    var attributeArrayMax = attributeArray[attributeArray.length-1]
+    // find the average value for the attribute
+    var attributeArrayAverage = attributeArraySum / attributeArray.length;
+    // find the median value for the attribute (to use to test with different attributes)
+    var attributeArrayMedian = attributeArray[Math.floor(attributeArray.length/2)];
+
+    for (var i = 0; i < edges.length; i++){
+      // create coordinate array for segment
       var begin = edges[i].begin_shape_index;
       var end =  edges[i].end_shape_index;
       var pointsSlice = points.slice(begin, end+1);
-      var weightedGrade = edges[i].weighted_grade;
-      var weightedColor;
-      console.log(weightedGrade)
-      if (weightedGrade < 0) {
-        weightedColor = "green"
-      } else if ( 0 < weightedGrade){
-        weightedColor = "red"
+    
+      var mid = attributeArrayAverage;
+      // var mid = attributeArrayMedian;  
+      var min = attributeArrayMin;
+      var max = attributeArrayMax;
+    
+      // may want to set midpoing to zero for grade attributes
+      // if (this.get('styleAttribute') === "weighted_grade"){
+      //   mid = 0;
+      // }
+
+      var attr = edges[i][this.get('styleAttribute')];
+      
+      // find color
+        
+      // Hue is a degree on the color wheel; 0 (or 360) is red, 120 is green, 240 is blue. Numbers in between reflect different shades.
+      // Saturation is a percentage value; 100% is the full colour.
+      // Lightness is also a percentage; 0% is dark (black), 100% is light (white), and 50% is the average.
+
+      // HSL
+      // blue: 240
+      // green: 120
+      // yellow: 60
+      // red: 0 or 360
+
+      var range = attributeArrayMax - attributeArrayMin;
+      var percentage = (attr + attributeArrayMin) / range;
+
+      var highColor = 0;
+      var midColor = 120;
+      var lowColor = 280;
+  
+      // set color scale around midpoint
+      if (attr <= mid){
+        var hue = (percentage * (midColor - lowColor));
+        var color = 'hsl(' + hue + ', 100%, 50%)';
+      } else if (attr > mid) {
+        var hue = (percentage * (highColor - midColor));
+        var color =  'hsl(' + hue + ', 100%, 50%)';
       }
 
+      // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
       edgeCoordinates.push({
         coordinates: pointsSlice,
-        color: weightedColor,
-        id: i
+        color: color,
+        attribute: attribute
       })
     }
+  
     return edgeCoordinates;
   }),
  
@@ -84,7 +151,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 
     showAttributes(){
       console.log(this.get('traceAttributeSegments'))
-      debugger;
       if (this.get('showAttributes')){
         this.set('showAttributes', null);
       } else {
