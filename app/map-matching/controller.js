@@ -21,7 +21,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   zoom: 14,
   trace: null,
   showMapMatch: false,
-  showAttributes: null,
+  showAttributes: false,
   styleAttribute: "weighted_grade",
   // styleAttribute: "speed",
   gpxPlaceholder: Ember.computed('trace', function(){
@@ -32,9 +32,22 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   edges: null,
+  attributes: Ember.computed('trace', function(){
+    console.log(this.model.mapMatchRequests.attributesRequest.edges[0])
+    var attributes = this.model.mapMatchRequests.attributesRequest.edges[0];
+    var attributeArray = [];
+    for (var attribute in attributes){
+      attributeArray.push(attribute)
+    }
+    // return [this.model.mapMatchRequests.attributesRequest.edges[0]];
+    return attributeArray;
+  }),
   
   traceAttributeSegments: Ember.computed('trace', function() {
+    // attributes look different when using the trace_route response shape vs the trace_attribute response shape 
+    // (even though the trace_route response shape is what is sent into the trace_attribute request)
     var points = L.PolylineUtil.decode(this.model.mapMatchRequests.attributesRequest.shape, 6);
+    // var points = this.model.mapMatchRequests.decodedPolyline;
     var edges = this.model.mapMatchRequests.attributesRequest.edges;
     var edgeCoordinates = [];
     var attributeArray = [];
@@ -112,12 +125,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // set color scale around midpoint
       if (attr <= mid){
         var hue = (percentage * (midColor - lowColor));
-        var color = 'hsl(' + hue + ', 100%, 50%)';
+        var color = 'hsl(' + hue + ', 90%, 50%)';
       } else if (attr > mid) {
         var hue = (percentage * (highColor - midColor));
-        var color =  'hsl(' + hue + ', 100%, 50%)';
+        var color =  'hsl(' + hue + ', 90%, 50%)';
       }
-
+     
       // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
       edgeCoordinates.push({
         coordinates: pointsSlice,
@@ -125,7 +138,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         attribute: attribute
       })
     }
-  
     return edgeCoordinates;
   }),
  
@@ -139,21 +151,24 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('showMapMatch', false);
       this.set('center', trace.center);
       this.set('trace', trace.name);
+      this.set('showMapMatch', false);
+      this.set('showAttributes', false);
     },
     
     setShowMapMatch(){
       if (this.get('showMapMatch')){
         this.set('showMapMatch', false);
       } else {
+        this.set('showAttributes', false);
         this.set('showMapMatch', true);
       }
     },
 
     showAttributes(){
-      console.log(this.get('traceAttributeSegments'))
       if (this.get('showAttributes')){
         this.set('showAttributes', null);
       } else {
+        this.set('showMapMatch', false);
         this.set('showAttributes', true);
       }
     }

@@ -40,12 +40,23 @@
             {{/if}}
             <label for="radio-1">Show map match</label><br>
             <button {{action "showAttributes"}}>See Route Segment Attributes</button>
-            {{#if showAttributes}}
-              {{#each edges as |edge|}}
-                {{edge.weighted_grade}}
-              {{/each}}
-            {{/if}}
+            {{#power-select
+              options=attributes
+              placeholder="Select attribute"
+              searchPlaceholder="Type to filter..."
+              onchange=(action "setTrace")
+              as |attribute|
+            }}
+              {{attribute}}
+            {{/power-select}}
           {{/if}}
+          <table class="table">
+            {{#each attributes as |attribute|}}
+              <tr>
+                <th>{{attribute}}</th><td>item 1 item 1</td>
+              </tr>
+            {{/each}}
+          </table>
         </form>
     </div>
   </div>
@@ -84,30 +95,36 @@
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}
         {{/if}}
-       <!--  {{#if trace}}
-          {{#polyline-layer locations=model.gpxTrace.coordinates weight=2}}
+        {{#if trace}}
+          {{#polyline-layer locations=model.gpxTrace.coordinates weight=5}}
           {{/polyline-layer}}
           {{#if showMapMatch}}
-            {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=2 color="red"}}
-            {{/polyline-layer}}
+            {{#unless showAttributes}}
+              {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=5 color="red"}}
+              {{/polyline-layer}}
+            {{/unless}}
           {{/if}}
-        {{/if}} -->
-        {{#each traceAttributeSegments as |segment|}}
-          {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
-          {{/polyline-layer}}
-        {{/each}}
-        {{#each traceAttributeSegments as |segment|}}
-          {{#polyline-layer locations=segment.coordinates color="white" weight=10 opacity=0.5}}
-          {{/polyline-layer}}
-        {{/each}}
-        {{#each traceAttributeSegments as |segment|}}
-          {{#polyline-layer locations=segment.coordinates color="white" weight=6 opacity=1}}
-          {{/polyline-layer}}
-        {{/each}}
-        {{#each traceAttributeSegments as |segment|}}
-          {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1}}
-          {{/polyline-layer}}
-        {{/each}}
+        {{/if}}
+        {{#if showAttributes}}
+          {{#unless showMapMatch}}
+            {{#each traceAttributeSegments as |segment|}}
+              {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
+              {{/polyline-layer}}
+            {{/each}}
+            {{#each traceAttributeSegments as |segment|}}
+              {{#polyline-layer locations=segment.coordinates color="white" weight=10 opacity=0.5}}
+              {{/polyline-layer}}
+            {{/each}}
+            {{#each traceAttributeSegments as |segment|}}
+              {{#polyline-layer locations=segment.coordinates color="white" weight=6 opacity=1}}
+              {{/polyline-layer}}
+            {{/each}}
+            {{#each traceAttributeSegments as |segment|}}
+              {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1}}
+              {{/polyline-layer}}
+            {{/each}}
+          {{/unless}}
+        {{/if}}
       {{/leaflet-map}}
     </div>
   </div>
