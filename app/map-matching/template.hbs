@@ -23,41 +23,50 @@
     <div class="expanded-selection">
       <h4>Sample GPX Traces</h4>
       {{#power-select
-          options=model.gpxTraces
-          placeholder=gpxPlaceholder
-          searchPlaceholder="Type to filter..."
-          onchange=(action "setTrace")
-          as |trace|
-        }}
-          {{trace.name}}
-        {{/power-select}}
-        <form>
-          {{#if trace}}
-            {{#if showMapMatch}}
-              <input type="radio" id="radio-1" name="options" checked=showMapMatch {{action "setShowMapMatch" trace}}>
-            {{else}}
-              <input type="radio" id="radio-1" name="options" {{action "setShowMapMatch" trace}}>
-            {{/if}}
-            <label for="radio-1">Show map match</label><br>
-            <button {{action "showAttributes"}}>See Route Segment Attributes</button>
-            {{#power-select
-              options=attributes
-              placeholder="Select attribute"
-              searchPlaceholder="Type to filter..."
-              onchange=(action "setTrace")
-              as |attribute|
-            }}
-              {{attribute}}
-            {{/power-select}}
+        options=model.gpxTraces
+        placeholder=gpxPlaceholder
+        searchPlaceholder="Type to filter..."
+        onchange=(action "setTrace")
+        as |trace|
+      }}
+        {{trace.name}}
+      {{/power-select}}
+      <form>
+        {{#if trace}}
+          {{#if showMapMatch}}
+            <input type="radio" id="radio-1" name="options" checked=showMapMatch {{action "setShowMapMatch" trace}}>
+          {{else}}
+            <input type="radio" id="radio-1" name="options" {{action "setShowMapMatch" trace}}>
           {{/if}}
+          <label for="radio-1">Show map match</label><br>
+          <button {{action "showAttributes"}}>See Route Segment Attributes</button>
+          {{#power-select
+            options=attributes
+            placeholder="Select attribute"
+            searchPlaceholder="Type to filter..."
+            onchange=(action "setTrace")
+            as |attribute|
+          }}
+            {{attribute}}
+          {{/power-select}}
+        {{/if}}
+        <!-- {{#if hoverSegment}}
           <table class="table">
-            {{#each attributes as |attribute|}}
+              <tr>
+                <th>Hover</th><td>item 1 item 1</td>
+              </tr>
+          </table>
+        {{/if}} -->
+        {{#if selectedSegment}}
+          <table class="table">
+            {{#each segmentAttributes as | attribute |}}
               <tr>
                 <th>{{attribute}}</th><td>item 1 item 1</td>
               </tr>
             {{/each}}
           </table>
-        </form>
+        {{/if}}
+      </form>
     </div>
   </div>
 </div>
@@ -120,7 +129,7 @@
               {{/polyline-layer}}
             {{/each}}
             {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1}}
+              {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
               {{/polyline-layer}}
             {{/each}}
           {{/unless}}

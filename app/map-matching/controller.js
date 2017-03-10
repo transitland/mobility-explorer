@@ -33,7 +33,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   edges: null,
   attributes: Ember.computed('trace', function(){
-    console.log(this.model.mapMatchRequests.attributesRequest.edges[0])
     var attributes = this.model.mapMatchRequests.attributesRequest.edges[0];
     var attributeArray = [];
     for (var attribute in attributes){
@@ -41,6 +40,19 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
     // return [this.model.mapMatchRequests.attributesRequest.edges[0]];
     return attributeArray;
+  }),
+  hoverSegment: null,
+  selectedSegment: null,
+  segmentAttributes: Ember.computed('selectedSegment', function(){
+    var segments = this.get('selectedSegment').attributes;
+    var attributeArray = {};
+    for (var segment in segments){
+      attributeArray[segment] = segments[segment];
+    };
+    console.log(attributeArray)
+    return attributeArray;
+    // console.log(segments)
+    // return segments;
   }),
   
   traceAttributeSegments: Ember.computed('trace', function() {
@@ -90,7 +102,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var begin = edges[i].begin_shape_index;
       var end =  edges[i].end_shape_index;
       var pointsSlice = points.slice(begin, end+1);
-    
+      var attributes = edges[i];    
       var mid = attributeArrayAverage;
       // var mid = attributeArrayMedian;  
       var min = attributeArrayMin;
@@ -130,16 +142,21 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         var hue = (percentage * (highColor - midColor));
         var color =  'hsl(' + hue + ', 90%, 50%)';
       }
-     
       // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
       edgeCoordinates.push({
         coordinates: pointsSlice,
         color: color,
-        attribute: attribute
+        attribute: attribute,
+        attributes: attributes
       })
     }
     return edgeCoordinates;
   }),
+
+// if attribute style selected, show key for colors
+// if hoverSegment, show attribute value for selected attribute
+// if no selected style, color segment, provide some detail on hover
+// onclick for all, show full attribute table
  
   actions: {
     updatebbox(e) {
@@ -171,6 +188,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('showMapMatch', false);
         this.set('showAttributes', true);
       }
-    }
+    },
+
+    selectSegment(segment){
+      this.set('hoverSegment', segment);
+    },
+    unselectSegment(segment){
+      this.set('hoverSegment', null);
+    },
+    setSegment(segment){
+      this.set('selectedSegment', segment);      
+    },
   }
 });

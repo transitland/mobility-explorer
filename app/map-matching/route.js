@@ -117,11 +117,11 @@ export default Ember.Route.extend(setLoading, {
 			gpxTrace.coordinates.map(function(coord){
 				routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
 			});
-
 			// trace_route request
 			mapMatchRequests = Ember.$.ajax({ 
 				type:"POST", 
-				url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
+				url:'http://valhalla.dev.mapzen.com/trace_route?api_key=valhalla-t_16n1c&', 
+				// url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
 				data:JSON.stringify(routeJson) 
 			})
 			.then(function(response){
@@ -137,7 +137,8 @@ export default Ember.Route.extend(setLoading, {
 				};
 				var attributesRequest = Ember.$.ajax({
 					type: "POST",
-					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
+					url:'http://valhalla.dev.mapzen.com/trace_attributes?api_key=valhalla-t_16n1c&',
+					// url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
 					data: JSON.stringify(attributesJson)
 				});
 				return Ember.RSVP.hash({
