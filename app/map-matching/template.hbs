@@ -59,9 +59,9 @@
         {{/if}} -->
         {{#if selectedSegment}}
           <table class="table">
-            {{#each segmentAttributes as | attribute |}}
+            {{#each segmentAttributes as | segment |}}
               <tr>
-                <th>{{attribute}}</th><td>item 1 item 1</td>
+                <th>{{segment.attribute}}</th><td>{{segment.value}}</td>
               </tr>
             {{/each}}
           </table>

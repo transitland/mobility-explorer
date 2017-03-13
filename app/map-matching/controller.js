@@ -45,14 +45,11 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   selectedSegment: null,
   segmentAttributes: Ember.computed('selectedSegment', function(){
     var segments = this.get('selectedSegment').attributes;
-    var attributeArray = {};
+    var attributeArray = [];
     for (var segment in segments){
-      attributeArray[segment] = segments[segment];
+      attributeArray.push({"attribute":segment, "value":segments[segment]})
     };
-    console.log(attributeArray)
     return attributeArray;
-    // console.log(segments)
-    // return segments;
   }),
   
   traceAttributeSegments: Ember.computed('trace', function() {
