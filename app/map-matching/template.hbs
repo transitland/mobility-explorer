@@ -39,15 +39,15 @@
             <input type="radio" id="radio-1" name="options" {{action "setShowMapMatch" trace}}>
           {{/if}}
           <label for="radio-1">Show map match</label><br>
-          <button {{action "showAttributes"}}>See Route Segment Attributes</button>
           {{#power-select
+            selected=style_attribute
             options=attributes
-            placeholder="Select attribute"
+            placeholder="Style route by attribute"
             searchPlaceholder="Type to filter..."
-            onchange=(action "setTrace")
+            onchange=(action "styleByAttribute")
             as |attribute|
           }}
-            {{attribute}}
+            {{attribute.display_name}}
           {{/power-select}}
         {{/if}}
         <!-- {{#if hoverSegment}}
@@ -108,13 +108,13 @@
           {{#polyline-layer locations=model.gpxTrace.coordinates weight=5}}
           {{/polyline-layer}}
           {{#if showMapMatch}}
-            {{#unless showAttributes}}
+            {{#unless selectedAttribute}}
               {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=5 color="red"}}
               {{/polyline-layer}}
             {{/unless}}
           {{/if}}
         {{/if}}
-        {{#if showAttributes}}
+        {{#if selectedAttribute}}
           {{#unless showMapMatch}}
             {{#each traceAttributeSegments as |segment|}}
               {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
