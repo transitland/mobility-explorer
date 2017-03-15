@@ -29,7 +29,7 @@
         onchange=(action "setTrace")
         as |trace|
       }}
-        {{trace.name}}
+        {{trace.display_name}}
       {{/power-select}}
       <form>
         {{#if trace}}
@@ -40,8 +40,7 @@
           {{/if}}
           <label for="radio-1">Show map match</label><br>
           {{#power-select
-            selected=style_attribute
-            options=attributes
+            options=attributesForSelection
             placeholder="Style route by attribute"
             searchPlaceholder="Type to filter..."
             onchange=(action "styleByAttribute")
@@ -50,13 +49,6 @@
             {{attribute.display_name}}
           {{/power-select}}
         {{/if}}
-        <!-- {{#if hoverSegment}}
-          <table class="table">
-              <tr>
-                <th>Hover</th><td>item 1 item 1</td>
-              </tr>
-          </table>
-        {{/if}} -->
         {{#if selectedSegment}}
           <table class="table">
             {{#each segmentAttributes as | segment |}}

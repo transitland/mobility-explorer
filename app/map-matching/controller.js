@@ -31,7 +31,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   edges: null,
-  attributes: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
+  attributesForSelection: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
   hoverSegment: null,
   selectedSegment: null,
   segmentAttributes: Ember.computed('selectedSegment', function(){
@@ -159,13 +159,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
 
     setTrace(trace){
-      this.set('trace', trace.name);
-      // this.set('trace', null);
+      this.set('trace', null);
+      this.set('selectedSegment', null);      
       this.set('showMapMatch', false);
       this.set('style_attribute', null);
-      this.set('selected_attribute', null);
+      this.set('selectedAttribute', null);
+      this.set('trace', trace.name);
       this.set('center', trace.center);
-     
+      // debugger;
     },
     
     setShowMapMatch(){
@@ -179,13 +180,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
 
     styleByAttribute(attribute){
+      // debugger;
       this.set('showMapMatch', false);
       this.set('selectedAttribute', null);
+      this.set('selectedSegment', null);      
       this.set('style_attribute', null);
       this.set('selectedAttribute', attribute.attribute);
       this.set('style_attribute', attribute.display_name);
-      console.log(attribute.display_name);
-      console.log(this.get('style_attribute'));
+      // debugger;
     },
 
     selectSegment(segment){
