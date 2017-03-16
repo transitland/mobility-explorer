@@ -5,9 +5,11 @@
     </div>
   </div>
 	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
-	{{#unless textboxIsClosed}}
-    {{text-box route="index" action="setTextBoxClosed"}}
-  {{/unless}}
+  {{#if media.isMobile}}
+		{{#unless textboxIsClosed}}
+	    {{text-box route="index" action="setTextBoxClosed"}}
+	  {{/unless}}
+	{{/if}}
   {{sidebar-title-transitland}}
 	<div class="btn-group-vertical" role="group" >
 
@@ -218,75 +220,83 @@
         {{/power-select}}
       </div>
 		</div>
-			{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-					{{#if onestop_id}}
-				  	{{#if (eq style_routes_by "mode")}}
-							{{#each model.routes as |route|}}
-								  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-									{{/geojson-layer}}
-							{{/each}}
-						{{else if (eq style_routes_by "operator")}}
-							{{#each model.routes as |route|}}
-								{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+		<div class="nonmobile-intro-textbox">
+      {{#unless media.isMobile}}
+        {{#unless textboxIsClosed}}
+          {{text-box route="index" action="setTextBoxClosed"}}
+        {{/unless}}
+      {{/unless}}
+    </div>
+
+		{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+				{{#if onestop_id}}
+			  	{{#if (eq style_routes_by "mode")}}
+						{{#each model.routes as |route|}}
+							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
 								{{/geojson-layer}}
-							{{/each}}
-						{{else}}
-							{{#each model.routes as |route|}}
-									{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-									{{/geojson-layer}}
-							{{/each}}
-						{{/if}}
-						{{#if displayStops}}
-							{{#each model.stops.features as |stop|}}
-					  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
-					  		{{/marker-layer}}
-				  		{{/each}}
-				  	{{/if}}
-				  {{else}}
+						{{/each}}
+					{{else if (eq style_routes_by "operator")}}
+						{{#each model.routes as |route|}}
+							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+							{{/geojson-layer}}
+						{{/each}}
+					{{else}}
+						{{#each model.routes as |route|}}
+								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{/if}}
+					{{#if displayStops}}
+						{{#each model.stops.features as |stop|}}
+				  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
+				  		{{/marker-layer}}
+			  		{{/each}}
+			  	{{/if}}
+			  {{else}}
+					{{#if (eq style_routes_by "mode")}}
+						{{#each model.routes as |route|}}
+							  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{else if (eq style_routes_by "operator")}}
+						{{#each model.routes as |route|}}
+							{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+								{{/geojson-layer}}
+						{{/each}}
+					{{else if operated_by}}
 						{{#if (eq style_routes_by "mode")}}
 							{{#each model.routes as |route|}}
 								  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 									{{/geojson-layer}}
 							{{/each}}
-						{{else if (eq style_routes_by "operator")}}
-							{{#each model.routes as |route|}}
-								{{#geojson-layer geoJSON=route.operator_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-									{{/geojson-layer}}
-							{{/each}}
-						{{else if operated_by}}
-							{{#if (eq style_routes_by "mode")}}
-								{{#each model.routes as |route|}}
-									  {{#geojson-layer geoJSON=route.mode_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{else}}
-								{{#each model.routes as |route|}}
-										{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
-										{{/geojson-layer}}
-								{{/each}}
-							{{/if}}
 						{{else}}
 							{{#each model.routes as |route|}}
-									{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+									{{#geojson-layer geoJSON=route.operator_focus_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
 									{{/geojson-layer}}
 							{{/each}}
 						{{/if}}
-						{{#if displayStops}}
-							{{#each model.stops.features as |stop|}}
-					  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=true riseOnHover=true riseOffset=1000}}
-			  				{{/marker-layer}}
-				  		{{/each}}
-				  	{{/if}}
-				  	{{#each model.stops as |stop|}}
-				  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
-				  		{{/marker-layer}}
+					{{else}}
+						{{#each model.routes as |route|}}
+								{{#geojson-layer geoJSON=route.default_as_geojson_with_outline onEachFeature=(action "onEachFeature") onMouseover=(action "selectRoute") onMouseout=(action "unselectRoute") onClick=(action "setOnestopId" route)}}
+								{{/geojson-layer}}
 						{{/each}}
-				  {{/if}}
-				  {{#if pin}}
-            {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-            {{/marker-layer}}
-          {{/if}}
+					{{/if}}
+					{{#if displayStops}}
+						{{#each model.stops.features as |stop|}}
+				  		{{#marker-layer location=stop.location icon=stop.stop_icon draggable=false clickable=true riseOnHover=true riseOffset=1000}}
+		  				{{/marker-layer}}
+			  		{{/each}}
+			  	{{/if}}
+			  	{{#each model.stops as |stop|}}
+			  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
+			  		{{/marker-layer}}
+					{{/each}}
+			  {{/if}}
+			  {{#if pin}}
+          {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+          {{/marker-layer}}
+        {{/if}}
 			{{/leaflet-map}}
 	</div>
 </div>

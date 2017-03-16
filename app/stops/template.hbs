@@ -5,9 +5,11 @@
     </div>
   </div>
 	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
-	{{#unless textboxIsClosed}}
-    {{text-box route="index" action="setTextBoxClosed"}}
-  {{/unless}}
+  {{#if media.isMobile}}
+		{{#unless textboxIsClosed}}
+	    {{text-box route="index" action="setTextBoxClosed"}}
+	  {{/unless}}
+	 {{/if}}
 	{{sidebar-title-transitland}}
 	<div class="btn-group-vertical" role="group" >
 		{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
@@ -80,6 +82,14 @@
         {{/power-select}}
       </div>
     </div>
+    <div class="nonmobile-intro-textbox">
+      {{#unless media.isMobile}}
+        {{#unless textboxIsClosed}}
+          {{text-box route="index" action="setTextBoxClosed"}}
+        {{/unless}}
+      {{/unless}}
+    </div>
+    
 	  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 			{{#if served_by}}

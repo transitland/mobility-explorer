@@ -26,7 +26,7 @@ export default Ember.Mixin.create({
 	}),
 	place: null,
   textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
-    if (localStorage.getItem('mobility-explorer-show-intro') === "true"){
+    if (localStorage.getItem('mobility-explorer-hide-intro') === "true"){
         return true;
     } else {
       return this.get('closeTextbox').get('textboxIsClosed');

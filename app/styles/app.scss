@@ -80,7 +80,7 @@ button {
 }
 
 .site-intro {
-  background-color: $explorer-bluegreen;
+  background-color: $mapzen-blue;
   color: $white;
   width: 100%;
   font-size: 16px;
@@ -88,6 +88,14 @@ button {
   /*margin-top: 50px;*/
   padding: 10px;
   z-index: 3;
+
+  @media (min-width: 992px) {
+    position: absolute;
+    margin-top: 30%;
+    margin-left: 25%;
+    width: 50%;
+    border: 2px solid $white;
+  }
 
   a {
     color: $white;
