@@ -26,7 +26,11 @@ export default Ember.Mixin.create({
 	}),
 	place: null,
   textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
-    return this.get('closeTextbox').get('textboxIsClosed');
+    if (localStorage.getItem('mobility-explorer-hide-intro') === "true"){
+        return true;
+    } else {
+      return this.get('closeTextbox').get('textboxIsClosed');
+    }
   }),
   searchbarContent: Ember.computed(function(){
     if (this.media.isMobile){

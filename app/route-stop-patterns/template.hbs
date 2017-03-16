@@ -5,9 +5,11 @@
     </div>
   </div>
 	{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null)}}<h2>Mobility Explorer</h2>{{/link-to}}
-	{{#unless textboxIsClosed}}
-    {{text-box route="index" action="setTextBoxClosed"}}
-  {{/unless}}
+  {{#if media.isMobile}}
+		{{#unless textboxIsClosed}}
+	    {{text-box route="index" action="setTextBoxClosed"}}
+	  {{/unless}}
+	{{/if}}
 	{{sidebar-title-transitland}}
 	<div class="btn-group-vertical" role="group" >
 	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
@@ -103,6 +105,13 @@
 		      {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
 		    {{/power-select}}
 		  </div>
+		  <div class="nonmobile-intro-textbox">
+        {{#unless media.isMobile}}
+          {{#unless textboxIsClosed}}
+            {{text-box route="index" action="setTextBoxClosed"}}
+          {{/unless}}
+        {{/unless}}
+      </div>
 			{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 
