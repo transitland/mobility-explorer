@@ -32,6 +32,17 @@
       }}
         {{trace.display_name}}
       {{/power-select}}
+      <form class="gpx-upload">
+        <button>Upload your own GPX file</button>
+        <!-- <div class="upload">
+            <input type="file">
+        </div> -->
+        <label class="custom-file">
+          <input type="file" id="gpxFileUpload">
+        </label><button {{action "uploadGpx"}}>submit</button>
+      </form>
+      {{#if uploadSelected}}
+      {{/if}}
       <form>
         {{#if trace}}
           {{#if showMapMatch}}

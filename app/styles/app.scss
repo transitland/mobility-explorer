@@ -617,3 +617,17 @@ td.day.active.today:hover {
   margin-top: 5px;
   text-align: right;
 }
+
+.upload{
+  background-color: $white;
+  margin: 15px;
+  padding: 5px;
+}
+
+.gpx-upload{
+  background-color: $white;
+  button{
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+}

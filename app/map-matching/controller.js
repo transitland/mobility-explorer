@@ -199,5 +199,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     setSegment(segment){
       this.set('selectedSegment', segment);      
     },
+    uploadGpx(){
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        console.log("congrats")
+        this.set('trace', "user_upload")
+      } else {
+       alert('Sorry, this functionality is not fully supported in your browser.');
+      }
+    }
   }
 });
