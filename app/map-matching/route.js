@@ -83,7 +83,14 @@ export default Ember.Route.extend(setLoading, {
 					"filename": "mountain-bike-3.gpx",
 					"costing": "bicycle",
 					"center": [37.399614, -122.304894]
-				}
+				},
+				{
+					"name": "user_upload",
+					"display_name": "user upload",
+					"filename": "half-marathon.gpx",
+					"costing": "pedestrian",
+					"center": [37.787859, -122.454815]
+				},
 			];
 			return gpxTraces;
 	},
