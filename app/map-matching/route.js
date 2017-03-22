@@ -17,12 +17,8 @@ export default Ember.Route.extend(setLoading, {
 		}
 	},
 
+
 	setupController: function (controller, model) {
-		if (controller.get('trace') === "user_upload"){
-			controller.set('trace', null);
-			// this.set('trace', null);
-			// use transitionTo to transition to mapmatching route?
-		}
 		if (controller.get('bbox') !== null){
 			var coordinateArray = [];
 			var bboxString = controller.get('bbox');
@@ -47,59 +43,57 @@ export default Ember.Route.extend(setLoading, {
 
 		}
 		controller.set('leafletBbox', controller.get('bbox'));
-		this._super(controller, model);
+			this._super(controller, model);
+		},
+
+
+		fixtures: function() {
+			let gpxTraces = [
+				{
+					"name": "half-marathon",
+					"display_name": "half marathon",
+					"filename": "half-marathon.gpx",
+					"costing": "pedestrian",
+					"center": [37.787859, -122.454815]
+				},
+				{
+					"name": "short-run",
+					"display_name": "short run",
+					"filename": "short-run.gpx",
+					"costing": "pedestrian",
+					"center": [37.7546595, -122.5091065]
+				},
+				{
+					"name": "mountain-bike-1",
+					"display_name": "mountain bike 1",
+					"filename": "mountain-bike-1.gpx",
+					"costing": "bicycle",
+					"center": [37.399614, -122.304894]
+				},
+				{
+					"name": "mountain-bike-2",
+					"display_name": "mountain bike 2",
+					"filename": "mountain-bike-2.gpx",
+					"costing": "bicycle",
+					"center": [37.399614, -122.304894]
+				},
+				{
+					"name": "mountain-bike-3",
+					"display_name": "mountain bike 3",
+					"filename": "mountain-bike-3.gpx",
+					"costing": "bicycle",
+					"center": [37.399614, -122.304894]
+				},
+				{
+					"name": "user_upload",
+					"display_name": "user upload",
+					"filename": "",
+					"costing": "pedestrian",
+					"center": [37.787859, -122.454815]
+				}
+			];
+			return gpxTraces;
 	},
-
-
-	fixtures: function() {
-		let gpxTraces = [
-			{
-				"name": "half-marathon",
-				"display_name": "half marathon",
-				"filename": "half-marathon.gpx",
-				"costing": "pedestrian",
-				"center": [37.787859, -122.454815]
-			},
-			{
-				"name": "short-run",
-				"display_name": "short run",
-				"filename": "short-run.gpx",
-				"costing": "pedestrian",
-				"center": [37.7546595, -122.5091065]
-			},
-			{
-				"name": "mountain-bike-1",
-				"display_name": "mountain bike 1",
-				"filename": "mountain-bike-1.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "mountain-bike-2",
-				"display_name": "mountain bike 2",
-				"filename": "mountain-bike-2.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "mountain-bike-3",
-				"display_name": "mountain bike 3",
-				"filename": "mountain-bike-3.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "user_upload",
-				"display_name": "user upload",
-				"filename": "mountain-bike-3.gpx",
-				"costing": "pedestrian",
-				"center": [37.787859, -122.454815]
-			}
-		];
-		return gpxTraces;
-	},
-
-
 
 	model: function(params){
 		this.store.unloadAll('data/transitland/operator');
@@ -111,46 +105,22 @@ export default Ember.Route.extend(setLoading, {
 		var gpxTrace;
 		var mapMatchRequests = null;
 
-		gpxTrace.coordinates = [];
-
-		if (document.getElementById('gpxFileUpload') !== null){
-			gpxTrace = fixtures[5];
-			debugger;
-			var reader = new FileReader();
-	  	var uploadedTrace = document.getElementById('gpxFileUpload').files[0];
-			reader.onload = function(e){
-				var str = e.target.result;
-				var gpxObj;
-				xml2js.parseString(str, function (err, result){
-					gpxObj = result.gpx.trk;
-				});
-				gpxObj[0].trkseg[0].trkpt.map(function(coord){
-					gpxTrace.coordinates.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
-				});
-				return gpxTrace;
-			}		
-			reader.readAsText(uploadedTrace);
-
-		} else {
-			for (var i = 0; i < fixtures.length; i++){
-				if (fixtures[i].name === params.trace){
-					gpxTrace = fixtures[i];
-				}
+		for (var i = 0; i < fixtures.length; i++){
+			if (fixtures[i].name === params.trace){
+				gpxTrace = fixtures[i];
 			}
 		}
 
-		
-
-		// __________________________
-		
-
 		if (gpxTrace) {
+
 			mapMatchRequests =  Ember.$.ajax({
 				type: "GET",
 				url: 'assets/traces/' + gpxTrace.filename,
 
 			}).then(function(response){
 				// look into xpath to query xml dom
+				
+
 				var s = new XMLSerializer();
 				var str = s.serializeToString(response);
 				gpxTrace.coordinates = [];

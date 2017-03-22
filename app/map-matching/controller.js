@@ -201,7 +201,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     uploadGpx(){
       if (window.File && window.FileReader && window.FileList && window.Blob) {
-        console.log("congrats")
         this.set('trace', "user_upload")
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
