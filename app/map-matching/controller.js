@@ -46,7 +46,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return false;
     }
   }),
-  
+
   traceAttributeSegments: Ember.computed('trace', function() {
     if (this.get('trace')){
       // attributes look different when using the trace_route response shape vs the trace_attribute response shape 
@@ -167,7 +167,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
       this.set('center', trace.center);
-      // debugger;
     },
     
     setShowMapMatch(){
@@ -181,14 +180,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
 
     styleByAttribute(attribute){
-      // debugger;
       this.set('showMapMatch', false);
       this.set('selectedAttribute', null);
       this.set('selectedSegment', null);      
       this.set('style_attribute', null);
       this.set('selectedAttribute', attribute.attribute);
       this.set('style_attribute', attribute.display_name);
-      // debugger;
     },
 
     selectSegment(segment){
@@ -202,7 +199,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     uploadGpx(){
       if (window.File && window.FileReader && window.FileList && window.Blob) {
-        this.set('trace', "user_upload");
+        this.set('trace', 'user_upload');
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
       }
