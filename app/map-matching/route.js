@@ -87,6 +87,7 @@ export default Ember.Route.extend(setLoading, {
 	},
 
 	getLocalGPX: function(gpxTrace) {
+		// might want to use RSVP.promise here instead of RSVP.defer
 		var deferred = Ember.RSVP.defer();
 		var element = document.getElementById('gpxFileUpload');
 		var uploadedTrace = element.files[0];
@@ -102,7 +103,6 @@ export default Ember.Route.extend(setLoading, {
 	},
 
 	getRemoteGPX: function(gpxTrace) {
-		// this is the part that needs to change; it should use local file instead of doing an ajax request
 		return Ember.$.ajax({
 			type: "GET",
 			url: 'assets/traces/' + gpxTrace.filename,
@@ -123,6 +123,11 @@ export default Ember.Route.extend(setLoading, {
 	},
 
 	model: function(params){
+		if (document.getElementById('gpxFileUpload') === null){
+			if (params.trace === "user_upload"){
+				this.transitionTo('map-matching',  {queryParams: {trace: null, style_attribute: null}});
+			}
+		};
 		this.store.unloadAll('data/transitland/operator');
 		this.store.unloadAll('data/transitland/stop');
 		this.store.unloadAll('data/transitland/route');
@@ -142,19 +147,18 @@ export default Ember.Route.extend(setLoading, {
 		} else if (element != null) {
 			var uploadedTrace = element.files[0];
 			if (uploadedTrace != null) {
-				gpxTrace = {
+				fixtures.push({
 					"name": "user_upload",
 					"display_name": "user upload",
 					"filename": "",
 					"costing": "pedestrian",
 					"center": [37.787859, -122.454815]
-				};
+				});
+				gpxTrace = fixtures[5]
 			}
 		}
 
 		if (gpxTrace) {
-			// the rest should be the same
-			// mapMatchRequests.then(function(response) {
 			var mapMatchRequests = this.getGPXTrace(gpxTrace).then(function(response){
 				gpxTrace.coordinates = [];
 				var gpxObj;
@@ -187,7 +191,9 @@ export default Ember.Route.extend(setLoading, {
 				});
 			})
 			.then(function(response){
+				// encodedPolyline needed for trace_attribute request
 				var encodedPolyline = response.trip.legs[0].shape;
+				// decodedPolyline needed for rendering trace_route response on map
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 
 				// Build the trace_attribute request
@@ -213,7 +219,10 @@ export default Ember.Route.extend(setLoading, {
 			gpxTraces: fixtures,
 			gpxTrace: gpxTrace,
 			mapMatchRequests: mapMatchRequests
-		}).then(function(r) { console.log(r); return r });
+		})
+		// .then(function(r){
+		// 	return r 
+		// });
 	},
 
 	actions: {

@@ -46,13 +46,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return false;
     }
   }),
-
+  // check to activate submit button
+  userUploadFilePresent: Ember.computed('trace', function(){
+    if (this.get('trace') === "user_upload"){
+      return true
+    }
+  }),
+  // 
   traceAttributeSegments: Ember.computed('trace', function() {
     if (this.get('trace')){
-      // attributes look different when using the trace_route response shape vs the trace_attribute response shape 
-      // (even though the trace_route response shape is what is sent into the trace_attribute request)
       var points = L.PolylineUtil.decode(this.model.mapMatchRequests.attributesRequest.shape, 6);
-      // var points = this.model.mapMatchRequests.decodedPolyline;
       var edges = this.model.mapMatchRequests.attributesRequest.edges;
       var selectedAttribute = this.get('selectedAttribute');
       var edgeCoordinates = [];
@@ -167,6 +170,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
       this.set('center', trace.center);
+      debugger;
     },
     
     setShowMapMatch(){
@@ -200,6 +204,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     uploadGpx(){
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
+        this.set('selectedAttribute', null);
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
       }
