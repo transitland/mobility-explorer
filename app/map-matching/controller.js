@@ -20,6 +20,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   zoom: 14,
   trace: null,
+  uploading: false,
   showMapMatch: false,
   style_attribute: null,
   selectedAttribute: null,
@@ -160,38 +161,53 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var newbox = e.target.getBounds();
       this.set('bbox', newbox.toBBoxString());
     },
-
     setTrace(trace){
       this.set('trace', null);
-      document.getElementById('gpxFileUpload').value = "";
+      // debugger;
+      if (document.getElementById('gpxFileUpload')){
+        document.getElementById('gpxFileUpload').value = "";
+      };
       this.set('selectedSegment', null);      
       this.set('showMapMatch', false);
       this.set('style_attribute', null);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
       this.set('center', trace.center);
-      debugger;
     },
-    
+    setUploading(){
+      this.toggleProperty('uploading');
+    },
     setShowMapMatch(){
       if (this.get('showMapMatch')){
         this.set('showMapMatch', false);
+        this.set('selectedAttribute', null);
+        this.set('selectedSegment', null);      
+        this.set('style_attribute', null);
       } else {
         this.set('style_attribute', null);
         this.set('selectedAttribute', null);
         this.set('showMapMatch', true);
       }
     },
-
     styleByAttribute(attribute){
-      this.set('showMapMatch', false);
-      this.set('selectedAttribute', null);
-      this.set('selectedSegment', null);      
-      this.set('style_attribute', null);
-      this.set('selectedAttribute', attribute.attribute);
-      this.set('style_attribute', attribute.display_name);
+      if (this.get('style_attribute') === attribute){
+        this.set('selectedAttribute', null);
+        this.set('selectedSegment', null);      
+        this.set('style_attribute', null);
+      } else {
+        this.set('selectedAttribute', null);
+        this.set('selectedSegment', null);      
+        this.set('style_attribute', null);
+        this.set('style_attribute', attribute);
+        var attributesForSelection = this.get('attributesForSelection');
+        for (var i = 0; i < attributesForSelection.length; i++){
+          if (attributesForSelection[i].display_name === attribute){
+            this.set('selectedAttribute', attributesForSelection[i].attribute);
+            console.log(attribute, attributesForSelection[i].attribute)
+          }
+        }   
+      }
     },
-
     selectSegment(segment){
       this.set('hoverSegment', segment);
     },
@@ -205,6 +221,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
         this.set('selectedAttribute', null);
+        this.set('style_attribute', null);
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
       }
