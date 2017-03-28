@@ -1,5 +1,4 @@
-@import
-'ember-power-select';
+@import 'ember-power-select';
 
 $mapzen-red: #d4645c;
 $mapzen-blue: #6ea0a4;
@@ -59,17 +58,17 @@ button {
   border: none;
   color: $white;
   padding: 10px;
-  /*@media screen and (orientation:portrait){
-    margin-top: 50%;
-    margin-bottom: none;
-  }*/
+  
 }
+
+
 
 .col-md-8 {
   @media screen and (orientation:portrait){
     padding: 0;
   }
 }
+
 
 .isochrone-caption a {
   color: $explorer-bluegreen;
@@ -616,4 +615,50 @@ td.day.active.today:hover {
   font-style: italic;
   margin-top: 5px;
   text-align: right;
+}
+
+.upload{
+  background-color: $white;
+}
+
+.gpx-upload{
+  background-color: $white;
+}
+
+.upload-options{
+  margin: 10px;
+  button{
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}
+
+.run-mapmatch {
+    background-color: darkgreen;
+  }
+
+.remove-mapmatch {
+  background-color: $mapzen-dark-red;
+}
+
+.fa-times{
+  margin-right: 15px;
+}
+
+.upload-button{
+  color: $white;
+  background-color: $mapzen-blue;
+  margin: 0;
+}
+
+.custom-class label {
+  background: #34495e;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+}
+.x-file--input:focus + label,
+.x-file--input + label:hover {
+  /* Apply your own hover state */
+  background-color: #2C3E50;
 }

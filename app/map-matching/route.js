@@ -10,13 +10,8 @@ export default Ember.Route.extend(setLoading, {
 		trace: {
 			replace: true,
 			refreshModel: true
-		},
-		style_attribute: {
-			replace: true,
-			refreshModel: true
 		}
 	},
-
 
 	setupController: function (controller, model) {
 		if (controller.get('bbox') !== null){
@@ -43,52 +38,92 @@ export default Ember.Route.extend(setLoading, {
 
 		}
 		controller.set('leafletBbox', controller.get('bbox'));
-			this._super(controller, model);
-		},
+		this._super(controller, model);
+	},
 
+	fixtures: function() {
+		let gpxTraces = [
+			{
+				"name": "half-marathon",
+				"display_name": "half marathon",
+				"filename": "half-marathon.gpx",
+				"costing": "pedestrian",
+				"center": [37.787859, -122.454815]
+			},
+			{
+				"name": "short-run",
+				"display_name": "short run",
+				"filename": "short-run.gpx",
+				"costing": "pedestrian",
+				"center": [37.7546595, -122.5091065]
+			},
+			{
+				"name": "mountain-bike-1",
+				"display_name": "mountain bike 1",
+				"filename": "mountain-bike-1.gpx",
+				"costing": "bicycle",
+				"center": [37.399614, -122.304894]
+			},
+			{
+				"name": "mountain-bike-2",
+				"display_name": "mountain bike 2",
+				"filename": "mountain-bike-2.gpx",
+				"costing": "bicycle",
+				"center": [37.399614, -122.304894]
+			},
+			{
+				"name": "mountain-bike-3",
+				"display_name": "mountain bike 3",
+				"filename": "mountain-bike-3.gpx",
+				"costing": "bicycle",
+				"center": [37.399614, -122.304894]
+			}
+		];
+		return gpxTraces;
+	},
 
-		fixtures: function() {
-			let gpxTraces = [
-				{
-					"name": "half-marathon",
-					"display_name": "half marathon",
-					"filename": "half-marathon.gpx",
-					"costing": "pedestrian",
-					"center": [37.787859, -122.454815]
-				},
-				{
-					"name": "short-run",
-					"display_name": "short run",
-					"filename": "short-run.gpx",
-					"costing": "pedestrian",
-					"center": [37.7546595, -122.5091065]
-				},
-				{
-					"name": "mountain-bike-1",
-					"display_name": "mountain bike 1",
-					"filename": "mountain-bike-1.gpx",
-					"costing": "bicycle",
-					"center": [37.399614, -122.304894]
-				},
-				{
-					"name": "mountain-bike-2",
-					"display_name": "mountain bike 2",
-					"filename": "mountain-bike-2.gpx",
-					"costing": "bicycle",
-					"center": [37.399614, -122.304894]
-				},
-				{
-					"name": "mountain-bike-3",
-					"display_name": "mountain bike 3",
-					"filename": "mountain-bike-3.gpx",
-					"costing": "bicycle",
-					"center": [37.399614, -122.304894]
-				}
-			];
-			return gpxTraces;
+	getLocalGPX: function(gpxTrace) {
+		// might want to use RSVP.promise here instead of RSVP.defer
+		var deferred = Ember.RSVP.defer();
+		var element = document.getElementById('gpxFileUpload');
+		var uploadedTrace = element.files[0];
+		var reader = new FileReader();
+		reader.onload = function(e) {
+		  deferred.resolve(e.target.result);
+		};
+		reader.onerror = function(e) {
+			deferred.reject(this);
+		}
+		reader.readAsText(uploadedTrace);
+		return deferred.promise;
+	},
+
+	getRemoteGPX: function(gpxTrace) {
+		return Ember.$.ajax({
+			type: "GET",
+			url: 'assets/traces/' + gpxTrace.filename,
+		}).then(function(response) {
+			// look into xpath to query xml dom
+			var s = new XMLSerializer();
+			var str = s.serializeToString(response);
+			return str;
+		})
+	},
+
+	getGPXTrace: function(gpxTrace) {
+		if (gpxTrace.name == 'user_upload') {
+			return this.getLocalGPX(gpxTrace);
+		} else {
+			return this.getRemoteGPX(gpxTrace);	
+		}
 	},
 
 	model: function(params){
+		if (document.getElementById('gpxFileUpload') === null){
+			if (params.trace === "user_upload"){
+				this.transitionTo('map-matching',  {queryParams: {trace: null}});
+			}
+		};
 		this.store.unloadAll('data/transitland/operator');
 		this.store.unloadAll('data/transitland/stop');
 		this.store.unloadAll('data/transitland/route');
@@ -98,37 +133,40 @@ export default Ember.Route.extend(setLoading, {
 		var gpxTrace;
 		var mapMatchRequests = null;
 
-		for (var i = 0; i < fixtures.length; i++){
-			if (fixtures[i].name === params.trace){
-				gpxTrace = fixtures[i];
+		var element = document.getElementById('gpxFileUpload');
+		if (params.trace != null && params.trace != 'user_upload') {
+			for (var i = 0; i < fixtures.length; i++){
+				if (fixtures[i].name === params.trace){
+					gpxTrace = fixtures[i];
+				}
+			}
+		} else if (element != null) {
+			var uploadedTrace = element.files[0];
+			if (uploadedTrace != null) {
+				fixtures.push({
+					"name": "user_upload",
+					"display_name": "user upload",
+					"filename": "",
+					"costing": "pedestrian",
+					"center": [37.787859, -122.454815]
+				});
+				gpxTrace = fixtures[5]
 			}
 		}
 
 		if (gpxTrace) {
-
-			mapMatchRequests =  Ember.$.ajax({
-				type: "GET",
-				url: 'assets/traces/' + gpxTrace.filename,
-
-			}).then(function(response){
-				// look into xpath to query xml dom
-				
-
-				var s = new XMLSerializer();
-				var str = s.serializeToString(response);
+			var mapMatchRequests = this.getGPXTrace(gpxTrace).then(function(response){
 				gpxTrace.coordinates = [];
 				var gpxObj;
 				// 112 & 114 should be rewritten using xpath
-				xml2js.parseString(str, function (err, result){
+				xml2js.parseString(response, function (err, result){
 					gpxObj = result.gpx.trk;
 				});
 				gpxObj[0].trkseg[0].trkpt.map(function(coord){
 					gpxTrace.coordinates.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
 				});
 				return gpxTrace;
-			})
-
-			.then(function(gpxTrace){
+			}).then(function(gpxTrace){
 				// Build the trace_route request
 				var routeJson = {
 					"shape": [],
@@ -142,15 +180,16 @@ export default Ember.Route.extend(setLoading, {
 					routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
 				});
 				// trace_route request
-				mapMatchRequests = Ember.$.ajax({ 
+				return Ember.$.ajax({ 
 					type:"POST", 
 					url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
 					data:JSON.stringify(routeJson) 
 				});
-				return mapMatchRequests;
 			})
 			.then(function(response){
+				// encodedPolyline needed for trace_attribute request
 				var encodedPolyline = response.trip.legs[0].shape;
+				// decodedPolyline needed for rendering trace_route response on map
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 
 				// Build the trace_attribute request
@@ -176,7 +215,10 @@ export default Ember.Route.extend(setLoading, {
 			gpxTraces: fixtures,
 			gpxTrace: gpxTrace,
 			mapMatchRequests: mapMatchRequests
-		});
+		})
+		// .then(function(r){
+		// 	return r 
+		// });
 	},
 
 	actions: {

@@ -20,7 +20,7 @@
     {{sidebar-title-mobility}}
     <div class="btn-group-vertical" role="group" >
     {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-    {{#link-to 'map-matching' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-mapzen-alt">Map Matching</button>{{/link-to}}
+    {{#link-to 'map-matching' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null trace=null)}}<button class="btn btn-mapzen-alt">Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
       <h4>Sample GPX Traces</h4>
       {{#power-select
@@ -32,23 +32,46 @@
       }}
         {{trace.display_name}}
       {{/power-select}}
+
+      <form class="gpx-upload">
+        {{#unless uploading}}
+          <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
+        {{else}}
+          <button type="button" class="upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
+          <div id="upload">
+            <label class="custom-file">
+              <input type="file" id="gpxFileUpload">
+            </label>
+            <div class="upload-options">
+              <!-- <h5>Choose mode:</h5>
+              <input type="radio" id="pedestrian" name="options"><label for="pedestrian">pedestrian</label><br>
+              <input type="radio" id="bicycle" name="options"><label for="bicycle">bicycle</label><br>
+              <input type="radio" id="driving" name="options"><label for="driving">driving</label><br> -->
+              <button {{action "uploadGpx"}} id="submit">submit</button>
+            </div>
+          </div>
+        {{/unless}}
+      </form>
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
-            <input type="radio" id="radio-1" name="options" checked=showMapMatch {{action "setShowMapMatch" trace}}>
+            <div class="upload-options">
+              <h5>Style matched route based on:</h5>
+              {{#if (eq selectedAttribute "weighted_grade")}}
+                <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}><label for="style-attribute">grade</label><br>
+              {{else}}
+                <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}><label for="style-attribute">grade</label><br>
+              {{/if}}
+              {{#if (eq selectedAttribute "speed")}}
+                <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>
+              {{else}}
+                <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>
+              {{/if}}
+            </div>
+             <button class="remove-mapmatch" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
           {{else}}
-            <input type="radio" id="radio-1" name="options" {{action "setShowMapMatch" trace}}>
+            <button class="run-mapmatch" {{action "setShowMapMatch" trace}}>See map-match for trace!</button>
           {{/if}}
-          <label for="radio-1">Show map match</label><br>
-          {{#power-select
-            options=attributesForSelection
-            placeholder="Style route by attribute"
-            searchPlaceholder="Type to filter..."
-            onchange=(action "styleByAttribute")
-            as |attribute|
-          }}
-            {{attribute.display_name}}
-          {{/power-select}}
         {{/if}}
         {{#if selectedSegment}}
           <table class="table">
@@ -115,7 +138,6 @@
           {{/if}}
         {{/if}}
         {{#if selectedAttribute}}
-          {{#unless showMapMatch}}
             {{#each traceAttributeSegments as |segment|}}
               {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
               {{/polyline-layer}}
@@ -132,7 +154,6 @@
               {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
               {{/polyline-layer}}
             {{/each}}
-          {{/unless}}
         {{/if}}
       {{/leaflet-map}}
     </div>
