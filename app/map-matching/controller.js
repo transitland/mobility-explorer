@@ -7,11 +7,6 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 import xml2js from 'npm:xml2js';
 import polylineEncoded from 'npm:polyline-encoded';
 
-
-// 3. Use stop svg for marker
-// 4. Set color for each to start:green stop:red
-
-
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
   queryParams: ['bbox','pin','trace'],
   center: Ember.computed('trace', function(){
