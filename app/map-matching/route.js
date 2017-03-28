@@ -106,7 +106,6 @@ export default Ember.Route.extend(setLoading, {
 		}).then(function(response) {
 			// look into xpath to query xml dom
 			var s = new XMLSerializer();
-			console.log("serializeToString")
 			var str = s.serializeToString(response);
 			return str;
 		})
