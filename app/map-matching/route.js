@@ -10,10 +10,6 @@ export default Ember.Route.extend(setLoading, {
 		trace: {
 			replace: true,
 			refreshModel: true
-		},
-		style_attribute: {
-			replace: true,
-			refreshModel: true
 		}
 	},
 
@@ -125,7 +121,7 @@ export default Ember.Route.extend(setLoading, {
 	model: function(params){
 		if (document.getElementById('gpxFileUpload') === null){
 			if (params.trace === "user_upload"){
-				this.transitionTo('map-matching',  {queryParams: {trace: null, style_attribute: null}});
+				this.transitionTo('map-matching',  {queryParams: {trace: null}});
 			}
 		};
 		this.store.unloadAll('data/transitland/operator');

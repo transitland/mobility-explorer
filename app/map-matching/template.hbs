@@ -57,12 +57,12 @@
           {{#if showMapMatch}}
             <div class="upload-options">
               <h5>Style matched route based on:</h5>
-              {{#if (eq style_attribute "grade")}}
-                <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "grade"}}><label for="style-attribute">grade</label><br>
+              {{#if (eq selectedAttribute "weighted_grade")}}
+                <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}><label for="style-attribute">grade</label><br>
               {{else}}
-                <input type="radio" id="grade" name="options" {{action "styleByAttribute" "grade"}}><label for="style-attribute">grade</label><br>
+                <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}><label for="style-attribute">grade</label><br>
               {{/if}}
-              {{#if (eq style_attribute "speed")}}
+              {{#if (eq selectedAttribute "speed")}}
                 <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>
               {{else}}
                 <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>

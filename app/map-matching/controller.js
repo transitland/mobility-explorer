@@ -9,7 +9,7 @@ import polylineEncoded from 'npm:polyline-encoded';
 
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-  queryParams: ['bbox','pin','trace','style_attribute'],
+  queryParams: ['bbox','pin','trace'],
   center: Ember.computed('trace', function(){
     // to get center from new gpx:
     // var encodedPolyline = this.model.traceRouteRequest;
@@ -22,7 +22,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   trace: null,
   uploading: false,
   showMapMatch: false,
-  style_attribute: null,
   selectedAttribute: null,
   gpxPlaceholder: Ember.computed('trace', function(){
     if (this.get('trace')){
@@ -54,7 +53,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   // 
-  traceAttributeSegments: Ember.computed('trace', function() {
+  traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
       var points = L.PolylineUtil.decode(this.model.mapMatchRequests.attributesRequest.shape, 6);
       var edges = this.model.mapMatchRequests.attributesRequest.edges;
@@ -163,13 +162,11 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     setTrace(trace){
       this.set('trace', null);
-      // debugger;
       if (document.getElementById('gpxFileUpload')){
         document.getElementById('gpxFileUpload').value = "";
       };
       this.set('selectedSegment', null);      
       this.set('showMapMatch', false);
-      this.set('style_attribute', null);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
       this.set('center', trace.center);
@@ -182,26 +179,21 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('showMapMatch', false);
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
-        this.set('style_attribute', null);
       } else {
-        this.set('style_attribute', null);
         this.set('selectedAttribute', null);
         this.set('showMapMatch', true);
       }
     },
     styleByAttribute(attribute){
-      if (this.get('style_attribute') === attribute){
+      if (this.get('selectedAttribute') === attribute){
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
-        this.set('style_attribute', null);
       } else {
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
-        this.set('style_attribute', null);
-        this.set('style_attribute', attribute);
         var attributesForSelection = this.get('attributesForSelection');
         for (var i = 0; i < attributesForSelection.length; i++){
-          if (attributesForSelection[i].display_name === attribute){
+          if (attributesForSelection[i].attribute === attribute){
             this.set('selectedAttribute', attributesForSelection[i].attribute);
             console.log(attribute, attributesForSelection[i].attribute)
           }
@@ -221,7 +213,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
         this.set('selectedAttribute', null);
-        this.set('style_attribute', null);
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
       }
