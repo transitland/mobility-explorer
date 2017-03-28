@@ -103,12 +103,14 @@ export default Ember.Route.extend(setLoading, {
 			type: "GET",
 			contentType: "text/xml",
 			url: 'assets/traces/' + gpxTrace.filename,
-		}).then(function(response) {
-			// look into xpath to query xml dom
-			var s = new XMLSerializer();
-			var str = s.serializeToString(response);
-			return str;
 		})
+		// test for dev:
+		// .then(function(response) {
+		// 	// look into xpath to query xml dom
+		// 	var s = new XMLSerializer();
+		// 	var str = s.serializeToString(response);
+		// 	return str;
+		// })
 	},
 
 	getGPXTrace: function(gpxTrace) {
