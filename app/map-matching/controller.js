@@ -47,15 +47,15 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   // check to activate submit button
-  userUploadFilePresent: Ember.computed('trace', function(){
-    if (document.getElementById('gpxFileUpload')){
-      console.log(document.getElementById('gpxFileUpload'))
-      debugger;
-    }
-    if (this.get('trace') === "user_upload"){
-      return true
-    }
-  }),
+  // userUploadFilePresent: Ember.computed('trace', function(){
+  //   if (document.getElementById('gpxFileUpload')){
+  //     console.log(document.getElementById('gpxFileUpload'))
+  //     debugger;
+  //   }
+  //   if (this.get('trace') === "user_upload"){
+  //     return true
+  //   }
+  // }),
   // 
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
@@ -222,8 +222,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       }
     },
     fileUploadTest(files){
-      console.log("fileUploadTest");
-      debugger;
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
         this.set('selectedAttribute', null);
