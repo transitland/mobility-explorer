@@ -207,6 +207,18 @@ button {
   margin-bottom: 5px;
 }
 
+.svg-start {
+  fill: green;
+  stroke: darkgreen;
+  stroke-width: 15%;
+}
+
+.svg-end {
+  fill: $mapzen-red;
+  stroke: $mapzen-dark-red;
+  stroke-width: 15%;
+}
+
 .svg-stop {
   fill: $mapzen-red;
   stroke: $mapzen-dark-red;

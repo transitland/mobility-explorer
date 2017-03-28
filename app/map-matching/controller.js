@@ -7,7 +7,6 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 import xml2js from 'npm:xml2js';
 import polylineEncoded from 'npm:polyline-encoded';
 
-
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
   queryParams: ['bbox','pin','trace'],
   center: Ember.computed('trace', function(){
@@ -32,6 +31,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   edges: null,
   attributesForSelection: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
+  html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
   hoverSegment: null,
   selectedSegment: null,
   segmentAttributes: Ember.computed('selectedSegment', function(){
@@ -47,15 +47,15 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   // check to activate submit button
-  userUploadFilePresent: Ember.computed('trace', function(){
-    if (document.getElementById('gpxFileUpload')){
-      console.log(document.getElementById('gpxFileUpload'))
-      debugger;
-    }
-    if (this.get('trace') === "user_upload"){
-      return true
-    }
-  }),
+  // userUploadFilePresent: Ember.computed('trace', function(){
+  //   if (document.getElementById('gpxFileUpload')){
+  //     console.log(document.getElementById('gpxFileUpload'))
+  //     debugger;
+  //   }
+  //   if (this.get('trace') === "user_upload"){
+  //     return true
+  //   }
+  // }),
   // 
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
@@ -222,8 +222,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       }
     },
     fileUploadTest(files){
-      console.log("fileUploadTest");
-      debugger;
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
         this.set('selectedAttribute', null);

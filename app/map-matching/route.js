@@ -168,6 +168,8 @@ export default Ember.Route.extend(setLoading, {
 				gpxObj[0].trkseg[0].trkpt.map(function(coord){
 					gpxTrace.coordinates.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
 				});
+				gpxTrace.startLocation = gpxTrace.coordinates[0];
+				gpxTrace.endLocation = gpxTrace.coordinates[gpxTrace.coordinates.length - 1];
 				return gpxTrace;
 			}).then(function(gpxTrace){
 				// Build the trace_route request
