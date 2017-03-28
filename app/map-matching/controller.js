@@ -48,6 +48,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   // check to activate submit button
   userUploadFilePresent: Ember.computed('trace', function(){
+    if (document.getElementById('gpxFileUpload')){
+      console.log(document.getElementById('gpxFileUpload'))
+      debugger;
+    }
     if (this.get('trace') === "user_upload"){
       return true
     }
@@ -195,7 +199,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         for (var i = 0; i < attributesForSelection.length; i++){
           if (attributesForSelection[i].attribute === attribute){
             this.set('selectedAttribute', attributesForSelection[i].attribute);
-            console.log(attribute, attributesForSelection[i].attribute)
           }
         }   
       }
