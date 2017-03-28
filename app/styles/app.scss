@@ -650,3 +650,15 @@ td.day.active.today:hover {
   background-color: $mapzen-blue;
   margin: 0;
 }
+
+.custom-class label {
+  background: #34495e;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+}
+.x-file--input:focus + label,
+.x-file--input + label:hover {
+  /* Apply your own hover state */
+  background-color: #2C3E50;
+}

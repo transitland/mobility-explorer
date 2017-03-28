@@ -166,6 +166,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     setTrace(trace){
       this.set('trace', null);
+      this.set('uploading', false);
       if (document.getElementById('gpxFileUpload')){
         document.getElementById('gpxFileUpload').value = "";
       };
@@ -213,6 +214,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('selectedSegment', segment);      
     },
     uploadGpx(){
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        this.set('trace', 'user_upload');
+        this.set('selectedAttribute', null);
+      } else {
+       alert('Sorry, this functionality is not fully supported in your browser.');
+      }
+    },
+    fileUploadTest(files){
+      console.log("fileUploadTest");
+      debugger;
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
         this.set('selectedAttribute', null);

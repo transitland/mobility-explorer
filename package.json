@@ -51,6 +51,7 @@
     "ember-tether": "0.3.1",
     "ember-tooltips": "2.4.1",
     "ember-truth-helpers": "1.2.0",
+    "emberx-file-input": "1.1.2",
     "eonasdan-bootstrap-datetimepicker-npm": "4.17.37",
     "gpx-parse": "^0.10.4",
     "loader.js": "^4.0.1",
