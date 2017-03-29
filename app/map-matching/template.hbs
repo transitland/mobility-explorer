@@ -54,10 +54,10 @@
               {{else}}
                 <input type="radio" id="bicycle" name="options" {{action "setCosting" "bicycle"}}><label for="bicycle">bicycle</label><br>
               {{/if}}
-              {{#if (eq costing "driving")}}
-                <input type="radio" id="driving" name="options" checked {{action "setCosting" "driving"}}><label for="driving">driving</label><br>
+              {{#if (eq costing "auto")}}
+                <input type="radio" id="driving" name="options" checked {{action "setCosting" "auto"}}><label for="driving">driving</label><br>
               {{else}}
-                <input type="radio" id="driving" name="options" {{action "setCosting" "driving"}}><label for="driving">driving</label><br>
+                <input type="radio" id="driving" name="options" {{action "setCosting" "auto"}}><label for="driving">driving</label><br>
               {{/if}}
               {{#if costing}}
                 <button {{action "uploadGpx"}} id="submit">submit</button>
