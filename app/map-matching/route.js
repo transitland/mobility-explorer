@@ -62,25 +62,11 @@ export default Ember.Route.extend(setLoading, {
 				"center": [37.7546595, -122.5091065]
 			},
 			{
-				"name": "mountain-bike-1",
-				"display_name": "mountain bike 1",
-				"filename": "mountain-bike-1.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "mountain-bike-2",
-				"display_name": "mountain bike 2",
-				"filename": "mountain-bike-2.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "mountain-bike-3",
-				"display_name": "mountain bike 3",
-				"filename": "mountain-bike-3.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
+				"name": "auto_05_Kmart_to_Middletown_Rd",
+				"display_name": "auto_05_Kmart_to_Middletown_Rd",
+				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
+				"costing": "auto",
+				"center": [40.248251652822866, -76.71328067779541]
 			}
 		];
 		return gpxTraces;
@@ -163,7 +149,7 @@ export default Ember.Route.extend(setLoading, {
 					"costing": params.costing,
 					"center": [37.787859, -122.454815]
 				});
-				gpxTrace = fixtures[5]
+				gpxTrace = fixtures[fixtures.length-1]
 			}
 		}
 
