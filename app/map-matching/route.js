@@ -186,6 +186,7 @@ export default Ember.Route.extend(setLoading, {
 				var routeJson = {
 					"shape": [],
 					"costing": gpxTrace.costing,
+					"directions_options":{"units":"miles"},
 					// "shape_match":"walk_or_snap",
 					"shape_match": "map_snap",
 					// "filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
@@ -211,6 +212,7 @@ export default Ember.Route.extend(setLoading, {
 				var attributesJson = {
 					"encoded_polyline": encodedPolyline,
 					"costing": gpxTrace.costing,
+					"directions_options":{"units":"miles"},
 					"shape_match": "walk_or_snap",
 					// "filters":{"attributes":["edge.weighted_grade", "shape"],"action":"include"}
 				};
