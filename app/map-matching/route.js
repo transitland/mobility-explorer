@@ -51,22 +51,19 @@ export default Ember.Route.extend(setLoading, {
 				"name": "half-marathon",
 				"display_name": "half marathon",
 				"filename": "half-marathon.gpx",
-				"costing": "pedestrian",
-				"center": [37.787859, -122.454815]
+				"costing": "pedestrian"
 			},
 			{
 				"name": "short-run",
 				"display_name": "short run",
 				"filename": "short-run.gpx",
-				"costing": "pedestrian",
-				"center": [37.7546595, -122.5091065]
+				"costing": "pedestrian"
 			},
 			{
 				"name": "auto_05_Kmart_to_Middletown_Rd",
 				"display_name": "auto_05_Kmart_to_Middletown_Rd",
 				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
-				"costing": "auto",
-				"center": [40.248251652822866, -76.71328067779541]
+				"costing": "auto"
 			}
 		];
 		return gpxTraces;
@@ -146,8 +143,7 @@ export default Ember.Route.extend(setLoading, {
 					"name": "user_upload",
 					"display_name": "user upload",
 					"filename": "",
-					"costing": params.costing,
-					"center": [37.787859, -122.454815]
+					"costing": params.costing
 				});
 				gpxTrace = fixtures[fixtures.length-1]
 			}

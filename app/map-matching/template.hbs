@@ -136,7 +136,7 @@
         {{/unless}}
       </div>
       {{#if this.model.gpxTrace}}
-        {{#leaflet-map bounds=bounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+        {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
           {{#if pin}}
             {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
