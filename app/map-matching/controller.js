@@ -157,7 +157,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('showMapMatch', false);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
-      // debugger;
     },
     setUploading(){
       this.toggleProperty('uploading');
