@@ -169,15 +169,25 @@ export default Ember.Route.extend(setLoading, {
 				return gpxTrace;
 			}).then(function(gpxTrace){
 				// Build the trace_route request
-				var routeJson = {
-					"shape": [],
-					"costing": gpxTrace.costing,
-					"directions_options":{"units":"miles"},
-					// "shape_match":"walk_or_snap",
-					"shape_match": "map_snap",
-					// "filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
-				};
-
+				if (params.costing === "bicycle"){
+					var routeJson = {
+						"shape": [],
+						"costing": "bicycle",
+						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
+						"directions_options":{"units":"miles"},
+						// "shape_match":"walk_or_snap",
+						"shape_match": "map_snap",
+						// "filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
+					};
+				} else {
+					var routeJson = {
+						"shape": [],
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						// "shape_match":"walk_or_snap",
+						"shape_match": "map_snap",
+					};
+				}
 				gpxTrace.coordinates.map(function(coord){
 					routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
 				});
@@ -195,13 +205,22 @@ export default Ember.Route.extend(setLoading, {
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 
 				// Build the trace_attribute request
-				var attributesJson = {
-					"encoded_polyline": encodedPolyline,
-					"costing": gpxTrace.costing,
-					"directions_options":{"units":"miles"},
-					"shape_match": "walk_or_snap",
-					// "filters":{"attributes":["edge.weighted_grade", "shape"],"action":"include"}
-				};
+				if (params.costing === "bicycle"){
+					var attributesJson = {
+						"encoded_polyline": encodedPolyline,
+						"costing": "bicycle",
+						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
+						"directions_options":{"units":"miles"},
+						"shape_match": "walk_or_snap",
+					};
+				} else {
+					var attributesJson = {
+						"encoded_polyline": encodedPolyline,
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						"shape_match": "walk_or_snap",
+					};
+				}
 				var attributesRequest = Ember.$.ajax({
 					type: "POST",
 					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
