@@ -62,25 +62,11 @@ export default Ember.Route.extend(setLoading, {
 				"center": [37.7546595, -122.5091065]
 			},
 			{
-				"name": "mountain-bike-1",
-				"display_name": "mountain bike 1",
-				"filename": "mountain-bike-1.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "mountain-bike-2",
-				"display_name": "mountain bike 2",
-				"filename": "mountain-bike-2.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "mountain-bike-3",
-				"display_name": "mountain bike 3",
-				"filename": "mountain-bike-3.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
+				"name": "auto_05_Kmart_to_Middletown_Rd",
+				"display_name": "auto_05_Kmart_to_Middletown_Rd",
+				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
+				"costing": "auto",
+				"center": [40.248251652822866, -76.71328067779541]
 			}
 		];
 		return gpxTraces;
@@ -163,7 +149,7 @@ export default Ember.Route.extend(setLoading, {
 					"costing": params.costing,
 					"center": [37.787859, -122.454815]
 				});
-				gpxTrace = fixtures[5]
+				gpxTrace = fixtures[fixtures.length-1]
 			}
 		}
 
@@ -183,15 +169,25 @@ export default Ember.Route.extend(setLoading, {
 				return gpxTrace;
 			}).then(function(gpxTrace){
 				// Build the trace_route request
-				var routeJson = {
-					"shape": [],
-					"costing": gpxTrace.costing,
-					"directions_options":{"units":"miles"},
-					// "shape_match":"walk_or_snap",
-					"shape_match": "map_snap",
-					// "filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
-				};
-
+				if (params.costing === "bicycle"){
+					var routeJson = {
+						"shape": [],
+						"costing": "bicycle",
+						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
+						"directions_options":{"units":"miles"},
+						// "shape_match":"walk_or_snap",
+						"shape_match": "map_snap",
+						// "filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
+					};
+				} else {
+					var routeJson = {
+						"shape": [],
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						// "shape_match":"walk_or_snap",
+						"shape_match": "map_snap",
+					};
+				}
 				gpxTrace.coordinates.map(function(coord){
 					routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
 				});
@@ -209,13 +205,22 @@ export default Ember.Route.extend(setLoading, {
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 
 				// Build the trace_attribute request
-				var attributesJson = {
-					"encoded_polyline": encodedPolyline,
-					"costing": gpxTrace.costing,
-					"directions_options":{"units":"miles"},
-					"shape_match": "walk_or_snap",
-					// "filters":{"attributes":["edge.weighted_grade", "shape"],"action":"include"}
-				};
+				if (params.costing === "bicycle"){
+					var attributesJson = {
+						"encoded_polyline": encodedPolyline,
+						"costing": "bicycle",
+						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
+						"directions_options":{"units":"miles"},
+						"shape_match": "walk_or_snap",
+					};
+				} else {
+					var attributesJson = {
+						"encoded_polyline": encodedPolyline,
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						"shape_match": "walk_or_snap",
+					};
+				}
 				var attributesRequest = Ember.$.ajax({
 					type: "POST",
 					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
