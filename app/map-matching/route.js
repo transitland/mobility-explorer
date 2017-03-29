@@ -169,6 +169,7 @@ export default Ember.Route.extend(setLoading, {
 				return gpxTrace;
 			}).then(function(gpxTrace){
 				// Build the trace_route request
+
 				if (params.costing === "bicycle"){
 					var routeJson = {
 						"shape": [],
