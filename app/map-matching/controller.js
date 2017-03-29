@@ -7,9 +7,8 @@ import sharedActions from 'mobility-playground/mixins/shared-actions';
 import xml2js from 'npm:xml2js';
 import polylineEncoded from 'npm:polyline-encoded';
 
-
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-  queryParams: ['bbox','pin','trace'],
+  queryParams: ['bbox','pin','trace', 'costing'],
   center: Ember.computed('trace', function(){
     // to get center from new gpx:
     // var encodedPolyline = this.model.traceRouteRequest;
@@ -20,6 +19,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   zoom: 14,
   trace: null,
+  costing: null,
   uploading: false,
   showMapMatch: false,
   selectedAttribute: null,
@@ -32,6 +32,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   edges: null,
   attributesForSelection: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
+  html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
   hoverSegment: null,
   selectedSegment: null,
   segmentAttributes: Ember.computed('selectedSegment', function(){
@@ -47,15 +48,15 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   // check to activate submit button
-  userUploadFilePresent: Ember.computed('trace', function(){
-    if (document.getElementById('gpxFileUpload')){
-      console.log(document.getElementById('gpxFileUpload'))
-      debugger;
-    }
-    if (this.get('trace') === "user_upload"){
-      return true
-    }
-  }),
+  // userUploadFilePresent: Ember.computed('trace', function(){
+  //   if (document.getElementById('gpxFileUpload')){
+  //     console.log(document.getElementById('gpxFileUpload'))
+  //     debugger;
+  //   }
+  //   if (this.get('trace') === "user_upload"){
+  //     return true
+  //   }
+  // }),
   // 
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
@@ -166,6 +167,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     setTrace(trace){
       this.set('trace', null);
+      this.set('costing', null);
       this.set('uploading', false);
       if (document.getElementById('gpxFileUpload')){
         document.getElementById('gpxFileUpload').value = "";
@@ -222,13 +224,18 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       }
     },
     fileUploadTest(files){
-      console.log("fileUploadTest");
-      debugger;
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
         this.set('selectedAttribute', null);
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
+      }
+    },
+    setCosting(mode){
+      if (this.get('costing') === mode){
+        this.set('costing', null);
+      } else {
+        this.set('costing', mode);
       }
     }
   }

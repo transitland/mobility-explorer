@@ -20,7 +20,7 @@
     {{sidebar-title-mobility}}
     <div class="btn-group-vertical" role="group" >
     {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-    {{#link-to 'map-matching' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null trace=null)}}<button class="btn btn-mapzen-alt">Map Matching</button>{{/link-to}}
+    {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
       <h4>Sample GPX Traces</h4>
       {{#power-select
@@ -43,11 +43,25 @@
               <input type="file" id="gpxFileUpload">
             </label>
             <div class="upload-options">
-              <!-- <h5>Choose mode:</h5>
-              <input type="radio" id="pedestrian" name="options"><label for="pedestrian">pedestrian</label><br>
-              <input type="radio" id="bicycle" name="options"><label for="bicycle">bicycle</label><br>
-              <input type="radio" id="driving" name="options"><label for="driving">driving</label><br> -->
-              <button {{action "uploadGpx"}} id="submit">submit</button>
+              <h5>Choose mode:</h5>
+              {{#if (eq costing "pedestrian")}}
+                <input type="radio" id="pedestrian" name="options" checked {{action "setCosting" "pedestrian"}}><label for="pedestrian">pedestrian</label><br>
+              {{else}}
+                <input type="radio" id="pedestrian" name="options" {{action "setCosting" "pedestrian"}}><label for="pedestrian">pedestrian</label><br>
+              {{/if}}
+              {{#if (eq costing "bicycle")}}
+                <input type="radio" id="bicycle" name="options" checked {{action "setCosting" "bicycle"}}><label for="bicycle">bicycle</label><br>
+              {{else}}
+                <input type="radio" id="bicycle" name="options" {{action "setCosting" "bicycle"}}><label for="bicycle">bicycle</label><br>
+              {{/if}}
+              {{#if (eq costing "driving")}}
+                <input type="radio" id="driving" name="options" checked {{action "setCosting" "driving"}}><label for="driving">driving</label><br>
+              {{else}}
+                <input type="radio" id="driving" name="options" {{action "setCosting" "driving"}}><label for="driving">driving</label><br>
+              {{/if}}
+              {{#if costing}}
+                <button {{action "uploadGpx"}} id="submit">submit</button>
+              {{/if}}
             </div>
           </div>
         {{/unless}}
@@ -138,22 +152,30 @@
           {{/if}}
         {{/if}}
         {{#if selectedAttribute}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
-              {{/polyline-layer}}
-            {{/each}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="white" weight=10 opacity=0.5}}
-              {{/polyline-layer}}
-            {{/each}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="white" weight=6 opacity=1}}
-              {{/polyline-layer}}
-            {{/each}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
-              {{/polyline-layer}}
-            {{/each}}
+          {{#each traceAttributeSegments as |segment|}}
+            {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
+            {{/polyline-layer}}
+          {{/each}}
+          {{#each traceAttributeSegments as |segment|}}
+            {{#polyline-layer locations=segment.coordinates color="white" weight=10 opacity=0.5}}
+            {{/polyline-layer}}
+          {{/each}}
+          {{#each traceAttributeSegments as |segment|}}
+            {{#polyline-layer locations=segment.coordinates color="white" weight=6 opacity=1}}
+            {{/polyline-layer}}
+          {{/each}}
+          {{#each traceAttributeSegments as |segment|}}
+            {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
+            {{/polyline-layer}}
+          {{/each}}
+        {{/if}}
+        {{#if trace}}
+          {{#marker-layer location=model.gpxTrace.startLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
+          {{/marker-layer}}
+        {{/if}}
+        {{#if trace}}
+          {{#marker-layer location=model.gpxTrace.endLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-end')}}
+          {{/marker-layer}}
         {{/if}}
       {{/leaflet-map}}
     </div>
