@@ -51,22 +51,19 @@ export default Ember.Route.extend(setLoading, {
 				"name": "half-marathon",
 				"display_name": "half marathon",
 				"filename": "half-marathon.gpx",
-				"costing": "pedestrian",
-				"center": [37.787859, -122.454815]
+				"costing": "pedestrian"
 			},
 			{
 				"name": "short-run",
 				"display_name": "short run",
 				"filename": "short-run.gpx",
-				"costing": "pedestrian",
-				"center": [37.7546595, -122.5091065]
+				"costing": "pedestrian"
 			},
 			{
 				"name": "auto_05_Kmart_to_Middletown_Rd",
 				"display_name": "auto_05_Kmart_to_Middletown_Rd",
 				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
-				"costing": "auto",
-				"center": [40.248251652822866, -76.71328067779541]
+				"costing": "auto"
 			}
 		];
 		return gpxTraces;
@@ -146,8 +143,7 @@ export default Ember.Route.extend(setLoading, {
 					"name": "user_upload",
 					"display_name": "user upload",
 					"filename": "",
-					"costing": params.costing,
-					"center": [37.787859, -122.454815]
+					"costing": params.costing
 				});
 				gpxTrace = fixtures[fixtures.length-1]
 			}
@@ -168,6 +164,9 @@ export default Ember.Route.extend(setLoading, {
 				gpxTrace.endLocation = gpxTrace.coordinates[gpxTrace.coordinates.length - 1];
 				return gpxTrace;
 			}).then(function(gpxTrace){
+				var bounds = L.latLngBounds(gpxTrace.coordinates);
+				var boundsArray = [[bounds._southWest.lat, bounds._southWest.lng],[bounds._northEast.lat,bounds._northEast.lng]];
+     		gpxTrace.bounds = boundsArray;
 				// Build the trace_route request
 
 				if (params.costing === "bicycle"){
@@ -204,7 +203,6 @@ export default Ember.Route.extend(setLoading, {
 				var encodedPolyline = response.trip.legs[0].shape;
 				// decodedPolyline needed for rendering trace_route response on map
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
-
 				// Build the trace_attribute request
 				if (params.costing === "bicycle"){
 					var attributesJson = {

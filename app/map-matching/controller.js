@@ -9,14 +9,6 @@ import polylineEncoded from 'npm:polyline-encoded';
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
   queryParams: ['bbox','pin','trace', 'costing'],
-  center: Ember.computed('trace', function(){
-    // to get center from new gpx:
-    // var encodedPolyline = this.model.traceRouteRequest;
-    // var decodedPolyline = L.Polyline(L.PolylineUtil.decode(encodedPolyline, 6));
-    // var bounds = decodedPolyline.getBounds();
-    
-    return this.model.gpxTrace ? this.model.gpxTrace.center : this.get('mapCenter');
-  }),
   zoom: 14,
   trace: null,
   costing: null,
@@ -47,17 +39,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return false;
     }
   }),
-  // check to activate submit button
-  // userUploadFilePresent: Ember.computed('trace', function(){
-  //   if (document.getElementById('gpxFileUpload')){
-  //     console.log(document.getElementById('gpxFileUpload'))
-  //     debugger;
-  //   }
-  //   if (this.get('trace') === "user_upload"){
-  //     return true
-  //   }
-  // }),
-  // 
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
       var points = L.PolylineUtil.decode(this.model.mapMatchRequests.attributesRequest.shape, 6);
@@ -176,7 +157,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('showMapMatch', false);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
-      this.set('center', trace.center);
     },
     setUploading(){
       this.toggleProperty('uploading');
