@@ -69,17 +69,10 @@ export default Ember.Route.extend(setLoading, {
 				"center": [37.399614, -122.304894]
 			},
 			{
-				"name": "mountain-bike-2",
-				"display_name": "mountain bike 2",
-				"filename": "mountain-bike-2.gpx",
-				"costing": "bicycle",
-				"center": [37.399614, -122.304894]
-			},
-			{
-				"name": "mountain-bike-3",
-				"display_name": "mountain bike 3",
-				"filename": "mountain-bike-3.gpx",
-				"costing": "bicycle",
+				"name": "auto_05_Kmart_to_Middletown_Rd",
+				"display_name": "auto_05_Kmart_to_Middletown_Rd",
+				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
+				"costing": "auto",
 				"center": [37.399614, -122.304894]
 			}
 		];
