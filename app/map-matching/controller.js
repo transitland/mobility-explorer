@@ -8,7 +8,7 @@ import xml2js from 'npm:xml2js';
 import polylineEncoded from 'npm:polyline-encoded';
 
 export default Ember.Controller.extend(mapBboxController, setTextboxClosed, sharedActions, {
-  queryParams: ['bbox','pin','trace'],
+  queryParams: ['bbox','pin','trace', 'costing'],
   center: Ember.computed('trace', function(){
     // to get center from new gpx:
     // var encodedPolyline = this.model.traceRouteRequest;
@@ -19,6 +19,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   zoom: 14,
   trace: null,
+  costing: null,
   uploading: false,
   showMapMatch: false,
   selectedAttribute: null,
@@ -166,6 +167,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     setTrace(trace){
       this.set('trace', null);
+      this.set('costing', null);
       this.set('uploading', false);
       if (document.getElementById('gpxFileUpload')){
         document.getElementById('gpxFileUpload').value = "";
@@ -227,6 +229,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('selectedAttribute', null);
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
+      }
+    },
+    setCosting(mode){
+      if (this.get('costing') === mode){
+        this.set('costing', null);
+      } else {
+        this.set('costing', mode);
       }
     }
   }

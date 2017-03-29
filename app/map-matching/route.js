@@ -10,6 +10,10 @@ export default Ember.Route.extend(setLoading, {
 		trace: {
 			replace: true,
 			refreshModel: true
+		},
+		costing: {
+			replace: false,
+			refreshModel: true
 		}
 	},
 
@@ -106,10 +110,10 @@ export default Ember.Route.extend(setLoading, {
 		})
 		// test for dev:
 		// .then(function(response) {
-		// 	// look into xpath to query xml dom
-		// 	var s = new XMLSerializer();
-		// 	var str = s.serializeToString(response);
-		// 	return str;
+			// look into xpath to query xml dom
+			// var s = new XMLSerializer();
+			// var str = s.serializeToString(response);
+			// return str;
 		// })
 	},
 
@@ -123,8 +127,11 @@ export default Ember.Route.extend(setLoading, {
 
 	model: function(params){
 		if (document.getElementById('gpxFileUpload') === null){
+			if (params.costing !== null){
+				this.transitionTo('map-matching',  {queryParams: {trace: null, costing: null}});
+			}
 			if (params.trace === "user_upload"){
-				this.transitionTo('map-matching',  {queryParams: {trace: null}});
+				this.transitionTo('map-matching',  {queryParams: {trace: null, costing: null}});
 			}
 		};
 		this.store.unloadAll('data/transitland/operator');
@@ -150,7 +157,7 @@ export default Ember.Route.extend(setLoading, {
 					"name": "user_upload",
 					"display_name": "user upload",
 					"filename": "",
-					"costing": "pedestrian",
+					"costing": params.costing,
 					"center": [37.787859, -122.454815]
 				});
 				gpxTrace = fixtures[5]
