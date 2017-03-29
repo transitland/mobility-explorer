@@ -182,6 +182,9 @@ export default Ember.Route.extend(setLoading, {
 				gpxTrace.endLocation = gpxTrace.coordinates[gpxTrace.coordinates.length - 1];
 				return gpxTrace;
 			}).then(function(gpxTrace){
+				var bounds = L.latLngBounds(gpxTrace.coordinates);
+				var boundsArray = [[bounds._southWest.lat, bounds._southWest.lng],[bounds._northEast.lat,bounds._northEast.lng]];
+     		gpxTrace.bounds = boundsArray;
 				// Build the trace_route request
 				var routeJson = {
 					"shape": [],
@@ -206,7 +209,6 @@ export default Ember.Route.extend(setLoading, {
 				var encodedPolyline = response.trip.legs[0].shape;
 				// decodedPolyline needed for rendering trace_route response on map
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
-
 				// Build the trace_attribute request
 				var attributesJson = {
 					"encoded_polyline": encodedPolyline,

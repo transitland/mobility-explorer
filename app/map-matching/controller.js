@@ -17,6 +17,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     
     return this.model.gpxTrace ? this.model.gpxTrace.center : this.get('mapCenter');
   }),
+  bounds: Ember.computed('trace', function(){
+      return this.model.gpxTrace.bounds;
+  }),
   zoom: 14,
   trace: null,
   costing: null,
@@ -176,7 +179,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('showMapMatch', false);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
-      this.set('center', trace.center);
+      // this.set('center', trace.center);
+      // debugger;
+      this.set('bbox', this.get('bounds'))
     },
     setUploading(){
       this.toggleProperty('uploading');
