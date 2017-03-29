@@ -73,7 +73,7 @@ export default Ember.Route.extend(setLoading, {
 				"display_name": "auto_05_Kmart_to_Middletown_Rd",
 				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
 				"costing": "auto",
-				"center": [37.399614, -122.304894]
+				"center": [40.2473672, -76.715340]
 			}
 		];
 		return gpxTraces;
