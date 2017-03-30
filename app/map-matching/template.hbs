@@ -143,11 +143,11 @@
             {{/marker-layer}}
           {{/if}}
           {{#if trace}}
-            {{#polyline-layer locations=model.gpxTrace.coordinates weight=5}}
+            {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false}}
             {{/polyline-layer}}
             {{#if showMapMatch}}
               {{#unless selectedAttribute}}
-                {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=5 color="red"}}
+                {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=5 clickable=false color="red"}}
                 {{/polyline-layer}}
               {{/unless}}
             {{/if}}
@@ -167,11 +167,12 @@
             {{/each}}
             {{#each traceAttributeSegments as |segment|}}
               {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
+                {{segmentPopupContent}}
               {{/polyline-layer}}
             {{/each}}
           {{/if}}
           {{#if trace}}
-            {{#marker-layer location=model.gpxTrace.startLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
+            {{#marker-layer location=model.gpxTrace.startLocation draggable=false  clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
             {{/marker-layer}}
           {{/if}}
           {{#if trace}}
