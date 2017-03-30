@@ -143,30 +143,26 @@
             {{/marker-layer}}
           {{/if}}
           {{#if trace}}
-            {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false}}
+            {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
+            {{/polyline-layer}}
+            {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
             {{/polyline-layer}}
             {{#if showMapMatch}}
               {{#unless selectedAttribute}}
-                {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=5 clickable=false color="red"}}
+                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=7 clickable=false color="#444444" opacity=1}}
+                {{/polyline-layer}}
+                {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=4 clickable=false color="#ffffff" opacity=1}}
                 {{/polyline-layer}}
               {{/unless}}
             {{/if}}
           {{/if}}
           {{#if selectedAttribute}}
             {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="white" weight=12 opacity=0.25}}
+              {{#polyline-layer locations=segment.coordinates color="#444444" weight=7 opacity=1}}
               {{/polyline-layer}}
             {{/each}}
             {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="white" weight=10 opacity=0.5}}
-              {{/polyline-layer}}
-            {{/each}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="white" weight=6 opacity=1}}
-              {{/polyline-layer}}
-            {{/each}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color=segment.color weight=5 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
+              {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
                 {{segmentPopupContent}}
               {{/polyline-layer}}
             {{/each}}
