@@ -1,10 +1,10 @@
-<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12" id="sidebar">
-  <div style="display:flex;justify-content:center;align-items:center;">
-    <div style="width:130px;height:40px;">
-      <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-    </div>
+<div id="sidebar" class="collapse in col-md-4">
+  <div class="col-xs-12 no-padding center">
+    <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
   </div>
-  {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
+  <div class="col-xs-12 no-padding">
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Mobility Explorer</h1>{{/link-to}}
+  </div>
   {{#if media.isMobile}}
     {{#unless textboxIsClosed}}
       {{text-box route="index" action="setTextBoxClosed"}}

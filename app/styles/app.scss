@@ -27,10 +27,13 @@ html, body, #map, #map-loading {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 22px;
   color: nth($mz-darkpurples, 3);
   margin: 15px 0 10px 0;
   padding-left: 0;
+  &:hover {
+    color: nth($mz-darkpurples, 4);
+  }
 
 }
 
@@ -492,6 +495,9 @@ input, button, select, textarea {
   outline-width: 2px;
   background-color: $mapzen-blue;
   margin: 0;
+  &:hover{
+    color: $mapzen-dark-blue;
+  }
 }
 
 .btn-mapzen-alt-style {
@@ -510,6 +516,9 @@ input, button, select, textarea {
   outline-width: 2px;
   margin-bottom: 10px;
   margin-top: 0;
+  &:hover{
+    color: $mapzen-dark-blue;
+  }
 }
 
 .btn-transparent-alt-style {
@@ -681,6 +690,28 @@ td.day.active.today:hover {
   color: $white;
   background-color: $mapzen-blue;
   margin: 0;
+  &:hover{
+    color: $mapzen-dark-blue;
+  }
+  &:after{
+    font-family: FontAwesome;
+    margin-left: 10px;
+    content: "\f0d7";
+  }
+}
+
+.collapsed {
+  color: $white;
+  background-color: $mapzen-blue;
+  margin: 0;
+  &:hover{
+    color: $mapzen-dark-blue;
+  }
+  &:after{
+    font-family: FontAwesome;
+    margin-left: 10px;
+    content: "\f0d8";
+  }
 }
 
 .custom-class label {
