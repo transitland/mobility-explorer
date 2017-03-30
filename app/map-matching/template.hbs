@@ -36,6 +36,8 @@
       <form class="gpx-upload">
         {{#unless uploading}}
           <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
+        {{else if trace}}
+          <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
         {{else}}
           <button type="button" class="upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
           <div id="upload">
@@ -60,7 +62,9 @@
                 <input type="radio" id="driving" name="options" {{action "setCosting" "auto"}}><label for="driving">driving</label><br>
               {{/if}}
               {{#if costing}}
-                <button {{action "uploadGpx"}} id="submit">submit</button>
+                {{#unless trace}}
+                  <button {{action "uploadGpx"}} class="submit">submit</button>
+                {{/unless}}
               {{/if}}
             </div>
           </div>
@@ -69,6 +73,7 @@
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
+            <button class="submit" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
             <div class="upload-options">
               <h5>Style matched route based on:</h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -82,7 +87,6 @@
                 <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>
               {{/if}}
             </div>
-             <button class="remove-mapmatch" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
           {{else}}
             <button class="run-mapmatch" {{action "setShowMapMatch" trace}}>See map-match for trace!</button>
           {{/if}}

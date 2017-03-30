@@ -228,6 +228,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       }
     },
     setCosting(mode){
+      this.set('trace', null);
       if (this.get('costing') === mode){
         this.set('costing', null);
       } else {

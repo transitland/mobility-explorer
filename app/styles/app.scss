@@ -658,8 +658,10 @@ td.day.active.today:hover {
   text-align: right;
 }
 
-.upload{
+#upload{
   background-color: $white;
+  padding: 10px;
+  border: 2px solid $mapzen-blue;
 }
 
 .gpx-upload{
@@ -675,12 +677,8 @@ td.day.active.today:hover {
 }
 
 .run-mapmatch {
-    background-color: darkgreen;
+    background-color: #669357;
   }
-
-.remove-mapmatch {
-  background-color: $mapzen-dark-red;
-}
 
 .fa-times{
   margin-right: 15px;
@@ -712,6 +710,10 @@ td.day.active.today:hover {
     margin-left: 10px;
     content: "\f0d8";
   }
+}
+
+.submit{
+  background-color: $mapzen-red;
 }
 
 .custom-class label {
