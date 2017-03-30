@@ -12,6 +12,7 @@ $lightest-grey-hover-detail: #d6d6d6;
 $light-grey: #c4c4c4;
 $medium-grey: #9c9c9c;
 $dark-grey: #898989;
+$mz-darkpurples: #1E0E33, #2C1E3F, #635378, #AD9CC2, #EEE7F8;
 
 body {
   margin: 0;
@@ -22,8 +23,15 @@ body {
 html, body, #map, #map-loading {
   height: 100vh;
   position: relative;
-  /*width: 100vw;*/
   z-index: 30;
+}
+
+h1 {
+  font-size: 24px;
+  color: nth($mz-darkpurples, 3);
+  margin: 15px 0 10px 0;
+  padding-left: 0;
+
 }
 
 h2 {
@@ -38,8 +46,8 @@ h2:hover {
 
 h4 {
   color: $mapzen-red;
-  font-size: 22px;
-  margin-top: 20px;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 .center-checkbox {
@@ -61,14 +69,25 @@ button {
   
 }
 
+.mapzen-logo{
+  background-position: 0 0;
+  margin: 0 auto;
+  background-image: url(https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png);
+}
 
+.no-margin {
+  margin: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
 
 .col-md-8 {
   @media screen and (orientation:portrait){
     padding: 0;
   }
 }
-
 
 .isochrone-caption a {
   color: $explorer-bluegreen;
@@ -84,7 +103,6 @@ button {
   width: 100%;
   font-size: 16px;
   font-weight: 300;
-  /*margin-top: 50px;*/
   padding: 15px;
   z-index: 3;
   text-align: left;
@@ -115,10 +133,6 @@ button {
   outline: none;
 }
 
-.subheading-row {
-  display: flex;
-}
-
 #sidebar {
   background-color: $white;
   height: 100vh;
@@ -127,7 +141,6 @@ button {
 
   @media screen and (orientation:portrait){
     /*overflow-y: auto;*/
-    /*height: max-content;*/
     height: fit-content;
 
     width:100%;
@@ -464,6 +477,13 @@ input, button, select, textarea {
 .route-style-options {
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+.btn-mapzen {
+  background-color: $mapzen-red;
+  &:hover {
+    background-color: $mapzen-dark-red;
+  }
 }
 
 .btn-mapzen-alt {

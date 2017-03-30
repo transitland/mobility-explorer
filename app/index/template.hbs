@@ -1,10 +1,10 @@
 <div id="sidebar" class="collapse in col-md-4">
-  <div style="display:flex;justify-content:center;align-items:center;">
-    <div style="width:130px;height:40px;">
-      <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-    </div>
+  <div class="col-xs-12 no-padding center">
+    <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
   </div>
-  <h2>Mobility Explorer</h2>
+  <div class="col-xs-12 no-padding">
+    <h1>Mobility Explorer</h1>
+  </div>
   {{#if media.isMobile}}
     {{#unless textboxIsClosed}}
       {{text-box route="index" action="setTextBoxClosed"}}
