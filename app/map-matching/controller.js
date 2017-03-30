@@ -26,6 +26,22 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   attributesForSelection: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
   html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
   hoverSegment: null,
+  segmentPopupContent: Ember.computed('hoverSegment', function(){
+    var selectedAttribute = this.get('selectedAttribute');
+    var attributes = this.get('hoverSegment').attributes;
+    var attributeValue = attributes[selectedAttribute]
+    if (selectedAttribute === 'weighted_grade') {
+      if (attributes.max_upward_grade !== 0 && attributes.max_downward_grade !== 0) {
+        return "weighted grade: " + attributes.weighted_grade + "%";
+      } else if (attributes.max_upward_grade !== 0) {
+        return "max upward grade: " + attributes.max_upward_grade + "%";
+      } else if (attributes.max_downward_grade !== 0) {
+        return "max downward grade: " + attributes.max_downward_grade + "%"; 
+      }
+    } else {
+      return "speed: " + attributes[selectedAttribute] + " mph";
+    }
+  }),
   selectedSegment: null,
   segmentAttributes: Ember.computed('selectedSegment', function(){
     if (this.get('selectedSegment')){
