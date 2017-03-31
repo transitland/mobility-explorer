@@ -61,9 +61,15 @@ export default Ember.Route.extend(setLoading, {
 			},
 			{
 				"name": "auto_05_Kmart_to_Middletown_Rd",
-				"display_name": "auto_05_Kmart_to_Middletown_Rd",
+				"display_name": "driving trace",
 				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
 				"costing": "auto"
+			},
+			{
+				"name": "user_upload",
+				"display_name": "...or try map-matching your own gpx!",
+				"filename": "",
+				"costing": ""
 			}
 		];
 		return gpxTraces;
@@ -139,13 +145,9 @@ export default Ember.Route.extend(setLoading, {
 		} else if (element != null) {
 			var uploadedTrace = element.files[0];
 			if (uploadedTrace != null) {
-				fixtures.push({
-					"name": "user_upload",
-					"display_name": "user upload",
-					"filename": "",
-					"costing": params.costing
-				});
-				gpxTrace = fixtures[fixtures.length-1]
+				fixtures[3].display_name = "your trace";
+				fixtures[3].costing = params.costing;
+				gpxTrace = fixtures[3]
 			}
 		}
 

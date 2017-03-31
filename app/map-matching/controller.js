@@ -15,13 +15,17 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   uploading: false,
   showMapMatch: false,
   selectedAttribute: null,
-  gpxPlaceholder: Ember.computed('trace', function(){
-    if (this.get('trace')){
-      return this.get('trace');
+  selectedTrace: Ember.computed('trace', function(){
+    
+    if (this.get('trace') && this.get('gpxPlaceholder') === "Select a sample GPX trace..."){
+      return this.model.gpxTrace.display_name;
+    } else if (this.get('trace') && this.get('trace').name === "user_upload"){
+      return this.get('gpxPlaceholder');
     } else {
-      return "Select a sample GPX trace...";
+      return this.get('gpxPlaceholder');
     }
   }),
+  gpxPlaceholder: "Select a sample GPX trace...",
   edges: null,
   attributesForSelection: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
   html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
@@ -173,6 +177,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('showMapMatch', false);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
+      if (trace.name === "user_upload"){
+        this.set('uploading', true);
+      } else {
+        this.set('uploading', false);
+      }
+      this.set('gpxPlaceholder', trace.display_name)
     },
     setUploading(){
       this.toggleProperty('uploading');
@@ -214,6 +224,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     uploadGpx(){
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('trace', 'user_upload');
+        this.set('gpxPlaceholder', 'your trace');
+        this.set('uploading', false);
         this.set('selectedAttribute', null);
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
