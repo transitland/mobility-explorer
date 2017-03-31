@@ -69,7 +69,8 @@ export default Ember.Route.extend(setLoading, {
 				"name": "user_upload",
 				"display_name": "...or try map-matching your own gpx!",
 				"filename": "",
-				"costing": ""
+				"costing": "",
+				"error": false
 			}
 		];
 		return gpxTraces;
@@ -231,6 +232,9 @@ export default Ember.Route.extend(setLoading, {
 					decodedPolyline: decodedPolyline,
 					attributesRequest: attributesRequest
 				});
+			}, function(error) {
+				console.log(error.responseJSON.error)
+				return "error";
 			});
 		}
     // Issue promise with both gpxTrace model and trace_route request
@@ -239,9 +243,6 @@ export default Ember.Route.extend(setLoading, {
 			gpxTrace: gpxTrace,
 			mapMatchRequests: mapMatchRequests
 		})
-		// .then(function(r){
-		// 	return r 
-		// });
 	},
 
 	actions: {
