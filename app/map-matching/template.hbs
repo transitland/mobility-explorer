@@ -25,7 +25,7 @@
       <h4>Sample GPX Traces</h4>
       {{#power-select
         options=model.gpxTraces
-        placeholder=gpxPlaceholder
+        placeholder=selectedTrace
         searchPlaceholder="Type to filter..."
         onchange=(action "setTrace")
         as |trace|
@@ -34,18 +34,14 @@
       {{/power-select}}
 
       <form class="gpx-upload">
-        {{#unless uploading}}
-          <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
-        {{else if (eq trace "user_upload")}}
-          <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
-        {{else}}
-          <button type="button" class="upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
+        {{#if uploading}}
+          <button type="button" class="upload-button" {{action "setUploading"}}>Map-match your own gpx file</button>
           <div id="upload">
             <label class="custom-file">
               <input type="file" id="gpxFileUpload">
             </label>
             <div class="upload-options">
-              <h5>Choose mode:</h5>
+              <h5>In which mode was your gpx recorded?</h5>
               {{#if (eq costing "pedestrian")}}
                 <input type="radio" id="pedestrian" name="options" checked {{action "setCosting" "pedestrian"}}><label for="pedestrian">pedestrian</label><br>
               {{else}}
@@ -63,19 +59,19 @@
               {{/if}}
               {{#if costing}}
                 {{#unless trace}}
-                  <button {{action "uploadGpx"}} class="submit">submit</button>
+                  <button {{action "uploadGpx"}} class="submit">See your gpx on the map</button>
                 {{/unless}}
               {{/if}}
             </div>
           </div>
-        {{/unless}}
+        {{/if}}
       </form>
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
-            <button class="submit" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
+            <button class="remove" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
             <div class="upload-options">
-              <h5>Style matched route based on:</h5>
+              <h5>See route segment info based on:</h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
                 <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}><label for="style-attribute">grade</label><br>
               {{else}}
@@ -88,7 +84,7 @@
               {{/if}}
             </div>
           {{else}}
-            <button class="run-mapmatch" {{action "setShowMapMatch" trace}}>See map-match for trace!</button>
+            <button class="run-mapmatch" {{action "setShowMapMatch" trace}}>See the map-match for this trace</button>
           {{/if}}
         {{/if}}
         {{#if selectedSegment}}
