@@ -1,10 +1,10 @@
-<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12" id="sidebar">
-  <div style="display:flex;justify-content:center;align-items:center;">
-    <div style="width:130px;height:40px;">
-      <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-    </div>
+<div id="sidebar" class="collapse in col-md-4">
+  <div class="col-xs-12 no-padding center">
+    <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
   </div>
-  {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
+  <div class="col-xs-12 no-padding">
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Mobility Explorer</h1>{{/link-to}}
+  </div>
   {{#if media.isMobile}}
     {{#unless textboxIsClosed}}
       {{text-box route="index" action="setTextBoxClosed"}}
@@ -36,6 +36,8 @@
       <form class="gpx-upload">
         {{#unless uploading}}
           <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
+        {{else if (eq trace "user_upload")}}
+          <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
         {{else}}
           <button type="button" class="upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
           <div id="upload">
@@ -60,7 +62,9 @@
                 <input type="radio" id="driving" name="options" {{action "setCosting" "auto"}}><label for="driving">driving</label><br>
               {{/if}}
               {{#if costing}}
-                <button {{action "uploadGpx"}} id="submit">submit</button>
+                {{#unless trace}}
+                  <button {{action "uploadGpx"}} class="submit">submit</button>
+                {{/unless}}
               {{/if}}
             </div>
           </div>
@@ -69,6 +73,7 @@
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
+            <button class="submit" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
             <div class="upload-options">
               <h5>Style matched route based on:</h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -82,7 +87,6 @@
                 <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>
               {{/if}}
             </div>
-             <button class="remove-mapmatch" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
           {{else}}
             <button class="run-mapmatch" {{action "setShowMapMatch" trace}}>See map-match for trace!</button>
           {{/if}}
