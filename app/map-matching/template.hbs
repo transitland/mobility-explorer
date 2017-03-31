@@ -36,7 +36,7 @@
       <form class="gpx-upload">
         {{#unless uploading}}
           <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
-        {{else if trace}}
+        {{else if (eq trace "user_upload")}}
           <button type="button" class="collapsed upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
         {{else}}
           <button type="button" class="upload-button" {{action "setUploading"}}>Try map-matching your own GPX file</button>
