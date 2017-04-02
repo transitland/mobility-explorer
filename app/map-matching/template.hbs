@@ -35,8 +35,14 @@
 
       <form class="gpx-upload">
         {{#if uploading}}
-          <button type="button" class="upload-button" {{action "setUploading"}}>Map-match your own gpx file</button>
+          <button type="button" class="upload-button">Map-match your own gpx file</button>
           <div id="upload">
+            {{#if showErrorMessage}}
+              We're sorry, but it looks like the map-matching service returned an error. If you would like help processing your gpx file, please email it to (support email address here).
+            {{/if}}
+            {{#if this.model.gpxTrace.error_message}}
+              We're sorry, but it looks like something is wrong with your gpx file. Please try another!
+            {{/if}}
             <label class="custom-file">
               <input type="file" id="gpxFileUpload">
             </label>
@@ -79,10 +85,11 @@
               {{/if}}
             </div>
           {{else}}
-            <button class="map-match" {{action "setShowMapMatch" trace}}>See the map-match for this trace</button>
-            {{#if showErrorMessage}}
-              We're sorry, but it looks like the map-matching service returned an error. If you would like help processing your gpx file, please email it to (support email address here).
-            {{/if}}
+            {{#unless showTraceErrorMessage}}
+              {{#unless this.model.gpxTrace.error_message}}
+                <button class="map-match" {{action "setShowMapMatch" trace}}>See the map-match for this trace</button>
+              {{/unless}}
+            {{/unless}}
           {{/if}}
         {{/if}}
         {{#if selectedSegment}}
@@ -134,46 +141,52 @@
         {{/unless}}
       </div>
       {{#if this.model.gpxTrace}}
-        {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
-          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-          {{#if pin}}
-            {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-            {{/marker-layer}}
-          {{/if}}
-          {{#if trace}}
-            {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
-            {{/polyline-layer}}
-            {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
-            {{/polyline-layer}}
-            {{#if showMapMatch}}
-              {{#unless selectedAttribute}}
-                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=7 clickable=false color="#444444" opacity=1}}
-                {{/polyline-layer}}
-                {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=4 clickable=false color="#d4645c" opacity=1}}
-                {{/polyline-layer}}
-              {{/unless}}
+        {{#unless this.model.gpxTrace.error_message}}
+          {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+            {{#if pin}}
+              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+              {{/marker-layer}}
             {{/if}}
-          {{/if}}
-          {{#if selectedAttribute}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="#444444" weight=7 opacity=1}}
+            {{#if trace}}
+              {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
-            {{/each}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
-                {{segmentPopupContent}}
+              {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
-            {{/each}}
-          {{/if}}
-          {{#if trace}}
-            {{#marker-layer location=model.gpxTrace.startLocation draggable=false  clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
-            {{/marker-layer}}
-          {{/if}}
-          {{#if trace}}
-            {{#marker-layer location=model.gpxTrace.endLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-end')}}
-            {{/marker-layer}}
-          {{/if}}
-        {{/leaflet-map}}
+              {{#if showMapMatch}}
+                {{#unless selectedAttribute}}
+                    {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=7 clickable=false color="#444444" opacity=1}}
+                  {{/polyline-layer}}
+                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=4 clickable=false color="#d4645c" opacity=1}}
+                  {{/polyline-layer}}
+                {{/unless}}
+              {{/if}}
+            {{/if}}
+            {{#if selectedAttribute}}
+              {{#each traceAttributeSegments as |segment|}}
+                {{#polyline-layer locations=segment.coordinates color="#444444" weight=7 opacity=1}}
+                {{/polyline-layer}}
+              {{/each}}
+              {{#each traceAttributeSegments as |segment|}}
+                {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
+                  {{segmentPopupContent}}
+                {{/polyline-layer}}
+              {{/each}}
+            {{/if}}
+            {{#if trace}}
+              {{#marker-layer location=model.gpxTrace.startLocation draggable=false  clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
+              {{/marker-layer}}
+            {{/if}}
+            {{#if trace}}
+              {{#marker-layer location=model.gpxTrace.endLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-end')}}
+              {{/marker-layer}}
+            {{/if}}
+          {{/leaflet-map}}
+        {{else}}
+          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+          {{/leaflet-map}}
+        {{/unless}}
       {{else}}
         {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
