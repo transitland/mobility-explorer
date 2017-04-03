@@ -138,7 +138,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     var attributeValue = attributes[selectedAttribute];
     if (selectedAttribute === 'weighted_grade') {
       if (attributes.max_upward_grade !== 0 && attributes.max_downward_grade !== 0) {
-        return "weighted grade: " + attributes.weighted_grade + "%";
+        // return "weighted grade: " + attributes.weighted_grade + "%";
+        if (-attributes.max_downward_grade >= attributes.max_upward_grade){
+          return "max downward grade: " + attributes.max_downward_grade + "%"; 
+        } else {
+          return "max upward grade: " + attributes.max_upward_grade + "%";
+        }
       } else if (attributes.max_upward_grade !== 0) {
         return "max upward grade: " + attributes.max_upward_grade + "%";
       } else if (attributes.max_downward_grade !== 0) {
@@ -197,7 +202,11 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
         if (selectedAttribute === 'weighted_grade') {
           if (edges[i].max_upward_grade !== 0 && edges[i].max_downward_grade !== 0) {
-            attribute = edges[i].weighted_grade;
+            if (-edges[i].max_downward_grade >= edges[i].max_upward_grade){
+              attribute = edges[i].max_downward_grade; 
+            } else {
+              attribute = edges[i].max_upward_grade;
+            }
           } else if (edges[i].max_upward_grade !== 0) {
             attribute = edges[i].max_upward_grade;
           } else if (edges[i].max_downward_grade !== 0) {

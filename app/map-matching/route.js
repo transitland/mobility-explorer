@@ -54,9 +54,9 @@ export default Ember.Route.extend(setLoading, {
 				"costing": "pedestrian"
 			},
 			{
-				"name": "short-run",
-				"display_name": "short run",
-				"filename": "short-run.gpx",
+				"name": "dc-run",
+				"display_name": "DC run",
+				"filename": "dc-run.gpx",
 				"costing": "pedestrian"
 			},
 			{
@@ -64,6 +64,12 @@ export default Ember.Route.extend(setLoading, {
 				"display_name": "Pennsylvania drive",
 				"filename": "Pennsylvania-drive.gpx",
 				"costing": "auto"
+			},
+			{
+				"name": "maryland-bike-ride",
+				"display_name": "Maryland bike ride",
+				"filename": "maryland-bike-ride.gpx",
+				"costing": "bicycle"
 			},
 			{
 				"name": "user_upload",
@@ -191,7 +197,7 @@ export default Ember.Route.extend(setLoading, {
 						"directions_options":{"units":"miles"},
 						"shape_match": "map_snap",
 					};
-				} else {
+				} else if (params.trace === "san-francisco-run"){
 					var routeJson = {
 						"shape": [],
 						"costing": gpxTrace.costing,
@@ -199,6 +205,13 @@ export default Ember.Route.extend(setLoading, {
 						"shape_match": "map_snap",
 						// only for marathon
 						"trace_options":{"turn_penalty_factor":500}
+					};
+				} else {
+					var routeJson = {
+						"shape": [],
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						"shape_match": "map_snap",
 					};
 				}
 				gpxTrace.coordinates.map(function(coord){
