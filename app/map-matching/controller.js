@@ -51,11 +51,110 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   selectedSegment: null,
   segmentAttributes: Ember.computed('selectedSegment', function(){
+    var attributeDisplayName = {
+      "id": {
+        "display_name": "ID",
+        "units": ""
+      },
+      "speed": {
+        "display_name": "speed",
+        "units": " mph"
+      },
+      "max_upward_grade": {
+        "display_name": "max downward grade",
+        "units": "%"
+      },
+      "end_heading": {
+        "display_name": "end heading",
+        "units": ""
+      },
+      "travel_mode": {
+        "display_name": "travel mode",
+        "units": ""
+      },
+      "speed_limit": {
+        "display_name": "speed limit",
+        "units": " mph"
+      },
+      "bicycle_network": {
+        "display_name": "bicycle network",
+        "units": ""
+      },
+      "surface": {
+        "display_name": "surface",
+        "units": ""
+      },
+      "end_shape_index": {
+        "display_name": "skip",
+        "units": ""
+      },
+      "density": {
+        "display_name": "density",
+        "units": ""
+      },
+      "way_id": {
+        "display_name": "OSM way id",
+        "units": ""
+      },
+      "vehicle_type": {
+        "display_name": "vehicle type",
+        "units": ""
+      },
+      "drive_on_right": {
+        "display_name": "drive on right",
+        "units": ""
+      },
+      "use": {
+        "display_name": "use",
+        "units": ""
+      },
+      "lane_count": {
+        "display_name": "lane count",
+        "units": ""
+      },
+      "traversability": {
+        "display_name": "traversability",
+        "units": ""
+      },
+      "begin_shape_index": {
+        "display_name": "skip",
+        "units": ""
+      },
+      "end_node": {
+        "display_name": "skip",
+        "units": ""
+      },
+      "sign": {
+        "display_name": "skip",
+        "units": ""
+      },
+      "begin_heading": {
+        "display_name": "begin heading",
+        "units": ""
+      },
+      "road_class": {
+        "display_name": "road class",
+        "units": ""
+      },
+      "length": {
+        "display_name": "length",
+        "units": " miles"
+      },
+      "weighted_grade": {
+        "display_name": "weighted grade",
+        "units": "%"
+      },
+      "max_downward_grade": {
+        "display_name": "max downward grade",
+        "units": "%"
+      }
+    }
     if (this.get('selectedSegment')){
-      var segments = this.get('selectedSegment').attributes;
+      var attributes = this.get('selectedSegment').attributes;
       var attributeArray = [];
-      for (var segment in segments){
-        attributeArray.push({"attribute":segment, "value":segments[segment]})
+      for (var attribute in attributes){
+        var value = attributes[attribute].toString() + attributeDisplayName[attribute].units;
+        attributeArray.push({"attribute":attributeDisplayName[attribute].display_name, "value":value})
       };
       return attributeArray;
     } else {

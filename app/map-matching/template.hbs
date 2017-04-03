@@ -106,9 +106,11 @@
         {{#if selectedSegment}}
           <table class="table">
             {{#each segmentAttributes as | segment |}}
-              <tr>
-                <th>{{segment.attribute}}</th><td>{{segment.value}}</td>
-              </tr>
+              {{#unless (eq segment.attribute "skip")}}
+                <tr>
+                  <th>{{segment.attribute}}</th><td>{{segment.value}}</td>
+                </tr>
+              {{/unless}}
             {{/each}}
           </table>
         {{/if}}
