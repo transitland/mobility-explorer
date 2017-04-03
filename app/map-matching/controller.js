@@ -61,7 +61,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         "units": " mph"
       },
       "max_upward_grade": {
-        "display_name": "max downward grade",
+        "display_name": "max upward grade",
         "units": "%"
       },
       "end_heading": {
@@ -156,6 +156,20 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         var value = attributes[attribute].toString() + attributeDisplayName[attribute].units;
         attributeArray.push({"attribute":attributeDisplayName[attribute].display_name, "value":value})
       };
+      // sort by attribute name
+      attributeArray.sort(function(a, b) {
+        var attributeA = a.attribute.toUpperCase(); // ignore upper and lowercase
+        var attributeB = b.attribute.toUpperCase(); // ignore upper and lowercase
+        if (attributeA < attributeB) {
+          return -1;
+        }
+        if (attributeA > attributeB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
       return attributeArray;
     } else {
       return false;
