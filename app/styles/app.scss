@@ -7,6 +7,7 @@ $mapzen-dark-red: #993434;
 $mapzen-dark-blue: #385d5c;
 $explorer-bluegreen: #9dbfc1;
 $white: #fff;
+$pink: #edb3af;
 $lightest-grey: #f0f0f0;
 $lightest-grey-hover-detail: #d6d6d6;
 $light-grey: #c4c4c4;
@@ -691,6 +692,10 @@ td.day.active.today:hover {
   margin-right: 15px;
 }
 
+.fa-exclamation-triangle{
+  margin-right: 10px;
+}
+
 .upload-button{
   color: $white;
   background-color: $mapzen-blue;
@@ -714,13 +719,8 @@ td.day.active.today:hover {
   }
 }
 
-.custom-class label {
-  background: #34495e;
+.error-message{
+  background-color: $pink;
+  border: 2px solid $mapzen-red;
   padding: 10px;
-  color: white;
-  border-radius: 5px;
-}
-.x-file--input:focus + label,
-.x-file--input + label:hover {
-  background-color: #2C3E50;
 }

@@ -35,7 +35,7 @@
 
       <form class="gpx-upload">
         {{#if uploading}}
-          <button type="button" class="upload-button">Map-match your own gpx file</button>
+          <button type="button" class="upload-button" {{action "setUploading"}}>Map-match your own gpx file</button>
           <div id="upload">
             {{#if showErrorMessage}}
               We're sorry, but it looks like the map-matching service returned an error. If you would like help processing your gpx file, please email it to (support email address here).
@@ -85,11 +85,21 @@
               {{/if}}
             </div>
           {{else}}
-            {{#unless showTraceErrorMessage}}
+            {{#unless showErrorMessage}}
               {{#unless this.model.gpxTrace.error_message}}
                 <button class="map-match" {{action "setShowMapMatch" trace}}>See the map-match for this trace</button>
               {{/unless}}
             {{/unless}}
+              {{#if showErrorMessage}}
+                <div class="error-message">
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like the map-matching service has returned an error. If you would like help processing your gpx file, please email it to (support email address here).
+                </div>
+              {{/if}}
+              {{#if this.model.gpxTrace.error_message}}
+                <div class="error-message">
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like something is wrong with your gpx file. Please try another!
+                </div>
+              {{/if}}
           {{/if}}
         {{/if}}
         {{#if selectedSegment}}

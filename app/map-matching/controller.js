@@ -237,7 +237,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       }
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         this.set('gpxPlaceholder', 'your trace');
-        // this.set('uploading', false);
+        this.set('uploading', false);
         this.set('selectedAttribute', null);
         this.set('trace', 'user_upload');
       } else {
