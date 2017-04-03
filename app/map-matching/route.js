@@ -154,7 +154,7 @@ export default Ember.Route.extend(setLoading, {
 			if (uploadedTrace != null) {
 				fixtures[3].display_name = "your trace";
 				fixtures[3].costing = params.costing;
-				gpxTrace = fixtures[3]
+				gpxTrace = fixtures[fixtures.length - 1]
 			}
 		}
 
