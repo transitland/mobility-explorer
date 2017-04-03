@@ -33,10 +33,109 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   attributesForSelection: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
   html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
   hoverSegment: null,
+  selectedSegment: null,
+  attributeDisplay: {
+    "id": {
+      "display_name": "ID",
+      "units": ""
+    },
+    "speed": {
+      "display_name": "speed",
+      "units": " mph"
+    },
+    "max_upward_grade": {
+      "display_name": "max upward grade",
+      "units": "%"
+    },
+    "end_heading": {
+      "display_name": "end heading",
+      "units": ""
+    },
+    "travel_mode": {
+      "display_name": "travel mode",
+      "units": ""
+    },
+    "speed_limit": {
+      "display_name": "speed limit",
+      "units": " mph"
+    },
+    "bicycle_network": {
+      "display_name": "bicycle network",
+      "units": ""
+    },
+    "surface": {
+      "display_name": "surface",
+      "units": ""
+    },
+    "end_shape_index": {
+      "display_name": "skip",
+      "units": ""
+    },
+    "density": {
+      "display_name": "density",
+      "units": ""
+    },
+    "way_id": {
+      "display_name": "OSM way id",
+      "units": ""
+    },
+    "vehicle_type": {
+      "display_name": "vehicle type",
+      "units": ""
+    },
+    "drive_on_right": {
+      "display_name": "drive on right",
+      "units": ""
+    },
+    "use": {
+      "display_name": "use",
+      "units": ""
+    },
+    "lane_count": {
+      "display_name": "lane count",
+      "units": ""
+    },
+    "traversability": {
+      "display_name": "traversability",
+      "units": ""
+    },
+    "begin_shape_index": {
+      "display_name": "skip",
+      "units": ""
+    },
+    "end_node": {
+      "display_name": "skip",
+      "units": ""
+    },
+    "sign": {
+      "display_name": "skip",
+      "units": ""
+    },
+    "begin_heading": {
+      "display_name": "begin heading",
+      "units": ""
+    },
+    "road_class": {
+      "display_name": "road class",
+      "units": ""
+    },
+    "length": {
+      "display_name": "length",
+      "units": " miles"
+    },
+    "weighted_grade": {
+      "display_name": "weighted grade",
+      "units": "%"
+    },
+    "max_downward_grade": {
+      "display_name": "max downward grade",
+      "units": "%"
+    }
+  },
   segmentPopupContent: Ember.computed('hoverSegment', function(){
     var selectedAttribute = this.get('selectedAttribute');
     var attributes = this.get('hoverSegment').attributes;
-    var attributeValue = attributes[selectedAttribute]
+    var attributeValue = attributes[selectedAttribute];
     if (selectedAttribute === 'weighted_grade') {
       if (attributes.max_upward_grade !== 0 && attributes.max_downward_grade !== 0) {
         return "weighted grade: " + attributes.weighted_grade + "%";
@@ -49,14 +148,36 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return "speed: " + attributes[selectedAttribute] + " mph";
     }
   }),
-  selectedSegment: null,
   segmentAttributes: Ember.computed('selectedSegment', function(){
     if (this.get('selectedSegment')){
-      var segments = this.get('selectedSegment').attributes;
+      var attributes = this.get('selectedSegment').attributes;
       var attributeArray = [];
-      for (var segment in segments){
-        attributeArray.push({"attribute":segment, "value":segments[segment]})
-      };
+      var attributeDisplay = this.get('attributeDisplay');
+      for (var attribute in attributes){
+        if (attributeDisplay[attribute]){
+          var value = attributes[attribute].toString() + attributeDisplay[attribute].units;
+          attributeArray.push({"attribute":attributeDisplay[attribute].display_name, "value":value});
+        } else if (attribute.indexOf('_') > -1){
+          var attributeWithoutUnderscore = attribute.replace(/_/gi, ' ');
+          attributeArray.push({"attribute":attributeWithoutUnderscore, "value":attributes[attribute]});
+        } else {
+          attributeArray.push({"attribute":attribute, "value":attributes[attribute]});
+        }
+      }
+      // sort by attribute name
+      attributeArray.sort(function(a, b) {
+        var attributeA = a.attribute.toUpperCase(); // ignore upper and lowercase
+        var attributeB = b.attribute.toUpperCase(); // ignore upper and lowercase
+        if (attributeA < attributeB) {
+          return -1;
+        }
+        if (attributeA > attributeB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
       return attributeArray;
     } else {
       return false;
