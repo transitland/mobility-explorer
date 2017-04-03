@@ -121,32 +121,55 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         var attr = edges[i][selectedAttribute];
         
         // find color
+        if (selectedAttribute === 'weighted_grade') {
           
-        // Hue is a degree on the color wheel; 0 (or 360) is red, 120 is green, 240 is blue. Numbers in between reflect different shades.
-        // Saturation is a percentage value; 100% is the full colour.
-        // Lightness is also a percentage; 0% is dark (black), 100% is light (white), and 50% is the average.
+          // Hue is a degree on the color wheel; 0 (or 360) is red, 120 is green, 240 is blue. Numbers in between reflect different shades.
+          // Saturation is a percentage value; 100% is the full colour.
+          // Lightness is also a percentage; 0% is dark (black), 100% is light (white), and 50% is the average.
 
-        // HSL
-        // blue: 240
-        // green: 120
-        // yellow: 60
-        // red: 0 or 360
+          // HSL
+          // blue: 240
+          // green: 120
+          // yellow: 60
+          // red: 0 or 360
 
-        var range = attributeArrayMax - attributeArrayMin;
-        var percentage = (attr + attributeArrayMin) / range;
+          var range = attributeArrayMax - attributeArrayMin;
+          var percentage = (attr + attributeArrayMin) / range;
 
-        var highColor = 0;
-        var midColor = 120;
-        var lowColor = 280;
-    
-        // set color scale around midpoint
-        if (attr <= mid){
-          var hue = (percentage * (midColor - lowColor));
-          var color = 'hsl(' + hue + ', 90%, 50%)';
-        } else if (attr > mid) {
-          var hue = (percentage * (highColor - midColor));
-          var color =  'hsl(' + hue + ', 90%, 50%)';
-        }
+          var highColor = 0;
+          var midColor = 120;
+          var lowColor = 280;
+      
+          // set color scale around midpoint
+          if (attr <= mid){
+            var hue = (percentage * (midColor - lowColor));
+            var color = 'hsl(' + hue + ', 90%, 50%)';
+          } else if (attr > mid) {
+            var hue = (percentage * (highColor - midColor));
+            var color =  'hsl(' + hue + ', 90%, 50%)';
+          }
+        } else if (selectedAttribute === 'speed') {
+         if (attr >= 70)
+           var color = '#313695 ';
+         else if (attr === 65)
+           var color = '#4575b4 ';
+         else if (attr === 60)
+           var color = '#74add1 ';
+         else if (attr === 55)
+           var color = '#abd9e9 ';
+         else if (attr === 50)
+           var color = '#e0f3f8 ';
+         else if (attr === 45)
+           var color = '#fee090 ';
+         else if (attr === 40)
+           var color = '#fdae61 ';
+         else if (attr === 35)
+           var color = '#f46d43 ';
+         else if (attr === 30)
+           var color = '#d73027 ';
+         else if (attr <= 25)
+           var color = '#a50026 ';
+       }
         // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
         edgeCoordinates.push({
           coordinates: pointsSlice,
