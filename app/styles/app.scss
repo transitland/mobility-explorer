@@ -666,7 +666,17 @@ td.day.active.today:hover {
 }
 
 .gpx-upload{
-  background-color: $white;
+  table {
+    margin-top: 15px;
+    background-color: $white;
+    td {
+      padding-left: 10px;
+      border: 2px solid $light-grey;
+    }
+    th {
+      border: 2px solid $light-grey;
+    }
+  }
 }
 
 .upload-options{
