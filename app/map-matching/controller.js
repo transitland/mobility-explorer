@@ -14,10 +14,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   costing: null,
   uploading: false,
   showMapMatch: false,
+  showErrorMessage: false,
+  showTraceErrorMessage: false,
   selectedAttribute: null,
   selectedTrace: Ember.computed('trace', function(){
-    
-    if (this.get('trace') && this.get('gpxPlaceholder') === "Select a sample GPX trace..."){
+    if (!this.get('trace')) {
+      return "Select a sample GPX trace...";
+    } else if (this.get('trace') && this.get('gpxPlaceholder') === "Select a sample GPX trace..."){
       return this.model.gpxTrace.display_name;
     } else if (this.get('trace') && this.get('trace').name === "user_upload"){
       return this.get('gpxPlaceholder');
@@ -166,9 +169,11 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var newbox = e.target.getBounds();
       this.set('bbox', newbox.toBBoxString());
     },
-    setTrace(trace){
+    setTrace(trace){      
       this.set('trace', null);
       this.set('costing', null);
+      this.set('showErrorMessage', false);
+      this.set('showTraceErrorMessage', false);
       this.set('uploading', false);
       if (document.getElementById('gpxFileUpload')){
         document.getElementById('gpxFileUpload').value = "";
@@ -188,7 +193,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.toggleProperty('uploading');
     },
     setShowMapMatch(){
-      if (this.get('showMapMatch')){
+      if (this.model.mapMatchRequests === "request error"){
+        this.set('showErrorMessage', true);
+      } else if (this.get('showMapMatch')){
         this.set('showMapMatch', false);
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
@@ -221,30 +228,20 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     setSegment(segment){
       this.set('selectedSegment', segment);      
     },
-    uploadGpx(){
-      if (window.File && window.FileReader && window.FileList && window.Blob) {
-        this.set('trace', 'user_upload');
-        this.set('gpxPlaceholder', 'your trace');
-        this.set('uploading', false);
-        this.set('selectedAttribute', null);
-      } else {
-       alert('Sorry, this functionality is not fully supported in your browser.');
-      }
-    },
-    fileUploadTest(files){
-      if (window.File && window.FileReader && window.FileList && window.Blob) {
-        this.set('trace', 'user_upload');
-        this.set('selectedAttribute', null);
-      } else {
-       alert('Sorry, this functionality is not fully supported in your browser.');
-      }
-    },
     setCosting(mode){
       this.set('trace', null);
       if (this.get('costing') === mode){
         this.set('costing', null);
       } else {
         this.set('costing', mode);
+      }
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        this.set('gpxPlaceholder', 'your trace');
+        this.set('uploading', false);
+        this.set('selectedAttribute', null);
+        this.set('trace', 'user_upload');
+      } else {
+       alert('Sorry, this functionality is not fully supported in your browser.');
       }
     }
   }

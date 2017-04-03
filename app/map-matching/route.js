@@ -69,7 +69,8 @@ export default Ember.Route.extend(setLoading, {
 				"name": "user_upload",
 				"display_name": "...or try map-matching your own gpx!",
 				"filename": "",
-				"costing": ""
+				"costing": "",
+				"error_message": ""
 			}
 		];
 		return gpxTraces;
@@ -152,25 +153,36 @@ export default Ember.Route.extend(setLoading, {
 		}
 
 		if (gpxTrace) {
-			var mapMatchRequests = this.getGPXTrace(gpxTrace).then(function(response){
+			mapMatchRequests = this.getGPXTrace(gpxTrace).then(function(response){
 				gpxTrace.coordinates = [];
 				var gpxObj;
 				// 112 & 114 should be rewritten using xpath
 				xml2js.parseString(response, function (err, result){
+					if(err){
+						return gpxObj = "error";
+					}
 					gpxObj = result.gpx.trk;
 				});
+				if (gpxObj === "error"){
+					gpxTrace.error_message = "error" 
+					return gpxTrace
+				}
 				gpxObj[0].trkseg[0].trkpt.map(function(coord){
 					gpxTrace.coordinates.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
 				});
+
 				gpxTrace.startLocation = gpxTrace.coordinates[0];
 				gpxTrace.endLocation = gpxTrace.coordinates[gpxTrace.coordinates.length - 1];
+
 				return gpxTrace;
 			}).then(function(gpxTrace){
+				if (gpxTrace.error_message === "error"){
+					return gpxTrace;
+				}
 				var bounds = L.latLngBounds(gpxTrace.coordinates);
 				var boundsArray = [[bounds._southWest.lat, bounds._southWest.lng],[bounds._northEast.lat,bounds._northEast.lng]];
      		gpxTrace.bounds = boundsArray;
 				// Build the trace_route request
-
 				if (params.costing === "bicycle"){
 					var routeJson = {
 						"shape": [],
@@ -201,6 +213,9 @@ export default Ember.Route.extend(setLoading, {
 				});
 			})
 			.then(function(response){
+				if (response.error_message === "error"){
+					return "trace error";
+				}
 				// encodedPolyline needed for trace_attribute request
 				var encodedPolyline = response.trip.legs[0].shape;
 				// decodedPolyline needed for rendering trace_route response on map
@@ -231,6 +246,8 @@ export default Ember.Route.extend(setLoading, {
 					decodedPolyline: decodedPolyline,
 					attributesRequest: attributesRequest
 				});
+			}, function(error) {
+				return "request error";
 			});
 		}
     // Issue promise with both gpxTrace model and trace_route request
@@ -239,9 +256,6 @@ export default Ember.Route.extend(setLoading, {
 			gpxTrace: gpxTrace,
 			mapMatchRequests: mapMatchRequests
 		})
-		// .then(function(r){
-		// 	return r 
-		// });
 	},
 
 	actions: {

@@ -12,14 +12,14 @@
   {{/if}}
   {{sidebar-title-transitland}}
   <div class="btn-group-vertical" role="group" >
-    {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
-    {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
-    {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
+    {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null trace=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
+    {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin trace=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+    {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null trace=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
   </div>
   <hr class="sidebar-hr">
     {{sidebar-title-mobility}}
     <div class="btn-group-vertical" role="group" >
-    {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+    {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
       <h4>Sample GPX Traces</h4>
@@ -37,6 +37,12 @@
         {{#if uploading}}
           <button type="button" class="upload-button" {{action "setUploading"}}>Map-match your own gpx file</button>
           <div id="upload">
+            {{#if showErrorMessage}}
+              We're sorry, but it looks like the map-matching service returned an error. If you would like help processing your gpx file, please email it to (support email address here).
+            {{/if}}
+            {{#if this.model.gpxTrace.error_message}}
+              We're sorry, but it looks like something is wrong with your gpx file. Please try another!
+            {{/if}}
             <label class="custom-file">
               <input type="file" id="gpxFileUpload">
             </label>
@@ -57,11 +63,6 @@
               {{else}}
                 <input type="radio" id="driving" name="options" {{action "setCosting" "auto"}}><label for="driving">driving</label><br>
               {{/if}}
-              {{#if costing}}
-                {{#unless trace}}
-                  <button {{action "uploadGpx"}} class="submit">See your gpx on the map</button>
-                {{/unless}}
-              {{/if}}
             </div>
           </div>
         {{/if}}
@@ -69,7 +70,7 @@
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
-            <button class="remove" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
+            <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
             <div class="upload-options">
               <h5>See route segment info based on:</h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -84,7 +85,22 @@
               {{/if}}
             </div>
           {{else}}
-            <button class="run-mapmatch" {{action "setShowMapMatch" trace}}>See the map-match for this trace</button>
+            {{#unless showErrorMessage}}
+              {{#unless this.model.gpxTrace.error_message}}
+                <button class="map-match" {{action "setShowMapMatch" trace}}>See the map-match for this trace</button>
+              {{/unless}}
+            {{/unless}}
+              {{#if showErrorMessage}}
+                <div class="error-message">
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like the map-matching service has returned an error.<br><br>
+                  If you would like help processing your gpx file, please email it to (support email address here).
+                </div>
+              {{/if}}
+              {{#if this.model.gpxTrace.error_message}}
+                <div class="error-message">
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like something is wrong with your gpx file. Please try another!
+                </div>
+              {{/if}}
           {{/if}}
         {{/if}}
         {{#if selectedSegment}}
@@ -136,46 +152,52 @@
         {{/unless}}
       </div>
       {{#if this.model.gpxTrace}}
-        {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
-          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-          {{#if pin}}
-            {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-            {{/marker-layer}}
-          {{/if}}
-          {{#if trace}}
-            {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
-            {{/polyline-layer}}
-            {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
-            {{/polyline-layer}}
-            {{#if showMapMatch}}
-              {{#unless selectedAttribute}}
-                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=7 clickable=false color="#444444" opacity=1}}
-                {{/polyline-layer}}
-                {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=4 clickable=false color="#ffffff" opacity=1}}
-                {{/polyline-layer}}
-              {{/unless}}
+        {{#unless this.model.gpxTrace.error_message}}
+          {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+            {{#if pin}}
+              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+              {{/marker-layer}}
             {{/if}}
-          {{/if}}
-          {{#if selectedAttribute}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color="#444444" weight=7 opacity=1}}
+            {{#if trace}}
+              {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
-            {{/each}}
-            {{#each traceAttributeSegments as |segment|}}
-              {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
-                {{segmentPopupContent}}
+              {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
-            {{/each}}
-          {{/if}}
-          {{#if trace}}
-            {{#marker-layer location=model.gpxTrace.startLocation draggable=false  clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
-            {{/marker-layer}}
-          {{/if}}
-          {{#if trace}}
-            {{#marker-layer location=model.gpxTrace.endLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-end')}}
-            {{/marker-layer}}
-          {{/if}}
-        {{/leaflet-map}}
+              {{#if showMapMatch}}
+                {{#unless selectedAttribute}}
+                    {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=7 clickable=false color="#444444" opacity=1}}
+                  {{/polyline-layer}}
+                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=4 clickable=false color="#d4645c" opacity=1}}
+                  {{/polyline-layer}}
+                {{/unless}}
+              {{/if}}
+            {{/if}}
+            {{#if selectedAttribute}}
+              {{#each traceAttributeSegments as |segment|}}
+                {{#polyline-layer locations=segment.coordinates color="#444444" weight=7 opacity=1}}
+                {{/polyline-layer}}
+              {{/each}}
+              {{#each traceAttributeSegments as |segment|}}
+                {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
+                  {{segmentPopupContent}}
+                {{/polyline-layer}}
+              {{/each}}
+            {{/if}}
+            {{#if trace}}
+              {{#marker-layer location=model.gpxTrace.startLocation draggable=false  clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
+              {{/marker-layer}}
+            {{/if}}
+            {{#if trace}}
+              {{#marker-layer location=model.gpxTrace.endLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-end')}}
+              {{/marker-layer}}
+            {{/if}}
+          {{/leaflet-map}}
+        {{else}}
+          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+          {{/leaflet-map}}
+        {{/unless}}
       {{else}}
         {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
