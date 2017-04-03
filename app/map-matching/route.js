@@ -48,9 +48,9 @@ export default Ember.Route.extend(setLoading, {
 	fixtures: function() {
 		let gpxTraces = [
 			{
-				"name": "half-marathon",
-				"display_name": "half marathon",
-				"filename": "half-marathon.gpx",
+				"name": "san-francisco-run",
+				"display_name": "San Francisco run",
+				"filename": "san-francisco-run.gpx",
 				"costing": "pedestrian"
 			},
 			{
@@ -60,9 +60,9 @@ export default Ember.Route.extend(setLoading, {
 				"costing": "pedestrian"
 			},
 			{
-				"name": "auto_05_Kmart_to_Middletown_Rd",
-				"display_name": "driving trace",
-				"filename": "auto_05_Kmart_to_Middletown_Rd.gpx",
+				"name": "pennsylvania-drive",
+				"display_name": "Pennsylvania drive",
+				"filename": "Pennsylvania-drive.gpx",
 				"costing": "auto"
 			},
 			{
@@ -189,17 +189,16 @@ export default Ember.Route.extend(setLoading, {
 						"costing": "bicycle",
 						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
 						"directions_options":{"units":"miles"},
-						// "shape_match":"walk_or_snap",
 						"shape_match": "map_snap",
-						// "filters": {"attributes":["edge.names","edge.id","edge.weighted_grade","edge.speed"],"action":"include"}
 					};
 				} else {
 					var routeJson = {
 						"shape": [],
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
-						// "shape_match":"walk_or_snap",
 						"shape_match": "map_snap",
+						// only for marathon
+						"trace_options":{"turn_penalty_factor":500}
 					};
 				}
 				gpxTrace.coordinates.map(function(coord){
@@ -235,6 +234,8 @@ export default Ember.Route.extend(setLoading, {
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
 						"shape_match": "walk_or_snap",
+						// only for marathon
+						"trace_options":{"turn_penalty_factor":500}
 					};
 				}
 				var attributesRequest = Ember.$.ajax({
