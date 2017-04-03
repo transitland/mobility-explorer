@@ -157,6 +157,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         if (attributeDisplay[attribute]){
           var value = attributes[attribute].toString() + attributeDisplay[attribute].units;
           attributeArray.push({"attribute":attributeDisplay[attribute].display_name, "value":value});
+        } else if (attribute.indexOf('_') > -1){
+          var attributeWithoutUnderscore = attribute.replace(/_/gi, ' ');
+          attributeArray.push({"attribute":attributeWithoutUnderscore, "value":attributes[attribute]});
         } else {
           attributeArray.push({"attribute":attribute, "value":attributes[attribute]});
         }
