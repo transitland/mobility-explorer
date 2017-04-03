@@ -270,26 +270,26 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
             var color =  'hsl(' + hue + ', 90%, 50%)';
           }
         } else if (selectedAttribute === 'speed') {
-         if (attr >= 70)
-           var color = '#313695 ';
-         else if (attr === 65)
-           var color = '#4575b4 ';
-         else if (attr === 60)
-           var color = '#74add1 ';
-         else if (attr === 55)
-           var color = '#abd9e9 ';
-         else if (attr === 50)
-           var color = '#e0f3f8 ';
-         else if (attr === 45)
-           var color = '#fee090 ';
-         else if (attr === 40)
-           var color = '#fdae61 ';
-         else if (attr === 35)
-           var color = '#f46d43 ';
-         else if (attr === 30)
-           var color = '#d73027 ';
-         else if (attr <= 25)
-           var color = '#a50026 ';
+          if (attr >= 70)
+            var color = '#313695 ';
+          else if (attr >= 65)
+            var color = '#4575b4 ';
+          else if (attr >= 60)
+            var color = '#74add1 ';
+          else if (attr >= 55)
+            var color = '#abd9e9 ';
+          else if (attr >= 50)
+            var color = '#e0f3f8 ';
+          else if (attr >= 45)
+            var color = '#fee090 ';
+          else if (attr >= 40)
+            var color = '#fdae61 ';
+          else if (attr >= 35)
+            var color = '#f46d43 ';
+          else if (attr >= 30)
+            var color = '#d73027 ';
+          else if (attr < 30)
+            var color = '#a50026 ';
        }
         // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
         edgeCoordinates.push({
