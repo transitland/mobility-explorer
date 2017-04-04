@@ -153,7 +153,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         return "max downward grade: " + attributes.max_downward_grade + "%"; 
       }
     } else {
-      return "speed: " + attributes[selectedAttribute] + " mph";
+      return "speed limit: " + attributes[selectedAttribute] + " mph";
     }
   }),
   segmentAttributes: Ember.computed('selectedSegment', function(){
@@ -335,12 +335,15 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('showMapMatch', false);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
+      // if (trace.name !== "user_upload"){
+      //   this.set('costing',trace.costing);
+      // }
       if (trace.name === "user_upload"){
         this.set('uploading', true);
       } else {
         this.set('uploading', false);
       }
-      this.set('gpxPlaceholder', trace.display_name)
+      this.set('gpxPlaceholder', trace.display_name);
     },
     setUploading(){
       this.toggleProperty('uploading');
