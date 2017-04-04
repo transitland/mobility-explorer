@@ -22,7 +22,7 @@
     {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Try Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
-      <h4>Sample GPX Traces</h4>
+      <h4>Choose GPX file for matching</h4>
       {{#power-select
         options=model.gpxTraces
         placeholder=selectedTrace
@@ -35,13 +35,13 @@
 
       <form class="gpx-upload">
         {{#if uploading}}
-          <button type="button" class="upload-button" {{action "setUploading"}}>Map-match your own gpx file</button>
+          <button type="button" class="upload-button" {{action "setUploading"}}>Match your own GPX file</button>
           <div id="upload">
             <label class="custom-file">
               <input type="file" id="gpxFileUpload">
             </label>
             <div class="upload-options">
-              <h5>In which mode was your gpx recorded?</h5>
+              <h5>In which mode was your GPX recorded?</h5>
               {{#if (eq costing "pedestrian")}}
                 <input type="radio" id="pedestrian" name="options" checked {{action "setCosting" "pedestrian"}}><label for="pedestrian">pedestrian</label><br>
               {{else}}
@@ -64,9 +64,9 @@
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
-            <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove map-match from map</button>
+            <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove match from map</button>
             <div class="upload-options">
-              <h5>See route segment info based on:</h5>
+              <h5>Style route segments by:</h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
                 <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}>
                 <label for="style-attribute">grade</label><br>
@@ -87,12 +87,12 @@
                   <tr><th class="level" style="background-color:#4575b4;"></th><td>65 mph</td></tr>
                   <tr><th class="level" style="background-color:#74add1;"></th><td>60 mph</td></tr>
                   <tr><th class="level" style="background-color:#abd9e9;"></th><td>55 mph</td></tr>
-                  <tr><th class="level" style="background-color:#e0f3f8;"></th><td>50 mph</td></tr> 
-                  <tr><th class="level" style="background-color:#fee090;"></th><td>45 mph</td></tr> 
+                  <tr><th class="level" style="background-color:#e0f3f8;"></th><td>50 mph</td></tr>
+                  <tr><th class="level" style="background-color:#fee090;"></th><td>45 mph</td></tr>
                   <tr><th class="level" style="background-color:#fdae61;"></th><td>40 mph</td></tr>
-                  <tr><th class="level" style="background-color:#f46d43;"></th><td>35 mph</td></tr> 
-                  <tr><th class="level" style="background-color:#d73027;"></th><td>30 mph</td></tr> 
-                  <tr><th class="level" style="background-color:#a50026;"><</th><td> 25 mph or less</td></tr> 
+                  <tr><th class="level" style="background-color:#f46d43;"></th><td>35 mph</td></tr>
+                  <tr><th class="level" style="background-color:#d73027;"></th><td>30 mph</td></tr>
+                  <tr><th class="level" style="background-color:#a50026;"><</th><td> 25 mph or less</td></tr>
                 </table>
               {{/if}}
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -103,13 +103,13 @@
                     <td class="grade-mid">0%</td>
                     <td class="grade-high">{{maxUpwardGrade}}%</td>
                   </tr>
-                </table> 
+                </table>
               {{/if}}
             </div>
           {{else}}
             {{#unless showErrorMessage}}
               {{#unless this.model.gpxTrace.error_message}}
-                <button class="map-match" {{action "setShowMapMatch" trace}}>See the map-match for this trace</button>
+                <button class="map-match" {{action "setShowMapMatch" trace}}>Match this GPX</button>
               {{/unless}}
             {{/unless}}
               {{#if showErrorMessage}}
@@ -120,7 +120,7 @@
               {{/if}}
               {{#if this.model.gpxTrace.error_message}}
                 <div class="error-message">
-                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like something is wrong with your gpx file. Please try another!
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like something is wrong with your GPX file. Please try another!
                 </div>
               {{/if}}
           {{/if}}
@@ -148,7 +148,7 @@
     <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
     {{#if media.isMobile}}
       <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
-    {{/if}}            
+    {{/if}}
     <div class="location-search">
       <div class="row">
         <div class="col-md-2 ember-basic-dropdown-trigger-icon">
@@ -161,7 +161,7 @@
         {{#power-select
           search=(action "searchRepo")
           selected=place
-          placeholder=searchbarContent              
+          placeholder=searchbarContent
           onchange=(action "setPlace")
           onclose=(action "clearPlace")
           as |repo|

@@ -49,31 +49,31 @@ export default Ember.Route.extend(setLoading, {
 		let gpxTraces = [
 			{
 				"name": "san-francisco-run",
-				"display_name": "San Francisco run",
+				"display_name": "Run in San Francisco (sample)",
 				"filename": "san-francisco-run.gpx",
 				"costing": "pedestrian"
 			},
 			{
 				"name": "dc-run",
-				"display_name": "DC run",
+				"display_name": "Run in Washington, DC (sample)",
 				"filename": "dc-run.gpx",
 				"costing": "pedestrian"
 			},
 			{
 				"name": "pennsylvania-drive",
-				"display_name": "Pennsylvania drive",
+				"display_name": "Drive in Pennsylvania (sample)",
 				"filename": "Pennsylvania-drive.gpx",
 				"costing": "auto"
 			},
 			{
 				"name": "maryland-bike-ride",
-				"display_name": "Maryland bike ride",
+				"display_name": "Bike ride in Maryland (sample)",
 				"filename": "maryland-bike-ride.gpx",
 				"costing": "bicycle"
 			},
 			{
 				"name": "user_upload",
-				"display_name": "...or try map-matching your own gpx!",
+				"display_name": "Match your own GPX file...",
 				"filename": "",
 				"costing": "",
 				"error_message": ""
@@ -120,7 +120,7 @@ export default Ember.Route.extend(setLoading, {
 		if (gpxTrace.name == 'user_upload') {
 			return this.getLocalGPX(gpxTrace);
 		} else {
-			return this.getRemoteGPX(gpxTrace);	
+			return this.getRemoteGPX(gpxTrace);
 		}
 	},
 
@@ -152,7 +152,7 @@ export default Ember.Route.extend(setLoading, {
 		} else if (element != null) {
 			var uploadedTrace = element.files[0];
 			if (uploadedTrace != null) {
-				fixtures[fixtures.length - 1].display_name = "your trace";
+				fixtures[fixtures.length - 1].display_name = "your GPX file";
 				fixtures[fixtures.length - 1].costing = params.costing;
 				gpxTrace = fixtures[fixtures.length - 1]
 			}
@@ -170,7 +170,7 @@ export default Ember.Route.extend(setLoading, {
 					gpxObj = result.gpx.trk;
 				});
 				if (gpxObj === "error"){
-					gpxTrace.error_message = "error" 
+					gpxTrace.error_message = "error"
 					return gpxTrace
 				}
 				gpxObj[0].trkseg[0].trkpt.map(function(coord){
@@ -218,10 +218,10 @@ export default Ember.Route.extend(setLoading, {
 					routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
 				});
 				// trace_route request
-				return Ember.$.ajax({ 
-					type:"POST", 
-					url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&', 
-					data:JSON.stringify(routeJson) 
+				return Ember.$.ajax({
+					type:"POST",
+					url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
+					data:JSON.stringify(routeJson)
 				});
 			})
 			.then(function(response){
