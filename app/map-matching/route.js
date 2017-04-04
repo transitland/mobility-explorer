@@ -261,7 +261,7 @@ export default Ember.Route.extend(setLoading, {
 					attributesRequest: attributesRequest
 				});
 			}, function(error) {
-				return "request error";
+				return {"error": error.responseJSON.error};
 			});
 		}
     // Issue promise with both gpxTrace model and trace_route request

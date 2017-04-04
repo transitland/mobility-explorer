@@ -14,6 +14,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   costing: null,
   uploading: false,
   showMapMatch: false,
+  errorMessage: null,
   showErrorMessage: false,
   showTraceErrorMessage: false,
   selectedAttribute: null,
@@ -346,7 +347,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.toggleProperty('uploading');
     },
     setShowMapMatch(){
-      if (this.model.mapMatchRequests === "request error"){
+      if (this.model.mapMatchRequests.error){
+        this.set('errorMessage', this.model.mapMatchRequests.error);
         this.set('showErrorMessage', true);
       } else if (this.get('showMapMatch')){
         this.set('showMapMatch', false);
