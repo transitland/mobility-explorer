@@ -729,9 +729,44 @@ td.day.active.today:hover {
   }
 }
 
-.error-message{
+.error-message {
   background-color: $pink;
   border: 2px solid $mapzen-red;
   padding: 10px;
   font-size: smaller;
+}
+
+.legend {
+  font-size: 14px;
+  margin-left: 25px;
+  margin-top: 10px;
+  td {
+    padding-left: 5px;
+  }
+  .level {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.grade-gradient {
+  height: 25px;
+  background: linear-gradient(to right, red , yellow, hsl(120, 90%, 50%))
+}
+
+.grade-legend{
+  width: 100%;
+  margin-top: 15px;
+  .grade-low {
+    text-align: left;
+    padding-top: 5px;
+  }
+  .grade-mid {
+    text-align: center;
+    padding-top: 5px;
+  }
+  .grade-high {
+    text-align: right;
+    padding-top: 5px;
+  }
 }
