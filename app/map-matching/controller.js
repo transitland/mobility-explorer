@@ -31,6 +31,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   gpxPlaceholder: "Select a sample GPX trace...",
   edges: null,
+  maxUpwardGrade: null,
+  maxDownwardGrade: null,
   attributesForSelection: [{ attribute: "weighted_grade", display_name: "grade" }, { attribute: "speed", display_name: "speed" }],
   html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
   hoverSegment: null,
@@ -226,8 +228,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       attributeArray.sort(function(a,b){return a - b;});
       // find the minimum value in attributeArray
       var attributeArrayMin = attributeArray[0];
+      this.set('maxDownwardGrade', attributeArrayMin);
       // find the maximum value in attributeArray
       var attributeArrayMax = attributeArray[attributeArray.length-1];
+      this.set('maxUpwardGrade', attributeArrayMax);
       // find the average value for the attribute
       var attributeArrayAverage = attributeArraySum / attributeArray.length;
       // find the median value for the attribute (to use to test with different attributes)
@@ -239,16 +243,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         var end =  edges[i].end_shape_index;
         var pointsSlice = points.slice(begin, end+1);
         var attributes = edges[i];    
-        var mid = attributeArrayAverage;
+        var mid = 0;
+        // var mid = attributeArrayAverage;
         // var mid = attributeArrayMedian;  
         var min = attributeArrayMin;
         var max = attributeArrayMax;
       
-        // may want to set midpoing to zero for grade attributes
-        // if (this.get('styleAttribute') === "weighted_grade"){
-        //   mid = 0;
-        // }
-
         var attr = edges[i][selectedAttribute];
         
         // find color
@@ -266,7 +266,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 
           var range = attributeArrayMax - attributeArrayMin;
           var percentage = (attr + attributeArrayMin) / range;
-
           var highColor = 0;
           var midColor = 120;
           var lowColor = 280;
