@@ -48,36 +48,38 @@
 		    {{/power-select}}
 		    {{#unless hoverRoute}}
 	  			<p class="caption">{{routeSelectContent}}</p>
-					<form>
-						<strong>Operated by:</strong> {{operated_by}}<br>
-					  <row class="subheading-row">
-							<div class="form-group-header sidebar-header col-md-10">Style routes by:
-							&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
-							{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
-						</row>
-					  <div class="form-group">
-					  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
-					  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
-					    <label for="radio-1">Mode</label>
-					    <div class="sidebar-dropdown">
-					    {{#if (eq style_routes_by "mode")}}
-					    	{{#unless vehicle_type}}
-							    {{#power-select
-							    	options=routeModes
-							      selected=mode
-										placeholder=placeholderMessageModes
-										searchPlaceholder="Type to filter..."
-							      onchange=(action "setMode")
-						        onclose=(action "clearMode")
-							      as |mode|
-							    }}
-								    <div style={{mode.style}}>{{mode.name}}</div>
-								  {{/power-select}}
-								{{/unless}}
-					  	{{/if}}
+	  			<div class="routes-form">
+						<form>
+							<strong>Operated by:</strong> {{operated_by}}<br>
+						  <row class="subheading-row">
+								<div class="form-group-header sidebar-header col-md-10">Style routes by:
+								&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
+								{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
+							</row>
+						  <div class="form-group">
+						  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
+						  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
+						    <label for="radio-1">Mode</label>
+						    <div class="sidebar-dropdown">
+						    {{#if (eq style_routes_by "mode")}}
+						    	{{#unless vehicle_type}}
+								    {{#power-select
+								    	options=routeModes
+								      selected=mode
+											placeholder=placeholderMessageModes
+											searchPlaceholder="Type to filter..."
+								      onchange=(action "setMode")
+							        onclose=(action "clearMode")
+								      as |mode|
+								    }}
+									    <div style={{mode.style}}>{{mode.name}}</div>
+									  {{/power-select}}
+									{{/unless}}
+						  	{{/if}}
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 		  {{/unless}}
 			{{#each model.routes as |route|}}
 				{{#if (eq hoverRoute route.onestop_id)}}
