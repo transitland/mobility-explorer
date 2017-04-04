@@ -68,14 +68,18 @@
             <div class="upload-options">
               <h5>See route segment info based on:</h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
-                <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}><label for="style-attribute">grade</label><br>
+                <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}>
+                <label for="style-attribute">grade</label><br>
               {{else}}
-                <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}><label for="style-attribute">grade</label><br>
+                <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}>
+                <label for="style-attribute">grade</label><br>
               {{/if}}
               {{#if (eq selectedAttribute "speed")}}
-                <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>
+                <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}>
+                <label for="style-attribute">speed&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click" side="right" duration=3000 spacing=10}}The speed limit is used when one exists. If there is no speed limit information available for a given segment, the speed attribute value is used.{{/popover-on-element}}<br></label><br>
               {{else}}
-                <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}><label for="style-attribute">speed</label><br>
+                <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}>
+                <label for="style-attribute">speed&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click" side="right" duration=3000 spacing=10}}The speed limit is used when one exists. If there is no speed limit information available for a given segment, the speed attribute value is used.{{/popover-on-element}}</label><br>
               {{/if}}
             </div>
           {{else}}
