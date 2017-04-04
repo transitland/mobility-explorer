@@ -37,12 +37,6 @@
         {{#if uploading}}
           <button type="button" class="upload-button" {{action "setUploading"}}>Map-match your own gpx file</button>
           <div id="upload">
-            {{#if showErrorMessage}}
-              We're sorry, but it looks like the map-matching service returned an error. If you would like help processing your gpx file, please email it to (support email address here).
-            {{/if}}
-            {{#if this.model.gpxTrace.error_message}}
-              We're sorry, but it looks like something is wrong with your gpx file. Please try another!
-            {{/if}}
             <label class="custom-file">
               <input type="file" id="gpxFileUpload">
             </label>
@@ -93,7 +87,7 @@
               {{#if showErrorMessage}}
                 <div class="error-message">
                   <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like the map-matching service has returned an error.<br><br>
-                  If you would like help processing your gpx file, please email it to (support email address here).
+                  If you would like help processing your gpx file, please email it to routing@mapzen.com.
                 </div>
               {{/if}}
               {{#if this.model.gpxTrace.error_message}}
