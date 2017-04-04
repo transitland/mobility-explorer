@@ -217,6 +217,9 @@ export default Ember.Route.extend(setLoading, {
 				gpxTrace.coordinates.map(function(coord){
 					routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
 				});
+
+				// gpxTrace.linkUrl = 
+				// debugger;
 				// trace_route request
 				return Ember.$.ajax({ 
 					type:"POST", 
@@ -256,6 +259,10 @@ export default Ember.Route.extend(setLoading, {
 					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
 					data: JSON.stringify(attributesJson)
 				});
+				var jsonForLink = attributesJson;
+				jsonForLink.link = '';
+				// gpxTrace.data = JSON.stringify(jsonForLink).slice(0,-2);
+				gpxTrace.data = JSON.stringify(jsonForLink);
 				return Ember.RSVP.hash({
 					decodedPolyline: decodedPolyline,
 					attributesRequest: attributesRequest
@@ -268,7 +275,7 @@ export default Ember.Route.extend(setLoading, {
 		return Ember.RSVP.hash({
 			gpxTraces: fixtures,
 			gpxTrace: gpxTrace,
-			mapMatchRequests: mapMatchRequests
+			mapMatchRequests: mapMatchRequests,
 		})
 	},
 

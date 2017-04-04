@@ -141,6 +141,20 @@
       </form>
     </div>
   </div>
+  <form method="post" action="https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&" class="inline">
+    <input type="hidden" name={{this.model.gpxTrace.data}} value='}'>
+    <button type="submit" class="link-button">
+      This is a link that sends a POST request
+    </button>
+  </form>
+  {{#if showMapMatch}}
+    {{#unless selectedAttribute}}
+      {{url-builder url=model.linkUrl server="Mapzen Trace-Route" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}
+    {{/unless}}
+  {{/if}}
+  {{#if selectedAttribute}}
+    {{url-builder url=model.linkUrl server="Mapzen Trace-Attribute" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}
+  {{/if}}
 </div>
 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
   <div class="row">
