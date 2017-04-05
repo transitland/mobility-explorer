@@ -211,7 +211,7 @@
             {{/if}}
             {{#if selectedAttribute}}
               {{#each traceAttributeSegments as |segment|}}
-                {{#polyline-layer locations=segment.coordinates color="#444444" weight=7 opacity=1}}
+                {{#polyline-layer locations=segment.coordinates color="#444444" clickable=false weight=7 opacity=1}}
                 {{/polyline-layer}}
               {{/each}}
               {{#each traceAttributeSegments as |segment|}}
