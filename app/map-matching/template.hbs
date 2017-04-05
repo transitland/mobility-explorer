@@ -230,12 +230,12 @@
             {{/if}}
           {{/leaflet-map}}
         {{else}}
-          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
             {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
           {{/leaflet-map}}
         {{/unless}}
       {{else}}
-        {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+        {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
         {{/leaflet-map}}
       {{/if}}
