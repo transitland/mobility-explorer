@@ -196,14 +196,14 @@ export default Ember.Route.extend(setLoading, {
 						"costing": "bicycle",
 						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
 						"directions_options":{"units":"miles"},
-						"shape_match": "walk_or_snap",
+						"shape_match": "map_snap",
 					};
 				} else if (params.trace === "san-francisco-run"){
 					routeJson = {
 						"shape": [],
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
-						"shape_match": "walk_or_snap",
+						"shape_match": "map_snap",
 						// only for marathon
 						"trace_options":{"turn_penalty_factor":500}
 					};
@@ -212,7 +212,7 @@ export default Ember.Route.extend(setLoading, {
 						"shape": [],
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
-						"shape_match": "walk_or_snap",
+						"shape_match": "map_snap",
 					};
 				}
 				gpxTrace.coordinates.map(function(coord){
@@ -241,14 +241,14 @@ export default Ember.Route.extend(setLoading, {
 						"costing": "bicycle",
 						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
 						"directions_options":{"units":"miles"},
-						"shape_match": "walk_or_snap",
+						"shape_match": "map_snap",
 					};
 				} else if (params.trace === "san-francisco-run"){
 				  attributesJson = {
 						"encoded_polyline": encodedPolyline,
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
-						"shape_match": "walk_or_snap",
+						"shape_match": "map_snap",
 						// only for marathon
 						"trace_options":{"turn_penalty_factor":500}
 					};
@@ -257,7 +257,7 @@ export default Ember.Route.extend(setLoading, {
 						"encoded_polyline": encodedPolyline,
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
-						"shape_match": "walk_or_snap",
+						"shape_match": "map_snap",
 					};
 				}
 				var attributesRequest = Ember.$.ajax({
