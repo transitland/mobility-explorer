@@ -189,7 +189,7 @@
       </div>
       {{#if this.model.gpxTrace}}
         {{#unless this.model.gpxTrace.error_message}}
-          {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+          {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox")}}
             {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
             {{#if pin}}
               {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
@@ -230,12 +230,12 @@
             {{/if}}
           {{/leaflet-map}}
         {{else}}
-          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
             {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
           {{/leaflet-map}}
         {{/unless}}
       {{else}}
-        {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
+        {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
           {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
         {{/leaflet-map}}
       {{/if}}
