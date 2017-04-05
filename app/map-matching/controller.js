@@ -16,6 +16,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   showMapMatch: false,
   errorMessage: null,
   showErrorMessage: false,
+  noTraceUploaded: false,
   showTraceErrorMessage: false,
   selectedAttribute: null,
   selectedTrace: Ember.computed('trace', function(){
@@ -386,6 +387,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('selectedSegment', segment);      
     },
     setCosting(mode){
+      this.set('noTraceUploaded', false);
       this.set('trace', null);
       if (this.get('costing') === mode){
         this.set('costing', null);
@@ -393,10 +395,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('costing', mode);
       }
       if (window.File && window.FileReader && window.FileList && window.Blob) {
-        this.set('gpxPlaceholder', 'your trace');
-        this.set('uploading', false);
-        this.set('selectedAttribute', null);
-        this.set('trace', 'user_upload');
+        if (document.getElementById('gpxFileUpload').files.length > 0){
+          this.set('gpxPlaceholder', 'your trace');
+          this.set('uploading', false);
+          this.set('selectedAttribute', null);
+          this.set('trace', 'user_upload');
+        } else {
+          this.set('noTraceUploaded', true);
+          this.set('costing', null);
+        }
+        
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
       }
