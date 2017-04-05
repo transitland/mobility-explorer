@@ -328,6 +328,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('costing', null);
       this.set('showErrorMessage', false);
       this.set('showTraceErrorMessage', false);
+      this.set('noTraceUploaded', false);
       this.set('uploading', false);
       if (document.getElementById('gpxFileUpload')){
         document.getElementById('gpxFileUpload').value = "";
