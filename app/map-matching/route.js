@@ -93,7 +93,7 @@ export default Ember.Route.extend(setLoading, {
 		};
 		reader.onerror = function(e) {
 			deferred.reject(this);
-		}
+		};
 		reader.readAsText(uploadedTrace);
 		return deferred.promise;
 	},
@@ -113,11 +113,11 @@ export default Ember.Route.extend(setLoading, {
 				var str = s.serializeToString(response);
 				return str;
 			}
-		})
+		});
 	},
 
 	getGPXTrace: function(gpxTrace) {
-		if (gpxTrace.name == 'user_upload') {
+		if (gpxTrace.name === 'user_upload') {
 			return this.getLocalGPX(gpxTrace);
 		} else {
 			return this.getRemoteGPX(gpxTrace);
@@ -132,7 +132,7 @@ export default Ember.Route.extend(setLoading, {
 			if (params.trace === "user_upload"){
 				this.transitionTo('map-matching',  {queryParams: {trace: null, costing: null}});
 			}
-		};
+		}
 		this.store.unloadAll('data/transitland/operator');
 		this.store.unloadAll('data/transitland/stop');
 		this.store.unloadAll('data/transitland/route');
@@ -143,7 +143,7 @@ export default Ember.Route.extend(setLoading, {
 		var mapMatchRequests = null;
 
 		var element = document.getElementById('gpxFileUpload');
-		if (params.trace != null && params.trace != 'user_upload') {
+		if (params.trace !== null && params.trace !== 'user_upload') {
 			for (var i = 0; i < fixtures.length; i++){
 				if (fixtures[i].name === params.trace){
 					gpxTrace = fixtures[i];
@@ -154,7 +154,7 @@ export default Ember.Route.extend(setLoading, {
 			if (uploadedTrace != null) {
 				fixtures[fixtures.length - 1].display_name = "your GPX file";
 				fixtures[fixtures.length - 1].costing = params.costing;
-				gpxTrace = fixtures[fixtures.length - 1]
+				gpxTrace = fixtures[fixtures.length - 1];
 			}
 		}
 
@@ -170,8 +170,8 @@ export default Ember.Route.extend(setLoading, {
 					gpxObj = result.gpx.trk;
 				});
 				if (gpxObj === "error"){
-					gpxTrace.error_message = "error"
-					return gpxTrace
+					gpxTrace.error_message = "error";
+					return gpxTrace;
 				}
 				gpxObj[0].trkseg[0].trkpt.map(function(coord){
 					gpxTrace.coordinates.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
@@ -188,30 +188,31 @@ export default Ember.Route.extend(setLoading, {
 				var bounds = L.latLngBounds(gpxTrace.coordinates);
 				var boundsArray = [[bounds._southWest.lat, bounds._southWest.lng],[bounds._northEast.lat,bounds._northEast.lng]];
      		gpxTrace.bounds = boundsArray;
+     		var routeJson = {};
 				// Build the trace_route request
-				if (params.costing === "bicycle"){
-					var routeJson = {
+				if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
+					routeJson = {
 						"shape": [],
 						"costing": "bicycle",
 						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
 						"directions_options":{"units":"miles"},
-						"shape_match": "map_snap",
+						"shape_match": "walk_or_snap",
 					};
 				} else if (params.trace === "san-francisco-run"){
-					var routeJson = {
+					routeJson = {
 						"shape": [],
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
-						"shape_match": "map_snap",
+						"shape_match": "walk_or_snap",
 						// only for marathon
 						"trace_options":{"turn_penalty_factor":500}
 					};
 				} else {
-					var routeJson = {
+					routeJson = {
 						"shape": [],
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
-						"shape_match": "map_snap",
+						"shape_match": "walk_or_snap",
 					};
 				}
 				gpxTrace.coordinates.map(function(coord){
@@ -233,22 +234,30 @@ export default Ember.Route.extend(setLoading, {
 				// decodedPolyline needed for rendering trace_route response on map
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 				// Build the trace_attribute request
-				if (params.costing === "bicycle"){
-					var attributesJson = {
+				var attributesJson = {};
+				if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
+					attributesJson = {
 						"encoded_polyline": encodedPolyline,
 						"costing": "bicycle",
 						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
 						"directions_options":{"units":"miles"},
 						"shape_match": "walk_or_snap",
 					};
-				} else {
-					var attributesJson = {
+				} else if (params.trace === "san-francisco-run"){
+				  attributesJson = {
 						"encoded_polyline": encodedPolyline,
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
 						"shape_match": "walk_or_snap",
 						// only for marathon
 						"trace_options":{"turn_penalty_factor":500}
+					};
+				} else {
+					attributesJson = {
+						"encoded_polyline": encodedPolyline,
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						"shape_match": "walk_or_snap",
 					};
 				}
 				var attributesRequest = Ember.$.ajax({
@@ -269,7 +278,7 @@ export default Ember.Route.extend(setLoading, {
 			gpxTraces: fixtures,
 			gpxTrace: gpxTrace,
 			mapMatchRequests: mapMatchRequests
-		})
+		});
 	},
 
 	actions: {
