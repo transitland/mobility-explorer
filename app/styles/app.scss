@@ -76,7 +76,6 @@ button {
 .mapzen-logo{
   background-position: 0 0;
   margin: 0 auto;
-  background-image: url(https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png);
 }
 
 .no-margin {
@@ -492,6 +491,7 @@ input, button, select, textarea {
   outline-width: 2px;
   background-color: $mapzen-blue;
   margin: 0;
+  border-radius: 0;
   &:hover{
     color: $mapzen-dark-blue;
   }
@@ -765,5 +765,13 @@ td.day.active.today:hover {
   .grade-high {
     text-align: right;
     padding-top: 5px;
+  }
+}
+
+.mapzen-logo {
+  background-image: url('https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png');
+  &:hover {
+    background-image: url('https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png');
+    background-position: 0 0;
   }
 }
