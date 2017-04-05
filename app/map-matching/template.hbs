@@ -215,7 +215,7 @@
                 {{/polyline-layer}}
               {{/each}}
               {{#each traceAttributeSegments as |segment|}}
-                {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onClick=(action "setSegment" segment)}}
+                {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onPopupclose=(action "closePopup") onClick=(action "setSegment" segment)}}
                   {{segmentPopupContent}}
                 {{/polyline-layer}}
               {{/each}}

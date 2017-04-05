@@ -400,6 +400,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
       }
+    },
+    closePopup(){
+      this.set('selectedSegment', null);      
     }
   }
 });
