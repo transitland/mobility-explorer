@@ -49,25 +49,25 @@ export default Ember.Route.extend(setLoading, {
 		let gpxTraces = [
 			{
 				"name": "san-francisco-run",
-				"display_name": "Run in San Francisco (sample)",
+				"display_name": "Run in San Francisco",
 				"filename": "san-francisco-run.gpx",
 				"costing": "pedestrian"
 			},
 			{
 				"name": "dc-run",
-				"display_name": "Run in Washington, DC (sample)",
+				"display_name": "Run in Washington, DC",
 				"filename": "dc-run.gpx",
 				"costing": "pedestrian"
 			},
 			{
 				"name": "pennsylvania-drive",
-				"display_name": "Drive in Pennsylvania (sample)",
+				"display_name": "Drive in Pennsylvania",
 				"filename": "Pennsylvania-drive.gpx",
 				"costing": "auto"
 			},
 			{
 				"name": "maryland-bike-ride",
-				"display_name": "Bike ride in Maryland (sample)",
+				"display_name": "Bike ride in Maryland",
 				"filename": "maryland-bike-ride.gpx",
 				"costing": "bicycle"
 			},

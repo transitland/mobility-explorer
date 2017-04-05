@@ -20,7 +20,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   selectedAttribute: null,
   selectedTrace: Ember.computed('trace', function(){
     if (!this.get('trace')) {
-      return "Select a sample GPX trace...";
+      return "Select a sample or upload your own file";
     } else if (this.get('trace') && this.get('gpxPlaceholder') === "Select a sample GPX trace..."){
       return this.model.gpxTrace.display_name;
     } else if (this.get('trace') && this.get('trace').name === "user_upload"){

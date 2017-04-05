@@ -22,10 +22,14 @@
     {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Try Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
-      <h4>Choose GPX file for matching</h4>
+      {{#unless trace}}
+        <div class="caption">Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
+      {{/unless}}
+      <h5>Choose a GPX file for matching</h5>
       {{#power-select
         options=model.gpxTraces
         placeholder=selectedTrace
+        searchEnabled=false
         searchPlaceholder="Type to filter..."
         onchange=(action "setTrace")
         as |trace|
@@ -66,7 +70,7 @@
           {{#if showMapMatch}}
             <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove match from map</button>
             <div class="upload-options">
-              <h5>Style route segments by:</h5>
+              <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
                 <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}>
                 <label for="style-attribute">grade</label><br>
@@ -74,28 +78,33 @@
                 <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}>
                 <label for="style-attribute">grade</label><br>
               {{/if}}
-                {{#if (eq selectedAttribute "speed")}}
-                  <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}>
-                  <label for="style-attribute">speed limit&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click" side="right" duration=3000 spacing=10}}The speed limit is used when one exists. If there is no speed limit information available for a given segment, a default speed value for that classification of road is used.{{/popover-on-element}}<br></label><br>
-                {{else}}
-                  <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}>
-                  <label for="style-attribute">speed limit&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click" side="right" duration=3000 spacing=10}}The speed limit is used when one exists. If there is no speed limit information available for a given segment, a default speed value for that classification of road is used.{{/popover-on-element}}</label><br>
-                {{/if}}
               {{#if (eq selectedAttribute "speed")}}
+                <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}>
+                <label for="style-attribute">speed limit</label>
+              {{else}}
+                <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}>
+                <label for="style-attribute">speed limit</label>
+              {{/if}}
+              {{#if selectedAttribute}}
+                <br><br><div class="caption">Click a segment on the map to see detailed attributes.</div>
+              {{/if}}
+              {{#if (eq selectedAttribute "speed")}}
+                <h5>Speed, in miles per hour</h5>
                 <table class="legend">
-                  <tr><th class="level" style="background-color:#313695;"></th><td>70 mph or more</td></tr>
-                  <tr><th class="level" style="background-color:#4575b4;"></th><td>65 mph</td></tr>
-                  <tr><th class="level" style="background-color:#74add1;"></th><td>60 mph</td></tr>
-                  <tr><th class="level" style="background-color:#abd9e9;"></th><td>55 mph</td></tr>
-                  <tr><th class="level" style="background-color:#e0f3f8;"></th><td>50 mph</td></tr>
-                  <tr><th class="level" style="background-color:#fee090;"></th><td>45 mph</td></tr>
-                  <tr><th class="level" style="background-color:#fdae61;"></th><td>40 mph</td></tr>
-                  <tr><th class="level" style="background-color:#f46d43;"></th><td>35 mph</td></tr>
-                  <tr><th class="level" style="background-color:#d73027;"></th><td>30 mph</td></tr>
-                  <tr><th class="level" style="background-color:#a50026;"><</th><td> 25 mph or less</td></tr>
+                  <tr><th class="level" style="background-color:#313695;"></th><td>70 or more</td></tr>
+                  <tr><th class="level" style="background-color:#4575b4;"></th><td>65</td></tr>
+                  <tr><th class="level" style="background-color:#74add1;"></th><td>60</td></tr>
+                  <tr><th class="level" style="background-color:#abd9e9;"></th><td>55</td></tr>
+                  <tr><th class="level" style="background-color:#e0f3f8;"></th><td>50</td></tr>
+                  <tr><th class="level" style="background-color:#fee090;"></th><td>45</td></tr>
+                  <tr><th class="level" style="background-color:#fdae61;"></th><td>40</td></tr>
+                  <tr><th class="level" style="background-color:#f46d43;"></th><td>35</td></tr>
+                  <tr><th class="level" style="background-color:#d73027;"></th><td>30</td></tr>
+                  <tr><th class="level" style="background-color:#a50026;"></th><td>25 or less</td></tr>
                 </table>
               {{/if}}
               {{#if (eq selectedAttribute "weighted_grade")}}
+                <h5>Route segment grade</h5>
                 <table class="grade-legend">
                   <tr><th colspan="3" class="grade-gradient"></th></tr>
                   <tr>
@@ -127,6 +136,7 @@
         {{/if}}
         {{#if selectedSegment}}
           <div class="gpx-upload">
+            <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Mapzen Mobility routing calculations.<br>Read more about segment attributes in the <a href="https://mapzen.com/documentation/mobility/map-matching/api-reference/#outputs-of-trace_attributes">Map Matching documentation</a>.{{/popover-on-element}}</h5>
             <table class="table">
               {{#each segmentAttributes as | segment |}}
                 {{#unless (eq segment.attribute "skip")}}
