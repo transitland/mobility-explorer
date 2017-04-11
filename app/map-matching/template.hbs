@@ -44,6 +44,11 @@
             <label class="custom-file">
               <input type="file" id="gpxFileUpload">
             </label>
+            {{#if noTraceUploaded}}
+              <div class="error-message">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Please choose a file and then select a mode.
+              </div>
+            {{/if}}
             <div class="upload-options">
               <h5>In which mode was your GPX recorded?</h5>
               {{#if (eq costing "pedestrian")}}
