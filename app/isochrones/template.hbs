@@ -45,7 +45,7 @@
 							{{#if (eq isochrone_mode "bicycle")}}
 								{{isochrone-legend isochrone_mode=isochrone_mode showIsochrone=showIsochrone action="setIsochrone"}}
 							{{/if}}
-							
+
 							{{#if (eq isochrone_mode "auto")}}
 								<input type="radio" id="radio-3" name="options" checked {{action "setIsochroneMode" "auto"}}>
 							{{else}}
@@ -121,7 +121,7 @@
 												{{else}}
 													<input type="checkbox" name="exclude-operator" {{action "excludeOperator" operator}}>
 												<label></label>
-													
+
 												{{/if}}
 											</td>
 											<td>{{operator.name}}</td>
@@ -139,7 +139,7 @@
 									<tr>
 										<th style="min-width:5ch;padding-right:5px">Incl.</th>
 										<th style="min-width:5ch;padding-right:5px">Excl.</th>
-										<th>Operator</th>
+										<th>Route</th>
 									</tr>
 									{{#if (gt exclude_operators.length 0)}}
 										{{#each model.routes as |route|}}
@@ -232,10 +232,10 @@
 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
 	<div class="row">
 		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-		<div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}> 
+		<div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 		{{#if media.isMobile}}
 			<button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
-		{{/if}}       
+		{{/if}}
 			<div class="location-search">
 					<div class="row">
 						<div class="col-md-2 ember-basic-dropdown-trigger-icon">
@@ -293,4 +293,4 @@
 			{{/leaflet-map}}
 		</div>
 	</div>
-</div>  
+</div>
