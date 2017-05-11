@@ -225,7 +225,6 @@
 				{{/if}}
 			</form>
 		</div>
-		{{#link-to 'map-matching' (query-params bbox=bbox pin=null onestop_id=null isochrone_mode=null departure_time=null include_operators=null exclude_operators=null include_routes=null exclude_routes=null stop=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
 	</div>
 	{{#if isochrone_mode}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
 </div>
