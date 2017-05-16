@@ -230,11 +230,11 @@
 </div>
 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
 	<div class="row">
-		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-		<div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 		{{#if media.isMobile}}
 			<button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
 		{{/if}}
+		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+		<div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 			<div class="location-search">
 					<div class="row">
 						<div class="col-md-2 ember-basic-dropdown-trigger-icon">
