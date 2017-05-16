@@ -701,20 +701,6 @@ td.day.active.today:hover {
   }
 }
 
-.collapsed {
-  color: $white;
-  background-color: $mapzen-blue;
-  margin: 0;
-  &:hover{
-    color: $mapzen-dark-blue;
-  }
-  &:after{
-    font-family: FontAwesome;
-    margin-left: 10px;
-    content: "\f0d7";
-  }
-}
-
 .error-message {
   background-color: $pink;
   border: 2px solid $mapzen-red;
