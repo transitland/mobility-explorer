@@ -62,7 +62,9 @@
   </div>
 <div class="col-md-8">
   <!-- <div class="row"> -->
-    
+    <!-- {{#if media.isMobile}}
+      <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+    {{/if}}  -->
     {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
     <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
       <div class="location-search">
@@ -105,6 +107,6 @@
             {{/marker-layer}}
           {{/if}}
       {{/leaflet-map}}
-    </div>
-  <!-- </div> -->
+    <!-- </div> -->
+  </div>
 </div>
