@@ -56,6 +56,9 @@
       <div class="btn-group-vertical" role="group" >
       {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null isochrone_mode=null pin=pin)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
     </div>
+    {{#each model as |operator|}}
+      {{operator.id}}<br>
+    {{/each}}
   </div>
 <div class="col-md-8">
   <div class="row">
