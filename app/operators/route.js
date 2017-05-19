@@ -5,7 +5,7 @@ import setLoading from 'mobility-playground/mixins/set-loading';
 export default Ember.Route.extend(mapBboxRoute, setLoading, {
   queryParams: {
     onestop_id: {
-      // replace: true,
+      replace: true,
       refreshModel: true
     },
     bbox: {
