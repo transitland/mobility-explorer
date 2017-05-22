@@ -141,8 +141,8 @@ export default Ember.Route.extend(setLoading, {
 		var fixtures = this.fixtures();
 		var gpxTrace;
 		var mapMatchRequests = null;
-
 		var element = document.getElementById('gpxFileUpload');
+
 		if (params.trace !== null && params.trace !== 'user_upload') {
 			for (var i = 0; i < fixtures.length; i++){
 				if (fixtures[i].name === params.trace){
@@ -162,7 +162,7 @@ export default Ember.Route.extend(setLoading, {
 			mapMatchRequests = this.getGPXTrace(gpxTrace).then(function(response){
 				gpxTrace.coordinates = [];
 				var gpxObj;
-				// 112 & 114 should be rewritten using xpath
+
 				xml2js.parseString(response, function (err, result){
 					if(err){
 						return gpxObj = "error";
@@ -188,56 +188,13 @@ export default Ember.Route.extend(setLoading, {
 				var bounds = L.latLngBounds(gpxTrace.coordinates);
 				var boundsArray = [[bounds._southWest.lat, bounds._southWest.lng],[bounds._northEast.lat,bounds._northEast.lng]];
      		gpxTrace.bounds = boundsArray;
-     		var routeJson = {};
-				// Build the trace_route request
-				if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
-					routeJson = {
-						"shape": [],
-						"costing": "bicycle",
-						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
-						"directions_options":{"units":"miles"},
-						"shape_match": "map_snap",
-					};
-				} else if (params.trace === "san-francisco-run"){
-					routeJson = {
-						"shape": [],
-						"costing": gpxTrace.costing,
-						"directions_options":{"units":"miles"},
-						"shape_match": "map_snap",
-						// only for marathon
-						"trace_options":{"turn_penalty_factor":500}
-					};
-				} else {
-					routeJson = {
-						"shape": [],
-						"costing": gpxTrace.costing,
-						"directions_options":{"units":"miles"},
-						"shape_match": "map_snap",
-					};
-				}
-				gpxTrace.coordinates.map(function(coord){
-					routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
-				});
-				// trace_route request
-				return Ember.$.ajax({
-					type:"POST",
-					url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
-					data:JSON.stringify(routeJson)
-				});
-			})
-			.then(function(response){
-				if (response.error_message === "error"){
-					return "trace error";
-				}
-				// encodedPolyline needed for trace_attribute request
-				var encodedPolyline = response.trip.legs[0].shape;
-				// decodedPolyline needed for rendering trace_route response on map
-				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
-				// Build the trace_attribute request
+     		var attributesJson = {};
+
+				// UPDATE: Build the trace_attribute request
 				var attributesJson = {};
 				if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
 					attributesJson = {
-						"encoded_polyline": encodedPolyline,
+						"shape": [],
 						"costing": "bicycle",
 						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
 						"directions_options":{"units":"miles"},
@@ -245,7 +202,7 @@ export default Ember.Route.extend(setLoading, {
 					};
 				} else if (params.trace === "san-francisco-run"){
 				  attributesJson = {
-						"encoded_polyline": encodedPolyline,
+						"shape": [],
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
 						"shape_match": "map_snap",
@@ -254,20 +211,68 @@ export default Ember.Route.extend(setLoading, {
 					};
 				} else {
 					attributesJson = {
+						"shape": [],
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						"shape_match": "map_snap",
+					};
+				}
+
+				gpxTrace.coordinates.map(function(coord){
+					attributesJson.shape.push({"lat":coord[0],"lon":coord[1]});
+				});
+
+				// trace_attributes request
+				return Ember.$.ajax({
+					type:"POST",
+					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
+					data:JSON.stringify(attributesJson)
+				});
+			})
+			.then(function(response){
+				if (response.error_message === "error"){
+					return "trace error";
+				}
+				// encodedPolyline needed for trace_attribute request
+				var encodedPolyline = response.shape;
+				// decodedPolyline needed for rendering trace_route response on map
+				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
+				
+				// Build the trace_route request	
+				var routeJson = {};
+				if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
+					routeJson = {
+						"encoded_polyline": encodedPolyline,
+						"costing": "bicycle",
+						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
+						"directions_options":{"units":"miles"},
+						"shape_match": "map_snap",
+					};
+				} else if (params.trace === "san-francisco-run"){
+				  routeJson = {
+						"encoded_polyline": encodedPolyline,
+						"costing": gpxTrace.costing,
+						"directions_options":{"units":"miles"},
+						"shape_match": "map_snap",
+						// only for marathon
+						"trace_options":{"turn_penalty_factor":500}
+					};
+				} else {
+					routeJson = {
 						"encoded_polyline": encodedPolyline,
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
 						"shape_match": "map_snap",
 					};
 				}
-				var attributesRequest = Ember.$.ajax({
+				var routeRequest = Ember.$.ajax({
 					type: "POST",
-					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
-					data: JSON.stringify(attributesJson)
+					url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
+					data: JSON.stringify(routeJson)
 				});
 				return Ember.RSVP.hash({
 					decodedPolyline: decodedPolyline,
-					attributesRequest: attributesRequest
+					routeRequest: routeRequest
 				});
 			}, function(error) {
 				return {"error": error.responseJSON.error};

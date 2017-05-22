@@ -73,7 +73,7 @@
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
-            <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove match from map</button>
+            <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove trace_attribute query result from map</button>
             <div class="upload-options">
               <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -123,9 +123,10 @@
           {{else}}
             {{#unless showErrorMessage}}
               {{#unless this.model.gpxTrace.error_message}}
-                <button class="map-match" {{action "setShowMapMatch" trace}}>Match this GPX</button>
+                <button class="map-match" {{action "setShowMapMatch" trace}}>Query trace_attribute API</button>
               {{/unless}}
             {{/unless}}
+            <!-- TODO: review errors and error messages -->
               {{#if showErrorMessage}}
                 <div class="error-message">
                   <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like the map-matching service has returned the following error:<br><br><i>"{{errorMessage}}"</i><br><br>
