@@ -233,6 +233,7 @@ export default Ember.Route.extend(setLoading, {
 				if (response.error_message === "error"){
 					return "trace error";
 				}
+				var attributesResponse = response;
 				// encodedPolyline needed for trace_attribute request
 				var encodedPolyline = response.shape;
 				// decodedPolyline needed for rendering trace_route response on map
@@ -272,6 +273,8 @@ export default Ember.Route.extend(setLoading, {
 				});
 				return Ember.RSVP.hash({
 					decodedPolyline: decodedPolyline,
+					encodedPolyline: encodedPolyline,
+					attributesResponse: attributesResponse,
 					routeRequest: routeRequest
 				});
 			}, function(error) {
