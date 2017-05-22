@@ -73,7 +73,7 @@
       <form>
         {{#if trace}}
           {{#if showMapMatch}}
-            <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove trace_attribute query result from map</button>
+            <button class="map-match" {{action "setShowMapMatch" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove trace_attribute response from map</button>
             <div class="upload-options">
               <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -120,10 +120,24 @@
                 </table>
               {{/if}}
             </div>
+            {{#unless this.model.gpxTrace.error_message}}
+              {{#if showTraceRoute}}
+                <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove trace_route response from map</button>
+              {{else}}
+                <button class="map-match" {{action "setShowTraceRoute" trace}}>Show trace_route response</button>
+              {{/if}}
+            {{/unless}}
+            {{#if showTraceRoute}}
+              <strong>Status:</strong> {{this.model.mapMatchRequests.routeRequest.trip.status_message}}<br>
+              <strong>Length:</strong> {{this.model.mapMatchRequests.routeRequest.trip.summary.length}}{{this.model.mapMatchRequests.routeRequest.trip.units}}<br><br>
+              {{#each routeManeuvers as | maneuver |}}
+                {{maneuver.instruction}}<br>
+              {{/each}}
+            {{/if}}
           {{else}}
             {{#unless showErrorMessage}}
               {{#unless this.model.gpxTrace.error_message}}
-                <button class="map-match" {{action "setShowMapMatch" trace}}>Query trace_attribute API</button>
+                <button class="map-match" {{action "setShowMapMatch" trace}}>Show trace_attribute response</button>
               {{/unless}}
             {{/unless}}
             <!-- TODO: review errors and error messages -->
@@ -208,7 +222,7 @@
               {{/polyline-layer}}
               {{#if showMapMatch}}
                 {{#unless selectedAttribute}}
-                    {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=7 clickable=false color="#444444" opacity=1}}
+                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=7 clickable=false color="#444444" opacity=1}}
                   {{/polyline-layer}}
                   {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline weight=4 clickable=false color="#d4645c" opacity=1}}
                   {{/polyline-layer}}

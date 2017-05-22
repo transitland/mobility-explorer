@@ -14,6 +14,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   costing: null,
   uploading: false,
   showMapMatch: false,
+  showTraceRoute: false,
   errorMessage: null,
   showErrorMessage: false,
   noTraceUploaded: false,
@@ -156,6 +157,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     } else {
       return "speed limit: " + attributes[selectedAttribute] + " mph";
     }
+  }),
+  routeManeuvers: Ember.computed('showTraceRoute', function(){
+    var maneuvers = this.model.mapMatchRequests.routeRequest.trip.legs[0].maneuvers;
+    return maneuvers;
   }),
   segmentAttributes: Ember.computed('selectedSegment', function(){
     if (this.get('selectedSegment')){
@@ -361,6 +366,17 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       } else {
         this.set('selectedAttribute', null);
         this.set('showMapMatch', true);
+      }
+    },
+    setShowTraceRoute(){
+      // TODO: set up error message
+      if (this.model.mapMatchRequests.error){
+        this.set('errorMessage', this.model.mapMatchRequests.error);
+        this.set('showErrorMessage', true);
+      } else if (this.get('showTraceRoute')){
+        this.set('showTraceRoute', false);     
+      } else {
+        this.set('showTraceRoute', true);
       }
     },
     styleByAttribute(attribute){
