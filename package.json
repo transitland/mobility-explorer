@@ -40,7 +40,7 @@
     "ember-cli-sass": "6.1.1",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
-    "ember-data": "^2.5.0",
+    "ember-data": "2.8.0",
     "ember-export-application-global": "^1.0.5",
     "ember-leaflet": "2.2.2",
     "ember-leaflet-multi-options-polyline": "0.2.0",
