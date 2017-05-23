@@ -15,6 +15,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   uploading: false,
   showTraceAttribut: false,
   showTraceRoute: false,
+  traceRouteErrorMessage: null,
+  showTraceRouteErrorMessage: false,
   errorMessage: null,
   showErrorMessage: false,
   noTraceUploaded: false,
@@ -371,11 +373,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       }
     },
     setShowTraceRoute(){
-      // TODO: set up error message
       if (this.model.mapMatchRequests.traceRouteRequest.state === "rejected"){
-        console.log(this.model.mapMatchRequests.traceRouteRequest.reason.responseJSON.error);
-        this.set('errorMessage', this.model.mapMatchRequests.traceRouteRequest.reason.responseJSON.error);
-        this.set('showErrorMessage', true);
+        this.set('traceRouteErrorMessage', this.model.mapMatchRequests.traceRouteRequest.reason.responseJSON.error);
+        this.set('showTraceRouteErrorMessage', true);
+        this.set('showTraceRoute', true);
       } else if (this.get('showTraceRoute')){
         this.set('showTraceRoute', false);     
       } else {
