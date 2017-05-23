@@ -150,7 +150,7 @@
             {{/unless}}
             {{#if showTraceRoute}}
               <strong>Status:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.status_message}}<br>
-              <strong>Length:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}}{{this.model.traceRouteRequest.value.trip.units}}<br><br>
+              <strong>Length:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}<br><br>
               {{#each routeManeuvers as | maneuver |}}
                 {{maneuver.instruction}}<br>
               {{/each}}
