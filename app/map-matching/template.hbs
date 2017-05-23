@@ -141,7 +141,7 @@
                 </table>
               {{/if}}
             </div>
-            {{#unless this.model.gpxTrace.error_message}}
+            <!-- {{#unless this.model.gpxTrace.error_message}}
               {{#if showTraceRoute}}
                 <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Hide trace_route narrative directions</button>
               {{else}}
@@ -159,7 +159,7 @@
                   {{maneuver.instruction}}<br>
                 {{/each}}
               {{/if}}
-            {{/if}}
+            {{/if}} -->
           {{else}}
             {{#unless showErrorMessage}}
               {{#unless this.model.gpxTrace.error_message}}
@@ -179,20 +179,41 @@
                 </div>
               {{/if}}
           {{/if}}
-        {{/if}}
-        {{#if selectedSegment}}
-          <div class="gpx-upload">
-            <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Mapzen Mobility routing calculations.<br>Read more about segment attributes in the <a href="https://mapzen.com/documentation/mobility/map-matching/api-reference/#outputs-of-trace_attributes">Map Matching documentation</a>.{{/popover-on-element}}</h5>
-            <table class="table">
-              {{#each segmentAttributes as | segment |}}
-                {{#unless (eq segment.attribute "skip")}}
-                  <tr>
-                    <th>{{segment.attribute}}</th><td>{{segment.value}}</td>
-                  </tr>
-                {{/unless}}
-              {{/each}}
-            </table>
-          </div>
+          {{#if selectedSegment}}
+            <div class="gpx-upload">
+              <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Mapzen Mobility routing calculations.<br>Read more about segment attributes in the <a href="https://mapzen.com/documentation/mobility/map-matching/api-reference/#outputs-of-trace_attributes">Map Matching documentation</a>.{{/popover-on-element}}</h5>
+              <table class="table">
+                {{#each segmentAttributes as | segment |}}
+                  {{#unless (eq segment.attribute "skip")}}
+                    <tr>
+                      <th>{{segment.attribute}}</th><td>{{segment.value}}</td>
+                    </tr>
+                  {{/unless}}
+                {{/each}}
+              </table>
+            </div>
+          {{/if}}
+          {{#if showTraceAttribute}}
+            {{#unless this.model.gpxTrace.error_message}}
+              {{#if showTraceRoute}}
+                <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Hide trace_route narrative directions</button>
+              {{else}}
+                <button class="map-match" {{action "setShowTraceRoute" trace}}>Show trace_route narrative directions</button>
+              {{/if}}
+            {{/unless}}
+            {{#if showTraceRoute}}
+              {{#if showTraceRouteErrorMessage}}
+                <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
+                <i>More detailed information about why errors occur and how to fix them will go here.</i>
+              {{else}}
+                <strong>Status:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.status_message}}<br>
+                <strong>Length:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}<br><br>
+                {{#each routeManeuvers as | maneuver |}}
+                  {{maneuver.instruction}}<br>
+                {{/each}}
+              {{/if}}
+            {{/if}}
+          {{/if}}
         {{/if}}
       </form>
     </div>
