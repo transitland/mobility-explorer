@@ -59,11 +59,7 @@
     "moment-timezone": "0.5.7",
     "polyline-encoded": "0.0.8",
     "turf-difference": "^3.0.12",
-    "turf-polygon": "^1.0.3"
-  },
-  "dependencies": {
-    "ember-browserify": "^1.1.13",
-    "gpx-parse": "^0.10.4",
+    "turf-polygon": "^1.0.3",
     "xml2js": "^0.4.17"
   }
 }
