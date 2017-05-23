@@ -159,9 +159,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   routeManeuvers: Ember.computed('showTraceRoute', function(){
-    // debugger;
-    // var maneuvers = this.model.traceRouteRequest.trip.legs[0].maneuvers;
-    var maneuvers = this.model.mapMatchRequests.traceRouteRequest.trip.legs[0].maneuvers;
+    var maneuvers = this.model.mapMatchRequests.traceRouteRequest.value.trip.legs[0].maneuvers;
     return maneuvers;
   }),
   segmentAttributes: Ember.computed('selectedSegment', function(){
@@ -201,14 +199,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
-      var points = this.model.mapMatchRequests.decodedPolyline;
+      var points = this.model.mapMatchRequests.decodedPolyline.value;
       // var points = this.model.mapMatchRequests.attributesResponse.matched_points;
-      var edges = this.model.mapMatchRequests.attributesResponse.edges;
+      var edges = this.model.mapMatchRequests.attributesResponse.value.edges;
       var selectedAttribute = this.get('selectedAttribute');
       var edgeCoordinates = [];
       var attributeArray = [];
       var attributeArraySum = 0;
-      console.log(this.model.mapMatchRequests)
       for (var i = 0; i < edges.length; i++){
         var attribute;
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
@@ -343,6 +340,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       };
       this.set('selectedSegment', null);      
       this.set('showMapMatch', false);
+      this.set('showTraceRoute', false);     
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
       // if (trace.name !== "user_upload"){
@@ -359,11 +357,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.toggleProperty('uploading');
     },
     setShowMapMatch(){
-      if (this.model.mapMatchRequests.error){
-        this.set('errorMessage', this.model.mapMatchRequests.error);
+      if (this.model.mapMatchRequests.attributesResponse.state === "rejected"){
+        this.set('errorMessage', this.model.mapMatchRequests.attributesResponse.reason.responseJSON.error);
         this.set('showErrorMessage', true);
       } else if (this.get('showMapMatch')){
         this.set('showMapMatch', false);
+        this.set('showTraceRoute', false);     
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
       } else {
@@ -373,8 +372,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     setShowTraceRoute(){
       // TODO: set up error message
-      if (this.model.mapMatchRequests.error){
-        this.set('errorMessage', this.model.mapMatchRequests.error);
+      if (this.model.mapMatchRequests.traceRouteRequest.state === "rejected"){
+        console.log(this.model.mapMatchRequests.traceRouteRequest.reason.responseJSON.error);
+        this.set('errorMessage', this.model.mapMatchRequests.traceRouteRequest.reason.responseJSON.error);
         this.set('showErrorMessage', true);
       } else if (this.get('showTraceRoute')){
         this.set('showTraceRoute', false);     

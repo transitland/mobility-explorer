@@ -267,18 +267,20 @@ export default Ember.Route.extend(setLoading, {
 						"shape_match": "map_snap",
 					};
 				}
+
 				var traceRouteRequest = Ember.$.ajax({
 					type: "POST",
 					url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
 					data: JSON.stringify(routeJson)
 				});
-
-				return Ember.RSVP.hash({
+				
+				return Ember.RSVP.hashSettled({
 					decodedPolyline: decodedPolyline,
 					encodedPolyline: encodedPolyline,
 					attributesResponse: attributesResponse,
 					traceRouteRequest: traceRouteRequest
 				});
+				
 			}, function(error) {
 				return {"error": error.responseJSON.error};
 			});
