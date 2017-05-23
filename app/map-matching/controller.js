@@ -13,7 +13,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   trace: null,
   costing: null,
   uploading: false,
-  showMapMatch: false,
+  showTraceAttribut: false,
   showTraceRoute: false,
   errorMessage: null,
   showErrorMessage: false,
@@ -339,7 +339,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         document.getElementById('gpxFileUpload').value = "";
       };
       this.set('selectedSegment', null);      
-      this.set('showMapMatch', false);
+      this.set('showTraceAttribute', false);
       this.set('showTraceRoute', false);     
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
@@ -356,18 +356,18 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     setUploading(){
       this.toggleProperty('uploading');
     },
-    setShowMapMatch(){
+    setShowTraceAttribute(){
       if (this.model.mapMatchRequests.attributesResponse.state === "rejected"){
         this.set('errorMessage', this.model.mapMatchRequests.attributesResponse.reason.responseJSON.error);
         this.set('showErrorMessage', true);
-      } else if (this.get('showMapMatch')){
-        this.set('showMapMatch', false);
+      } else if (this.get('showTraceAttribute')){
+        this.set('showTraceAttribute', false);
         this.set('showTraceRoute', false);     
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
       } else {
         this.set('selectedAttribute', null);
-        this.set('showMapMatch', true);
+        this.set('showTraceAttribute', true);
       }
     },
     setShowTraceRoute(){
