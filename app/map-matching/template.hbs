@@ -122,14 +122,14 @@
             </div>
             {{#unless this.model.gpxTrace.error_message}}
               {{#if showTraceRoute}}
-                <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove trace_route response from map</button>
+                <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Hide trace_route narrative directions</button>
               {{else}}
-                <button class="map-match" {{action "setShowTraceRoute" trace}}>Show trace_route response</button>
+                <button class="map-match" {{action "setShowTraceRoute" trace}}>Show trace_route narrative directions</button>
               {{/if}}
             {{/unless}}
             {{#if showTraceRoute}}
-              <strong>Status:</strong> {{this.model.traceRouteRequest.trip.status_message}}<br>
-              <strong>Length:</strong> {{this.model.traceRouteRequest.trip.summary.length}}{{this.model.traceRouteRequest.trip.units}}<br><br>
+              <strong>Status:</strong> {{this.model.mapMatchRequests.traceRouteRequest.trip.status_message}}<br>
+              <strong>Length:</strong> {{this.model.mapMatchRequests.traceRouteRequest.trip.summary.length}}{{this.model.traceRouteRequest.trip.units}}<br><br>
               {{#each routeManeuvers as | maneuver |}}
                 {{maneuver.instruction}}<br>
               {{/each}}

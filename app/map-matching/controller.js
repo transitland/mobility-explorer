@@ -159,7 +159,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   routeManeuvers: Ember.computed('showTraceRoute', function(){
-    var maneuvers = this.model.traceRouteRequest.trip.legs[0].maneuvers;
+    // debugger;
+    // var maneuvers = this.model.traceRouteRequest.trip.legs[0].maneuvers;
+    var maneuvers = this.model.mapMatchRequests.traceRouteRequest.trip.legs[0].maneuvers;
     return maneuvers;
   }),
   segmentAttributes: Ember.computed('selectedSegment', function(){

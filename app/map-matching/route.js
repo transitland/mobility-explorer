@@ -241,78 +241,10 @@ export default Ember.Route.extend(setLoading, {
 				var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 				
 				// // Build the trace_route request	
-				// var routeJson = {};
-				// if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
-				// 	routeJson = {
-				// 		"encoded_polyline": encodedPolyline,
-				// 		"costing": "bicycle",
-				// 		"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
-				// 		"directions_options":{"units":"miles"},
-				// 		"shape_match": "map_snap",
-				// 	};
-				// } else if (params.trace === "san-francisco-run"){
-				//   routeJson = {
-				// 		"encoded_polyline": encodedPolyline,
-				// 		"costing": gpxTrace.costing,
-				// 		"directions_options":{"units":"miles"},
-				// 		"shape_match": "map_snap",
-				// 		// only for marathon
-				// 		"trace_options":{"turn_penalty_factor":500}
-				// 	};
-				// } else {
-				// 	routeJson = {
-				// 		"encoded_polyline": encodedPolyline,
-				// 		"costing": gpxTrace.costing,
-				// 		"directions_options":{"units":"miles"},
-				// 		"shape_match": "map_snap",
-				// 	};
-				// }
-				// var routeRequest = Ember.$.ajax({
-				// 	type: "POST",
-				// 	url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
-				// 	data: JSON.stringify(routeJson)
-				// });
-				return Ember.RSVP.hash({
-					decodedPolyline: decodedPolyline,
-					encodedPolyline: encodedPolyline,
-					attributesResponse: attributesResponse,
-					// routeRequest: routeRequest
-				});
-			}, function(error) {
-				return {"error": error.responseJSON.error};
-			});
-		}
-		if (gpxTrace) {
-			traceRouteRequest = this.getGPXTrace(gpxTrace).then(function(response){
-				gpxTrace.coordinates = [];
-				var gpxObj;
-
-				xml2js.parseString(response, function (err, result){
-					if(err){
-						return gpxObj = "error";
-					}
-					gpxObj = result.gpx.trk;
-				});
-				if (gpxObj === "error"){
-					gpxTrace.error_message = "error";
-					return gpxTrace;
-				}
-				gpxObj[0].trkseg[0].trkpt.map(function(coord){
-					gpxTrace.coordinates.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
-				});
-
-				gpxTrace.startLocation = gpxTrace.coordinates[0];
-				gpxTrace.endLocation = gpxTrace.coordinates[gpxTrace.coordinates.length - 1];
-
-				return gpxTrace;
-			}).then(function(gpxTrace){
-				if (gpxTrace.error_message === "error"){
-					return gpxTrace;
-				}
 				var routeJson = {};
 				if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
 					routeJson = {
-						"shape": [],
+						"encoded_polyline": encodedPolyline,
 						"costing": "bicycle",
 						"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
 						"directions_options":{"units":"miles"},
@@ -320,7 +252,7 @@ export default Ember.Route.extend(setLoading, {
 					};
 				} else if (params.trace === "san-francisco-run"){
 				  routeJson = {
-						"shape": [],
+						"encoded_polyline": encodedPolyline,
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
 						"shape_match": "map_snap",
@@ -329,31 +261,100 @@ export default Ember.Route.extend(setLoading, {
 					};
 				} else {
 					routeJson = {
-						"shape": [],
+						"encoded_polyline": encodedPolyline,
 						"costing": gpxTrace.costing,
 						"directions_options":{"units":"miles"},
 						"shape_match": "map_snap",
 					};
 				}
-
-				gpxTrace.coordinates.map(function(coord){
-					routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
-				});
-				var routeRequest = Ember.$.ajax({
+				var traceRouteRequest = Ember.$.ajax({
 					type: "POST",
 					url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
 					data: JSON.stringify(routeJson)
 				});
-				return routeRequest;
-			});
 
+				return Ember.RSVP.hash({
+					decodedPolyline: decodedPolyline,
+					encodedPolyline: encodedPolyline,
+					attributesResponse: attributesResponse,
+					traceRouteRequest: traceRouteRequest
+				});
+			}, function(error) {
+				return {"error": error.responseJSON.error};
+			});
 		}
+		// if (gpxTrace) {
+		// 	traceRouteRequest = this.getGPXTrace(gpxTrace).then(function(response){
+		// 		gpxTrace.coordinates = [];
+		// 		var gpxObj;
+
+		// 		xml2js.parseString(response, function (err, result){
+		// 			if(err){
+		// 				return gpxObj = "error";
+		// 			}
+		// 			gpxObj = result.gpx.trk;
+		// 		});
+		// 		if (gpxObj === "error"){
+		// 			gpxTrace.error_message = "error";
+		// 			return gpxTrace;
+		// 		}
+		// 		gpxObj[0].trkseg[0].trkpt.map(function(coord){
+		// 			gpxTrace.coordinates.push([parseFloat(coord.$.lat),parseFloat(coord.$.lon)]);
+		// 		});
+
+		// 		gpxTrace.startLocation = gpxTrace.coordinates[0];
+		// 		gpxTrace.endLocation = gpxTrace.coordinates[gpxTrace.coordinates.length - 1];
+
+		// 		return gpxTrace;
+		// 	}).then(function(gpxTrace){
+		// 		if (gpxTrace.error_message === "error"){
+		// 			return gpxTrace;
+		// 		}
+		// 		var routeJson = {};
+		// 		if (gpxTrace.costing === "bicycle" || params.costing === "bicycle"){
+		// 			routeJson = {
+		// 				"shape": [],
+		// 				"costing": "bicycle",
+		// 				"costing_options":{"bicycle":{"bicycle_type":"Mountain"}},
+		// 				"directions_options":{"units":"miles"},
+		// 				"shape_match": "map_snap",
+		// 			};
+		// 		} else if (params.trace === "san-francisco-run"){
+		// 		  routeJson = {
+		// 				"shape": [],
+		// 				"costing": gpxTrace.costing,
+		// 				"directions_options":{"units":"miles"},
+		// 				"shape_match": "map_snap",
+		// 				// only for marathon
+		// 				"trace_options":{"turn_penalty_factor":500}
+		// 			};
+		// 		} else {
+		// 			routeJson = {
+		// 				"shape": [],
+		// 				"costing": gpxTrace.costing,
+		// 				"directions_options":{"units":"miles"},
+		// 				"shape_match": "map_snap",
+		// 			};
+		// 		}
+
+		// 		gpxTrace.coordinates.map(function(coord){
+		// 			routeJson.shape.push({"lat":coord[0],"lon":coord[1]});
+		// 		});
+		// 		var routeRequest = Ember.$.ajax({
+		// 			type: "POST",
+		// 			url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
+		// 			data: JSON.stringify(routeJson)
+		// 		});
+		// 		return routeRequest;
+		// 	});
+		// }
+
     // Issue promise with both gpxTrace model and trace_route request
 		return Ember.RSVP.hash({
 			gpxTraces: fixtures,
 			gpxTrace: gpxTrace,
 			mapMatchRequests: mapMatchRequests,
-			traceRouteRequest: traceRouteRequest
+			// traceRouteRequest: traceRouteRequest
 		});
 	},
 
