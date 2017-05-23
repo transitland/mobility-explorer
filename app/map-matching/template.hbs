@@ -128,8 +128,8 @@
               {{/if}}
             {{/unless}}
             {{#if showTraceRoute}}
-              <strong>Status:</strong> {{this.model.mapMatchRequests.routeRequest.trip.status_message}}<br>
-              <strong>Length:</strong> {{this.model.mapMatchRequests.routeRequest.trip.summary.length}}{{this.model.mapMatchRequests.routeRequest.trip.units}}<br><br>
+              <strong>Status:</strong> {{this.model.traceRouteRequest.trip.status_message}}<br>
+              <strong>Length:</strong> {{this.model.traceRouteRequest.trip.summary.length}}{{this.model.traceRouteRequest.trip.units}}<br><br>
               {{#each routeManeuvers as | maneuver |}}
                 {{maneuver.instruction}}<br>
               {{/each}}

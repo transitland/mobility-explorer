@@ -159,7 +159,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     }
   }),
   routeManeuvers: Ember.computed('showTraceRoute', function(){
-    var maneuvers = this.model.mapMatchRequests.routeRequest.trip.legs[0].maneuvers;
+    var maneuvers = this.model.traceRouteRequest.trip.legs[0].maneuvers;
     return maneuvers;
   }),
   segmentAttributes: Ember.computed('selectedSegment', function(){
@@ -200,12 +200,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
       var points = this.model.mapMatchRequests.decodedPolyline;
+      // var points = this.model.mapMatchRequests.attributesResponse.matched_points;
       var edges = this.model.mapMatchRequests.attributesResponse.edges;
       var selectedAttribute = this.get('selectedAttribute');
       var edgeCoordinates = [];
       var attributeArray = [];
       var attributeArraySum = 0;
-
+      console.log(this.model.mapMatchRequests)
       for (var i = 0; i < edges.length; i++){
         var attribute;
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
