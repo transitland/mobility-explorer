@@ -1,195 +1,95 @@
-{{#if media.isMobile}}
-	<div class="col-xs-12 col-sm-12 col-md-12 linebreak-text">
-    <div class="row">
-      <div id="sidebar-media" class="collapse in">
-    		 <div style="display:flex;justify-content:center;align-items:center;">
-          <div style="width:130px;height:40px;">
-            <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-          </div>
-        </div>
-				{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
-				{{#unless textboxIsClosed}}
-          {{text-box route="index" action="setTextBoxClosed"}}
-        {{/unless}}
-        	{{sidebar-title-transitland}}
-           <div class="btn-group-vertical" role="group" >
-						{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
-						{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<button class="btn btn-mapzen-alt">Show Stops</button>{{/link-to}}
-					    <div class="expanded-selection">
-								{{#if onestop_id}}
-							  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
-							  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
-							  	{{#if onestop_id}}
-										{{#each model.stops as |stop|}}
-							  			<p>{{#link-to 'isochrones' (query-params serves=null bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=stopCoordinates isochrone_mode="multimodal") }}View isochrones for this stop{{/link-to}}</p>
-							  		{{/each}}
-							  	{{/if}}
-								{{else if served_by}}
-									<form>
-									  <div class="form-group-header">Stops served by:</div>
-									  <div class="form-group">
-									    <label for="radio-1">{{served_by}}</label>
-									  </div>
-									</form>
-								{{/if}}
-								{{#if onestop_id}}
-								{{else if hoverStop}}
-									<div class="hover-detail">
-										<div {{action "setOnestopId" selectedStop}}>{{hoverStop.name}}</div>
-										<p class="caption">Click the stop for more information</p>
-									</div>
-								{{else}}
-						    	<p class="caption">Click a stop for more information</p>
-						    	{{#if mapMoved}}
-					    			<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-					  			{{/if}}
-								{{/if}}
-							</div>
-					  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
-					  {{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
-				   	<hr class="sidebar-hr">
-           {{sidebar-title-mobility}}
-            <div class="btn-group-vertical" role="group" >
-			  			{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-			  		</div>
-			  	</div>
-
-				
-				
-				
-			</div>
-		  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-		  <button type="button" class="collapse-tab" data-toggle="collapse" data-target="#sidebar-media">&#8597;</button>
-		  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-		  	<div class="location-search" style="width:225px">
-              <div class="row">
-                <div class="ember-basic-dropdown-trigger-icon">
-                  {{#if pin}}
-                   <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-                  {{else}}
-                    <img src='assets/images/marker1.png' class="markerIcon"/>
-                  {{/if}}
-                </div>
-                {{#power-select
-                  search=(action "searchRepo")
-                  selected=place
-                  placeholder="Search for location..."
-                  onchange=(action "setPlace")
-                  onclose=(action "clearPlace")
-                  as |repo|
-                }}
-                  {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-                {{/power-select}}
-              </div>
-          </div>
-
-			  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
-					{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-					{{#if served_by}}
-						{{#each model.servedByRoute.features as |route|}}
-							{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
-							{{/geojson-layer}}
-						{{/each}}
-					{{/if}}
-					{{#if onestop_id}}
-						{{#each model.stops as |stop|}}
-						  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
-						  		{{/marker-layer}}
-					  {{/each}}
-					{{else}}
-						{{#each model.stops as |stop|}}
-						  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
-						  		{{/marker-layer}}
-					  {{/each}}
-					{{/if}}
-				  {{#if pin}}
-            {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-            {{/marker-layer}}
-          {{/if}}
-				{{/leaflet-map}}
-			</div>
-		</div>
-	</div>
-{{else}}
-	<div class="col-md-4 linebreak-text" id="sidebar">
-    <div style="display:flex;justify-content:center;align-items:center;">
-	    <div style="width:130px;height:40px;">
-	      <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-	    </div>
-	  </div>
-		{{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<h2>Mobility Explorer</h2>{{/link-to}}
+<div id="sidebar" class="collapse in col-md-4">
+  <div class="col-xs-12 no-padding center">
+    <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
+  </div>
+  <div class="col-xs-12 no-padding">
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Mobility Explorer</h1>{{/link-to}}
+  </div>
+  {{#if media.isMobile}}
 		{{#unless textboxIsClosed}}
-      {{text-box route="index" action="setTextBoxClosed"}}
-    {{/unless}}
-		{{sidebar-title-transitland}}
-		<div class="btn-group-vertical" role="group" >
-			{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
-			{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<button class="btn btn-mapzen-alt">Show Stops</button>{{/link-to}}
-		    <div class="expanded-selection">
-					{{#if onestop_id}}
-				  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
-				  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
-				  	{{#if onestop_id}}
-							{{#each model.stops as |stop|}}
-				  			<p>{{#link-to 'isochrones' (query-params serves=null bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=stopCoordinates isochrone_mode="multimodal") }}View isochrones for this stop{{/link-to}}</p>
-				  		{{/each}}
-				  	{{/if}}
-					{{else if served_by}}
-						<form>
-						  <div class="form-group-header">Stops served by:</div>
-						  <div class="form-group">
-						    <label for="radio-1">{{served_by}}</label>
-						  </div>
-						</form>
-					{{/if}}
+	    {{text-box route="index" action="setTextBoxClosed"}}
+	  {{/unless}}
+	 {{/if}}
+	{{sidebar-title-transitland}}
+	<div class="btn-group-vertical" role="group" >
+		{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
+		{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<button class="btn btn-mapzen-alt">Show Stops</button>{{/link-to}}
+	    <div class="expanded-selection">
+				{{#if onestop_id}}
+			  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
+			  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
+			  	{{#if onestop_id}}
+						{{#each model.stops as |stop|}}
+			  			<p>{{#link-to 'isochrones' (query-params serves=null bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=stopCoordinates isochrone_mode="multimodal") }}View isochrones for this stop{{/link-to}}</p>
+			  		{{/each}}
+			  	{{/if}}
+				{{else if served_by}}
+					<form>
+					  <div class="form-group-header">Stops served by:</div>
+					  <div class="form-group">
+					    <label for="radio-1">{{served_by}}</label>
+					  </div>
+					</form>
+				{{/if}}
 
-					{{#if onestop_id}}
-					{{else if hoverStop}}
-						<div class="hover-detail">
-							<div {{action "setOnestopId" selectedStop}}>Stop name: {{hoverStop.name}}</div>
-							<p class="caption">Click the stop for more information</p>
-						</div>
-					{{else}}
-		    		<p class="caption">Hover over a stop for more information</p>
-		    		{{#if mapMoved}}
-	    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-	  				{{/if}}
-					{{/if}}
-				</div>
-		  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
-		  {{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
-		</div>
-		<hr class="sidebar-hr">
-		{{sidebar-title-mobility}}
-		<div class="btn-group-vertical" role="group" >
-  		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-  	</div>	
+				{{#if onestop_id}}
+				{{else if hoverStop}}
+					<div class="hover-detail">
+						<div {{action "setOnestopId" selectedStop}}>Stop name: {{hoverStop.name}}</div>
+						<p class="caption">Click the stop for more information</p>
+					</div>
+				{{else}}
+	    		<p class="caption">Hover over a stop for more information</p>
+	    		{{#if mapMoved}}
+    				<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+  				{{/if}}
+				{{/if}}
+			</div>
+	  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null pin=pin)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
+	  {{url-builder entity="stops" server="Transitland" query="results" queryParams=queryParams bbox=bbox onestop_id=onestop_id served_by=served_by}}
 	</div>
-	<div class="col-md-8">
+	<hr class="sidebar-hr">
+	{{sidebar-title-mobility}}
+	<div class="btn-group-vertical" role="group" >
+		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+	</div>	
+</div>
+<div class="col-md-8">
+	<div class="row">
+	  {{#if media.isMobile}}
+		  <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+		{{/if}} 
 	  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}> 
 	  	<div class="location-search">
-        <div class="row">
-          <div class="col-md-2 ember-basic-dropdown-trigger-icon">
-            {{#if pin}}
-            	<img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-            {{else}}
-              <img src='assets/images/marker1.png' class="markerIcon"/>
-            {{/if}}
-          </div>
-          {{#power-select
-            search=(action "searchRepo")
-            selected=place
-            placeholder="Search for location..."
-            onchange=(action "setPlace")
-            onclose=(action "clearPlace")
-            as |repo|
-          }}
-            {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-          {{/power-select}}
-        </div>
-      </div>
-
+	      <div class="row">
+	        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+	          {{#if pin}}
+	          	<img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+	          {{else}}
+	            <img src='assets/images/marker1.png' class="markerIcon"/>
+	          {{/if}}
+	        </div>
+	        {{#power-select
+	          search=(action "searchRepo")
+	          selected=place
+	          placeholder=searchbarContent
+	          onchange=(action "setPlace")
+	          onclose=(action "clearPlace")
+	          as |repo|
+	        }}
+	          {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+	        {{/power-select}}
+	      </div>
+	    </div>
+	    <div class="nonmobile-intro-textbox">
+	      {{#unless media.isMobile}}
+	        {{#unless textboxIsClosed}}
+	          {{text-box route="index" action="setTextBoxClosed"}}
+	        {{/unless}}
+	      {{/unless}}
+	    </div>
+	    
 		  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
 				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
 				{{#if served_by}}
@@ -210,10 +110,10 @@
 				  {{/each}}
 				{{/if}}
 			  {{#if pin}}
-          {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-          {{/marker-layer}}
-        {{/if}}
+	        {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+	        {{/marker-layer}}
+	      {{/if}}
 			{{/leaflet-map}}
 		</div>
 	</div>
-{{/if}}
+</div>

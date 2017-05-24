@@ -21,6 +21,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   moment: moment(),
   mapMoved: false,
   mousedOver: false,
+  stopSelectContent: Ember.computed(function(){
+    if (this.media.isMobile){
+      return "Click a stop for more information"
+    } else {
+      return "Hover over a stop for information";
+    }
+  }),
+
   stopCoordinates: Ember.computed('onestop_id', function(){
     var stopLocation = this.model.onlyStop.get('geometry.coordinates');
     var lat = stopLocation[0];
