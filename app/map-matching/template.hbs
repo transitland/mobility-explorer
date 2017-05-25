@@ -196,9 +196,9 @@
           {{#if showTraceAttribute}}
             {{#unless this.model.gpxTrace.error_message}}
               {{#if showTraceRoute}}
-                <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Hide trace_route narrative directions</button>
+                <button class="map-match" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-up" aria-hidden="true"></i></button>
               {{else}}
-                <button class="map-match" {{action "setShowTraceRoute" trace}}>Show trace_route narrative directions</button>
+                <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-down" aria-hidden="true"></i></button>
               {{/if}}
             {{/unless}}
             {{#if showTraceRoute}}
@@ -206,11 +206,55 @@
                 <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
                 <i>More detailed information about why errors occur and how to fix them will go here.</i>
               {{else}}
-                <strong>Status:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.status_message}}<br>
-                <strong>Length:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}<br><br>
-                {{#each routeManeuvers as | maneuver |}}
-                  {{maneuver.instruction}}<br>
-                {{/each}}
+              <div class="map-match-narrative">
+                <table class="map-match-maneuvers">
+                  <th></th>
+                  <th>
+                    Total distance: {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}
+                  </th>
+                  <th></th>
+                  {{#each routeManeuvers as | maneuver |}}
+                    <tr>
+                      <td>
+                        <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-maneuver-01"></use></svg>
+                      </td>
+                      <td>{{maneuver.instruction}}</td>
+                      {{#unless (eq maneuver.length 0)}}
+                        <td>{{maneuver.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}</td>
+                      {{else}}
+                        <td></td>
+                      {{/unless}}
+                    </tr>
+                  {{/each}}
+                </table>
+              </div>
+
+                <!-- <div class="leaflet-routing-alt">
+                  <div class="route-display-info">
+                    <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon-mode"><use xlink:href="#icon-mode-multimodal"></use></svg>Total distance: {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}
+                  </div>
+                  <table>
+                    <colgroup class="">
+                      <col class="leaflet-routing-instruction-icon">
+                      <col class="leaflet-routing-instruction-text">
+                      <col class="leaflet-routing-instruction-distance">
+                    </colgroup>
+                    <tbody>
+                      {{#each routeManeuvers as | maneuver |}}
+                        <tr class="route-itinerary-row">
+                          <td class="route-itinerary-maneuver">
+                            <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon-maneuver"><use xlink:href="#icon-maneuver-01"></use></svg>
+                          </td>
+                          <td class="route-itinerary-guide">
+                            <div class="route-itinerary-depart"></div>{{maneuver.instruction}}
+                            <div class="route-itinerary-arrive"></div>
+                          </td>
+                          <td class="route-itinerary-measure">{{maneuver.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}</td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div> -->
               {{/if}}
             {{/if}}
           {{/if}}

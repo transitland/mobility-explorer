@@ -259,7 +259,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         }
       }
 
-      debugger;
+      // TODO: Style discontinuities
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
 
       for (var i = 0; i < edges.length; i++){
