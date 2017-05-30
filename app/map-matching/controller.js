@@ -202,12 +202,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
       var points = this.model.mapMatchRequests.decodedPolyline.value;
-      // var points = this.model.mapMatchRequests.attributesResponse.matched_points;
+      var matchedPoints = this.model.mapMatchRequests.attributesResponse.value.matched_points;
       var edges = this.model.mapMatchRequests.attributesResponse.value.edges;
       var selectedAttribute = this.get('selectedAttribute');
       var edgeCoordinates = [];
       var attributeArray = [];
       var attributeArraySum = 0;
+      
       for (var i = 0; i < edges.length; i++){
         var attribute;
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
@@ -250,6 +251,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var unmatched = 0;
 
       for (var b = 0; b < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; b++){
+        if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].begin_route_discontinuity){
+          console.log("begin_route_discontinuity")
+          console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+        }
+        if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].end_route_discontinuity){
+          console.log("end_route_discontinuity")
+          console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+        }
         if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "matched"){
           matched += 1;
         } else if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "unmatched"){
@@ -258,6 +267,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           interpolated += 1;
         }
       }
+
+      console.log("matched: " + matched)
+      console.log("unmatched: " + unmatched)
+      console.log("interpolated: "  + interpolated);
 
       // TODO: Style discontinuities
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
@@ -334,6 +347,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           attributes: attributes
         })
       }
+      debugger;
       return edgeCoordinates;
     }
   }),
