@@ -246,7 +246,32 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // find the median value for the attribute (to use to test with different attributes)
       var attributeArrayMedian = attributeArray[Math.floor(attributeArray.length/2)];
 
-     
+      // var matched = 0;
+      // var interpolated = 0;
+      // var unmatched = 0;
+
+      for (var b = 0; b < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; b++){
+        console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index)
+      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].begin_route_discontinuity){
+      //     console.log("begin_route_discontinuity")
+      //     console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+      //   }
+      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].end_route_discontinuity){
+      //     console.log("end_route_discontinuity")
+      //     console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+      //   }
+      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "matched"){
+      //     matched += 1;
+      //   } else if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "unmatched"){
+      //     unmatched += 1;
+      //   } else if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "interpolated"){
+      //     interpolated += 1;
+      //   }
+      }
+
+      // console.log("matched: " + matched)
+      // console.log("unmatched: " + unmatched)
+      // console.log("interpolated: "  + interpolated);
 
       // TODO: Style discontinuities
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
@@ -323,6 +348,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           attributes: attributes
         })
       }
+      debugger;
       return edgeCoordinates;
     }
   }),
