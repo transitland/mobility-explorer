@@ -44,7 +44,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 	mousedOver: false,
 	operatorSelectContent: Ember.computed(function(){
     if (this.media.isMobile){
-      return "Select an operator for information"
+      return "Select an operator for information";
     } else {
       return "Hover over an operator for information";
     }
@@ -79,6 +79,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 			this.set('selectedOperator', operator);
 		},
 		selectOperator(operator){
+			this.set('mousedOver', true);
 			this.set('selectedOperator', null);
 			operator.set('operator_path_opacity', 1);
 			operator.set('operator_path_weight', 3);

@@ -26,7 +26,6 @@ Router.map(function() {
   });
   this.route('error', { path: "*path" });
   this.route('isochrones');
-  this.route('map-matching');
 });
 
 export default Router;

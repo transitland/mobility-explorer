@@ -30,8 +30,8 @@
 			  </div>
 
 			  <row class="subheading-row">
-				  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div></div>
-				  {{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}
+				  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}</div>
+				  
 				</row>
 
 			{{else if operated_by}}
@@ -106,11 +106,13 @@
 		  	<p class="caption">{{routeSelectContent}}</p>
 				<form>
 				  <row class="subheading-row">
-						<div class="form-group-header sidebar-header col-md-10">Style routes by:
-						&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
+						<div class="form-group-header">Style routes by:
+						&nbsp;
+							<div class="fa fa-question-circle" id="fa-question-circle-detail"></div>
+						</div>
 						{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
 					</row>
-				  <div class="form-group" >
+				  <div class="form-group">
 				  	{{#if (eq style_routes_by "mode")}}
 				  		<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
 				  	{{else}}
@@ -192,15 +194,15 @@
 	{{sidebar-title-mobility}}
 	<div class="btn-group-vertical" role="group" >
   	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-    {{#link-to 'map-matching' (query-params bbox=bbox pin=null onestop_id=null serves=null operated_by=null vehicle_type=null style_routes_by=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
  	</div>
 </div>
 <div class="col-md-8">
+	<div class="row">
+	{{#if media.isMobile}}
+    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+  {{/if}}
 	{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
   <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-  {{#if media.isMobile}}
-    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
-  {{/if}}  
 		<div class="location-search">
       <div class="row">
         <div class="col-md-2 ember-basic-dropdown-trigger-icon">
@@ -218,7 +220,7 @@
           onclose=(action "clearPlace")
           as |repo|
         }}
-          {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
+          {{repo.properties.label}}
         {{/power-select}}
       </div>
 		</div>
@@ -300,5 +302,6 @@
           {{/marker-layer}}
         {{/if}}
 			{{/leaflet-map}}
+		</div>
 	</div>
 </div>

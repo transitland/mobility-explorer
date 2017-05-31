@@ -725,12 +725,9 @@ td.day.active.today:hover {
     width: 10px;
     height: 10px;
   }
-
   tr:last-child {
     border-bottom: none;
   }
-
-
 }
 
 .map-match-maneuver > * {
@@ -758,20 +755,6 @@ td.day.active.today:hover {
   margin: 0;
   &:hover{
     color: $mapzen-dark-blue;
-  }
-}
-
-.collapsed {
-  color: $white;
-  background-color: $mapzen-blue;
-  margin: 0;
-  &:hover{
-    color: $mapzen-dark-blue;
-  }
-  &:after{
-    font-family: FontAwesome;
-    margin-left: 10px;
-    content: "\f0d7";
   }
 }
 

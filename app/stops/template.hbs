@@ -52,67 +52,68 @@
 	{{sidebar-title-mobility}}
 	<div class="btn-group-vertical" role="group" >
 		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-		{{#link-to 'map-matching' (query-params bbox=bbox pin=null onestop_id=null served_by=null isochrone_mode=null departure_time=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
 	</div>	
 </div>
 <div class="col-md-8">
-  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+	<div class="row">
 	  {{#if media.isMobile}}
-	    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
-	  {{/if}}  
-  	<div class="location-search">
-      <div class="row">
-        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
-          {{#if pin}}
-          	<img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-          {{else}}
-            <img src='assets/images/marker1.png' class="markerIcon"/>
-          {{/if}}
-        </div>
-        {{#power-select
-          search=(action "searchRepo")
-          selected=place
-          placeholder=searchbarContent
-          onchange=(action "setPlace")
-          onclose=(action "clearPlace")
-          as |repo|
-        }}
-          {{repo.properties.name}}, {{repo.properties.region}}, {{repo.properties.country}}
-        {{/power-select}}
-      </div>
-    </div>
-    <div class="nonmobile-intro-textbox">
-      {{#unless media.isMobile}}
-        {{#unless textboxIsClosed}}
-          {{text-box route="index" action="setTextBoxClosed"}}
-        {{/unless}}
-      {{/unless}}
-    </div>
-    
-	  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
-			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-			{{#if served_by}}
-				{{#each model.servedByRoute.features as |route|}}
-					{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
-					{{/geojson-layer}}
-				{{/each}}
-			{{/if}}
-			{{#if onestop_id}}
-				{{#each model.stops as |stop|}}
-				  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
-				  		{{/marker-layer}}
-			  {{/each}}
-			{{else}}
-				{{#each model.stops as |stop|}}
-				  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
-				  		{{/marker-layer}}
-			  {{/each}}
-			{{/if}}
-		  {{#if pin}}
-        {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-        {{/marker-layer}}
-      {{/if}}
-		{{/leaflet-map}}
+		  <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+		{{/if}} 
+	  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}> 
+	  	<div class="location-search">
+	      <div class="row">
+	        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+	          {{#if pin}}
+	          	<img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+	          {{else}}
+	            <img src='assets/images/marker1.png' class="markerIcon"/>
+	          {{/if}}
+	        </div>
+	        {{#power-select
+	          search=(action "searchRepo")
+	          selected=place
+	          placeholder=searchbarContent
+	          onchange=(action "setPlace")
+	          onclose=(action "clearPlace")
+	          as |repo|
+	        }}
+	          {{repo.properties.label}}
+	        {{/power-select}}
+	      </div>
+	    </div>
+	    <div class="nonmobile-intro-textbox">
+	      {{#unless media.isMobile}}
+	        {{#unless textboxIsClosed}}
+	          {{text-box route="index" action="setTextBoxClosed"}}
+	        {{/unless}}
+	      {{/unless}}
+	    </div>
+	    
+		  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
+				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+				{{#if served_by}}
+					{{#each model.servedByRoute.features as |route|}}
+						{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
+						{{/geojson-layer}}
+					{{/each}}
+				{{/if}}
+				{{#if onestop_id}}
+					{{#each model.stops as |stop|}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=false riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+					  		{{/marker-layer}}
+				  {{/each}}
+				{{else}}
+					{{#each model.stops as |stop|}}
+					  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setOnestopId" stop)}}
+					  		{{/marker-layer}}
+				  {{/each}}
+				{{/if}}
+			  {{#if pin}}
+	        {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+	        {{/marker-layer}}
+	      {{/if}}
+			{{/leaflet-map}}
+		</div>
 	</div>
 </div>
