@@ -1,0 +1,355 @@
+<div id="sidebar" class="collapse in col-md-4">
+  <div class="col-xs-12 no-padding center">
+    <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
+  </div>
+  <div class="col-xs-12 no-padding">
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Mobility Explorer</h1>{{/link-to}}
+  </div>
+  {{#if media.isMobile}}
+    {{#unless textboxIsClosed}}
+      {{text-box route="index" action="setTextBoxClosed"}}
+    {{/unless}}
+  {{/if}}
+  {{sidebar-title-transitland}}
+  <div class="btn-group-vertical" role="group" >
+    {{#link-to 'routes' (query-params bbox=bbox onestop_id=null operated_by=null pin=pin style_routes_by=null pin=pin serves=null trace=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
+    {{#link-to 'stops' (query-params bbox=bbox onestop_id=null isochrone_mode=null pin=pin trace=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
+    {{#link-to 'operators' (query-params bbox=bbox pin=pin onestop_id=null trace=null)}}<button class="btn btn-transparent-alt">Show Operators</button>{{/link-to}}
+  </div>
+  <hr class="sidebar-hr">
+    {{sidebar-title-mobility}}
+    <div class="btn-group-vertical" role="group" >
+    {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
+    {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Try Map Matching</button>{{/link-to}}
+    <div class="expanded-selection">
+      {{#unless trace}}
+        <div class="caption">Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
+      {{/unless}}
+      <h5>Choose a GPX file for matching</h5>
+      {{#power-select
+        options=model.gpxTraces
+        placeholder=selectedTrace
+        searchEnabled=false
+        searchPlaceholder="Type to filter..."
+        onchange=(action "setTrace")
+        as |trace|
+      }}
+        {{trace.display_name}}
+      {{/power-select}}
+
+      <form class="gpx-upload">
+        {{#if uploading}}
+          <button type="button" class="upload-button" {{action "setUploading"}}>Match your own GPX file</button>
+          <div id="upload">
+            <label class="custom-file">
+              <input type="file" id="gpxFileUpload">
+            </label>
+            {{#if noTraceUploaded}}
+              <div class="error-message">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Please choose a file and then select a mode.
+              </div>
+            {{/if}}
+            <div class="upload-options">
+              <h5>In which mode was your GPX recorded?</h5>
+              {{#if (eq costing "pedestrian")}}
+                <input type="radio" id="pedestrian" name="options" checked {{action "setCosting" "pedestrian"}}><label for="pedestrian">pedestrian</label><br>
+              {{else}}
+                <input type="radio" id="pedestrian" name="options" {{action "setCosting" "pedestrian"}}><label for="pedestrian">pedestrian</label><br>
+              {{/if}}
+              {{#if (eq costing "bicycle")}}
+                <input type="radio" id="bicycle" name="options" checked {{action "setCosting" "bicycle"}}><label for="bicycle">bicycle</label><br>
+              {{else}}
+                <input type="radio" id="bicycle" name="options" {{action "setCosting" "bicycle"}}><label for="bicycle">bicycle</label><br>
+              {{/if}}
+              {{#if (eq costing "auto")}}
+                <input type="radio" id="driving" name="options" checked {{action "setCosting" "auto"}}><label for="driving">driving</label><br>
+              {{else}}
+                <input type="radio" id="driving" name="options" {{action "setCosting" "auto"}}><label for="driving">driving</label><br>
+              {{/if}}
+            </div>
+          </div>
+        {{/if}}
+      </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <form>
+        {{#if trace}}
+          {{#if showTraceAttribute}}
+            <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove trace_attribute response from map</button>
+            <div class="upload-options">
+              <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
+              {{#if (eq selectedAttribute "weighted_grade")}}
+                <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}>
+                <label for="style-attribute">grade</label><br>
+              {{else}}
+                <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}>
+                <label for="style-attribute">grade</label><br>
+              {{/if}}
+              {{#if (eq selectedAttribute "speed")}}
+                <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}>
+                <label for="style-attribute">speed limit</label>
+              {{else}}
+                <input type="radio" id="speed" name="options" {{action "styleByAttribute" "speed"}}>
+                <label for="style-attribute">speed limit</label>
+              {{/if}}
+              {{#if selectedAttribute}}
+                <br><br><div class="caption">Click a segment on the map to see detailed attributes.</div>
+              {{/if}}
+              {{#if (eq selectedAttribute "speed")}}
+                <h5>Speed, in miles per hour</h5>
+                <table class="legend">
+                  <tr><th class="level" style="background-color:#313695;"></th><td>70 or more</td></tr>
+                  <tr><th class="level" style="background-color:#4575b4;"></th><td>65</td></tr>
+                  <tr><th class="level" style="background-color:#74add1;"></th><td>60</td></tr>
+                  <tr><th class="level" style="background-color:#abd9e9;"></th><td>55</td></tr>
+                  <tr><th class="level" style="background-color:#e0f3f8;"></th><td>50</td></tr>
+                  <tr><th class="level" style="background-color:#fee090;"></th><td>45</td></tr>
+                  <tr><th class="level" style="background-color:#fdae61;"></th><td>40</td></tr>
+                  <tr><th class="level" style="background-color:#f46d43;"></th><td>35</td></tr>
+                  <tr><th class="level" style="background-color:#d73027;"></th><td>30</td></tr>
+                  <tr><th class="level" style="background-color:#a50026;"></th><td>25 or less</td></tr>
+                </table>
+              {{/if}}
+              {{#if (eq selectedAttribute "weighted_grade")}}
+                <h5>Route segment grade</h5>
+                <table class="grade-legend">
+                  <tr><th colspan="3" class="grade-gradient"></th></tr>
+                  <tr>
+                    <td class="grade-low">{{maxDownwardGrade}}%</td>
+                    <td class="grade-mid">0%</td>
+                    <td class="grade-high">{{maxUpwardGrade}}%</td>
+                  </tr>
+                </table>
+              {{/if}}
+            </div>
+            <!-- {{#unless this.model.gpxTrace.error_message}}
+              {{#if showTraceRoute}}
+                <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Hide trace_route narrative directions</button>
+              {{else}}
+                <button class="map-match" {{action "setShowTraceRoute" trace}}>Show trace_route narrative directions</button>
+              {{/if}}
+            {{/unless}}
+            {{#if showTraceRoute}}
+              {{#if showTraceRouteErrorMessage}}
+                <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
+                <i>More detailed information about why errors occur and how to fix them will go here.</i>
+              {{else}}
+                <strong>Status:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.status_message}}<br>
+                <strong>Length:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}<br><br>
+                {{#each routeManeuvers as | maneuver |}}
+                  {{maneuver.instruction}}<br>
+                {{/each}}
+              {{/if}}
+            {{/if}} -->
+          {{else}}
+            {{#unless showErrorMessage}}
+              {{#unless this.model.gpxTrace.error_message}}
+                <button class="map-match" {{action "setShowTraceAttribute" trace}}>Show trace_attribute response</button>
+              {{/unless}}
+            {{/unless}}
+            <!-- TODO: review errors and error messages -->
+              {{#if showErrorMessage}}
+                <div class="error-message">
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like the map-matching service has returned the following error:<br><br><i>"{{errorMessage}}"</i><br><br>
+                  If you would like help processing your gpx file, please email it to routing@mapzen.com.
+                </div>
+              {{/if}}
+              {{#if this.model.gpxTrace.error_message}}
+                <div class="error-message">
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like something is wrong with your GPX file. Please try another!
+                </div>
+              {{/if}}
+          {{/if}}
+          {{#if selectedSegment}}
+            <div class="gpx-upload">
+              <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Mapzen Mobility routing calculations.<br>Read more about segment attributes in the <a href="https://mapzen.com/documentation/mobility/map-matching/api-reference/#outputs-of-trace_attributes">Map Matching documentation</a>.{{/popover-on-element}}</h5>
+              <table class="table">
+                {{#each segmentAttributes as | segment |}}
+                  {{#unless (eq segment.attribute "skip")}}
+                    <tr>
+                      <th>{{segment.attribute}}</th><td>{{segment.value}}</td>
+                    </tr>
+                  {{/unless}}
+                {{/each}}
+              </table>
+            </div>
+          {{/if}}
+          {{#if showTraceAttribute}}
+            {{#unless this.model.gpxTrace.error_message}}
+              {{#if showTraceRoute}}
+                <button class="map-match" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-up" aria-hidden="true"></i></button>
+              {{else}}
+                <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+              {{/if}}
+            {{/unless}}
+            {{#if showTraceRoute}}
+              {{#if showTraceRouteErrorMessage}}
+                <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
+                <i>More detailed information about why errors occur and how to fix them will go here.</i>
+              {{else}}
+              <div class="map-match-narrative">
+                <table class="map-match-maneuvers">
+                  <th></th>
+                  <th>
+                    Total distance: {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}
+                  </th>
+                  <th></th>
+                  {{#each routeManeuvers as | maneuver |}}
+                    <tr>
+                      <td>
+                        <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-maneuver-01"></use></svg>
+                      </td>
+                      <td>{{maneuver.instruction}}</td>
+                      {{#unless (eq maneuver.length 0)}}
+                        <td>{{maneuver.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}</td>
+                      {{else}}
+                        <td></td>
+                      {{/unless}}
+                    </tr>
+                  {{/each}}
+                </table>
+              </div>
+
+                <!-- <div class="leaflet-routing-alt">
+                  <div class="route-display-info">
+                    <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon-mode"><use xlink:href="#icon-mode-multimodal"></use></svg>Total distance: {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}
+                  </div>
+                  <table>
+                    <colgroup class="">
+                      <col class="leaflet-routing-instruction-icon">
+                      <col class="leaflet-routing-instruction-text">
+                      <col class="leaflet-routing-instruction-distance">
+                    </colgroup>
+                    <tbody>
+                      {{#each routeManeuvers as | maneuver |}}
+                        <tr class="route-itinerary-row">
+                          <td class="route-itinerary-maneuver">
+                            <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon-maneuver"><use xlink:href="#icon-maneuver-01"></use></svg>
+                          </td>
+                          <td class="route-itinerary-guide">
+                            <div class="route-itinerary-depart"></div>{{maneuver.instruction}}
+                            <div class="route-itinerary-arrive"></div>
+                          </td>
+                          <td class="route-itinerary-measure">{{maneuver.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}</td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div> -->
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      </form>
+    </div>
+  </div>
+</div>
+<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+  <div class="row">
+    {{#if media.isMobile}}
+      <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+    {{/if}}
+    {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+    <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+    <div class="location-search">
+      <div class="row">
+        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+          {{#if pin}}
+            <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+          {{else}}
+            <img src='assets/images/marker1.png' class="markerIcon"/>
+          {{/if}}
+        </div>
+        {{#power-select
+          search=(action "searchRepo")
+          selected=place
+          placeholder=searchbarContent
+          onchange=(action "setPlace")
+          onclose=(action "clearPlace")
+          as |repo|
+        }}
+          {{repo.properties.label}}
+        {{/power-select}}
+        </div>
+      </div>
+      <div class="nonmobile-intro-textbox">
+        {{#unless media.isMobile}}
+          {{#unless textboxIsClosed}}
+            {{text-box route="index" action="setTextBoxClosed"}}
+          {{/unless}}
+        {{/unless}}
+      </div>
+      {{#if this.model.gpxTrace}}
+        {{#unless this.model.gpxTrace.error_message}}
+          {{#leaflet-map bounds=this.model.gpxTrace.bounds onMoveend=(action "updatebbox")}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+            {{#if pin}}
+              {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+              {{/marker-layer}}
+            {{/if}}
+            {{#if trace}}
+              {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
+              {{/polyline-layer}}
+              {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
+              {{/polyline-layer}}
+              {{#if showTraceAttribute}}
+                {{#unless selectedAttribute}}
+                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline.value weight=7 clickable=false color="#444444" opacity=1}}
+                  {{/polyline-layer}}
+                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline.value weight=4 clickable=false color="#d4645c" opacity=1}}
+                  {{/polyline-layer}}
+                {{/unless}}
+              {{/if}}
+            {{/if}}
+            {{#if selectedAttribute}}
+              {{#each traceAttributeSegments as |segment|}}
+                {{#polyline-layer locations=segment.coordinates color="#444444" clickable=false weight=7 opacity=1}}
+                {{/polyline-layer}}
+              {{/each}}
+              {{#each traceAttributeSegments as |segment|}}
+                {{#polyline-layer locations=segment.coordinates color=segment.color weight=4 opacity=1 onMouseover=(action "selectSegment" segment)  onMouseout=(action "unselectSegment" segment) onPopupclose=(action "closePopup") onClick=(action "setSegment" segment)}}
+                  {{segmentPopupContent}}
+                {{/polyline-layer}}
+              {{/each}}
+            {{/if}}
+            {{#if trace}}
+              {{#marker-layer location=model.gpxTrace.startLocation draggable=false  clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-start')}}
+              {{/marker-layer}}
+            {{/if}}
+            {{#if trace}}
+              {{#marker-layer location=model.gpxTrace.endLocation draggable=false clickable=false riseOnHover=false riseOffset=1000 icon=(div-icon html=html className='svg-end')}}
+              {{/marker-layer}}
+            {{/if}}
+          {{/leaflet-map}}
+        {{else}}
+          {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+          {{/leaflet-map}}
+        {{/unless}}
+      {{else}}
+        {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+        {{/leaflet-map}}
+      {{/if}}
+    </div>
+  </div>
+</div>

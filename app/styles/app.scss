@@ -684,8 +684,65 @@ td.day.active.today:hover {
   }
 }
 
+.map-match {
+  background-color: #465371;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.run-mapmatch {
+  background-color: $mapzen-red;
+}
+
+.map-match-narrative {
+  max-height: 400px;
+  width: 100%;
+  overflow-y: scroll;
+  /*overflow-x: hidden;*/
+  background-color: white;
+}
+
+.map-match-maneuvers {
+  max-height: 10px;
+  background-color: white;
+
+  th {
+    color: #465371;
+    padding-left: 10px;
+    font-size: 14px;
+    line-height: 50px;
+    border-bottom: 2px dashed lightgray;
+
+  }
+  tr {
+    border-bottom: 1px solid lightgray;
+  }
+  td {
+    padding: 10px 10px 10px 10px;
+    font-size: 13px;
+  }
+  svg{
+    width: 10px;
+    height: 10px;
+  }
+  tr:last-child {
+    border-bottom: none;
+  }
+}
+
+.map-match-maneuver > * {
+}
+
 .fa-times{
   margin-right: 15px;
+}
+
+.fa-caret-down{
+  margin-left: 15px;
+}
+
+.fa-caret-up{
+  margin-left: 15px;
 }
 
 .fa-exclamation-triangle{
