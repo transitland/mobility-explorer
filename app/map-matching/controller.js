@@ -326,11 +326,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return edgeCoordinates;
     }
   }),
-
-// if attribute style selected, show key for colors
-// if hoverSegment, show attribute value for selected attribute
-// if no selected style, color segment, provide some detail on hover
-// onclick for all, show full attribute table
  
   actions: {
     updatebbox(e) {
