@@ -50,7 +50,7 @@ export default Ember.Route.extend(setLoading, {
 			{
 				"name": "half-marathon",
 				"display_name": "FOR TESTING: discontinuous trace",
-				"filename": "half-marathon.gpx",
+				"filename": "Half-Marathon.gpx",
 				"costing": "pedestrian"
 			},
 			{
