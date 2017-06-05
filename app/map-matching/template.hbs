@@ -260,6 +260,12 @@
           {{/if}}
         {{/if}}
       </form>
+              {{#each model.mapMatchRequests.attributesResponse.value.matched_points as | matchedPoint |}}
+                {{#if (eq matchedPoint.type "unmatched")}}
+               <!-- yes -->
+                {{/if}}
+              {{/each}}
+
     </div>
   </div>
 </div>
@@ -307,6 +313,12 @@
               {{/marker-layer}}
             {{/if}}
             {{#if trace}}
+              {{#each model.mapMatchRequests.attributesResponse.value.matched_points as | matchedPoint |}}
+                {{#if (eq matchedPoint.type "unmatched")}}
+                {{#marker-layer lat=matchedPoint.lat lng=matchedPoint.lon}}
+                {{/marker-layer}}
+                {{/if}}
+              {{/each}}
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}

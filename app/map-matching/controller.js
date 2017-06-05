@@ -251,15 +251,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // var unmatched = 0;
 
       for (var b = 0; b < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; b++){
-        console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index)
-      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].begin_route_discontinuity){
-      //     console.log("begin_route_discontinuity")
-      //     console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
-      //   }
-      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].end_route_discontinuity){
-      //     console.log("end_route_discontinuity")
-      //     console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
-      //   }
+        if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].begin_route_discontinuity){
+          console.log("begin_route_discontinuity")
+          console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+        }
+        if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].end_route_discontinuity){
+          console.log("end_route_discontinuity")
+          console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+        }
       //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "matched"){
       //     matched += 1;
       //   } else if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "unmatched"){
@@ -268,6 +267,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       //     interpolated += 1;
       //   }
       }
+
+      // console.log("edges.length: " + edges.length);
+      // console.log("max edge_index: " + this.model.mapMatchRequests.attributesResponse.value.matched_points[this.model.mapMatchRequests.attributesResponse.value.matched_points.length-1].edge_index);
+      // console.log("decoded polyline array length: " + this.model.mapMatchRequests.decodedPolyline.value.length)
+      // console.log("final edge end_shape_index: " + edges[edges.length-1].end_shape_index);
+
 
       // console.log("matched: " + matched)
       // console.log("unmatched: " + unmatched)
@@ -290,7 +295,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         var max = attributeArrayMax;
       
         var attr = edges[i][selectedAttribute];
-        
         // find color
         if (selectedAttribute === 'weighted_grade') {
           
@@ -340,6 +344,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           else if (attr < 30)
             var color = '#a50026 ';
        }
+
         // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
         edgeCoordinates.push({
           coordinates: pointsSlice,
@@ -348,15 +353,15 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           attributes: attributes
         })
       }
-      debugger;
+
+      // debugger;
       return edgeCoordinates;
     }
   }),
 
-// if attribute style selected, show key for colors
-// if hoverSegment, show attribute value for selected attribute
-// if no selected style, color segment, provide some detail on hover
-// onclick for all, show full attribute table
+  discontinuousPoint: Ember.computed('trace', function(){
+
+  }),
  
   actions: {
     updatebbox(e) {
