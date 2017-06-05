@@ -48,6 +48,12 @@ export default Ember.Route.extend(setLoading, {
 	fixtures: function() {
 		let gpxTraces = [
 			{
+				"name": "half-marathon",
+				"display_name": "FOR TESTING: discontinuous trace",
+				"filename": "half-marathon.gpx",
+				"costing": "pedestrian"
+			},
+			{
 				"name": "san-francisco-run",
 				"display_name": "Run in San Francisco",
 				"filename": "san-francisco-run.gpx",

@@ -246,41 +246,24 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // find the median value for the attribute (to use to test with different attributes)
       var attributeArrayMedian = attributeArray[Math.floor(attributeArray.length/2)];
 
-      // var matched = 0;
-      // var interpolated = 0;
-      // var unmatched = 0;
 
+      // for testing:
       for (var b = 0; b < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; b++){
         if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].begin_route_discontinuity){
-          console.log("begin_route_discontinuity")
-          console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+          console.log("begin_route_discontinuity, matched_points index: " + b + ", edge_index:" + this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index + ". Begin_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].begin_shape_index + ", end_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].end_shape_index);
         }
         if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].end_route_discontinuity){
-          console.log("end_route_discontinuity")
-          console.log(this.model.mapMatchRequests.attributesResponse.value.matched_points[b])
+          console.log("end_route_discontinuity, matched_points index: " + b + ", edge_index:" + this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index + ". Begin_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].begin_shape_index + ", end_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].end_shape_index);
         }
-      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "matched"){
-      //     matched += 1;
-      //   } else if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "unmatched"){
-      //     unmatched += 1;
-      //   } else if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].type === "interpolated"){
-      //     interpolated += 1;
-      //   }
       }
-
-      // console.log("edges.length: " + edges.length);
-      // console.log("max edge_index: " + this.model.mapMatchRequests.attributesResponse.value.matched_points[this.model.mapMatchRequests.attributesResponse.value.matched_points.length-1].edge_index);
-      // console.log("decoded polyline array length: " + this.model.mapMatchRequests.decodedPolyline.value.length)
-      // console.log("final edge end_shape_index: " + edges[edges.length-1].end_shape_index);
-
-
-      // console.log("matched: " + matched)
-      // console.log("unmatched: " + unmatched)
-      // console.log("interpolated: "  + interpolated);
+      console.log("edges.length: " + edges.length);
+      console.log("max edge_index: " + this.model.mapMatchRequests.attributesResponse.value.matched_points[this.model.mapMatchRequests.attributesResponse.value.matched_points.length-1].edge_index);
+      console.log("decoded polyline array length: " + this.model.mapMatchRequests.decodedPolyline.value.length)
+      console.log("final edge end_shape_index: " + edges[edges.length-1].end_shape_index);
+      // end testing
 
       // TODO: Style discontinuities
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
-
       for (var i = 0; i < edges.length; i++){
 
         // create coordinate array for segment
@@ -353,13 +336,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           attributes: attributes
         })
       }
-
-      // debugger;
       return edgeCoordinates;
     }
   }),
 
-  discontinuousPoint: Ember.computed('trace', function(){
+  discontinuousPoints: Ember.computed('trace', function(){
+    // debugger;
 
   }),
  
