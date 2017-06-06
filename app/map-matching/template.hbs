@@ -228,45 +228,13 @@
                   {{/each}}
                 </table>
               </div>
-
-                <!-- <div class="leaflet-routing-alt">
-                  <div class="route-display-info">
-                    <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon-mode"><use xlink:href="#icon-mode-multimodal"></use></svg>Total distance: {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}
-                  </div>
-                  <table>
-                    <colgroup class="">
-                      <col class="leaflet-routing-instruction-icon">
-                      <col class="leaflet-routing-instruction-text">
-                      <col class="leaflet-routing-instruction-distance">
-                    </colgroup>
-                    <tbody>
-                      {{#each routeManeuvers as | maneuver |}}
-                        <tr class="route-itinerary-row">
-                          <td class="route-itinerary-maneuver">
-                            <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon-maneuver"><use xlink:href="#icon-maneuver-01"></use></svg>
-                          </td>
-                          <td class="route-itinerary-guide">
-                            <div class="route-itinerary-depart"></div>{{maneuver.instruction}}
-                            <div class="route-itinerary-arrive"></div>
-                          </td>
-                          <td class="route-itinerary-measure">{{maneuver.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}</td>
-                        </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
-                </div> -->
               {{/if}}
             {{/if}}
           {{/if}}
         {{/if}}
       </form>
-              {{#each model.mapMatchRequests.attributesResponse.value.matched_points as | matchedPoint |}}
-                {{#if (eq matchedPoint.type "unmatched")}}
-               <!-- yes -->
-                {{/if}}
-              {{/each}}
-
     </div>
+   
   </div>
 </div>
 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -313,7 +281,7 @@
               {{/marker-layer}}
             {{/if}}
             {{#if trace}}
-              {{#each model.mapMatchRequests.attributesResponse.value.matched_points as | matchedPoint |}}
+              <!-- {{#each model.mapMatchRequests.attributesResponse.value.matched_points as | matchedPoint |}}
                 {{#if traceDiscontinuities}}
                   {{#if matchedPoint.end_route_discontinuity}}
                     {{#marker-layer lat=matchedPoint.lat lng=matchedPoint.lon}}
@@ -324,7 +292,13 @@
                     {{/marker-layer}}
                   {{/if}}
                 {{/if}}
-              {{/each}}
+              {{/each}} -->
+               <!-- {{#if unmatchedPoints}}
+                {{#each unmatchedPoints as | unmatchedPoint | }}
+                  {{#marker-layer location=unmatchedPoint}}
+                  {{/marker-layer}}
+                {{/each}}
+              {{/if}} -->
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
@@ -340,10 +314,12 @@
             {{/if}}
             {{#if selectedAttribute}}
               {{#if traceDiscontinuities}}
-                {{#polyline-layer locations=traceDiscontinuities color="black" weight=12 opacity=1}}
-                {{/polyline-layer}}
-                {{#polyline-layer locations=traceDiscontinuities color="red" weight=12 opacity=1}}
-                {{/polyline-layer}}
+                {{#each traceDiscontinuities as | traceDiscontinuity |}}
+                  {{#polyline-layer locations=traceDiscontinuity color="#939393" weight=7 opacity=1}}
+                  {{/polyline-layer}}
+                  {{#polyline-layer locations=traceDiscontinuity color="#666" weight=6 opacity=1 dashArray="1, 7"}}
+                  {{/polyline-layer}}
+                {{/each}}
               {{/if}}
               {{#each traceAttributeSegments as |segment|}}
                 {{#polyline-layer locations=segment.coordinates color="#444444" clickable=false weight=7 opacity=1}}

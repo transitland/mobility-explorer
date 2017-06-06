@@ -48,6 +48,12 @@ export default Ember.Route.extend(setLoading, {
 	fixtures: function() {
 		let gpxTraces = [
 			{
+				"name": "mountain-bike-1",
+				"display_name": "FOR TESTING: mult. discontinuities",
+				"filename": "mountain-bike-1.gpx",
+				"costing": "bicycle"
+			},
+			{
 				"name": "half-marathon",
 				"display_name": "FOR TESTING: discontinuous trace",
 				"filename": "Half-Marathon.gpx",
@@ -232,7 +238,8 @@ export default Ember.Route.extend(setLoading, {
 				// trace_attributes request
 				return Ember.$.ajax({
 					type:"POST",
-					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
+					// url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
+					url:'https://valhalla.dev.mapzen.com/trace_attributes?api_key=valhalla-t_16n1c&',
 					data:JSON.stringify(attributesJson)
 				});
 			})
@@ -276,7 +283,8 @@ export default Ember.Route.extend(setLoading, {
 
 				var traceRouteRequest = Ember.$.ajax({
 					type: "POST",
-					url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
+					// url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
+					url:'https://valhalla.dev.mapzen.com/trace_attributes?api_key=valhalla-t_16n1c&',
 					data: JSON.stringify(routeJson)
 				});
 				
