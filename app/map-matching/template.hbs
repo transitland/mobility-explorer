@@ -314,9 +314,15 @@
             {{/if}}
             {{#if trace}}
               {{#each model.mapMatchRequests.attributesResponse.value.matched_points as | matchedPoint |}}
-                {{#if (eq matchedPoint.type "unmatched")}}
-                {{#marker-layer lat=matchedPoint.lat lng=matchedPoint.lon}}
-                {{/marker-layer}}
+                {{#if traceDiscontinuities}}
+                  {{#if matchedPoint.end_route_discontinuity}}
+                    {{#marker-layer lat=matchedPoint.lat lng=matchedPoint.lon}}
+                    {{/marker-layer}}
+                  {{/if}}
+                  {{#if matchedPoint.begin_route_discontinuity}}
+                    {{#marker-layer lat=matchedPoint.lat lng=matchedPoint.lon}}
+                    {{/marker-layer}}
+                  {{/if}}
                 {{/if}}
               {{/each}}
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
@@ -333,6 +339,12 @@
               {{/if}}
             {{/if}}
             {{#if selectedAttribute}}
+              {{#if traceDiscontinuities}}
+                {{#polyline-layer locations=traceDiscontinuities color="black" weight=12 opacity=1}}
+                {{/polyline-layer}}
+                {{#polyline-layer locations=traceDiscontinuities color="red" weight=12 opacity=1}}
+                {{/polyline-layer}}
+              {{/if}}
               {{#each traceAttributeSegments as |segment|}}
                 {{#polyline-layer locations=segment.coordinates color="#444444" clickable=false weight=7 opacity=1}}
                 {{/polyline-layer}}

@@ -41,6 +41,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
   hoverSegment: null,
   selectedSegment: null,
+  traceDiscontinuities: null,
   attributeDisplay: {
     "id": {
       "display_name": "ID",
@@ -251,15 +252,19 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       for (var b = 0; b < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; b++){
         if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].begin_route_discontinuity){
           console.log("begin_route_discontinuity, matched_points index: " + b + ", edge_index:" + this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index + ". Begin_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].begin_shape_index + ", end_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].end_shape_index);
+          this.set('traceDiscontinuities', [points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].end_shape_index]]);
         }
         if (this.model.mapMatchRequests.attributesResponse.value.matched_points[b].end_route_discontinuity){
           console.log("end_route_discontinuity, matched_points index: " + b + ", edge_index:" + this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index + ". Begin_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].begin_shape_index + ", end_shape_index: " + edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].end_shape_index);
+          this.traceDiscontinuities.push(points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[b].edge_index].begin_shape_index]);
         }
       }
-      console.log("edges.length: " + edges.length);
-      console.log("max edge_index: " + this.model.mapMatchRequests.attributesResponse.value.matched_points[this.model.mapMatchRequests.attributesResponse.value.matched_points.length-1].edge_index);
-      console.log("decoded polyline array length: " + this.model.mapMatchRequests.decodedPolyline.value.length)
-      console.log("final edge end_shape_index: " + edges[edges.length-1].end_shape_index);
+      console.log("traceDiscontinuities (start and end coordinates of discontinuity): " + this.traceDiscontinuities);
+      // console.log("edges.length: " + edges.length);
+      // console.log("max edge_index: " + this.model.mapMatchRequests.attributesResponse.value.matched_points[this.model.mapMatchRequests.attributesResponse.value.matched_points.length-1].edge_index);
+      // console.log("decoded polyline array length: " + this.model.mapMatchRequests.decodedPolyline.value.length)
+      // console.log("final edge end_shape_index: " + edges[edges.length-1].end_shape_index);
+      console.log("The blue pins mark the beginning and end of the discontinuity. There should be a red line connecting these two points, but it currently renders as a dot because the start and end of the line are the same point.")
       // end testing
 
       // TODO: Style discontinuities
@@ -336,13 +341,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           attributes: attributes
         })
       }
+
       return edgeCoordinates;
     }
-  }),
-
-  discontinuousPoints: Ember.computed('trace', function(){
-    // debugger;
-
   }),
  
   actions: {
