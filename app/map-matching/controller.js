@@ -41,8 +41,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   html:'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="15px" width="15px" viewBox="0 0 180 180" enable-background="new 0 0 180 180" xml:space="preserve"> <path d="M90,14c-42.053,0-76,33.947-76,76c0,42.054,33.947,76,76,76c42.054,0,76-33.946,76-76C166,47.947,132.054,14,90,14L90,14z"/></svg>',
   hoverSegment: null,
   selectedSegment: null,
-  traceDiscontinuities: null,
-  unmatchedPoints: null,
   attributeDisplay: {
     "id": {
       "display_name": "ID",
@@ -210,7 +208,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var edgeCoordinates = [];
       var attributeArray = [];
       var attributeArraySum = 0;
-      
+
       for (var i = 0; i < edges.length; i++){
         var attribute;
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
@@ -248,25 +246,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // find the median value for the attribute (to use to test with different attributes)
       var attributeArrayMedian = attributeArray[Math.floor(attributeArray.length/2)];
 
-      // this.set('unmatchedPoints', []);
-      // this.set('traceDiscontinuities', []);
-      // var discontinuitySegment = [];
-      
-      // for (var i = 0; i < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; i++){
-      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[i].begin_route_discontinuity){
-      //     var beginDiscontinuity = points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[i].edge_index].end_shape_index];
-      //     this.unmatchedPoints.push(beginDiscontinuity);
-      //     discontinuitySegment.push(beginDiscontinuity);
-      //   }
-      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[i].end_route_discontinuity){
-      //     var endDiscontinuity = points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[i].edge_index].begin_shape_index];
-      //     discontinuitySegment.push(endDiscontinuity);
-      //     this.unmatchedPoints.push(endDiscontinuity);
-      //     this.traceDiscontinuities.push(discontinuitySegment);
-      //     discontinuitySegment = [];
-      //   }
-      // }
-     
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
       for (var i = 0; i < edges.length; i++){
 
