@@ -248,24 +248,24 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // find the median value for the attribute (to use to test with different attributes)
       var attributeArrayMedian = attributeArray[Math.floor(attributeArray.length/2)];
 
-      this.set('unmatchedPoints', []);
-      this.set('traceDiscontinuities', []);
-      var discontinuitySegment = [];
+      // this.set('unmatchedPoints', []);
+      // this.set('traceDiscontinuities', []);
+      // var discontinuitySegment = [];
       
-      for (var i = 0; i < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; i++){
-        if (this.model.mapMatchRequests.attributesResponse.value.matched_points[i].begin_route_discontinuity){
-          var beginDiscontinuity = points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[i].edge_index].end_shape_index];
-          this.unmatchedPoints.push(beginDiscontinuity);
-          discontinuitySegment.push(beginDiscontinuity);
-        }
-        if (this.model.mapMatchRequests.attributesResponse.value.matched_points[i].end_route_discontinuity){
-          var endDiscontinuity = points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[i].edge_index].begin_shape_index];
-          discontinuitySegment.push(endDiscontinuity);
-          this.unmatchedPoints.push(endDiscontinuity);
-          this.traceDiscontinuities.push(discontinuitySegment);
-          discontinuitySegment = [];
-        }
-      }
+      // for (var i = 0; i < this.model.mapMatchRequests.attributesResponse.value.matched_points.length; i++){
+      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[i].begin_route_discontinuity){
+      //     var beginDiscontinuity = points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[i].edge_index].end_shape_index];
+      //     this.unmatchedPoints.push(beginDiscontinuity);
+      //     discontinuitySegment.push(beginDiscontinuity);
+      //   }
+      //   if (this.model.mapMatchRequests.attributesResponse.value.matched_points[i].end_route_discontinuity){
+      //     var endDiscontinuity = points[edges[this.model.mapMatchRequests.attributesResponse.value.matched_points[i].edge_index].begin_shape_index];
+      //     discontinuitySegment.push(endDiscontinuity);
+      //     this.unmatchedPoints.push(endDiscontinuity);
+      //     this.traceDiscontinuities.push(discontinuitySegment);
+      //     discontinuitySegment = [];
+      //   }
+      // }
      
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
       for (var i = 0; i < edges.length; i++){

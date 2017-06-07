@@ -309,18 +309,22 @@
                   {{/polyline-layer}}
                   {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline.value weight=4 clickable=false color="#d4645c" opacity=1}}
                   {{/polyline-layer}}
+                  {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
+                    {{#polyline-layer locations=traceDiscontinuity color="#666" weight=7 opacity=1}}
+                    {{/polyline-layer}}
+                    {{#polyline-layer locations=traceDiscontinuity color="#939393" weight=4 opacity=1}}
+                    {{/polyline-layer}}
+                  {{/each}}
                 {{/unless}}
               {{/if}}
             {{/if}}
             {{#if selectedAttribute}}
-              {{#if traceDiscontinuities}}
-                {{#each traceDiscontinuities as | traceDiscontinuity |}}
-                  {{#polyline-layer locations=traceDiscontinuity color="#939393" weight=7 opacity=1}}
-                  {{/polyline-layer}}
-                  {{#polyline-layer locations=traceDiscontinuity color="#666" weight=6 opacity=1 dashArray="1, 7"}}
-                  {{/polyline-layer}}
-                {{/each}}
-              {{/if}}
+              {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
+                {{#polyline-layer locations=traceDiscontinuity color="#666" weight=7 opacity=1}}
+                {{/polyline-layer}}
+                {{#polyline-layer locations=traceDiscontinuity color="#939393" weight=4 opacity=1}}
+                {{/polyline-layer}}
+              {{/each}}
               {{#each traceAttributeSegments as |segment|}}
                 {{#polyline-layer locations=segment.coordinates color="#444444" clickable=false weight=7 opacity=1}}
                 {{/polyline-layer}}
