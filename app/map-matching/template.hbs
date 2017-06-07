@@ -234,7 +234,6 @@
         {{/if}}
       </form>
     </div>
-   
   </div>
 </div>
 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -281,38 +280,22 @@
               {{/marker-layer}}
             {{/if}}
             {{#if trace}}
-              <!-- {{#each model.mapMatchRequests.attributesResponse.value.matched_points as | matchedPoint |}}
-                {{#if traceDiscontinuities}}
-                  {{#if matchedPoint.end_route_discontinuity}}
-                    {{#marker-layer lat=matchedPoint.lat lng=matchedPoint.lon}}
-                    {{/marker-layer}}
-                  {{/if}}
-                  {{#if matchedPoint.begin_route_discontinuity}}
-                    {{#marker-layer lat=matchedPoint.lat lng=matchedPoint.lon}}
-                    {{/marker-layer}}
-                  {{/if}}
-                {{/if}}
-              {{/each}} -->
-               <!-- {{#if unmatchedPoints}}
-                {{#each unmatchedPoints as | unmatchedPoint | }}
-                  {{#marker-layer location=unmatchedPoint}}
-                  {{/marker-layer}}
-                {{/each}}
-              {{/if}} -->
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=3 clickable=false color="#6ea0a4" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
               {{#if showTraceAttribute}}
                 {{#unless selectedAttribute}}
-                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline.value weight=7 clickable=false color="#444444" opacity=1}}
-                  {{/polyline-layer}}
-                  {{#polyline-layer locations=model.mapMatchRequests.decodedPolyline.value weight=4 clickable=false color="#d4645c" opacity=1}}
-                  {{/polyline-layer}}
-                  {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
-                    {{#polyline-layer locations=traceDiscontinuity color="#666" weight=7 opacity=1}}
+                  {{#each traceAttributeSegments as |segment|}}
+                    {{#polyline-layer locations=segment.coordinates color="#444444" clickable=false weight=7 opacity=1}}
                     {{/polyline-layer}}
-                    {{#polyline-layer locations=traceDiscontinuity color="#939393" weight=4 opacity=1}}
+                  {{/each}}
+                  {{#each traceAttributeSegments as |segment|}}
+                    {{#polyline-layer locations=segment.coordinates color="#d4645c" clickable=false weight=4 opacity=1}}
+                    {{/polyline-layer}}
+                  {{/each}}
+                  {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
+                    {{#polyline-layer locations=traceDiscontinuity color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
                     {{/polyline-layer}}
                   {{/each}}
                 {{/unless}}
@@ -320,9 +303,7 @@
             {{/if}}
             {{#if selectedAttribute}}
               {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
-                {{#polyline-layer locations=traceDiscontinuity color="#666" weight=7 opacity=1}}
-                {{/polyline-layer}}
-                {{#polyline-layer locations=traceDiscontinuity color="#939393" weight=4 opacity=1}}
+                {{#polyline-layer locations=traceDiscontinuity color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
                 {{/polyline-layer}}
               {{/each}}
               {{#each traceAttributeSegments as |segment|}}

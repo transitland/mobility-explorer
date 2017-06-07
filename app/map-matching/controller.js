@@ -208,7 +208,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var edgeCoordinates = [];
       var attributeArray = [];
       var attributeArraySum = 0;
-
       for (var i = 0; i < edges.length; i++){
         var attribute;
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade

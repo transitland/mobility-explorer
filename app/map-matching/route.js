@@ -310,7 +310,7 @@ export default Ember.Route.extend(setLoading, {
           url:'https://valhalla.dev.mapzen.com/trace_attributes?api_key=valhalla-t_16n1c&',
           data: JSON.stringify(routeJson)
         });
-        
+
         return Ember.RSVP.hashSettled({
           decodedPolyline: decodedPolyline,
           encodedPolyline: encodedPolyline,
