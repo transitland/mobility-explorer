@@ -70,31 +70,25 @@
           </div>
         {{/if}}
       </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <form>
         {{#if trace}}
+          <h5>GPX trace</h5>
+          <svg width="100px" height="30px" viewBox="0 0 200 200">
+            <line x2="360" y1="20" y2="20" stroke="black" stroke-width="30" stroke-linecap="round" stroke-dasharray="40, 50" />
+            <line x2="360" y1="20" y2="20" stroke="#6ea0a4" stroke-width="20" stroke-linecap="round" stroke-dasharray="40, 50" />
+          </svg>
           {{#if showTraceAttribute}}
-            <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove trace_attribute response from map</button>
+            <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
+            <h5>Matched route</h5>
+            <svg width="100px" height="30px" viewBox="0 0 200 200">
+              <line x2="360" y1="20" y2="20" stroke="#d4645c" stroke-width="30" stroke-linecap="round"/>
+            </svg>
+            {{#if model.mapMatchRequests.traceDiscontinuities.value}}
+              <h5>Unmatched segment</h5>
+              <svg width="100px" height="30px" viewBox="0 0 200 200">
+                <line x2="360" y1="20" y2="20" stroke="#444444" stroke-width="30" stroke-linecap="round" stroke-dasharray="40, 50"/>
+              </svg>
+            {{/if}}
             <div class="upload-options">
               <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -141,29 +135,10 @@
                 </table>
               {{/if}}
             </div>
-            <!-- {{#unless this.model.gpxTrace.error_message}}
-              {{#if showTraceRoute}}
-                <button class="map-match" {{action "setShowTraceRoute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Hide trace_route narrative directions</button>
-              {{else}}
-                <button class="map-match" {{action "setShowTraceRoute" trace}}>Show trace_route narrative directions</button>
-              {{/if}}
-            {{/unless}}
-            {{#if showTraceRoute}}
-              {{#if showTraceRouteErrorMessage}}
-                <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
-                <i>More detailed information about why errors occur and how to fix them will go here.</i>
-              {{else}}
-                <strong>Status:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.status_message}}<br>
-                <strong>Length:</strong> {{this.model.mapMatchRequests.traceRouteRequest.value.trip.summary.length}} {{this.model.mapMatchRequests.traceRouteRequest.value.trip.units}}<br><br>
-                {{#each routeManeuvers as | maneuver |}}
-                  {{maneuver.instruction}}<br>
-                {{/each}}
-              {{/if}}
-            {{/if}} -->
           {{else}}
             {{#unless showErrorMessage}}
               {{#unless this.model.gpxTrace.error_message}}
-                <button class="map-match" {{action "setShowTraceAttribute" trace}}>Show trace_attribute response</button>
+                <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
               {{/unless}}
             {{/unless}}
             <!-- TODO: review errors and error messages -->
@@ -197,9 +172,9 @@
             {{#unless this.model.gpxTrace.error_message}}
               {{#if model.mapMatchRequests.traceRouteRequest.value.trip}}
                 {{#if showTraceRoute}}
-                  <button class="map-match" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-up" aria-hidden="true"></i></button>
+                  <button class="map-match" {{action "setShowTraceRoute" trace}}>View directions for the matched route<i class="fa fa-caret-up" aria-hidden="true"></i></button>
                 {{else}}
-                  <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                  <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>Hide directions for the matched route<i class="fa fa-caret-down" aria-hidden="true"></i></button>
                 {{/if}}
               {{/if}}
             {{/unless}}
@@ -228,8 +203,10 @@
               </div>
             {{/if}}
             {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
-              <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
-              <i>More detailed information about why errors occur and how to fix them will go here.</i>
+              <div class="error-message">
+                <strong>There was an error matching your trace.</strong><br>
+                <i>More detailed information about why errors occur and how to fix them will go here.</i>
+              </div>
             {{/unless}}
           {{/if}}
         {{/if}}
