@@ -195,17 +195,15 @@
           {{/if}}
           {{#if showTraceAttribute}}
             {{#unless this.model.gpxTrace.error_message}}
-              {{#if showTraceRoute}}
-                <button class="map-match" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-up" aria-hidden="true"></i></button>
-              {{else}}
-                <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+              {{#if model.mapMatchRequests.traceRouteRequest.value.trip}}
+                {{#if showTraceRoute}}
+                  <button class="map-match" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-up" aria-hidden="true"></i></button>
+                {{else}}
+                  <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>trace_route narrative directions<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                {{/if}}
               {{/if}}
             {{/unless}}
             {{#if showTraceRoute}}
-              {{#if showTraceRouteErrorMessage}}
-                <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
-                <i>More detailed information about why errors occur and how to fix them will go here.</i>
-              {{else}}
               <div class="map-match-narrative">
                 <table class="map-match-maneuvers">
                   <th></th>
@@ -228,8 +226,11 @@
                   {{/each}}
                 </table>
               </div>
-              {{/if}}
             {{/if}}
+            {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
+              <strong>Error message returned:</strong> "{{traceRouteErrorMessage}}"<br>
+              <i>More detailed information about why errors occur and how to fix them will go here.</i>
+            {{/unless}}
           {{/if}}
         {{/if}}
       </form>
@@ -286,16 +287,16 @@
               {{/polyline-layer}}
               {{#if showTraceAttribute}}
                 {{#unless selectedAttribute}}
+                 {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
+                    {{#polyline-layer locations=traceDiscontinuity color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
+                    {{/polyline-layer}}
+                  {{/each}}
                   {{#each model.mapMatchRequests.edgeCoordinates.value as |segment|}}
                     {{#polyline-layer locations=segment color="#444444" clickable=false weight=7 opacity=1}}
                     {{/polyline-layer}}
                   {{/each}}
                   {{#each model.mapMatchRequests.edgeCoordinates.value as |segment|}}
                     {{#polyline-layer locations=segment color="#d4645c" clickable=false weight=4 opacity=1}}
-                    {{/polyline-layer}}
-                  {{/each}}
-                  {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
-                    {{#polyline-layer locations=traceDiscontinuity color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
                     {{/polyline-layer}}
                   {{/each}}
                 {{/unless}}
