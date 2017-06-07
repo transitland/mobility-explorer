@@ -202,7 +202,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
       var points = this.model.mapMatchRequests.decodedPolyline.value;
-      var matchedPoints = this.model.mapMatchRequests.attributesResponse.value.matched_points;
       var edges = this.model.mapMatchRequests.attributesResponse.value.edges;
       var selectedAttribute = this.get('selectedAttribute');
       var edgeCoordinates = [];

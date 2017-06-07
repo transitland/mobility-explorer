@@ -250,12 +250,11 @@ export default Ember.Route.extend(setLoading, {
         var attributesResponse = response;
         // encodedPolyline needed for trace_attribute request
         var encodedPolyline = response.shape;
-        // decodedPolyline needed for rendering trace_route response on map
+        // decodedPolyline needed for rendering response on map
         var decodedPolyline = L.PolylineUtil.decode(encodedPolyline, 6);
 
         // find discontinuities
         var points = decodedPolyline;
-        // var matchedPoints = attributesResponse.matched_points;
         var edges = attributesResponse.edges;
         var unmatchedPoints = [];
         var traceDiscontinuities = [];
@@ -274,6 +273,14 @@ export default Ember.Route.extend(setLoading, {
             traceDiscontinuities.push(discontinuitySegment);
             discontinuitySegment = [];
           }
+        }
+
+        var edgeCoordinates = [];
+        for (var i = 0; i < edges.length; i++){
+          var begin = edges[i].begin_shape_index;
+          var end =  edges[i].end_shape_index;
+          var pointsSlice = points.slice(begin, end+1);
+          edgeCoordinates.push(pointsSlice)
         }
         
         // // Build the trace_route request 
@@ -316,6 +323,7 @@ export default Ember.Route.extend(setLoading, {
           encodedPolyline: encodedPolyline,
           attributesResponse: attributesResponse,
           traceRouteRequest: traceRouteRequest,
+          edgeCoordinates: edgeCoordinates,
           traceDiscontinuities: traceDiscontinuities
         });
 

@@ -286,12 +286,12 @@
               {{/polyline-layer}}
               {{#if showTraceAttribute}}
                 {{#unless selectedAttribute}}
-                  {{#each traceAttributeSegments as |segment|}}
-                    {{#polyline-layer locations=segment.coordinates color="#444444" clickable=false weight=7 opacity=1}}
+                  {{#each model.mapMatchRequests.edgeCoordinates.value as |segment|}}
+                    {{#polyline-layer locations=segment color="#444444" clickable=false weight=7 opacity=1}}
                     {{/polyline-layer}}
                   {{/each}}
-                  {{#each traceAttributeSegments as |segment|}}
-                    {{#polyline-layer locations=segment.coordinates color="#d4645c" clickable=false weight=4 opacity=1}}
+                  {{#each model.mapMatchRequests.edgeCoordinates.value as |segment|}}
+                    {{#polyline-layer locations=segment color="#d4645c" clickable=false weight=4 opacity=1}}
                     {{/polyline-layer}}
                   {{/each}}
                   {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
