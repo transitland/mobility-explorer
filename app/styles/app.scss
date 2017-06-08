@@ -676,11 +676,14 @@ td.day.active.today:hover {
 }
 
 .upload-options{
-  margin: 0;
+  margin: 0 0 15px 0;
   button{
     background-color: nth($mz-darkpurples, 2);
     margin-bottom: 10px;
     margin-top: 10px;
+  }
+  h5 {
+    margin-bottom: 0;
   }
 }
 
@@ -807,4 +810,29 @@ td.day.active.today:hover {
     background-image: url('https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png');
     background-position: 0 0;
   }
+}
+
+.legend-gpx-trace{
+  background-color: $mapzen-red;
+  height: 7px;
+  border: 2px solid #444444;
+  border-radius: 5px;
+}
+
+.legend-matched-route{
+  background-color: $explorer-bluegreen;
+  margin: 3px;
+  width: 15px;
+  height: 7px;
+  border: 1px solid #444444;
+  border-radius: 5px;
+}
+
+.legend-unmatched{
+  background-color: #444444;
+  opacity: .8;
+  margin: 3px;
+  width: 15px;
+  height: 7px;
+  border-radius: 5px;
 }

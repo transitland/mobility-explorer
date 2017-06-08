@@ -202,13 +202,11 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   traceAttributeSegments: Ember.computed('selectedAttribute', function() {
     if (this.get('trace')){
       var points = this.model.mapMatchRequests.decodedPolyline.value;
-      var matchedPoints = this.model.mapMatchRequests.attributesResponse.value.matched_points;
       var edges = this.model.mapMatchRequests.attributesResponse.value.edges;
       var selectedAttribute = this.get('selectedAttribute');
       var edgeCoordinates = [];
       var attributeArray = [];
       var attributeArraySum = 0;
-      
       for (var i = 0; i < edges.length; i++){
         var attribute;
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
@@ -246,11 +244,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // find the median value for the attribute (to use to test with different attributes)
       var attributeArrayMedian = attributeArray[Math.floor(attributeArray.length/2)];
 
-     
-
-      // TODO: Style discontinuities
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
-
       for (var i = 0; i < edges.length; i++){
 
         // create coordinate array for segment
@@ -265,7 +259,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         var max = attributeArrayMax;
       
         var attr = edges[i][selectedAttribute];
-        
         // find color
         if (selectedAttribute === 'weighted_grade') {
           
@@ -315,6 +308,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           else if (attr < 30)
             var color = '#a50026 ';
        }
+
         // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
         edgeCoordinates.push({
           coordinates: pointsSlice,
@@ -323,6 +317,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           attributes: attributes
         })
       }
+
       return edgeCoordinates;
     }
   }),
