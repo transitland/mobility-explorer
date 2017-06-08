@@ -172,9 +172,9 @@
             {{#unless this.model.gpxTrace.error_message}}
               {{#if model.mapMatchRequests.traceRouteRequest.value.trip}}
                 {{#if showTraceRoute}}
-                  <button class="map-match" {{action "setShowTraceRoute" trace}}>View directions for the matched route<i class="fa fa-caret-up" aria-hidden="true"></i></button>
+                  <button class="map-match" {{action "setShowTraceRoute" trace}}>Directions for the matched route<i class="fa fa-caret-up" aria-hidden="true"></i></button>
                 {{else}}
-                  <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>Hide directions for the matched route<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                  <button class="map-match narrative" {{action "setShowTraceRoute" trace}}>Directions for the matched route<i class="fa fa-caret-down" aria-hidden="true"></i></button>
                 {{/if}}
               {{/if}}
             {{/unless}}
@@ -189,7 +189,7 @@
                   {{#each routeManeuvers as | maneuver |}}
                     <tr>
                       <td>
-                        <svg xmlns="http://www.w3.org/1999/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-maneuver-01"></use></svg>
+                        {{#maneuver-icon maneuver=maneuver}}{{/maneuver-icon}}
                       </td>
                       <td>{{maneuver.instruction}}</td>
                       {{#unless (eq maneuver.length 0)}}
