@@ -49,14 +49,26 @@ export default Ember.Route.extend(setLoading, {
     let gpxTraces = [
       {
         "name": "mountain-bike-1",
-        "display_name": "FOR TESTING: mult. discontinuities",
+        "display_name": "TESTING: mult. discontinuities",
         "filename": "mountain-bike-1.gpx",
         "costing": "bicycle"
       },
       {
         "name": "half-marathon",
-        "display_name": "FOR TESTING: discontinuous trace",
+        "display_name": "TESTING: discontinuous trace",
         "filename": "Half-Marathon.gpx",
+        "costing": "pedestrian"
+      },
+      {
+        "name": "portland-bike",
+        "display_name": "TESTING: Portland bike",
+        "filename": "portland.gpx",
+        "costing": "bicycle"
+      },
+      {
+        "name": "portland-ped",
+        "display_name": "TESTING: Portland bike, as pedestrian",
+        "filename": "portland.gpx",
         "costing": "pedestrian"
       },
       {
