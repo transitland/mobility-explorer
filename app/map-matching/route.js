@@ -250,8 +250,7 @@ export default Ember.Route.extend(setLoading, {
         // trace_attributes request
         return Ember.$.ajax({
           type:"POST",
-          // url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
-          url:'https://valhalla.dev.mapzen.com/trace_attributes?api_key=valhalla-t_16n1c&',
+          url:'https://valhalla.mapzen.com/trace_attributes?api_key=mapzen-jLrDBSP&',
           data:JSON.stringify(attributesJson)
         });
       })
@@ -325,8 +324,7 @@ export default Ember.Route.extend(setLoading, {
 
         var traceRouteRequest = Ember.$.ajax({
           type: "POST",
-          // url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
-          url:'https://valhalla.dev.mapzen.com/trace_route?api_key=valhalla-t_16n1c&',
+          url:'https://valhalla.mapzen.com/trace_route?api_key=mapzen-jLrDBSP&',
           data: JSON.stringify(routeJson)
         });
 
