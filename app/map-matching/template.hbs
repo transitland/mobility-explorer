@@ -202,12 +202,18 @@
                 </table>
               </div>
             {{/if}}
+            
+            <!-- TODO: -->
+            <!-- Provide common causes for discontinuities -->
+            <!-- Link to OSM -->
             {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
               <div class="error-message">
                 <strong>There was an error matching your trace.</strong><br>
                 <i>More detailed information about why errors occur and how to fix them will go here.</i>
               </div>
             {{/unless}}
+          
+
           {{/if}}
         {{/if}}
       </form>
