@@ -149,7 +149,7 @@
                 </div>
               {{/if}}
               {{#if this.model.gpxTrace.error_message}}
-                <div class="error-message">
+                <div class="alert alert-danger">
                   <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like something is wrong with your GPX file. Please try another!
                 </div>
               {{/if}}
@@ -203,7 +203,7 @@
               </div>
             {{/if}}
             {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
-              <div class="error-message">
+              <div class="alert alert-warning">
                 <strong>There was an error matching your trace.</strong><br>
                 <i>More detailed information about why errors occur and how to fix them will go here.</i>
               </div>
