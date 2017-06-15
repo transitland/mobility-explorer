@@ -72,13 +72,22 @@
       </form>
       <form>
         {{#if trace}}
+        {{#unless showErrorMessage}}
+              {{#unless this.model.gpxTrace.error_message}}
+                {{#if showTraceAttribute}}
+                  <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
+                {{else}}
+                  <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
+                {{/if}}
+
+              {{/unless}}
+            {{/unless}}
           <h5>GPX trace</h5>
           <svg width="100px" height="30px" viewBox="0 0 200 200">
             <line x2="360" y1="20" y2="20" stroke="black" stroke-width="30" stroke-linecap="round" stroke-dasharray="40, 50" />
             <line x2="360" y1="20" y2="20" stroke="#6ea0a4" stroke-width="20" stroke-linecap="round" stroke-dasharray="40, 50" />
           </svg>
           {{#if showTraceAttribute}}
-            <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
             <h5>Matched route</h5>
             <svg width="100px" height="30px" viewBox="0 0 200 200">
               <line x2="360" y1="20" y2="20" stroke="#d4645c" stroke-width="30" stroke-linecap="round"/>
@@ -136,11 +145,6 @@
               {{/if}}
             </div>
           {{else}}
-            {{#unless showErrorMessage}}
-              {{#unless this.model.gpxTrace.error_message}}
-                <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
-              {{/unless}}
-            {{/unless}}
             <!-- TODO: review errors and error messages -->
               {{#if showErrorMessage}}
                 <div class="error-message">
