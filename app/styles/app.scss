@@ -156,6 +156,7 @@ button {
 }
 
 .fa-question-circle {
+  padding-left: 1px;
   color: $light-grey;
   font-size: 18px;
 }
@@ -778,6 +779,21 @@ td.day.active.today:hover {
   .level {
     width: 25px;
     height: 25px;
+  }
+}
+
+.trace-legend {
+  font-size: small;
+  text-align: center;
+  margin-top: 10px;
+  width: 100%;
+  td {
+    padding: 5px;
+  }
+  th {
+    width: 33%;
+    text-align: center;
+    padding: 5px;
   }
 }
 
