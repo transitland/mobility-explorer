@@ -23,7 +23,7 @@
     {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Try Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
       {{#unless trace}}
-        <div class="caption">Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
+        <div>Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
       {{/unless}}
       <h5>Choose a GPX file for matching</h5>
       {{#power-select
@@ -72,23 +72,50 @@
       </form>
       <form>
         {{#if trace}}
-          <h5>GPX trace</h5>
-          <svg width="100px" height="30px" viewBox="0 0 200 200">
-            <line x2="360" y1="20" y2="20" stroke="black" stroke-width="30" stroke-linecap="round" stroke-dasharray="40, 50" />
-            <line x2="360" y1="20" y2="20" stroke="#6ea0a4" stroke-width="20" stroke-linecap="round" stroke-dasharray="40, 50" />
-          </svg>
+        {{#unless showErrorMessage}}
+              {{#unless this.model.gpxTrace.error_message}}
+                {{#if showTraceAttribute}}
+                  <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
+                {{else}}
+                  <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
+                {{/if}}
+              {{/unless}}
+            {{/unless}}
+          <table class="trace-legend">
+            <tr>
+              <th>GPX trace</th>
+              {{#if showTraceAttribute}}
+                <th>Matched route</th>
+                {{#if model.mapMatchRequests.traceDiscontinuities.value}}
+                  <th>Unmatched segment</th>
+                {{/if}}
+              {{/if}}
+            </tr>
+            <tr>
+              <td>
+                <svg width="40px" height="30px" viewBox="0 0 40 30">
+                  <line x1="5" x2="50" y1="20" y2="20" stroke="black" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8" />
+                  <line x1="5" x2="50" y1="20" y2="20" stroke="#6ea0a4" stroke-width="3" stroke-linecap="round" stroke-dasharray="5, 8" />
+                </svg>
+              </td>
+              {{#if showTraceAttribute}}
+                <td>
+                  <svg width="40px" height="30px" viewBox="0 0 40 30">
+                    <line x1="5" x2="50" y1="20" y2="20" stroke="black" stroke-width="5" />
+                    <line x1="5" x2="50" y1="20" y2="20" stroke="#d4645c" stroke-width="3" />
+                  </svg>
+                </td>
+                {{#if model.mapMatchRequests.traceDiscontinuities.value}}
+                  <td>
+                    <svg width="40px" height="30px" viewBox="0 0 40 30">
+                      <line x1="5" x2="50" y1="20" y2="20" stroke="#444444" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8"/>
+                    </svg>
+                  </td>
+                {{/if}}
+              {{/if}}
+            </tr>
+          </table>
           {{#if showTraceAttribute}}
-            <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
-            <h5>Matched route</h5>
-            <svg width="100px" height="30px" viewBox="0 0 200 200">
-              <line x2="360" y1="20" y2="20" stroke="#d4645c" stroke-width="30" stroke-linecap="round"/>
-            </svg>
-            {{#if model.mapMatchRequests.traceDiscontinuities.value}}
-              <h5>Unmatched segment</h5>
-              <svg width="100px" height="30px" viewBox="0 0 200 200">
-                <line x2="360" y1="20" y2="20" stroke="#444444" stroke-width="30" stroke-linecap="round" stroke-dasharray="40, 50"/>
-              </svg>
-            {{/if}}
             <div class="upload-options">
               <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
               {{#if (eq selectedAttribute "weighted_grade")}}
@@ -136,11 +163,6 @@
               {{/if}}
             </div>
           {{else}}
-            {{#unless showErrorMessage}}
-              {{#unless this.model.gpxTrace.error_message}}
-                <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
-              {{/unless}}
-            {{/unless}}
             <!-- TODO: review errors and error messages -->
               {{#if showErrorMessage}}
                 <div class="error-message">
@@ -149,7 +171,7 @@
                 </div>
               {{/if}}
               {{#if this.model.gpxTrace.error_message}}
-                <div class="error-message">
+                <div class="alert alert-danger">
                   <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like something is wrong with your GPX file. Please try another!
                 </div>
               {{/if}}
@@ -207,7 +229,7 @@
             <!-- Provide common causes for discontinuities -->
             <!-- Link to OSM -->
             {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
-              <div class="error-message">
+              <div class="alert alert-warning">
                 <strong>There was an error matching your trace.</strong><br>
                 <i>More detailed information about why errors occur and how to fix them will go here.</i>
               </div>
