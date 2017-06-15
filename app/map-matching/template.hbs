@@ -23,7 +23,7 @@
     {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Try Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
       {{#unless trace}}
-        <div class="caption">Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
+        <div>Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
       {{/unless}}
       <h5>Choose a GPX file for matching</h5>
       {{#power-select
