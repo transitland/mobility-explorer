@@ -81,40 +81,42 @@
                 {{/if}}
               {{/unless}}
             {{/unless}}
-          <table class="trace-legend">
-            <tr>
-              <th>GPX trace</th>
-              {{#if showTraceAttribute}}
-                <th>Matched route</th>
-                {{#if model.mapMatchRequests.traceDiscontinuities.value}}
-                  <th>Unmatched segment</th>
+          {{#unless this.model.gpxTrace.error_message}}
+            <table class="trace-legend">
+              <tr>
+                <th>GPX trace</th>
+                {{#if showTraceAttribute}}
+                  <th>Matched route</th>
+                  {{#if model.mapMatchRequests.discontinuities.value}}
+                    <th>Unmatched segment</th>
+                  {{/if}}
                 {{/if}}
-              {{/if}}
-            </tr>
-            <tr>
-              <td>
-                <svg width="40px" height="30px" viewBox="0 0 40 30">
-                  <line x1="5" x2="50" y1="20" y2="20" stroke="black" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8" />
-                  <line x1="5" x2="50" y1="20" y2="20" stroke="#6ea0a4" stroke-width="3" stroke-linecap="round" stroke-dasharray="5, 8" />
-                </svg>
-              </td>
-              {{#if showTraceAttribute}}
+              </tr>
+              <tr>
                 <td>
                   <svg width="40px" height="30px" viewBox="0 0 40 30">
-                    <line x1="5" x2="50" y1="20" y2="20" stroke="black" stroke-width="5" />
-                    <line x1="5" x2="50" y1="20" y2="20" stroke="#d4645c" stroke-width="3" />
+                    <line x1="5" x2="50" y1="20" y2="20" stroke="black" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8" />
+                    <line x1="5" x2="50" y1="20" y2="20" stroke="#6ea0a4" stroke-width="3" stroke-linecap="round" stroke-dasharray="5, 8" />
                   </svg>
                 </td>
-                {{#if model.mapMatchRequests.traceDiscontinuities.value}}
+                {{#if showTraceAttribute}}
                   <td>
                     <svg width="40px" height="30px" viewBox="0 0 40 30">
-                      <line x1="5" x2="50" y1="20" y2="20" stroke="#444444" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8"/>
+                      <line x1="5" x2="50" y1="20" y2="20" stroke="black" stroke-width="5" />
+                      <line x1="5" x2="50" y1="20" y2="20" stroke="#d4645c" stroke-width="3" />
                     </svg>
                   </td>
+                  {{#if model.mapMatchRequests.discontinuities.value}}
+                    <td>
+                      <svg width="40px" height="30px" viewBox="0 0 40 30">
+                        <line x1="5" x2="50" y1="20" y2="20" stroke="#444444" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8"/>
+                      </svg>
+                    </td>
+                  {{/if}}
                 {{/if}}
-              {{/if}}
-            </tr>
-          </table>
+              </tr>
+            </table>
+          {{/unless}}
           {{#if showTraceAttribute}}
             <div class="upload-options">
               <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
@@ -224,18 +226,57 @@
                 </table>
               </div>
             {{/if}}
-            
-            <!-- TODO: -->
-            <!-- Provide common causes for discontinuities -->
-            <!-- Link to OSM -->
             {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
               <div class="alert alert-warning">
                 <strong>There was an error matching your trace.</strong><br>
-                <i>More detailed information about why errors occur and how to fix them will go here.</i>
+                <div class="headroom footroom">
+                  <i>Errors are commonly caused by x, y, and z.</i>
+                </div>
+                <div class="footroom">
+                  <i>To verify that the underlying path data exists, click on the link below to view that unmatched segment's location on OpenStreetMap.</i>
+                </div>
+                <div class="footroom">
+                  <i>
+                    If the data isn't there, you can add it and contribute to better data for everyone!
+                  </i>
+                </div>
+                <table class="discontinuity-table">
+                  {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
+                    <tr>
+                      <th>
+                        <div {{action 'selectDiscontinuity' discontinuity on="mouseEnter"}} {{action 'unselectDiscontinuity' discontinuity on="mouseLeave"}}>
+                          {{#if (eq selectedDiscontinuity discontinuity)}}
+                            <div class="selected-link">
+                              <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">
+                                Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}<br>
+                              </a>
+                            </div>
+                          {{else}}
+                            <div>
+                              <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">
+                                Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}<br>
+                              </a>
+                            </div>
+                          {{/if}}
+                        </div>
+                      </th>
+                      <td>
+                        {{#if (eq selectedDiscontinuity discontinuity)}}
+                          <svg width="40px" height="30px" viewBox="0 0 40 30">
+                            <line x1="0" x2="50" y1="20" y2="20" stroke="orange" stroke-width="7"/>
+                            <line x1="0" x2="50" y1="20" y2="20" stroke="#444444" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8" />
+                          </svg>
+                        {{else}}
+                          <svg width="40px" height="30px" viewBox="0 0 40 30">
+                            <line x1="5" x2="50" y1="20" y2="20" stroke="none" stroke-width="5" stroke-linecap="round"/>
+                          </svg>
+                        {{/if}}
+                      </td>
+                    </tr>
+                  {{/each}}
+                </table>
               </div>
-            {{/unless}}
-          
-
+            {{/unless}}      
           {{/if}}
         {{/if}}
       </form>
@@ -285,6 +326,12 @@
               {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
               {{/marker-layer}}
             {{/if}}
+            {{#if selectedDiscontinuity}}
+              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="orange" weight=7 opacity=1 onMouseout=(action "unselectDiscontinuity")}}
+              {{/polyline-layer}}
+              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
+              {{/polyline-layer}}
+            {{/if}}
             {{#if trace}}
               {{#polyline-layer locations=model.gpxTrace.coordinates weight=5 clickable=false color="#444444" opacity=1 dashArray="5, 8"}}
               {{/polyline-layer}}
@@ -292,8 +339,8 @@
               {{/polyline-layer}}
               {{#if showTraceAttribute}}
                 {{#unless selectedAttribute}}
-                 {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
-                    {{#polyline-layer locations=traceDiscontinuity color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
+                  {{#each model.mapMatchRequests.discontinuities.value as | traceDiscontinuity |}}
+                    {{#polyline-layer locations=traceDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onMouseover=(action "selectDiscontinuity" traceDiscontinuity) onMouseout=(action "unselectDiscontinuity")}}
                     {{/polyline-layer}}
                   {{/each}}
                   {{#each model.mapMatchRequests.edgeCoordinates.value as |segment|}}
@@ -308,8 +355,8 @@
               {{/if}}
             {{/if}}
             {{#if selectedAttribute}}
-              {{#each model.mapMatchRequests.traceDiscontinuities.value as | traceDiscontinuity |}}
-                {{#polyline-layer locations=traceDiscontinuity color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
+              {{#each model.mapMatchRequests.discontinuities.value as | traceDiscontinuity |}}
+                {{#polyline-layer locations=traceDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10"}}
                 {{/polyline-layer}}
               {{/each}}
               {{#each traceAttributeSegments as |segment|}}

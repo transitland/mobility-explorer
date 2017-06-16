@@ -797,6 +797,23 @@ td.day.active.today:hover {
   }
 }
 
+.discontinuity-table {
+  font-size: small;
+  text-align: center;
+  /*margin-top: 10px;*/
+  td {
+    padding: 0 0 5px 5px;
+  }
+  th {
+    text-align: center;
+    /*padding: 5px;*/
+  }
+}
+
+.selected-link {
+  color: orange;
+}
+
 .grade-gradient {
   height: 25px;
   background: linear-gradient(to left, red , yellow, hsl(120, 90%, 50%))
