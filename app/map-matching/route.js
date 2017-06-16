@@ -77,18 +77,6 @@ export default Ember.Route.extend(setLoading, {
         "filename": "Half-Marathon.gpx",
         "costing": "pedestrian"
       },
-      // {
-      //   "name": "portland-bike",
-      //   "display_name": "TESTING: Portland bike",
-      //   "filename": "portland.gpx",
-      //   "costing": "bicycle"
-      // },
-      // {
-      //   "name": "portland-ped",
-      //   "display_name": "TESTING: Portland bike, as pedestrian",
-      //   "filename": "portland.gpx",
-      //   "costing": "pedestrian"
-      // },
       {
         "name": "user_upload",
         "display_name": "Match your own GPX file...",
@@ -264,7 +252,8 @@ export default Ember.Route.extend(setLoading, {
         var unmatchedPoints = [];
         var traceDiscontinuities = [];
         var discontinuitySegment = [];
-        
+        var discontinuities = [];
+
         for (var i = 0; i < attributesResponse.matched_points.length; i++){
           if (attributesResponse.matched_points[i].begin_route_discontinuity){
             var beginDiscontinuity = points[edges[attributesResponse.matched_points[i].edge_index].end_shape_index];
@@ -280,6 +269,27 @@ export default Ember.Route.extend(setLoading, {
           }
         }
 
+        for (var i = 0; i < traceDiscontinuities.length; i++){
+          var edgeCoordinates = traceDiscontinuities[i];
+          var maxLat;
+          var maxLon;
+          var minLat;
+          var minLon;
+          var multipleDiscontinuities = false;
+          for (var j = 0; j < edgeCoordinates.length; j++){
+            if (j === 0){
+              maxLat = edgeCoordinates[j][0];
+              maxLon = edgeCoordinates[j][1];
+            } else {
+              minLat = edgeCoordinates[j][0];
+              minLon = edgeCoordinates[j][1];
+            }
+          }
+          if (traceDiscontinuities.length > 1){
+            multipleDiscontinuities = true;
+          }
+          discontinuities.push({edgeCoordinates: edgeCoordinates, maxLat: maxLat, maxLon: maxLon, minLat: minLat, minLon: minLon, multipleDiscontinuities: multipleDiscontinuities, number: i+1});
+        }
         var edgeCoordinates = [];
         for (var i = 0; i < edges.length; i++){
           var begin = edges[i].begin_shape_index;
@@ -328,7 +338,7 @@ export default Ember.Route.extend(setLoading, {
           attributesResponse: attributesResponse,
           traceRouteRequest: traceRouteRequest,
           edgeCoordinates: edgeCoordinates,
-          traceDiscontinuities: traceDiscontinuities
+          discontinuities: discontinuities
         });
 
       }, function(error) {

@@ -22,6 +22,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   noTraceUploaded: false,
   showTraceErrorMessage: false,
   selectedAttribute: null,
+  selectedDiscontinuity: null,
   selectedTrace: Ember.computed('trace', function(){
     if (!this.get('trace')) {
       return "Select a sample or upload your own file";
@@ -320,8 +321,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 
       return edgeCoordinates;
     }
-  }),
- 
+  }), 
   actions: {
     updatebbox(e) {
       var newbox = e.target.getBounds();
@@ -429,6 +429,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     closePopup(){
       this.set('selectedSegment', null);      
+    },
+    selectDiscontinuity(traceDiscontinuity){
+      this.set('selectedDiscontinuity', traceDiscontinuity);
+    },
+    unselectDiscontinuity(){
+      this.set('selectedDiscontinuity', null);
     }
-  }
+  },
 });
