@@ -12,6 +12,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   zoom: 14,
   trace: null,
   costing: null,
+  traceBounds: Ember.computed('selectedDiscontinuity', function(){
+    if (this.selectedDiscontinuity){
+      return this.selectedDiscontinuity.edgeCoordinates;
+    }
+    else {
+      return this.model.gpxTrace.bounds;
+    }
+  }),
   uploading: false,
   showTraceAttribut: false,
   showTraceRoute: false,
@@ -327,7 +335,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var newbox = e.target.getBounds();
       this.set('bbox', newbox.toBBoxString());
     },
-    setTrace(trace){      
+    setTrace(trace){    
+      this.set('selectedDiscontinuity', null);  
       this.set('trace', null);
       this.set('costing', null);
       this.set('showErrorMessage', false);
@@ -436,5 +445,5 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     unselectDiscontinuity(){
       this.set('selectedDiscontinuity', null);
     }
-  },
+  }
 });
