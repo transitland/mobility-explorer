@@ -240,42 +240,20 @@
                     If the data isn't there, you can add it and contribute to better data for everyone!
                   </i>
                 </div>
-                <table class="discontinuity-table">
-                  {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
-                    <tr>
-                      <th>
-                        <div>
-                          {{#if (eq selectedDiscontinuity discontinuity)}}
-                            <div class="selected-link" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
-                                Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}
-                            </div>
-                          {{else}}
-                            <div {{action 'selectDiscontinuity' discontinuity on="click"}}>
-                                Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}<i class="fa fa-search-plus" aria-hidden="true"></i>
-                            </div>
-                          {{/if}}
-                        </div>
-                      </th>
-                      <td>
-                        {{#if (eq selectedDiscontinuity discontinuity)}}
-                          <svg width="40px" height="30px" viewBox="0 0 40 30">
-                            <line x1="0" x2="50" y1="20" y2="20" stroke="orange" stroke-width="7"/>
-                            <line x1="0" x2="50" y1="20" y2="20" stroke="#444444" stroke-width="5" stroke-linecap="round" stroke-dasharray="5, 8" />
-                          </svg>
-                        {{else}}
-                          <svg width="40px" height="30px" viewBox="0 0 40 30">
-                            <line x1="5" x2="50" y1="20" y2="20" stroke="none" stroke-width="5" stroke-linecap="round"/>
-                          </svg>
-                        {{/if}}
-                      </td>
-                      <td>
-                        {{#if (eq selectedDiscontinuity discontinuity)}}
-                          <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">View location on OSM <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        {{/if}}
-                      </td>
-                    </tr>
-                  {{/each}}
-                </table>
+                {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
+                  {{#if (eq selectedDiscontinuity discontinuity)}}
+                    <div class="row selected-link" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
+                      <div class="col-xs-8">
+                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-minus" aria-hidden="true"></i> </div><div class="col-xs-4">
+                        (<a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">OSM <i class="fa fa-external-link" aria-hidden="true"></i>
+                        </a>) </div>
+                    </div>
+                  {{else}}
+                    <div {{action 'selectDiscontinuity' discontinuity on="click"}}>
+                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-plus" aria-hidden="true"></i>
+                    </div>
+                  {{/if}}
+                {{/each}}
               </div>
             {{/unless}}      
           {{/if}}
