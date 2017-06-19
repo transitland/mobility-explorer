@@ -12,8 +12,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   zoom: 14,
   trace: null,
   costing: null,
-  traceBounds: Ember.computed('selectedDiscontinuity', 'trace', function(){
-    debugger;
+  traceBounds: Ember.computed('selectedDiscontinuity', 'model', function(){
     if (this.selectedDiscontinuity){
       return this.selectedDiscontinuity.edgeCoordinates;
     }
@@ -370,11 +369,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('errorMessage', this.model.mapMatchRequests.attributesResponse.reason.responseJSON.error);
         this.set('showErrorMessage', true);
       } else if (this.get('showTraceAttribute')){
+        this.set('selectedDiscontinuity', null);  
         this.set('showTraceAttribute', false);
         this.set('showTraceRoute', false);     
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
       } else {
+        this.set('selectedDiscontinuity', null);  
         this.set('selectedAttribute', null);
         this.set('showTraceAttribute', true);
       }
