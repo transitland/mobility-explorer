@@ -12,7 +12,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   zoom: 14,
   trace: null,
   costing: null,
-  traceBounds: Ember.computed('selectedDiscontinuity', function(){
+  traceBounds: Ember.computed('selectedDiscontinuity', 'trace', function(){
+    debugger;
     if (this.selectedDiscontinuity){
       return this.selectedDiscontinuity.edgeCoordinates;
     }
