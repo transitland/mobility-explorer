@@ -827,6 +827,10 @@ td.day.active.today:hover {
   color: orange;
 }
 
+.unmatched-segment{
+  cursor: pointer;
+}
+
 .grade-gradient {
   height: 25px;
   background: linear-gradient(to left, red , yellow, hsl(120, 90%, 50%))
