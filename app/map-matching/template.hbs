@@ -250,14 +250,21 @@
                 {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
                   {{#if (eq selectedDiscontinuity discontinuity)}}
                     <div class="row selected-link">
-                      <div class="col-xs-8" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
-                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-minus" aria-hidden="true"></i> </div><div class="col-xs-4">
-                        <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">OSM <i class="fa fa-external-link" aria-hidden="true"></i>
-                        </a></div>
+                      <div class="col-xs-8 unmatched-segment" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
+                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} 
+                        <i class="fa fa-search-minus" aria-hidden="true"></i>
+                      </div>
+                      <div class="col-xs-4">
+                        <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">OSM 
+                        <i class="fa fa-external-link" aria-hidden="true"></i>
+                        </a>
+                      </div>
                     </div>
                   {{else}}
-                    <div {{action 'selectDiscontinuity' discontinuity on="click"}}>
-                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-plus" aria-hidden="true"></i>
+                    <div class="row">
+                      <div class="col-xs-8 unmatched-segment" {{action 'selectDiscontinuity' discontinuity on="click"}}>
+                          Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-plus" aria-hidden="true"></i>
+                      </div>
                     </div>
                   {{/if}}
                 {{/each}}
