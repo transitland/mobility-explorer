@@ -692,6 +692,9 @@ td.day.active.today:hover {
   background-color: #465371;
   margin-bottom: 0;
   margin-top: 10px;
+  &:hover {
+    background-color: #505f81;
+  }
 }
 
 .run-mapmatch {
@@ -830,18 +833,25 @@ td.day.active.today:hover {
 .unmatched-segment{
   button {
     margin-bottom: 0;
-    background-color: nth($mz-darkpurples, 2);
+    /*background-color:  nth($mz-darkpurples, 3);*/
+    background-color: #465371;
+    &:hover {
+      background-color: #505f81;
+    }
   }
   .unmatched-options {
     margin-bottom: 10px;
-    background-color: #FFFFFF;
-    border: 2px solid nth($mz-darkpurples, 2);
-    color: nth($mz-darkpurples, 2);
-    border-radius: 5px;
+    color: #FFFFFF;
+    background-color: $mapzen-blue;
+    /*background-color: #466571;*/
+    /*border-radius: 5px;*/
     padding: 5px;
     a {
       font-weight: normal;
-      color: nth($mz-darkpurples, 2);
+      color: #FFFFFF;
+    }
+    &:hover {
+      background-color: #7ca9ad;
     }
   }
   .row {
