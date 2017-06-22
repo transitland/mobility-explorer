@@ -235,17 +235,9 @@
             {{/if}}
             {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
               <div class="alert alert-warning">
-                <strong>There was an error matching your trace.</strong><br>
-                <div class="headroom footroom">
-                  <i>Errors commonly occur when a trace has low GPS accuracy (which often occurs in dense, urban areas), or when the path data doesn't exist in OpenStreetMap. </i>
-                </div>
-                <div class="footroom">
-                  <i>To verify that the underlying path data exists, click on the link below to view that unmatched segment's location on OpenStreetMap.</i>
-                </div>
-                <div>
-                  <i>
-                    If the data isn't there, you can add it and contribute to better data for everyone!
-                  </i>
+                <strong>There was an error matching your trace. </strong><div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Errors commonly occur when a trace has low GPS accuracy (which often occurs in dense, urban areas), or when the path data doesn't exist in OpenStreetMap.{{/popover-on-element}}<br>
+                <div class="headroom">
+                  <i>Click the button{{#if discontinuity.multipleDiscontinuities}}s{{/if}} below to highlight and zoom to the unmatched segment{{#if discontinuity.multipleDiscontinuities}}s{{/if}}.</i>
                 </div>
               </div>
               {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}

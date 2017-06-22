@@ -368,13 +368,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('errorMessage', this.model.mapMatchRequests.attributesResponse.reason.responseJSON.error);
         this.set('showErrorMessage', true);
       } else if (this.get('showTraceAttribute')){
-        this.set('zoomedDiscontinuity', null);  
+        this.set('selectedDiscontinuity', null);  
         this.set('showTraceAttribute', false);
         this.set('showTraceRoute', false);     
         this.set('selectedAttribute', null);
         this.set('selectedSegment', null);      
       } else {
-        this.set('zoomedDiscontinuity', null);  
+        this.set('selectedDiscontinuity', null);  
         this.set('selectedAttribute', null);
         this.set('showTraceAttribute', true);
       }

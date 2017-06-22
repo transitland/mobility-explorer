@@ -916,3 +916,9 @@ td.day.active.today:hover {
   height: 7px;
   border-radius: 5px;
 }
+
+.alert-warning{
+  .fa-question-circle {
+    color: #91893b;
+  }
+}
