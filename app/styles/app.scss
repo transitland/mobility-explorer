@@ -828,7 +828,27 @@ td.day.active.today:hover {
 }
 
 .unmatched-segment{
-  cursor: pointer;
+  button {
+    margin-bottom: 0;
+    background-color: nth($mz-darkpurples, 2);
+  }
+  .unmatched-options {
+    margin-bottom: 10px;
+    background-color: #FFFFFF;
+    border: 2px solid nth($mz-darkpurples, 2);
+    color: nth($mz-darkpurples, 2);
+    border-radius: 5px;
+    padding: 5px;
+    a {
+      font-weight: normal;
+      color: nth($mz-darkpurples, 2);
+    }
+  }
+  .row {
+    background-color: #FFFFFF;
+    width: 100%;
+    margin: 0;
+  }
 }
 
 .grade-gradient {

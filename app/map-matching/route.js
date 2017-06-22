@@ -78,6 +78,12 @@ export default Ember.Route.extend(setLoading, {
         "costing": "pedestrian"
       },
       {
+        "name": "run-grade-trace",
+        "display_name": "TESTING: grade",
+        "filename": "run-grade-trace.gpx",
+        "costing": "pedestrian"
+      },
+      {
         "name": "user_upload",
         "display_name": "Match your own GPX file...",
         "filename": "",

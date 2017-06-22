@@ -242,33 +242,54 @@
                 <div class="footroom">
                   <i>To verify that the underlying path data exists, click on the link below to view that unmatched segment's location on OpenStreetMap.</i>
                 </div>
-                <div class="footroom">
+                <div>
                   <i>
                     If the data isn't there, you can add it and contribute to better data for everyone!
                   </i>
                 </div>
-                {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
-                  {{#if (eq selectedDiscontinuity discontinuity)}}
-                    <div class="row selected-link">
-                      <div class="col-xs-8 unmatched-segment" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
-                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} 
-                        <i class="fa fa-search-minus" aria-hidden="true"></i>
+              </div>
+              {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
+                <div class="unmatched-segment">
+                  {{#if (eq showSelectedDiscontinuity discontinuity)}}
+                    <button {{action 'hideSelectedDiscontinuity' on="click"}}>Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}</button>
+                    <div class="row">
+                      <div class="col-xs-6">
+                        {{#unless (eq selectedDiscontinuity discontinuity)}}
+                          <button class="unmatched-options" {{action 'selectDiscontinuity' discontinuity on="click"}}>Zoom in to segment <i class="fa fa-search-plus" aria-hidden="true"></i></button>
+                        {{else}}
+                          <button class="unmatched-options" {{action 'unselectDiscontinuity' on="click"}}>Zoom out to trace <i class="fa fa-search-minus" aria-hidden="true"></i></button>
+                        {{/unless}}
                       </div>
-                      <div class="col-xs-4">
-                        <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">OSM 
+                      <div class="col-xs-6">
+                        <button class="unmatched-options"><a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">View OSM data  
                         <i class="fa fa-external-link" aria-hidden="true"></i>
-                        </a>
+                        </a></button>
                       </div>
                     </div>
                   {{else}}
-                    <div class="row">
-                      <div class="col-xs-8 unmatched-segment" {{action 'selectDiscontinuity' discontinuity on="click"}}>
-                          Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-plus" aria-hidden="true"></i>
-                      </div>
-                    </div>
+                    <button {{action 'showSelectedDiscontinuity' discontinuity on="click"}}>Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}</button>
                   {{/if}}
-                {{/each}}
-              </div>
+                </div>
+                <!-- {{#if (eq selectedDiscontinuity discontinuity)}}
+                  <div class="row selected-link">
+                    <div class="col-xs-8 unmatched-segment" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
+                      Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} 
+                      <i class="fa fa-search-minus" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-xs-4">
+                      <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">OSM 
+                      <i class="fa fa-external-link" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </div>
+                {{else}}
+                  <div class="row">
+                    <div class="col-xs-8 unmatched-segment" {{action 'selectDiscontinuity' discontinuity on="click"}}>
+                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-plus" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                {{/if}} -->
+              {{/each}}
             {{/unless}}      
           {{/if}}
         {{/if}}

@@ -30,6 +30,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   noTraceUploaded: false,
   showTraceErrorMessage: false,
   selectedAttribute: null,
+  showSelectedDiscontinuity: null,
   selectedDiscontinuity: null,
   selectedTrace: Ember.computed('trace', function(){
     if (!this.get('trace')) {
@@ -286,7 +287,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           var highColor = 0;
           var midColor = 120;
           var lowColor = 280;
-      
+          debugger;
           // set color scale around midpoint
           if (attr <= mid){
             var hue = (percentage * (midColor - lowColor));
@@ -440,6 +441,12 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     },
     closePopup(){
       this.set('selectedSegment', null);      
+    },
+    showSelectedDiscontinuity(traceDiscontinuity){
+      this.set('showSelectedDiscontinuity', traceDiscontinuity);
+    },
+    hideSelectedDiscontinuity(traceDiscontinuity){
+      this.set('showSelectedDiscontinuity', null);
     },
     selectDiscontinuity(traceDiscontinuity){
       this.set('selectedDiscontinuity', traceDiscontinuity);
