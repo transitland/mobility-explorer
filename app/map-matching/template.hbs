@@ -72,15 +72,15 @@
       </form>
       <form>
         {{#if trace}}
-        {{#unless showErrorMessage}}
-              {{#unless this.model.gpxTrace.error_message}}
-                {{#if showTraceAttribute}}
-                  <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
-                {{else}}
-                  <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
-                {{/if}}
-              {{/unless}}
+          {{#unless showErrorMessage}}
+            {{#unless this.model.gpxTrace.error_message}}
+              {{#if showTraceAttribute}}
+                <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
+              {{else}}
+                <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
+              {{/if}}
             {{/unless}}
+          {{/unless}}
           {{#unless this.model.gpxTrace.error_message}}
             <table class="trace-legend">
               <tr>
@@ -250,14 +250,14 @@
               </div>
               {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
                 <div class="unmatched-segment">
-                  {{#if (eq showSelectedDiscontinuity discontinuity)}}
+                  {{#if (eq selectedDiscontinuity discontinuity)}}
                     <button {{action 'hideSelectedDiscontinuity' on="click"}}>Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}</button>
                     <div class="row">
                       <div class="col-xs-6">
-                        {{#unless (eq selectedDiscontinuity discontinuity)}}
-                          <button class="unmatched-options" {{action 'selectDiscontinuity' discontinuity on="click"}}>Zoom in to segment <i class="fa fa-search-plus" aria-hidden="true"></i></button>
+                        {{#unless (eq zoomedDiscontinuity discontinuity)}}
+                          <button class="unmatched-options" {{action 'zoomToSelectedDiscontinuity' discontinuity on="click"}}>Zoom in to segment <i class="fa fa-search-plus" aria-hidden="true"></i></button>
                         {{else}}
-                          <button class="unmatched-options" {{action 'unselectDiscontinuity' on="click"}}>Zoom out to trace <i class="fa fa-search-minus" aria-hidden="true"></i></button>
+                          <button class="unmatched-options" {{action 'zoomOutFromSelectedDiscontinuity' on="click"}}>Zoom out to trace <i class="fa fa-search-minus" aria-hidden="true"></i></button>
                         {{/unless}}
                       </div>
                       <div class="col-xs-6">
@@ -270,25 +270,6 @@
                     <button {{action 'showSelectedDiscontinuity' discontinuity on="click"}}>Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}</button>
                   {{/if}}
                 </div>
-                <!-- {{#if (eq selectedDiscontinuity discontinuity)}}
-                  <div class="row selected-link">
-                    <div class="col-xs-8 unmatched-segment" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
-                      Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} 
-                      <i class="fa fa-search-minus" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-xs-4">
-                      <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">OSM 
-                      <i class="fa fa-external-link" aria-hidden="true"></i>
-                      </a>
-                    </div>
-                  </div>
-                {{else}}
-                  <div class="row">
-                    <div class="col-xs-8 unmatched-segment" {{action 'selectDiscontinuity' discontinuity on="click"}}>
-                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-plus" aria-hidden="true"></i>
-                    </div>
-                  </div>
-                {{/if}} -->
               {{/each}}
             {{/unless}}      
           {{/if}}
@@ -341,9 +322,9 @@
               {{/marker-layer}}
             {{/if}}
             {{#if selectedDiscontinuity}}
-              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="orange" weight=7 opacity=1 onClick=(action "unselectDiscontinuity")}}
+              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="orange" weight=7 opacity=1 onClick=(action "hideSelectedDiscontinuity")}}
               {{/polyline-layer}}
-              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "unselectDiscontinuity")}}
+              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "hideSelectedDiscontinuity")}}
               {{/polyline-layer}}
             {{/if}}
             {{#if trace}}
@@ -354,7 +335,7 @@
               {{#if showTraceAttribute}}
                 {{#unless selectedAttribute}}
                   {{#each model.mapMatchRequests.discontinuities.value as | traceDiscontinuity |}}
-                    {{#polyline-layer locations=traceDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "selectDiscontinuity" traceDiscontinuity)}}
+                    {{#polyline-layer locations=traceDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "showSelectedDiscontinuity" traceDiscontinuity)}}
                     {{/polyline-layer}}
                   {{/each}}
                   {{#each model.mapMatchRequests.edgeCoordinates.value as |segment|}}
