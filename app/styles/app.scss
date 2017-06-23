@@ -851,6 +851,9 @@ td.day.active.today:hover {
     margin: 0 0 5px 0;
     padding: 5px 0 5px 0;
     background-color: #FFFFFF;
+     &:hover {
+      background-color: nth($mz-darkpurples, 5);
+    }
   }
   .selected {
     &:hover {
