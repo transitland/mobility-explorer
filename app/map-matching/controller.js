@@ -17,7 +17,17 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       return this.selectedDiscontinuity.edgeCoordinates;
     }
     else {
-      return this.model.gpxTrace.bounds;
+      // location: Ember.computed('latitude', 'longitude', function() {
+      // var latitude = this.get('latitude');
+      // var longitude = this.get('longitude');
+      // return L.latLng(latitude, longitude);
+      // }),
+      // return L.latLngBounds(this.get('places').map(function(place){ return place.get('location'); }));
+      // })
+      console.log(L.latLng(this.model.gpxTrace.bounds[0][0],this.model.gpxTrace.bounds[0][1]));
+      console.log(L.latLngBounds(this.model.gpxTrace.bounds))
+      // return this.model.gpxTrace.bounds;
+      return L.latLngBounds(this.model.gpxTrace.bounds);
     }
   }),
   uploading: false,
