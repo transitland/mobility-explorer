@@ -180,10 +180,11 @@
 				</div>
 			{{/if}}
 
-
-			{{#if mapMoved}}
-    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
-  		{{/if}}
+			{{#unless onestop_id}}
+				{{#if mapMoved}}
+	    		<button class="btn btn-mapzen" {{action "updatebbox"}}>Redo search in map area</button>
+	  		{{/if}}
+  		{{/unless}}
 		<br>
 		</div>
 	  {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
