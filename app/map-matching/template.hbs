@@ -240,29 +240,35 @@
                   <i>Click the button{{#if discontinuity.multipleDiscontinuities}}s{{/if}} below to highlight and zoom to the unmatched segment{{#if discontinuity.multipleDiscontinuities}}s{{/if}}.</i>
                 </div>
               </div>
-              {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
-                <div class="unmatched-segment">
-                  {{#if (eq selectedDiscontinuity discontinuity)}}
-                    <button {{action 'hideSelectedDiscontinuity' on="click"}}>Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}</button>
-                    <div class="row">
-                      <div class="col-xs-6">
-                        {{#unless (eq zoomedDiscontinuity discontinuity)}}
-                          <button class="unmatched-options" {{action 'zoomToSelectedDiscontinuity' discontinuity on="click"}}>Zoom in to segment <i class="fa fa-search-plus" aria-hidden="true"></i></button>
-                        {{else}}
-                          <button class="unmatched-options" {{action 'zoomOutFromSelectedDiscontinuity' on="click"}}>Zoom out to trace <i class="fa fa-search-minus" aria-hidden="true"></i></button>
-                        {{/unless}}
-                      </div>
-                      <div class="col-xs-6">
-                        <button class="unmatched-options"><a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">View OSM data  
-                        <i class="fa fa-external-link" aria-hidden="true"></i>
-                        </a></button>
-                      </div>
-                    </div>
-                  {{else}}
-                    <button {{action 'showSelectedDiscontinuity' discontinuity on="click"}}>Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}}</button>
-                  {{/if}}
+              <div class="unmatched-segment">
+                <h5>Unmatched Segments</h5>
+                  <hr>
+                  {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
+                      {{#if (eq selectedDiscontinuity discontinuity)}}
+                        <div class="row selected">
+                          <div class="col-xs-5" {{action 'hideSelectedDiscontinuity' on="click"}}>segment {{discontinuity.number}}</div>
+                          <div class="unmatched-options">
+                            <div class="col-xs-4">
+                              {{#unless (eq zoomedDiscontinuity discontinuity)}}
+                                <div {{action 'zoomToSelectedDiscontinuity' discontinuity on="click"}}>Zoom <i class="fa fa-search-plus" aria-hidden="true"></i></div>
+                              {{else}}
+                                <div {{action 'zoomOutFromSelectedDiscontinuity' on="click"}}>Zoom <i class="fa fa-search-minus" aria-hidden="true"></i></div>
+                              {{/unless}}
+                            </div>
+                            <div class="col-xs-3">
+                                <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">Data <i class="fa fa-external-link" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                          </div>
+                        </div>
+                      {{else}}
+                        <div class="row" {{action 'showSelectedDiscontinuity' discontinuity on="click"}}>
+                          <div class="col-xs-5">
+                            segment {{discontinuity.number}}</div>
+                        </div>
+                      {{/if}}
+                  {{/each}}
                 </div>
-              {{/each}}
             {{/unless}}      
           {{/if}}
         {{/if}}
