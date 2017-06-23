@@ -842,7 +842,6 @@ td.day.active.today:hover {
       font-weight: normal;
     }
   }
-
   .row {
     font-size: small;
     white-space: nowrap;
@@ -857,9 +856,6 @@ td.day.active.today:hover {
   }
   .selected {
     background-color: nth($mz-darkpurples, 5);
-    &:hover {
-      background-color: #FFFFFF;
-    }
   }
 }
 

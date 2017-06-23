@@ -237,7 +237,7 @@
               <div class="alert alert-warning">
                 <strong>There was an error matching your trace. </strong><div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Errors commonly occur when a trace has low GPS accuracy (which often occurs in dense, urban areas), or when the path data doesn't exist in OpenStreetMap.{{/popover-on-element}}<br>
                 <div class="headroom">
-                  <i>Click the button{{#if discontinuity.multipleDiscontinuities}}s{{/if}} below to highlight and zoom to the unmatched segment{{#if discontinuity.multipleDiscontinuities}}s{{/if}}.</i>
+                  <i>Select {{#if discontinuity.multipleDiscontinuities}}a{{else}}the{{/if}} segment below to highlight it, zoom for a closer view, and follow the link to examine the underlying data in OpenStreetMap.</i>
                 </div>
               </div>
               <div class="unmatched-segment">
