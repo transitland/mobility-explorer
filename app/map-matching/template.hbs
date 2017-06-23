@@ -72,15 +72,15 @@
       </form>
       <form>
         {{#if trace}}
-        {{#unless showErrorMessage}}
-              {{#unless this.model.gpxTrace.error_message}}
-                {{#if showTraceAttribute}}
-                  <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
-                {{else}}
-                  <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
-                {{/if}}
-              {{/unless}}
+          {{#unless showErrorMessage}}
+            {{#unless this.model.gpxTrace.error_message}}
+              {{#if showTraceAttribute}}
+                <button class="map-match" {{action "setShowTraceAttribute" trace}}><i class="fa fa-times" aria-hidden="true"></i>Remove matched route from map</button>
+              {{else}}
+                <button class="map-match" {{action "setShowTraceAttribute" trace}}>View matched route</button>
+              {{/if}}
             {{/unless}}
+          {{/unless}}
           {{#unless this.model.gpxTrace.error_message}}
             <table class="trace-legend">
               <tr>
@@ -235,40 +235,40 @@
             {{/if}}
             {{#unless model.mapMatchRequests.traceRouteRequest.value.trip}}
               <div class="alert alert-warning">
-                <strong>There was an error matching your trace.</strong><br>
-                <div class="headroom footroom">
-                  <i>Errors commonly occur when a trace has low GPS accuracy (which often occurs in dense, urban areas), or when the path data doesn't exist in OpenStreetMap. </i>
+                <strong>There was an error matching your trace. </strong><div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Errors commonly occur when a trace has low GPS accuracy (which often occurs in dense, urban areas), or when the path data doesn't exist in OpenStreetMap.{{/popover-on-element}}<br>
+                <div class="headroom">
+                  <i>Select {{#if discontinuity.multipleDiscontinuities}}a{{else}}the{{/if}} segment below to highlight it, zoom for a closer view, and follow the link to examine the underlying data in OpenStreetMap.</i>
                 </div>
-                <div class="footroom">
-                  <i>To verify that the underlying path data exists, click on the link below to view that unmatched segment's location on OpenStreetMap.</i>
-                </div>
-                <div class="footroom">
-                  <i>
-                    If the data isn't there, you can add it and contribute to better data for everyone!
-                  </i>
-                </div>
-                {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
-                  {{#if (eq selectedDiscontinuity discontinuity)}}
-                    <div class="row selected-link">
-                      <div class="col-xs-8 unmatched-segment" {{action 'unselectDiscontinuity' discontinuity on="click"}}>
-                        Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} 
-                        <i class="fa fa-search-minus" aria-hidden="true"></i>
-                      </div>
-                      <div class="col-xs-4">
-                        <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">OSM 
-                        <i class="fa fa-external-link" aria-hidden="true"></i>
-                        </a>
-                      </div>
-                    </div>
-                  {{else}}
-                    <div class="row">
-                      <div class="col-xs-8 unmatched-segment" {{action 'selectDiscontinuity' discontinuity on="click"}}>
-                          Unmatched segment {{#if discontinuity.multipleDiscontinuities}}#{{discontinuity.number}}{{/if}} <i class="fa fa-search-plus" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  {{/if}}
-                {{/each}}
               </div>
+              <div class="unmatched-segment">
+                <h5>Unmatched Segments</h5>
+                  <hr>
+                  {{#each model.mapMatchRequests.discontinuities.value as | discontinuity | }}
+                      {{#if (eq selectedDiscontinuity discontinuity)}}
+                        <div class="row selected">
+                          <div class="col-xs-5" {{action 'hideSelectedDiscontinuity' on="click"}}>segment {{discontinuity.number}}</div>
+                          <div class="unmatched-options">
+                            <div class="col-xs-4">
+                              {{#unless (eq zoomedDiscontinuity discontinuity)}}
+                                <div {{action 'zoomToSelectedDiscontinuity' discontinuity on="click"}}>Zoom <i class="fa fa-search-plus" aria-hidden="true"></i></div>
+                              {{else}}
+                                <div {{action 'zoomOutFromSelectedDiscontinuity' on="click"}}>Zoom <i class="fa fa-search-minus" aria-hidden="true"></i></div>
+                              {{/unless}}
+                            </div>
+                            <div class="col-xs-3">
+                                <a href="http://www.openstreetmap.org/?box=yes&maxlat={{discontinuity.maxLat}}&maxlon={{discontinuity.maxLon}}&minlat={{discontinuity.minLat}}&minlon={{discontinuity.minLon}}" target="_blank">Data <i class="fa fa-external-link" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                          </div>
+                        </div>
+                      {{else}}
+                        <div class="row" {{action 'showSelectedDiscontinuity' discontinuity on="click"}}>
+                          <div class="col-xs-5">
+                            segment {{discontinuity.number}}</div>
+                        </div>
+                      {{/if}}
+                  {{/each}}
+                </div>
             {{/unless}}      
           {{/if}}
         {{/if}}
@@ -320,9 +320,9 @@
               {{/marker-layer}}
             {{/if}}
             {{#if selectedDiscontinuity}}
-              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="orange" weight=7 opacity=1 onClick=(action "unselectDiscontinuity")}}
+              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="orange" weight=7 opacity=1 onClick=(action "hideSelectedDiscontinuity")}}
               {{/polyline-layer}}
-              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "unselectDiscontinuity")}}
+              {{#polyline-layer locations=selectedDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "hideSelectedDiscontinuity")}}
               {{/polyline-layer}}
             {{/if}}
             {{#if trace}}
@@ -333,7 +333,7 @@
               {{#if showTraceAttribute}}
                 {{#unless selectedAttribute}}
                   {{#each model.mapMatchRequests.discontinuities.value as | traceDiscontinuity |}}
-                    {{#polyline-layer locations=traceDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "selectDiscontinuity" traceDiscontinuity)}}
+                    {{#polyline-layer locations=traceDiscontinuity.edgeCoordinates color="#444444" weight=7 opacity=0.8 dashArray="3, 10" onClick=(action "showSelectedDiscontinuity" traceDiscontinuity)}}
                     {{/polyline-layer}}
                   {{/each}}
                   {{#each model.mapMatchRequests.edgeCoordinates.value as |segment|}}

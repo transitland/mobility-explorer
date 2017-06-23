@@ -119,10 +119,6 @@ button {
   }
 }
 
-.expanded-selection{
-  overflow-wrap: break-word;
-}
-
 .subheading {
   padding-bottom: 10px;
   padding-left: 5px;
@@ -541,7 +537,8 @@ input, button, select, textarea {
   outline-width: 2px;
   padding: 10px;
   margin-bottom: 10px;
-  
+  overflow-wrap: break-word;
+
   label {
     margin-bottom: 0;
   }
@@ -692,6 +689,10 @@ td.day.active.today:hover {
   background-color: #465371;
   margin-bottom: 0;
   margin-top: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #505f81;
+  }
 }
 
 .run-mapmatch {
@@ -828,7 +829,34 @@ td.day.active.today:hover {
 }
 
 .unmatched-segment{
-  cursor: pointer;
+  hr {
+    margin: 5px 0 5px 0;
+  }
+  .col-xs-5 {
+    padding-right: 0;
+    padding-left: 5px;
+  }
+  .unmatched-options {
+    text-align: right;
+    a {
+      font-weight: normal;
+    }
+  }
+  .row {
+    font-size: small;
+    white-space: nowrap;
+    cursor: pointer;
+    width: 100%;
+    margin: 0 0 5px 0;
+    padding: 5px 0 5px 0;
+    background-color: #FFFFFF;
+     &:hover {
+      background-color: nth($mz-darkpurples, 5);
+    }
+  }
+  .selected {
+    background-color: nth($mz-darkpurples, 5);
+  }
 }
 
 .grade-gradient {
@@ -885,4 +913,11 @@ td.day.active.today:hover {
   width: 15px;
   height: 7px;
   border-radius: 5px;
+}
+
+.alert-warning{
+  border-radius: 0;
+  .fa-question-circle {
+    color: #c9c179;
+  }
 }

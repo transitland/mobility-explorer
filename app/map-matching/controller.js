@@ -12,9 +12,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   zoom: 14,
   trace: null,
   costing: null,
-  traceBounds: Ember.computed('selectedDiscontinuity', 'model', function(){
-    if (this.selectedDiscontinuity){
-      return this.selectedDiscontinuity.edgeCoordinates;
+  traceBounds: Ember.computed('zoomedDiscontinuity', 'model', function(){
+    if (this.zoomedDiscontinuity){
+      return this.zoomedDiscontinuity.edgeCoordinates;
     }
     else {
       return this.model.gpxTrace.bounds;
@@ -31,6 +31,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   showTraceErrorMessage: false,
   selectedAttribute: null,
   selectedDiscontinuity: null,
+  zoomedDiscontinuity: null,
   selectedTrace: Ember.computed('trace', function(){
     if (!this.get('trace')) {
       return "Select a sample or upload your own file";
@@ -286,7 +287,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           var highColor = 0;
           var midColor = 120;
           var lowColor = 280;
-      
           // set color scale around midpoint
           if (attr <= mid){
             var hue = (percentage * (midColor - lowColor));
@@ -335,7 +335,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var newbox = e.target.getBounds();
       this.set('bbox', newbox.toBBoxString());
     },
-    setTrace(trace){    
+    setTrace(trace){  
+      this.set('zoomedDiscontinuity', null);  
       this.set('selectedDiscontinuity', null);  
       this.set('trace', null);
       this.set('costing', null);
@@ -344,6 +345,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('noTraceUploaded', false);
       this.set('uploading', false);
       if (document.getElementById('gpxFileUpload')){
+        console.log('test')
         document.getElementById('gpxFileUpload').value = "";
       };
       this.set('selectedSegment', null);      
@@ -351,9 +353,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('showTraceRoute', false);     
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
-      // if (trace.name !== "user_upload"){
-      //   this.set('costing',trace.costing);
-      // }
       if (trace.name === "user_upload"){
         this.set('uploading', true);
       } else {
@@ -441,11 +440,17 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     closePopup(){
       this.set('selectedSegment', null);      
     },
-    selectDiscontinuity(traceDiscontinuity){
+    showSelectedDiscontinuity(traceDiscontinuity){
       this.set('selectedDiscontinuity', traceDiscontinuity);
     },
-    unselectDiscontinuity(){
+    hideSelectedDiscontinuity(traceDiscontinuity){
       this.set('selectedDiscontinuity', null);
+    },
+    zoomToSelectedDiscontinuity(traceDiscontinuity){
+      this.set('zoomedDiscontinuity', traceDiscontinuity);
+    },
+    zoomOutFromSelectedDiscontinuity(){
+      this.set('zoomedDiscontinuity', null);
     }
   }
 });
