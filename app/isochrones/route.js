@@ -89,7 +89,7 @@ export default Ember.Route.extend(setLoading, {
 				denoise: 0.3,
 				polygons: true,
 				generalize: 50,
-				costing_options: {"pedestrian":{"use_ferry":0}},
+				costing_options: {"pedestrian":{"use_ferry":0},"bicycle":{"use_ferry":0}},
 				contours: [{"time":15},{"time":30},{"time":45},{"time":60}],
 			};
 
