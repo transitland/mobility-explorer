@@ -360,18 +360,15 @@ input, button, select, textarea {
 .leaflet-container {
   height: 100vh;
   position: relative;
-  /*position: */
-  width: 100vw;
-
-  @media screen and (orientation:portrait){
+  width: 70vw;
+  @media (max-width:1089px) {
     font-size: 10px;
-    width: 100%;
+    width: 100vw;
+    margin-left: 15px;
   }
-
   .leaflet-control-attribution {
     font-size: 10px;
     width: 100vw;
-
     @media screen and (orientation:portrait){
     }
   }
