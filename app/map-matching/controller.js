@@ -289,6 +289,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           var lowColor = 280;
           // set color scale around midpoint
           if (attr <= mid){
+            console.log(attr)
             var hue = (percentage * (midColor - lowColor));
             var color = 'hsl(' + hue + ', 90%, 50%)';
           } else if (attr > mid) {
@@ -345,7 +346,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('noTraceUploaded', false);
       this.set('uploading', false);
       if (document.getElementById('gpxFileUpload')){
-        console.log('test')
         document.getElementById('gpxFileUpload').value = "";
       };
       this.set('selectedSegment', null);      
