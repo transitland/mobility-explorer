@@ -13,11 +13,11 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
-
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    mapMatching: true
   };
 
   if (environment === 'development') {
@@ -59,7 +59,7 @@ module.exports = function(environment) {
     
     };
     ENV.baseURL = '/mobility/explorer/';
-
+    ENV.mapMatching = false;
   }
 
   return ENV;
