@@ -218,24 +218,25 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var attributeArray = [];
       var attributeArraySum = 0;
       for (var i = 0; i < edges.length; i++){
-        var attribute;
+        var attribute = edges[i][selectedAttribute];
         // decide whether to use max_upward_grade and max_downward_grade or wieghted_grade
-        if (selectedAttribute === 'weighted_grade') {
-          if (edges[i].max_upward_grade !== 0 && edges[i].max_downward_grade !== 0) {
-            if (-edges[i].max_downward_grade >= edges[i].max_upward_grade){
-              attribute = edges[i].max_downward_grade; 
-            } else {
-              attribute = edges[i].max_upward_grade;
-            }
-          } else if (edges[i].max_upward_grade !== 0) {
-            attribute = edges[i].max_upward_grade;
-          } else if (edges[i].max_downward_grade !== 0) {
-            attribute = edges[i].max_downward_grade; 
-          }
-        } else {
-          // set attribute to the value for the selected attribute
-          attribute = edges[i][selectedAttribute];
-        }
+        // if (selectedAttribute === 'weighted_grade') {
+          // if (edges[i].max_upward_grade !== 0 && edges[i].max_downward_grade !== 0) {
+          //   if (-edges[i].max_downward_grade >= edges[i].max_upward_grade){
+          //     attribute = edges[i].max_downward_grade; 
+          //   } else {
+          //     attribute = edges[i].max_upward_grade;
+          //   }
+          // } else if (edges[i].max_upward_grade !== 0) {
+          //   attribute = edges[i].max_upward_grade;
+          // } else if (edges[i].max_downward_grade !== 0) {
+          //   attribute = edges[i].max_downward_grade; 
+          // }
+        //   attribute = edges[i][selectedAttribute];
+        // } else {
+        //   // set attribute to the value for the selected attribute
+        //   attribute = edges[i][selectedAttribute];
+        // }
         // add attribute to attributeArray
         attributeArray.push(attribute);
         // increment attributeArraySum, to use to find average later
@@ -253,10 +254,8 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       var attributeArrayAverage = attributeArraySum / attributeArray.length;
       // find the median value for the attribute (to use to test with different attributes)
       var attributeArrayMedian = attributeArray[Math.floor(attributeArray.length/2)];
-
       // for every coordinate in gpxTrace.coordinates, point is either matched, unmatched, or interpolated
       for (var i = 0; i < edges.length; i++){
-
         // create coordinate array for segment
         var begin = edges[i].begin_shape_index;
         var end =  edges[i].end_shape_index;
@@ -289,7 +288,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           var lowColor = 280;
           // set color scale around midpoint
           if (attr <= mid){
-            console.log(attr)
             var hue = (percentage * (midColor - lowColor));
             var color = 'hsl(' + hue + ', 90%, 50%)';
           } else if (attr > mid) {
@@ -327,7 +325,6 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           attributes: attributes
         })
       }
-
       return edgeCoordinates;
     }
   }), 
