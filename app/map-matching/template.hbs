@@ -129,10 +129,10 @@
               {{/if}}
               {{#if (eq selectedAttribute "weighted_grade")}}
                 <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}>
-                <label for="style-attribute">grade</label><br>
+                <label for="style-attribute">weighted grade</label><div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Grade explanation{{/popover-on-element}}<br>
               {{else}}
                 <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}>
-                <label for="style-attribute">grade</label><br>
+                <label for="style-attribute">weighted grade</label><div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Grade explanation{{/popover-on-element}}<br>
               {{/if}}
               {{#if (eq selectedAttribute "speed")}}
                 <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}>
