@@ -1,30 +1,31 @@
 /* global L */
 
 import Ember from 'ember';
+import ENV from '../config/environment';
 
 export default Ember.Mixin.create({
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
-	bbox: null,
-	closeTextbox: Ember.inject.service(),
+  bbox: null,
+  closeTextbox: Ember.inject.service(),
   currentlyLoading: Ember.inject.service(),
-	icon: L.icon({
-		iconUrl: 'assets/images/marker1.png',
+  icon: L.icon({
+    iconUrl: 'assets/images/marker1.png',
     iconSize: (20, 20),
     iconAnchor: [10, 24],
-	}),
-	leafletBbox: null,
+  }),
+  leafletBbox: null,
   leafletBounds: [[43.053900124340984, -89.46407318115234],[43.10875337930414, -89.32708740234375]],
   mapCenter: [43.072963279523,-89.39234018325806],
-	pin: null,
-	pinLocation: Ember.computed('pin', function(){
+  pin: null,
+  pinLocation: Ember.computed('pin', function(){
     if (typeof(this.get('pin'))==="string"){
       var pinArray = this.get('pin').split(',');
       return pinArray;
     } else {
       return this.get('pin');
     }
-	}),
-	place: null,
+  }),
+  place: null,
   textboxIsClosed: Ember.computed('closeTextbox.textboxIsClosed', function(){
     if (localStorage.getItem('mobility-explorer-hide-intro') === "true"){
         return true;
@@ -39,8 +40,11 @@ export default Ember.Mixin.create({
       return "Find a place using Mapzen Search";
     }
   }),
+  mapMatching: Ember.computed('ENV',function(){
+    return ENV.mapMatching;
+  }),
 
-	actions: {
+  actions: {
     dropPin: function(e){
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;
@@ -78,5 +82,5 @@ export default Ember.Mixin.create({
     clearPlace: function(){
       this.set('place', null);
     }
-	}
+  }
 });

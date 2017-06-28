@@ -119,10 +119,6 @@ button {
   }
 }
 
-.expanded-selection{
-  overflow-wrap: break-word;
-}
-
 .subheading {
   padding-bottom: 10px;
   padding-left: 5px;
@@ -156,6 +152,7 @@ button {
 }
 
 .fa-question-circle {
+  padding-left: 1px;
   color: $light-grey;
   font-size: 18px;
 }
@@ -363,18 +360,15 @@ input, button, select, textarea {
 .leaflet-container {
   height: 100vh;
   position: relative;
-  /*position: */
-  width: 100vw;
-
-  @media screen and (orientation:portrait){
+  width: 70vw;
+  @media (max-width:1089px) {
     font-size: 10px;
-    width: 100%;
+    width: 100vw;
+    margin-left: 15px;
   }
-
   .leaflet-control-attribution {
     font-size: 10px;
     width: 100vw;
-
     @media screen and (orientation:portrait){
     }
   }
@@ -540,7 +534,8 @@ input, button, select, textarea {
   outline-width: 2px;
   padding: 10px;
   margin-bottom: 10px;
-  
+  overflow-wrap: break-word;
+
   label {
     margin-bottom: 0;
   }
@@ -676,16 +671,80 @@ td.day.active.today:hover {
 }
 
 .upload-options{
-  margin: 0;
+  margin: 0 0 15px 0;
   button{
     background-color: nth($mz-darkpurples, 2);
     margin-bottom: 10px;
     margin-top: 10px;
   }
+  h5 {
+    margin-bottom: 0;
+  }
+}
+
+.map-match {
+  background-color: #465371;
+  margin-bottom: 0;
+  margin-top: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #505f81;
+  }
+}
+
+.run-mapmatch {
+  background-color: $mapzen-red;
+}
+
+.map-match-narrative {
+  max-height: 400px;
+  width: 100%;
+  overflow-y: scroll;
+  /*overflow-x: hidden;*/
+  background-color: white;
+}
+
+.map-match-maneuvers {
+  max-height: 10px;
+  background-color: white;
+
+  th {
+    color: #465371;
+    padding-left: 10px;
+    font-size: 14px;
+    line-height: 50px;
+    border-bottom: 2px dashed lightgray;
+
+  }
+  tr {
+    border-bottom: 1px solid lightgray;
+  }
+  td {
+    padding: 10px 10px 10px 10px;
+    font-size: 13px;
+  }
+  svg{
+    width: 10px;
+    height: 10px;
+  }
+  tr:last-child {
+    border-bottom: none;
+  }
+}
+
+.map-match-maneuver > * {
 }
 
 .fa-times{
   margin-right: 15px;
+}
+
+.fa-caret-down{
+  margin-left: 15px;
+}
+
+.fa-caret-up{
+  margin-left: 15px;
 }
 
 .fa-exclamation-triangle{
@@ -721,6 +780,82 @@ td.day.active.today:hover {
   }
 }
 
+.trace-legend {
+  font-size: small;
+  text-align: center;
+  margin-top: 10px;
+  width: 100%;
+  td {
+    padding: 5px;
+  }
+  th {
+    width: 33%;
+    text-align: center;
+    padding: 5px;
+  }
+}
+
+.discontinuity-table {
+  background-color: white;
+  font-size: small;
+  text-align: center;
+  width: 100%;
+  /*margin-top: 10px*/
+  th {
+    /*width: 60%;*/
+    text-align: left;
+    /*padding: 0 5px 5px 5px;*/
+    /*padding-left: 5px;*/
+    /*padding: 5px;*/
+    /*border: 1px solid green;*/
+
+  }
+  td {
+    align-items: left;
+    width: 25%;
+    border: 1px solid blue;
+    /*padding: 0 15px 0 5px;*/
+  }
+  tr:first-child{
+    padding-top: 20px;
+  }
+}
+
+.selected-link {
+  color: orange;
+}
+
+.unmatched-segment{
+  hr {
+    margin: 5px 0 5px 0;
+  }
+  .col-xs-5 {
+    padding-right: 0;
+    padding-left: 5px;
+  }
+  .unmatched-options {
+    text-align: right;
+    a {
+      font-weight: normal;
+    }
+  }
+  .row {
+    font-size: small;
+    white-space: nowrap;
+    cursor: pointer;
+    width: 100%;
+    margin: 0 0 5px 0;
+    padding: 5px 0 5px 0;
+    background-color: #FFFFFF;
+     &:hover {
+      background-color: nth($mz-darkpurples, 5);
+    }
+  }
+  .selected {
+    background-color: nth($mz-darkpurples, 5);
+  }
+}
+
 .grade-gradient {
   height: 25px;
   background: linear-gradient(to left, red , yellow, hsl(120, 90%, 50%))
@@ -749,5 +884,37 @@ td.day.active.today:hover {
   &:hover {
     background-image: url('https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png');
     background-position: 0 0;
+  }
+}
+
+.legend-gpx-trace{
+  background-color: $mapzen-red;
+  height: 7px;
+  border: 2px solid #444444;
+  border-radius: 5px;
+}
+
+.legend-matched-route{
+  background-color: $explorer-bluegreen;
+  margin: 3px;
+  width: 15px;
+  height: 7px;
+  border: 1px solid #444444;
+  border-radius: 5px;
+}
+
+.legend-unmatched{
+  background-color: #444444;
+  opacity: .8;
+  margin: 3px;
+  width: 15px;
+  height: 7px;
+  border-radius: 5px;
+}
+
+.alert-warning{
+  border-radius: 0;
+  .fa-question-circle {
+    color: #c9c179;
   }
 }
