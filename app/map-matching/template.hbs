@@ -129,10 +129,10 @@
               {{/if}}
               {{#if (eq selectedAttribute "weighted_grade")}}
                 <input type="radio" id="grade" name="options" checked {{action "styleByAttribute" "weighted_grade"}}>
-                <label for="style-attribute">weighted grade</label><div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Grade explanation{{/popover-on-element}}<br>
+                <label for="style-attribute">weighted grade</label> <div class="fa fa-question-circle">{{#popover-on-element class="tooltip-on-sidebar" event="click"}}The weighted grade measure provides an idea of the average grade for each segment, calculated from elevation data. (There may be some steeper slopes present in a segment than are represented in its weighted grade. The "max upward grade" and "max downward grade" attributes provide more information about the various grades present in a single segment.{{/popover-on-element}}</div><br>
               {{else}}
                 <input type="radio" id="grade" name="options" {{action "styleByAttribute" "weighted_grade"}}>
-                <label for="style-attribute">weighted grade</label><div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Grade explanation{{/popover-on-element}}<br>
+                <label for="style-attribute">weighted grade</label> <div class="fa fa-question-circle">{{#popover-on-element class="tooltip-on-sidebar" event="click"}}The weighted grade measure provides an idea of the average grade for each segment, calculated from elevation data. (There may be some steeper slopes present in a segment than are represented in its weighted grade. The "max upward grade" and "max downward grade" attributes provide more information about the various grades present in a single segment.{{/popover-on-element}}</div><br>
               {{/if}}
               {{#if (eq selectedAttribute "speed")}}
                 <input type="radio" id="speed" name="options" checked {{action "styleByAttribute" "speed"}}>
