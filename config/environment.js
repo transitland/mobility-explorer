@@ -59,7 +59,7 @@ module.exports = function(environment) {
     
     };
     ENV.baseURL = '/mobility/explorer/';
-    ENV.mapMatching = false;
+    ENV.mapMatching = true;
   }
 
   return ENV;
