@@ -284,9 +284,11 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
 
           var range = attributeArrayMax - attributeArrayMin;
           var percentage = (attr + attributeArrayMin) / range;
-          var highColor = 0;
-          var midColor = 120;
-          var lowColor = 280;
+          var lowColor = 350;
+          // var midColor = 120;
+          var midColor = 300;
+          // var highColor = 0;
+          var highColor = 220;
           // set color scale around midpoint
           if (attr <= mid){
             var hue = (percentage * (midColor - lowColor));
