@@ -43,6 +43,15 @@ export default Ember.Mixin.create({
   mapMatching: Ember.computed('ENV',function(){
     return ENV.mapMatching;
   }),
+  webgl: Ember.computed(function(){
+      var canvas = document.createElement("canvas");
+      var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (gl && gl instanceof WebGLRenderingContext) {
+        return true;
+      } else {
+        return false;
+      }
+  }),
 
   actions: {
     dropPin: function(e){
