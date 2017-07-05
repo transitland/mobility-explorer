@@ -858,7 +858,7 @@ td.day.active.today:hover {
 
 .grade-gradient {
   height: 25px;
-  background: linear-gradient(to left, red , yellow, hsl(120, 90%, 50%))
+  background: linear-gradient(to left, hsl(0, 90%, 50%), hsl(60, 90%, 50%), hsl(120, 90%, 50%), hsl(180, 90%, 50%), hsl(240, 90%, 50%))
 }
 
 .grade-legend{
