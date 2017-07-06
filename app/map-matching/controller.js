@@ -282,19 +282,25 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           // yellow: 60
           // red: 0 or 360
 
-          var range = attributeArrayMax - attributeArrayMin;
-          var percentage = (attr + attributeArrayMin) / range;
+          
+          var lowColor = 120;
+          var midColor = 60;
           var highColor = 0;
-          var midColor = 120;
-          var lowColor = 280;
-          // set color scale around midpoint
+          
           if (attr <= mid){
-            var hue = (percentage * (midColor - lowColor));
-            var color = 'hsl(' + hue + ', 90%, 50%)';
-          } else if (attr > mid) {
-            var hue = (percentage * (highColor - midColor));
+            var range = 0 + attributeArrayMin;
+            var colorRange = lowColor - midColor;
+            var percentage = attr / range;
+            var hue = (percentage * colorRange) + midColor;
+            var color =  'hsl(' + hue + ', 90%, 50%)';
+          } else {
+            var range = 0 + attributeArrayMax;
+            var colorRange = midColor - highColor;
+            var percentage = attr / range;
+            var hue = midColor - (percentage * colorRange);
             var color =  'hsl(' + hue + ', 90%, 50%)';
           }
+
         } else if (selectedAttribute === 'speed') {
           if (attr >= 70)
             var color = '#313695 ';
