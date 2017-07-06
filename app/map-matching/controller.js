@@ -247,10 +247,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       attributeArray.sort(function(a,b){return a - b;});
       // find the minimum value in attributeArray
       var attributeArrayMin = attributeArray[0];
-      this.set('maxDownwardGrade', attributeArrayMin);
+      this.set('maxDownwardGrade', attributeArrayMin.toPrecision(2));
       // find the maximum value in attributeArray
       var attributeArrayMax = attributeArray[attributeArray.length-1];
-      this.set('maxUpwardGrade', attributeArrayMax);
+      this.set('maxUpwardGrade', attributeArrayMax.toPrecision(2));
       // find the average value for the attribute
       var attributeArrayAverage = attributeArraySum / attributeArray.length;
       // find the median value for the attribute (to use to test with different attributes)
@@ -282,19 +282,25 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           // yellow: 60
           // red: 0 or 360
 
-          var range = attributeArrayMax - attributeArrayMin;
-          var percentage = (attr + attributeArrayMin) / range;
+          
+          var lowColor = 120;
+          var midColor = 60;
           var highColor = 0;
-          var midColor = 120;
-          var lowColor = 280;
-          // set color scale around midpoint
+          
           if (attr <= mid){
-            var hue = (percentage * (midColor - lowColor));
-            var color = 'hsl(' + hue + ', 90%, 50%)';
-          } else if (attr > mid) {
-            var hue = (percentage * (highColor - midColor));
+            var range = attributeArrayMin;
+            var colorRange = lowColor - midColor;
+            var percentage = attr / range;
+            var hue = (percentage * colorRange) + midColor;
+            var color =  'hsl(' + hue + ', 90%, 50%)';
+          } else {
+            var range = attributeArrayMax;
+            var colorRange = midColor - highColor;
+            var percentage = attr / range;
+            var hue = midColor - (percentage * colorRange);
             var color =  'hsl(' + hue + ', 90%, 50%)';
           }
+
         } else if (selectedAttribute === 'speed') {
           if (attr >= 70)
             var color = '#313695 ';
