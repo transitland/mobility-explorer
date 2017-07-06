@@ -247,10 +247,10 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       attributeArray.sort(function(a,b){return a - b;});
       // find the minimum value in attributeArray
       var attributeArrayMin = attributeArray[0];
-      this.set('maxDownwardGrade', attributeArrayMin);
+      this.set('maxDownwardGrade', attributeArrayMin.toPrecision(2));
       // find the maximum value in attributeArray
       var attributeArrayMax = attributeArray[attributeArray.length-1];
-      this.set('maxUpwardGrade', attributeArrayMax);
+      this.set('maxUpwardGrade', attributeArrayMax.toPrecision(2));
       // find the average value for the attribute
       var attributeArrayAverage = attributeArraySum / attributeArray.length;
       // find the median value for the attribute (to use to test with different attributes)
