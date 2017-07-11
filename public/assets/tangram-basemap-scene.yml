@@ -1,0 +1,5 @@
+import: https://mapzen.com/carto/refill-style/6/refill-style.yaml
+
+global:
+    sdk_mapzen_api_key: mapzen-kdQfRFc
+    # ^ TODO: control this programmatically, store in config/environment.js

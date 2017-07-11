@@ -28,12 +28,12 @@
 <div class="col-md-8">
   <div class="row">
     {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-    
+
     {{#if media.isMobile}}
       <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
     {{/if}}
     <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-        
+
       <div class="location-search">
         <div class="row">
           <div class="col-md-2 ember-basic-dropdown-trigger-icon">
@@ -55,7 +55,7 @@
           {{/power-select}}
         </div>
       </div>
-      
+
       <div class="intro-textbox">
         {{#unless media.isMobile}}
           {{#unless textboxIsClosed}}
@@ -65,7 +65,7 @@
       </div>
 
       {{#leaflet-map center=center zoom=zoom onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
-        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+        {{tangram-refill-basemap-layer}}
         {{#if pin}}
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}
