@@ -1,5 +1,25 @@
-import: https://mapzen.com/carto/refill-style/6/refill-style.yaml
+import:
+ # basemap style
+    - https://mapzen.com/carto/refill-style/7/refill-style.zip
+    # recolor basemap style with a theme color
+    # - https://mapzen.com/carto/refill-style/7/themes/gray.zip
 
 global:
     sdk_mapzen_api_key: mapzen-kdQfRFc
+    sdk_building_extrude: true
     # ^ TODO: control this programmatically, store in config/environment.js
+
+sources:
+    mapzen:
+        type: TopoJSON
+        url: https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson?api_key=mapzen-kdQfRFc
+scene:
+    background:
+        color: white
+layers:
+    water:
+        data: { source: mapzen}
+        draw:
+            waves:
+                # order: global.feature_order
+                color: blue

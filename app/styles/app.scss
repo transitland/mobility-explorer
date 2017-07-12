@@ -29,13 +29,13 @@ html, body, #map, #map-loading {
 
 h1 {
   font-size: 22px;
+  font-weight: 600;
   color: nth($mz-darkpurples, 3);
   margin: 15px 0 10px 0;
   padding-left: 0;
   &:hover {
     color: nth($mz-darkpurples, 4);
   }
-
 }
 
 h2 {
@@ -52,6 +52,7 @@ h4 {
   color: $mapzen-red;
   font-size: 18px;
   margin-top: 10px;
+  font-weight: normal;
 }
 
 .center-checkbox {
@@ -69,9 +70,10 @@ button {
   background-color: $light-grey;
   border: none;
   color: $white;
-  padding: 10px;
-  
+  padding: 10px; 
 }
+
+
 
 .mapzen-logo{
   background-position: 0 0;
@@ -368,17 +370,18 @@ input, button, select, textarea {
   }
   .leaflet-control-attribution {
     font-size: 10px;
-    width: 100vw;
-    @media screen and (orientation:portrait){
+    display: inline-block;
+    text-align: center;
+    margin-right: 5vw;
+    @media (max-width:1089px){
+      width: 100vw;
     }
   }
 }
 
-.leaflet-right {
-  .leaflet-control {
-    background-color: transparent;
-    text-align: center;
-  }
+.leaflet-bottom {
+  white-space: nowrap;
+  background-color: white;
 }
 
 .pinx {
@@ -430,9 +433,14 @@ input, button, select, textarea {
 
   @media screen and (orientation:portrait){
     /*margin-left: 15px;*/
-    /*padding-left: 0px;*/
     width: 60%;
   }
+}
+
+.ember-power-select-placeholder {
+  /*color: $dark-grey;*/
+  color: black;
+  font-weight: lighter;
 }
 
 #map-loading {
@@ -472,6 +480,10 @@ input, button, select, textarea {
   margin-top: 10px;
 }
 
+.btn {
+  font-weight: 600;
+}
+
 .btn-mapzen {
   background-color: $mapzen-red;
   &:hover {
@@ -502,9 +514,8 @@ input, button, select, textarea {
 .btn-transparent-alt {
   color: $mapzen-blue;
   background-color: $white;
-  outline-color: $mapzen-blue;
-  outline-style: solid;
-  outline-width: 2px;
+  border: 2px solid $mapzen-blue;
+  border-radius: 0;
   margin-bottom: 10px;
   margin-top: 0;
   &:hover{
