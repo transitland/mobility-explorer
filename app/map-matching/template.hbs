@@ -316,7 +316,11 @@
       {{#if this.model.gpxTrace}}
         {{#unless this.model.gpxTrace.error_message}}
           {{#leaflet-map bounds=traceBounds onMoveend=(action "updatebbox")}}
-            {{tangram-refill-basemap-layer}}
+            {{#if webGL}}
+              {{tangram-refill-basemap-layer}}
+            {{else}}
+              {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+            {{/if}}
             {{#if pin}}
               {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
               {{/marker-layer}}

@@ -92,7 +92,11 @@
 	    </div>
 	    
 		  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
-        {{tangram-refill-basemap-layer}}
+        {{#if webGL}}
+          {{tangram-refill-basemap-layer}}
+        {{else}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+        {{/if}}
 				{{#if served_by}}
 					{{#each model.servedByRoute.features as |route|}}
 						{{#geojson-layer geoJSON=route color="#6ea0a4" opacity=1 weight=2}}
