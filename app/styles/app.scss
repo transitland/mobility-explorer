@@ -649,6 +649,9 @@ td.day.active.today:hover {
   font-size: 13px;
   font-style: italic;
   font-weight: 500;
+  &:hover{
+    color: $dark-grey;
+  }
 }
 
 .reset-datetime {
