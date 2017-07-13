@@ -379,12 +379,20 @@
           {{/leaflet-map}}
         {{else}}
           {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
-            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+            {{#if webGL}}
+              {{tangram-refill-basemap-layer}}
+            {{else}}
+              {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+            {{/if}}
           {{/leaflet-map}}
         {{/unless}}
       {{else}}
         {{#leaflet-map bounds=leafletBounds onMoveend=(action "updatebbox")}}
-          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+          {{#if webGL}}
+            {{tangram-refill-basemap-layer}}
+          {{else}}
+            {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+          {{/if}}
         {{/leaflet-map}}
       {{/if}}
     </div>
