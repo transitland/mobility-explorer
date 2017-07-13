@@ -200,42 +200,46 @@
 </div>
 <div class="col-md-8">
 	<div class="row">
-	{{#if media.isMobile}}
-    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
-  {{/if}}
-	{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-		<div class="location-search">
-      <div class="row">
-        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
-          {{#if pin}}
-            <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-          {{else}}
-            <img src='assets/images/marker1.png' class="markerIcon"/>
-          {{/if}}
-        </div>
-        {{#power-select
-          search=(action "searchRepo")
-          selected=place
-          placeholder=searchbarContent
-          onchange=(action "setPlace")
-          onclose=(action "clearPlace")
-          as |repo|
-        }}
-          {{repo.properties.label}}
-        {{/power-select}}
-      </div>
-		</div>
-		<div class="nonmobile-intro-textbox">
-      {{#unless media.isMobile}}
-        {{#unless textboxIsClosed}}
-          {{text-box route="index" action="setTextBoxClosed"}}
-        {{/unless}}
-      {{/unless}}
-    </div>
+		{{#if media.isMobile}}
+	    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+	  {{/if}}
+		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+			<div class="location-search">
+	      <div class="row">
+	        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+	          {{#if pin}}
+	            <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+	          {{else}}
+	            <img src='assets/images/marker1.png' class="markerIcon"/>
+	          {{/if}}
+	        </div>
+	        {{#power-select
+	          search=(action "searchRepo")
+	          selected=place
+	          placeholder=searchbarContent
+	          onchange=(action "setPlace")
+	          onclose=(action "clearPlace")
+	          as |repo|
+	        }}
+	          {{repo.properties.label}}
+	        {{/power-select}}
+	      </div>
+			</div>
+			<div class="nonmobile-intro-textbox">
+	      {{#unless media.isMobile}}
+	        {{#unless textboxIsClosed}}
+	          {{text-box route="index" action="setTextBoxClosed"}}
+	        {{/unless}}
+	      {{/unless}}
+	    </div>
 
-		{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-			{{tangram-refill-basemap-layer}}
+			{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+				{{#if webGL}}
+	        {{tangram-refill-basemap-layer}}
+	      {{else}}
+	        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+	      {{/if}}
 				{{#if onestop_id}}
 			  	{{#if (eq style_routes_by "mode")}}
 						{{#each model.routes as |route|}}
@@ -298,11 +302,11 @@
 			  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
 			  		{{/marker-layer}}
 					{{/each}}
-			  {{/if}}
-			  {{#if pin}}
-          {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-          {{/marker-layer}}
-        {{/if}}
+				{{/if}}
+				{{#if pin}}
+	        {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+	        {{/marker-layer}}
+	      {{/if}}
 			{{/leaflet-map}}
 		</div>
 	</div>

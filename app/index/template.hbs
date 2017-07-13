@@ -65,7 +65,11 @@
       </div>
 
       {{#leaflet-map center=center zoom=zoom onMoveend=(action "updatebbox") onClick=(action "dropPin")}}
-        {{tangram-refill-basemap-layer}}
+        {{#if webGL}}
+          {{tangram-refill-basemap-layer}}
+        {{else}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+        {{/if}}
         {{#if pin}}
           {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
           {{/marker-layer}}

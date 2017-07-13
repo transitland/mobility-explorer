@@ -95,15 +95,19 @@
       </div>
 
       {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
-        {{tangram-refill-basemap-layer}}
+        {{#if webGL}}
+          {{tangram-refill-basemap-layer}}
+        {{else}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+        {{/if}}
         {{#each model as |operator|}}
           {{#polygon-layer locations=operator.location color=operator.operator_color weight=operator.operator_path_weight opacity=operator.operator_path_opacity onMouseover=(action "selectOperator" operator) onMouseout=(action "unselectOperator" operator) icon=icon draggable=false onClick=(action "setOnestopId" operator)}}
           {{/polygon-layer}}
         {{/each}}
         {{#if pin}}
-            {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-            {{/marker-layer}}
-          {{/if}}
+          {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+          {{/marker-layer}}
+        {{/if}}
       {{/leaflet-map}}
     </div>
   </div>
