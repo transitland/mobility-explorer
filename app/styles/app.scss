@@ -498,7 +498,7 @@ input, button, select, textarea {
   margin: 0;
   border-radius: 0;
   &:hover{
-    color: $mapzen-dark-blue;
+    color: white;
   }
 }
 
@@ -518,7 +518,7 @@ input, button, select, textarea {
   margin-bottom: 10px;
   margin-top: 0;
   &:hover{
-    color: $mapzen-dark-blue;
+    color: nth($mz-darkpurples, 2);
   }
 }
 
