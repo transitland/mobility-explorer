@@ -24,13 +24,19 @@
 	  		{{/if}}
 				<br>
 				<div class="form-group">
-			  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
-			  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
-			    <label for="check-1">Show stops served by route</label>
-
-				  <row class="subheading-row">
-					  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}</div>
-					</row>
+					<span>
+			  		{{#if displayStops}}
+			  			<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
+			  		{{else}}
+			  			<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>
+			  		{{/if}}
+			    	<label for="check-1">Show stops served by route</label>
+			  	</span>
+			  	<div class="headroom footroom">
+					  <row class="subheading-row">
+						  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}</div>
+						</row>
+					</div>
 			  </div>
 
 			{{else if operated_by}}
@@ -169,7 +175,7 @@
 		  	{{/each}}
 			{{/if}}
 			{{#if hoverStop}}
-			<row>
+			<row class="headroom">
 				<div class="hover-detail">
 					{{#if onestop_id}}
 						{{hoverStop.properties.name}}
