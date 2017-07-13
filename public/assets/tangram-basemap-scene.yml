@@ -1,0 +1,30 @@
+import:
+ # basemap style
+    - https://mapzen.com/carto/refill-style/7/refill-style.zip
+    # recolor basemap style with a theme color
+    - https://mapzen.com/carto/refill-style/7/themes/gray.zip
+
+global:
+    sdk_mapzen_api_key: mapzen-kdQfRFc
+    sdk_building_extrude: true
+    sdk_transit_overlay: false
+
+sources:
+    mapzen:
+        type: TopoJSON
+        url: https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson
+scene:
+    background:
+        color: white
+layers:
+    roads:
+        data: { source: mapzen }
+        ferry:
+            filter: { kind: ferry }
+            visible: false
+            draw:
+                lines:
+                    color: global.light_color
+                    width: 10px
+                    outline:
+                        width: 0px
