@@ -9,22 +9,7 @@ global:
     sdk_building_extrude: true
     sdk_transit_overlay: false
 
-sources:
-    mapzen:
-        type: TopoJSON
-        url: https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson
-scene:
-    background:
-        color: white
 layers:
     roads:
-        data: { source: mapzen }
         ferry:
-            filter: { kind: ferry }
-            visible: false
-            draw:
-                lines:
-                    color: global.light_color
-                    width: 10px
-                    outline:
-                        width: 0px
+            enabled: false
