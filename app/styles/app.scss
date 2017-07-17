@@ -27,14 +27,14 @@ html, body, #map, #map-loading {
 }
 
 h1 {
-  font-size: 22px;
-  font-weight: 600;
-  color: nth($mz-darkpurples, 3);
+  /*font-size: 22px;*/
+  /*font-weight: 600;*/
+ /* color: nth($mz-darkpurples, 3);
   margin: 15px 0 10px 0;
   padding-left: 0;
   &:hover {
     color: nth($mz-darkpurples, 4);
-  }
+  }*/
 }
 
 h2 {
@@ -484,7 +484,7 @@ input, button, select, textarea {
 
 .btn-mapzen {
   background-color: #635378;
-  border-radius: 0;
+  /*border-radius: 0;*/
   &:hover {
     background-color: nth($mz-darkpurples, 2);
   }
@@ -492,11 +492,9 @@ input, button, select, textarea {
 
 .btn-mapzen-alt {
   outline-color: nth($mz-darkpurples, 3);
-  outline-style: solid;
-  outline-width: 2px;
   background-color: nth($mz-darkpurples, 3);
   margin: 0;
-  border-radius: 0;
+  /*border-radius: 0;*/
   &:hover{
     color: white;
   }
@@ -514,7 +512,6 @@ input, button, select, textarea {
   color: nth($mz-darkpurples, 3);
   background-color: $white;
   border: 2px solid nth($mz-darkpurples, 3);
-  border-radius: 0;
   margin-bottom: 10px;
   margin-top: 0;
   &:hover{
@@ -538,10 +535,8 @@ input, button, select, textarea {
 
 .expanded-selection {
   background-color: $lightest-grey;
-  border: 10px solid $white;
-  outline-color: nth($mz-darkpurples, 3);
-  outline-style: solid;
-  outline-width: 2px;
+  border: 2px solid nth($mz-darkpurples, 4);
+  border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
   overflow-wrap: break-word;
@@ -550,10 +545,22 @@ input, button, select, textarea {
     margin-bottom: 0;
   }
 
-  label:before {
-    border-color: $lightest-grey;
-  }
+  /*label:before {*/
+    /*border-color: $lightest-grey;*/
+  /*}*/
 }
+
+.expanded-style.expanded-selection {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.expanded-style.btn-mapzen-alt {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: nth($mz-darkpurples, 4);
+}
+
 
 .hover-detail {
   background-color: $lightest-grey-hover-detail;

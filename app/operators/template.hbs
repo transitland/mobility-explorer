@@ -1,7 +1,5 @@
 <div id="sidebar" class="collapse in col-md-4">
-  <div class="col-xs-12 no-padding center">
-    <a href="https://mapzen.com/"><div class="mapzen-logo"></div></a>
-  </div>
+ {{mapzen-logo}}
   <div class="col-xs-12 no-padding">
     {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Mobility Explorer</h1>{{/link-to}}
   </div>
@@ -14,8 +12,8 @@
   <div class="btn-group-vertical" role="group" >
   {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
   {{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Show Stops</button>{{/link-to}}
-  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt">Show Operators</button>{{/link-to}}
-    <div class="expanded-selection">
+  {{#link-to 'operators' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null)}}<button class="btn btn-mapzen-alt expanded-style">Show Operators</button>{{/link-to}}
+    <div class="expanded-selection expanded-style">
       {{#if onestop_id}}
         {{#operator-detail bbox=bbox onestop_id=onestop_id operator=selectedOperator operators=model}}{{/operator-detail}}
         <p>{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null serves=null operated_by=onestop_id served_by=null style_routes_by=null) }}View routes operated by {{model.firstObject.name}}{{/link-to}}</p><br>
