@@ -1,8 +1,6 @@
 <div id="sidebar" class="collapse in col-md-4">
   {{mapzen-logo}}
-  <div class="col-xs-12 no-padding">
-    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Mobility Explorer</h1>{{/link-to}}
-  </div>
+  {{explorer-logo pin=pin bbox=bbox}}
   {{#if media.isMobile}}
 		{{#unless textboxIsClosed}}
 	    {{text-box route="index" action="setTextBoxClosed"}}

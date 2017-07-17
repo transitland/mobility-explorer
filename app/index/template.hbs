@@ -1,8 +1,6 @@
 <div id="sidebar" class="collapse in col-md-4">
   {{mapzen-logo}}
-  <div class="col-xs-12 no-padding">
-    <h1 class="red-text center-text">Mobility Explorer</h1>
-  </div>
+  {{explorer-logo route="index"}}
   {{#if media.isMobile}}
     {{#unless textboxIsClosed}}
       {{text-box route="index" action="setTextBoxClosed"}}
