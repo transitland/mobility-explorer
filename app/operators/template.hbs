@@ -1,4 +1,4 @@
-<div id="sidebar" class="collapse in col-md-4">
+<div id="sidebar" class="collapse in col-md-3">
   {{mapzen-logo}}
   {{explorer-logo pin=pin bbox=bbox}}
   {{#if media.isMobile}}
@@ -54,7 +54,7 @@
       {{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
     </div>
   </div>
-<div class="col-md-8">
+<div class="col-md-9">
   <div class="row">
     {{#if media.isMobile}}
       <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>

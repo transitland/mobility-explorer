@@ -13,6 +13,19 @@ $light-grey: #c4c4c4;
 $medium-grey: #9c9c9c;
 $dark-grey: #898989;
 $mz-darkpurples: #1E0E33, #2C1E3F, #635378, #AD9CC2, #EEE7F8;
+$mz-purple-1: #7f2de3;
+$mz-purple-2: #985fdd;
+$mz-purple-3: #bda2dd;
+$mz-scarlet-1: #ff4947;
+$mz-scarlet-2: #ff7b7b;
+$mz-scarlet-3: #fcdbdb;
+$mz-pink-1: #f9a293;
+$mz-pink-2: #f7beb4;
+$mz-pink-3: #fbe6e3;
+$mz-black: #191919;
+$mz-darkgray: #444;
+$mz-mediumgray: #666;
+$mz-lightgray: #f8f8f8;
 
 body {
   margin: 0;
@@ -231,20 +244,21 @@ button {
 }
 
 .svg-stop {
-  fill: $mapzen-red;
-  stroke: $mapzen-dark-red;
+  fill: $mz-purple-1;
+  stroke: nth($mz-darkpurples, 2);
   stroke-width: 15%;
   width: 9px;
 }
 
 .svg-stop:hover {
-  fill: $white;
+  /*fill: $white;*/
+  fill: $mz-purple-3;
   z-index: 900;
 }
 
 .svg-stop-rsp {
-  fill: $explorer-bluegreen;
-  stroke: $mapzen-dark-blue;
+  fill: $mz-scarlet-2;
+  stroke: $mz-scarlet-1;
   stroke-width: 15%;
   width: 9px;
   z-index: 900;
@@ -362,19 +376,19 @@ input, button, select, textarea {
 .leaflet-container {
   height: 100vh;
   position: relative;
-  width: 70vw;
+  /*width: 70vw;*/
   @media (max-width:1089px) {
     font-size: 10px;
     width: 100vw;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
   }
   .leaflet-control-attribution {
     font-size: 10px;
     display: inline-block;
-    text-align: center;
-    margin-right: 5vw;
+    text-align: right;
+    /*margin-right: 5vw;*/
     @media (max-width:1089px){
-      width: 100vw;
+      /*width: 100vw;*/
     }
   }
 }
