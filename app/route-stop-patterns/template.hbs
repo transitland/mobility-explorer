@@ -8,8 +8,8 @@
 	{{/if}}
 	{{sidebar-title-transitland}}
 	<div class="btn-group-vertical" role="group" >
-	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt">Show Routes</button>{{/link-to}}
-	  <div class="expanded-selection">
+	  {{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null vehicle_type=null style_routes_by=null)}}<button class="btn btn-mapzen-alt expanded-style">Show Routes</button>{{/link-to}}
+	  <div class="expanded-selection expanded-style">
 			{{#each model.traversedByRoute as |route|}}
 	  		{{#route-detail bbox=bbox onestop_id=route.onestop_id route=route}}{{/route-detail}}
   		{{/each}}

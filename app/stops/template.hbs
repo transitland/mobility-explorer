@@ -9,8 +9,8 @@
 	{{sidebar-title-transitland}}
 	<div class="btn-group-vertical" role="group" >
 		{{#link-to 'routes' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin)}}<button class="btn btn-transparent-alt">Show Routes</button>{{/link-to}}
-		{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<button class="btn btn-mapzen-alt">Show Stops</button>{{/link-to}}
-	    <div class="expanded-selection">
+		{{#link-to 'stops' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<button class="btn btn-mapzen-alt expanded-style">Show Stops</button>{{/link-to}}
+	    <div class="expanded-selection expanded-style">
 				{{#if onestop_id}}
 			  	{{#stop-detail stop=selectedStop bbox=bbox onestop_id=onestop_id stops=model.stops}}{{/stop-detail}}
 			  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>

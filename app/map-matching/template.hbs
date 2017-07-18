@@ -16,8 +16,8 @@
     {{sidebar-title-mobility}}
     <div class="btn-group-vertical" role="group" >
     {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-      {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Try Map Matching</button>{{/link-to}}
-    <div class="expanded-selection">
+      {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt expanded-style">Try Map Matching</button>{{/link-to}}
+    <div class="expanded-selection expanded-style">
       {{#unless trace}}
         <div>Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/" target="_blank">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
       {{/unless}}
