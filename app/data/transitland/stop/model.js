@@ -6,6 +6,7 @@ var Stop = DS.Model.extend({
 	imported_from_feed_onestop_ids: DS.attr('string'),
 	onestop_id: Ember.computed.alias('id'),
 	geometry: DS.attr(),
+	geometry_centroid: DS.attr(),
 	name: DS.attr('string'),
 	tags: DS.attr(),
 	timezone: DS.attr('string'),
