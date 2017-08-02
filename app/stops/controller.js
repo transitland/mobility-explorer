@@ -30,7 +30,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   }),
 
   stopCoordinates: Ember.computed('onestop_id', function(){
-    var stopLocation = this.model.onlyStop.get('geometry.coordinates');
+    var stopLocation = this.model.onlyStop.get('geometry_centroid.coordinates');
     var lat = stopLocation[0];
     var lng = stopLocation[1];
     var coordinates = [];
