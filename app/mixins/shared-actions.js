@@ -4,7 +4,6 @@ import Ember from 'ember';
 import ENV from '../config/environment';
 
 export default Ember.Mixin.create({
-  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a> | Imagery © <a href="https://carto.com/">CARTO</a>',
   bbox: null,
   closeTextbox: Ember.inject.service(),
   currentlyLoading: Ember.inject.service(),
@@ -43,7 +42,16 @@ export default Ember.Mixin.create({
   mapMatching: Ember.computed('ENV',function(){
     return ENV.mapMatching;
   }),
-
+  webGL: Ember.computed(function(){
+    var canvas = document.createElement("canvas");
+    var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    if (gl && gl instanceof WebGLRenderingContext) {
+      return true;
+    } else {
+      return false;
+    }
+  }),
+  
   actions: {
     dropPin: function(e){
       var lat = e.latlng.lat;

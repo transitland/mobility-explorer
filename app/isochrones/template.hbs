@@ -225,9 +225,7 @@
 				{{/if}}
 			</form>
 		</div>
-    {{#if map-matching}}
-			{{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
-		{{/if}}
+		{{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
 	</div>
 	{{#if isochrone_mode}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
 </div>
@@ -267,7 +265,11 @@
         {{/unless}}
       </div>
 			{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onClick=(action "dropPin")}}
-				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+				{{#if webGL}}
+          {{tangram-refill-basemap-layer}}
+        {{else}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+        {{/if}}
 				{{#if pin}}
 					{{#if isochrone_mode}}
 						{{#each model.isochrones.features as |isochrone|}}

@@ -24,15 +24,20 @@
 	  		{{/if}}
 				<br>
 				<div class="form-group">
-			  	{{#if displayStops}}<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
-			  	{{else}}<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>{{/if}}
-			    <label for="check-1">Show stops served by route</label>
+					<span>
+			  		{{#if displayStops}}
+			  			<input type="checkbox" id="check-1" name="option-one" checked {{action "setDisplayStops"}}>
+			  		{{else}}
+			  			<input type="checkbox" id="check-1" name="option-one" {{action "setDisplayStops"}}>
+			  		{{/if}}
+			    	<label for="check-1">Show stops served by route</label>
+			  	</span>
+			  	<div class="headroom footroom">
+					  <row class="subheading-row">
+						  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}</div>
+						</row>
+					</div>
 			  </div>
-
-			  <row class="subheading-row">
-				  <div class="form-group-header sidebar-header col-md-10">{{#link-to 'route-stop-patterns' (query-params bbox=bbox traversed_by=onestop_id onestop_id=null operated_by=null serves=null served_by=onestop_id vehicle_type=null pin=pin isochrone_mode=null)}}Show route stop patterns{{/link-to}}&nbsp;<div class="fa fa-question-circle"></div>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View the unique combinations of shape lines for trips and stops along this route.{{/popover-on-element}}</div>
-				  
-				</row>
 
 			{{else if operated_by}}
 				{{#power-select
@@ -49,18 +54,22 @@
 		    {{#unless hoverRoute}}
 	  			<p class="caption">{{routeSelectContent}}</p>
 	  			<div class="routes-form">
-						<form>
-							<strong>Operated by:</strong> {{operated_by}}<br>
-						  <row class="subheading-row">
-								<div class="form-group-header sidebar-header col-md-10">Style routes by:
-								&nbsp;<div class="fa fa-question-circle" id="fa-question-circle-detail"></div></div>
-								{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
-							</row>
-						  <div class="form-group">
-						  	{{#if (eq style_routes_by "mode")}}<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
-						  	{{else}}<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>{{/if}}
-						    <label for="radio-1">Mode</label>
-						    <div class="sidebar-dropdown">
+					<form>
+					  <row class="subheading-row">
+							<div class="form-group-header">Style routes by:
+							&nbsp;
+								<div class="fa fa-question-circle" id="fa-question-circle-detail"></div>
+							</div>
+							{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View route lines and display them by the route's transit mode or operator. Click a route on the map or in the list for its details.{{/popover-on-element}}
+						</row>
+					  <div class="form-group">
+					  	{{#if (eq style_routes_by "mode")}}
+					  		<input type="radio" id="radio-1" name="option-one" checked {{action "setRouteStyle" "mode"}}>
+					  	{{else}}
+					  		<input type="radio" id="radio-1" name="option-one" {{action "setRouteStyle" "mode"}}>
+					  	{{/if}}
+					    <label for="radio-1">Mode</label>
+					    <div class="sidebar-dropdown">
 						    {{#if (eq style_routes_by "mode")}}
 						    	{{#unless vehicle_type}}
 								    {{#power-select
@@ -75,9 +84,32 @@
 									    <div style={{mode.style}}>{{mode.name}}</div>
 									  {{/power-select}}
 									{{/unless}}
-						  	{{/if}}
+							  {{/if}}
 							</div>
-						</div>
+					  </div>
+				  	<div class="form-group" >
+					    {{#if (eq style_routes_by "operator")}}
+					    	<input type="radio" id="radio-2" name="option-two" checked {{action "setRouteStyle" "operator"}}>
+					    {{else}}
+					    	<input type="radio" id="radio-2" name="option-two" {{action "setRouteStyle" "operator"}}>
+					    {{/if}}
+				    	<label for="radio-2">Operator</label>
+						  {{#if (eq style_routes_by "operator")}}
+				    		<div class="sidebar-dropdown">
+								  {{#power-select
+							    	options=routeOperators
+							      selected=operator
+										placeholder=placeholderMessageOperators
+										searchPlaceholder="Type to filter..."
+							      onchange=(action "setOperator")
+						        onclose=(action "clearOperator")
+							      as |operator|
+								    }}
+											<div style={{operator.style}}>{{operator.name}}</div>
+								  {{/power-select}}
+						  	</div>
+						  {{/if}}
+					 	</div>
 					</form>
 				</div>
 		  {{/unless}}
@@ -170,14 +202,16 @@
 		  	{{/each}}
 			{{/if}}
 			{{#if hoverStop}}
+			<row class="headroom">
 				<div class="hover-detail">
 					{{#if onestop_id}}
-						<div>{{hoverStop.properties.name}}</div>
+						{{hoverStop.properties.name}}
 					{{else}}
-						<div>{{hoverStop.name}}</div>
+						{{hoverStop.name}}
 					{{/if}}
 					<p class="caption">Click the stop for more details</p>
 				</div>
+			</row>
 			{{/if}}
 
 			{{#unless onestop_id}}
@@ -195,49 +229,51 @@
 	{{sidebar-title-mobility}}
 	<div class="btn-group-vertical" role="group" >
   	{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-    {{#if map-matching}}
-  		{{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
-		{{/if}}
+  	{{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
  	</div>
 </div>
 <div class="col-md-8">
 	<div class="row">
-	{{#if media.isMobile}}
-    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
-  {{/if}}
-	{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
-		<div class="location-search">
-      <div class="row">
-        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
-          {{#if pin}}
-            <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
-          {{else}}
-            <img src='assets/images/marker1.png' class="markerIcon"/>
-          {{/if}}
-        </div>
-        {{#power-select
-          search=(action "searchRepo")
-          selected=place
-          placeholder=searchbarContent
-          onchange=(action "setPlace")
-          onclose=(action "clearPlace")
-          as |repo|
-        }}
-          {{repo.properties.label}}
-        {{/power-select}}
-      </div>
-		</div>
-		<div class="nonmobile-intro-textbox">
-      {{#unless media.isMobile}}
-        {{#unless textboxIsClosed}}
-          {{text-box route="index" action="setTextBoxClosed"}}
-        {{/unless}}
-      {{/unless}}
-    </div>
+		{{#if media.isMobile}}
+	    <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
+	  {{/if}}
+		{{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
+	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
+			<div class="location-search">
+	      <div class="row">
+	        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
+	          {{#if pin}}
+	            <img src='assets/images/pin_x1.png' class="markerIcon-x" {{action "removePin"}}/>
+	          {{else}}
+	            <img src='assets/images/marker1.png' class="markerIcon"/>
+	          {{/if}}
+	        </div>
+	        {{#power-select
+	          search=(action "searchRepo")
+	          selected=place
+	          placeholder=searchbarContent
+	          onchange=(action "setPlace")
+	          onclose=(action "clearPlace")
+	          as |repo|
+	        }}
+	          {{repo.properties.label}}
+	        {{/power-select}}
+	      </div>
+			</div>
+			<div class="nonmobile-intro-textbox">
+	      {{#unless media.isMobile}}
+	        {{#unless textboxIsClosed}}
+	          {{text-box route="index" action="setTextBoxClosed"}}
+	        {{/unless}}
+	      {{/unless}}
+	    </div>
 
-		{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-			{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+			{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
+				{{#if webGL}}
+	        {{tangram-refill-basemap-layer}}
+	      {{else}}
+	        {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+	      {{/if}}
 				{{#if onestop_id}}
 			  	{{#if (eq style_routes_by "mode")}}
 						{{#each model.routes as |route|}}
@@ -300,11 +336,11 @@
 			  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
 			  		{{/marker-layer}}
 					{{/each}}
-			  {{/if}}
-			  {{#if pin}}
-          {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
-          {{/marker-layer}}
-        {{/if}}
+				{{/if}}
+				{{#if pin}}
+	        {{#marker-layer location=pinLocation icon=icon draggable=true riseOnHover=true riseOffset=1000}}
+	        {{/marker-layer}}
+	      {{/if}}
 			{{/leaflet-map}}
 		</div>
 	</div>

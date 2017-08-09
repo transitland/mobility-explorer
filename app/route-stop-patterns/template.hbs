@@ -84,9 +84,7 @@
 	{{sidebar-title-mobility}}
 	<div class="btn-group-vertical" role="group" > 
 	  {{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-    {{#if mapMatching}}
-	  	{{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
-  	{{/if}}
+	  {{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
 	</div>
 </div>
 <div class="col-md-8">
@@ -116,29 +114,29 @@
 	      {{/unless}}
 	    </div>
 			{{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved")}}
-				{{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
-
-					{{#each model.traversedByRoute as |route|}}
-						{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-						{{/geojson-layer}}
-					{{/each}}
-
-					{{#each model.route_stop_patterns as |rsp|}}
-						{{#geojson-layer geoJSON=rsp.rsp_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
-						{{/geojson-layer}}
-					{{/each}}
-					
-					{{#if displayStops}}
-						{{#each model.stopsServedByRoute as |stop|}}
-				  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
-				  		{{/marker-layer}}
-			  		{{/each}}
-
-			  		{{#each model.stops.features as |stop|}}
-				  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
-				  		{{/marker-layer}}
-			  		{{/each}}
-			  	{{/if}}
+				{{#if webGL}}
+          {{tangram-refill-basemap-layer}}
+        {{else}}
+          {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution=attribution}}
+        {{/if}}
+				{{#each model.traversedByRoute as |route|}}
+					{{#geojson-layer geoJSON=route.rsp_route_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+					{{/geojson-layer}}
+				{{/each}}
+				{{#each model.route_stop_patterns as |rsp|}}
+					{{#geojson-layer geoJSON=rsp.rsp_as_geojson_with_outline clickable=false onEachFeature=(action "onEachFeature")}}
+					{{/geojson-layer}}
+				{{/each}}
+				{{#if displayStops}}
+					{{#each model.stopsServedByRoute as |stop|}}
+			  		{{#marker-layer location=stop.location icon=(div-icon html=stop.html className=stop.icon_class iconSize=stop.icon_size) draggable=false clickable=true riseOnHover=true riseOffset=1000 onMouseover=(action "selectStop" stop) onMouseout=(action "unselectStop" stop) onClick=(action "setStopOnestopId" stop)}}
+			  		{{/marker-layer}}
+		  		{{/each}}
+		  		{{#each model.stops.features as |stop|}}
+			  		{{#marker-layer location=stop.geometry.coordinates icon=stop.icon draggable=false riseOnHover=true riseOffset=1000}}
+			  		{{/marker-layer}}
+		  		{{/each}}
+		  	{{/if}}
 			{{/leaflet-map}}
 		</div>
 	</div>
