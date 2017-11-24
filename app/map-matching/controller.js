@@ -157,16 +157,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       // if (attributes.max_upward_grade !== 0 && attributes.max_downward_grade !== 0) {
       //   // return "weighted grade: " + attributes.weighted_grade + "%";
       //   if (-attributes.max_downward_grade >= attributes.max_upward_grade){
-      //     return "max downward grade: " + attributes.max_downward_grade + "%"; 
+      //     return "max downward grade: " + attributes.max_downward_grade + "%";
       //   } else {
       //     return "max upward grade: " + attributes.max_upward_grade + "%";
       //   }
       // } else if (attributes.max_upward_grade !== 0) {
       //   return "max upward grade: " + attributes.max_upward_grade + "%";
       // } else if (attributes.max_downward_grade !== 0) {
-      //   return "max downward grade: " + attributes.max_downward_grade + "%"; 
+      //   return "max downward grade: " + attributes.max_downward_grade + "%";
       // }
-      return "weighted grade: " + attributes.weighted_grade + "%"; 
+      return "weighted grade: " + attributes.weighted_grade + "%";
     } else {
       return "speed limit: " + attributes[selectedAttribute] + " mph";
     }
@@ -174,6 +174,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
   routeManeuvers: Ember.computed('showTraceRoute', function(){
     var maneuvers = this.model.mapMatchRequests.traceRouteRequest.value.trip.legs[0].maneuvers;
     return maneuvers;
+  }),
+  josmLink: Ember.computed('showTraceRoute', function(){
+    var edges = this.model.mapMatchRequests.attributesResponse.value.edges;
+    var josm_url = "http://localhost:8111/load_object?objects="
+    for (var i = 0; i < edges.length; i++){
+        josm_url += "w"+edges[i]['way_id'].toString() + ","
+    }
+    return josm_url;
   }),
   segmentAttributes: Ember.computed('selectedSegment', function(){
     if (this.get('selectedSegment')){
@@ -224,14 +232,14 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         // if (selectedAttribute === 'weighted_grade') {
           // if (edges[i].max_upward_grade !== 0 && edges[i].max_downward_grade !== 0) {
           //   if (-edges[i].max_downward_grade >= edges[i].max_upward_grade){
-          //     attribute = edges[i].max_downward_grade; 
+          //     attribute = edges[i].max_downward_grade;
           //   } else {
           //     attribute = edges[i].max_upward_grade;
           //   }
           // } else if (edges[i].max_upward_grade !== 0) {
           //   attribute = edges[i].max_upward_grade;
           // } else if (edges[i].max_downward_grade !== 0) {
-          //   attribute = edges[i].max_downward_grade; 
+          //   attribute = edges[i].max_downward_grade;
           // }
         //   attribute = edges[i][selectedAttribute];
         // } else {
@@ -261,17 +269,17 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         var begin = edges[i].begin_shape_index;
         var end =  edges[i].end_shape_index;
         var pointsSlice = points.slice(begin, end+1);
-        var attributes = edges[i];    
+        var attributes = edges[i];
         var mid = 0;
         // var mid = attributeArrayAverage;
-        // var mid = attributeArrayMedian;  
+        // var mid = attributeArrayMedian;
         var min = attributeArrayMin;
         var max = attributeArrayMax;
-      
+
         var attr = edges[i][selectedAttribute];
         // find color
         if (selectedAttribute === 'weighted_grade') {
-          
+
           // Hue is a degree on the color wheel; 0 (or 360) is red, 120 is green, 240 is blue. Numbers in between reflect different shades.
           // Saturation is a percentage value; 100% is the full colour.
           // Lightness is also a percentage; 0% is dark (black), 100% is light (white), and 50% is the average.
@@ -282,11 +290,11 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           // yellow: 60
           // red: 0 or 360
 
-          
+
           var lowColor = 120;
           var midColor = 60;
           var highColor = 0;
-          
+
           if (attr <= mid){
             var range = attributeArrayMin;
             var colorRange = lowColor - midColor;
@@ -324,7 +332,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
             var color = '#a50026 ';
        }
 
-        // add segment info to edgeCoordinates array, to use to draw polyline layers on map 
+        // add segment info to edgeCoordinates array, to use to draw polyline layers on map
         edgeCoordinates.push({
           coordinates: pointsSlice,
           color: color,
@@ -334,15 +342,15 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       }
       return edgeCoordinates;
     }
-  }), 
+  }),
   actions: {
     updatebbox(e) {
       var newbox = e.target.getBounds();
       this.set('bbox', newbox.toBBoxString());
     },
-    setTrace(trace){  
-      this.set('zoomedDiscontinuity', null);  
-      this.set('selectedDiscontinuity', null);  
+    setTrace(trace){
+      this.set('zoomedDiscontinuity', null);
+      this.set('selectedDiscontinuity', null);
       this.set('trace', null);
       this.set('costing', null);
       this.set('showErrorMessage', false);
@@ -352,9 +360,9 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       if (document.getElementById('gpxFileUpload')){
         document.getElementById('gpxFileUpload').value = "";
       };
-      this.set('selectedSegment', null);      
+      this.set('selectedSegment', null);
       this.set('showTraceAttribute', false);
-      this.set('showTraceRoute', false);     
+      this.set('showTraceRoute', false);
       this.set('selectedAttribute', null);
       this.set('trace', trace.name);
       if (trace.name === "user_upload"){
@@ -372,13 +380,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('errorMessage', this.model.mapMatchRequests.attributesResponse.reason.responseJSON.error);
         this.set('showErrorMessage', true);
       } else if (this.get('showTraceAttribute')){
-        this.set('selectedDiscontinuity', null);  
+        this.set('selectedDiscontinuity', null);
         this.set('showTraceAttribute', false);
-        this.set('showTraceRoute', false);     
+        this.set('showTraceRoute', false);
         this.set('selectedAttribute', null);
-        this.set('selectedSegment', null);      
+        this.set('selectedSegment', null);
       } else {
-        this.set('selectedDiscontinuity', null);  
+        this.set('selectedDiscontinuity', null);
         this.set('selectedAttribute', null);
         this.set('showTraceAttribute', true);
       }
@@ -389,7 +397,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
         this.set('showTraceRouteErrorMessage', true);
         this.set('showTraceRoute', true);
       } else if (this.get('showTraceRoute')){
-        this.set('showTraceRoute', false);     
+        this.set('showTraceRoute', false);
       } else {
         this.set('showTraceRoute', true);
       }
@@ -397,16 +405,16 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
     styleByAttribute(attribute){
       if (this.get('selectedAttribute') === attribute){
         this.set('selectedAttribute', null);
-        this.set('selectedSegment', null);      
+        this.set('selectedSegment', null);
       } else {
         this.set('selectedAttribute', null);
-        this.set('selectedSegment', null);      
+        this.set('selectedSegment', null);
         var attributesForSelection = this.get('attributesForSelection');
         for (var i = 0; i < attributesForSelection.length; i++){
           if (attributesForSelection[i].attribute === attribute){
             this.set('selectedAttribute', attributesForSelection[i].attribute);
           }
-        }   
+        }
       }
     },
     selectSegment(segment){
@@ -416,7 +424,7 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
       this.set('hoverSegment', null);
     },
     setSegment(segment){
-      this.set('selectedSegment', segment);      
+      this.set('selectedSegment', segment);
     },
     setCosting(mode){
       this.set('noTraceUploaded', false);
@@ -436,13 +444,13 @@ export default Ember.Controller.extend(mapBboxController, setTextboxClosed, shar
           this.set('noTraceUploaded', true);
           this.set('costing', null);
         }
-        
+
       } else {
        alert('Sorry, this functionality is not fully supported in your browser.');
       }
     },
     closePopup(){
-      this.set('selectedSegment', null);      
+      this.set('selectedSegment', null);
     },
     showSelectedDiscontinuity(traceDiscontinuity){
       this.set('selectedDiscontinuity', traceDiscontinuity);
