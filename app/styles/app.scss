@@ -74,11 +74,6 @@ button {
 
 
 
-.mapzen-logo{
-  background-position: 0 0;
-  margin: 0 auto;
-}
-
 .no-margin {
   margin: 0;
 }
@@ -891,14 +886,6 @@ td.day.active.today:hover {
   .grade-high {
     text-align: right;
     padding-top: 5px;
-  }
-}
-
-.mapzen-logo {
-  background-image: url('https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png');
-  &:hover {
-    background-image: url('https://mapzen.com/common/styleguide/images/logos/mapzen-logo-dark.png');
-    background-position: 0 0;
   }
 }
 

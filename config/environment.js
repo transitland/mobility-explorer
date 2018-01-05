@@ -26,21 +26,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    // ENV.transitlandDatastoreHost = 'https://dev.transit.land';
-  }
-
-  if (environment === 'staging') {
-    ENV.baseURL = '/mobility/explorer/';
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    // ENV.googleAnalytics = {
-    //   webPropertyId: 'UA-47035811-4'
-    // };
-    ENV.transitlandDatastoreHost = 'https://dev.transit.land';
-
+    // ENV.transitlandDatastoreHost = 'https://transit.land';
   }
 
   if (environment === 'test') {
@@ -58,7 +44,7 @@ module.exports = function(environment) {
       webPropertyId: 'UA-47035811-1'
     
     };
-    ENV.baseURL = '/mobility/explorer/';
+    ENV.baseURL = '/';
     ENV.mapMatching = true;
   }
 
