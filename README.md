@@ -1,7 +1,16 @@
-# Mobility-playground
+# Mobility Explorer
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+Mobility Explorer helps you understand transportation networks around the world. Search for a place or browse the map, and use the buttons to view transit routes, stops, and operators.
+
+Use Mobility Explorer to query and visualize transit data from [Transitland](https://transit.land), a community-edited, open transit data aggregation project, and to analyze access using an instance of the [Valhalla routing engine](https://github.com/valhalla/valhalla-docs).
+
+## User Documentation
+
+- [Overview](docs/overview.md)
+- [Tutorial](docs/tutorial.md)
+- [Explore Transit](docs/explore-transit.md)
+- [Isochrones](docs/isochrones.md)
+- [Map Matching](docs/map-matching.md)
 
 ## Prerequisites
 
@@ -11,7 +20,6 @@ You will need the following things properly installed on your computer.
 * [Node.js](http://nodejs.org/) (with NPM)
 * [Bower](http://bower.io/)
 * [Ember CLI](http://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
 
 ## Installation
 
@@ -29,19 +37,10 @@ You will need the following things properly installed on your computer.
 
 Make use of the many generators for code, try `ember help generate` for more details
 
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
 ### Building
 
 * `ember build` (development)
 * `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
 
 ## Further Reading / Useful Links
 
