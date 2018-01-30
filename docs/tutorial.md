@@ -29,7 +29,7 @@ Now that you have seen the source data in Transitland, you can better understand
 Each query or map update is maintained as a separate URL, which means that you can return to your previous map by clicking the back button in your browser window. You can also share this URL with others and they will see the same results that you see.
 
 1. In your browser, go to https://mobility-explorer.netlify.com/. Mobility Explorer opens to a default location, with a map on the right and a sidebar on the left where you can visualize and analyze transit data.
-2. In the search box on the map, type `Oakland, CA`. The search box uses [Mapzen Search](https://mapzen.com/products/search/geocoding), Mapzen's open-source geocoder, and the text automatically completes as you type. When you press Enter, the map extent updates and adds a pin in Oakland.
+2. In the search box on the map, type `Oakland, CA`. The search box uses [geocode.earth](https://geocode.earth), Mapzen's open-source geocoder, and the text automatically completes as you type. When you press Enter, the map extent updates and adds a pin in Oakland.
 3. On the left, under `Visualize public transit networks`, click `Show Operators`. This shows polygons representing the area served by each operator. Essentially, each polygon is created to surround all of the stop locations served by a given operator.
   ![Transit operators near Oakland, California](mobility-explorer-operator-polygons.png)
 4. Hover over the polygons on the map to see the operator name.
