@@ -15,7 +15,7 @@ The analysis comes from the [Valhalla Isochrone](https://github.com/valhalla/val
 3. Choose a mode of transportation. For example, click `walking` to see how far you can walk within intervals of 15 to 60 minutes.
   If you are generating isochrones for transit, you need to set the date and time of your departure. You can also choose whether to include or exclude certain operators or routes.
 4. The map updates with isochrone areas drawn around the point. Move the point around the map to calculate isochrones from that location.
-5. You can click `See the Mapzen Mobility API request for these results` to view the raw API request in your browser’s address bar and resulting JSON response from the server
+5. You can click `See the Valhalla API request for these results` to view the raw API request in your browser’s address bar and resulting JSON response from the server
 6. Click the clear button on the search box to remove the pin and any isochrones from the map.
 
 ## Data credits

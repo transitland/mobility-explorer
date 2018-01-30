@@ -224,7 +224,7 @@
 		</div>
 		{{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
 	</div>
-	{{#if isochrone_mode}}<br><div>{{url-builder url=model.linkUrl server="Mapzen Mobility" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
+	{{#if isochrone_mode}}<br><div>{{url-builder url=model.linkUrl server="Valhalla" query="results" entity="isochrones" queryParams=queryParams bbox=bbox}}</div>{{/if}}
 </div>
 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
 	<div class="row">

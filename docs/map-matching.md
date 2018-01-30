@@ -29,7 +29,7 @@ The speed is from the speed limit value from the OpenStreetMap source data, if i
 
 ![Matched line styled by segment grade](mobility-explorer-style-by-grade.png)
 
-When you click a segment on the map, you can see detailed attributes for the matched segment. Some attribute values, such as the name, pavement type, and road category, are from OpenStreetMap source data, while others are from Mapzen Mobility routing calculations.
+When you click a segment on the map, you can see detailed attributes for the matched segment. Some attribute values, such as the name, pavement type, and road category, are from OpenStreetMap source data, while others are from Valhalla routing calculations.
 
 1. Make sure you have a GPX file loaded and displaying on the map.
 2. Style the line by the grade or speed limit along a segment.
