@@ -36,7 +36,7 @@ export default Ember.Mixin.create({
     if (this.media.isMobile){
       return "Find a place"
     } else {
-      return "Find a place using Mapzen Search";
+      return "Find a place using geocode.earth";
     }
   }),
   mapMatching: Ember.computed('ENV',function(){
@@ -72,7 +72,7 @@ export default Ember.Mixin.create({
     },
     searchRepo: function(term) {
       if (Ember.isBlank(term)) { return []; }
-      const url = `https://search.mapzen.com/v1/autocomplete?api_key=mapzen-jLrDBSP&text=${term}`;      
+      const url = `https://api.geocode.earth/v1/autocomplete?api_key=ge-594964b44b60bf3a&text=${term}`;      
       return Ember.$.ajax({ url }).then(json => json.features);
     },
     setPlace: function(selected){
