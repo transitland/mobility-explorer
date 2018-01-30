@@ -186,7 +186,7 @@
           {{/if}}
           {{#if selectedSegment}}
             <div class="gpx-upload">
-              <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Mapzen Mobility routing calculations.<br>Read more about segment attributes in the <a href="https://mapzen.com/documentation/mobility/map-matching/api-reference/#outputs-of-trace_attributes" target="_blank">Map Matching documentation</a>.{{/popover-on-element}}</h5>
+              <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Valhalla routing calculations.<br>Read more about segment attributes in the <a href="https://mapzen.com/documentation/mobility/map-matching/api-reference/#outputs-of-trace_attributes" target="_blank">Map Matching documentation</a>.{{/popover-on-element}}</h5>
               <table class="table">
                 {{#each segmentAttributes as | segment |}}
                   {{#unless (eq segment.attribute "skip")}}
