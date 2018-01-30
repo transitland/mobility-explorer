@@ -6,7 +6,7 @@ export default BaseLayer.extend({
   createLayer() {
     return Tangram.leafletLayer({
       scene: 'assets/tangram-basemap-scene.yml',
-      attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a> | <a href="http://www.mapzen.com">Mapzen</a> | <a href="http://www.transit.land">Transitland</a>'
+      attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a> | <a href="https://www.nextzen.org">Nextzen</a> | <a href="https://transit.land">Transitland</a>'
     });
   }
 });
