@@ -16,9 +16,17 @@
   <hr class="sidebar-hr">
   {{sidebar-title-mobility}}
   <div class="btn-group-vertical" role="group" >
-    {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
-    {{#if mapMatching}}
-      {{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
+    {{#if valhallaServicesEnabled}}
+      {{#link-to 'isochrones' (query-params bbox=bbox pin=pin onestop_id=null isochrone_mode=null)}}
+        <button class="btn btn-transparent-alt">Generate Isochrones</button>
+      {{/link-to}}
+      {{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}
+        <button class="btn btn-transparent-alt">Try Map Matching</button>
+      {{/link-to}}
+    {{else}}
+      <p><i class="fa fa-wrench"></i> We have some work to do behind the scenes. Soon you'll be able to use Mobility Explorer with <a href="https://github.com/transitland/mobility-explorer/issues/522">alternatives to the Mapzen Mobility APIs.</a></p>
+      <button class="btn btn-transparent-alt" disabled>Generate Isochrones</button>
+      <button class="btn btn-transparent-alt" disabled>Try Map Matching</button>
     {{/if}}
   </div>
 </div>

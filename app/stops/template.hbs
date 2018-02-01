@@ -17,7 +17,13 @@
 			  	<p>{{#link-to 'routes' (query-params serves=onestop_id bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=pin) }}View routes serving this stop{{/link-to}}</p>
 			  	{{#if onestop_id}}
 						{{#each model.stops as |stop|}}
-			  			<p>{{#link-to 'isochrones' (query-params serves=null bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=stopCoordinates isochrone_mode="multimodal") }}View isochrones for this stop{{/link-to}}</p>
+							{{#if valhallaServicesEnabled}}
+								<p>{{#link-to 'isochrones' (query-params serves=null bbox=bbox onestop_id=null served_by=null operated_by=null style_routes_by=null pin=stopCoordinates isochrone_mode="multimodal") }}View isochrones for this stop{{/link-to}}</p>
+							{{else}}
+								<p>
+									<a disabled title="Sorry, temporarily disabled. We're hoping to offer alternatives to Mapzen Mobility APIs soon.">View isochrones for this stop</a>
+								</p>
+							{{/if}}
 			  		{{/each}}
 			  	{{/if}}
 				{{else if served_by}}
