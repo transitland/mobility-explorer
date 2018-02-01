@@ -17,7 +17,7 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    mapMatching: true
+    valhallaServicesEnabled: false
   };
 
   if (environment === 'development') {
@@ -45,7 +45,7 @@ module.exports = function(environment) {
     
     };
     ENV.baseURL = '/';
-    ENV.mapMatching = true;
+    ENV.valhallaServicesEnabled = false;
   }
 
   return ENV;

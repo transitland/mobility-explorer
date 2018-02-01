@@ -39,9 +39,7 @@ export default Ember.Mixin.create({
       return "Find a place using geocode.earth";
     }
   }),
-  mapMatching: Ember.computed('ENV',function(){
-    return ENV.mapMatching;
-  }),
+  valhallaServicesEnabled: Ember.computed.alias('ENV.valhallaServicesEnabled'),
   webGL: Ember.computed(function(){
     var canvas = document.createElement("canvas");
     var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
