@@ -5,7 +5,7 @@ import:
     - https://www.nextzen.org/carto/refill-style/11/themes/gray.zip
 
 global:
-    sdk_mapzen_key: ADD-NEXTZEN-KEY-HERE
+    sdk_api_key: 5Ky4E8AKT6mqrtiW6U8Dbw
     sdk_building_extrude: true
     sdk_transit_overlay: false
 
