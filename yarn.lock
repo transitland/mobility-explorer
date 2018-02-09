@@ -2,6 +2,44 @@
 # yarn lockfile v1
 
 
+"@bower_components/Leaflet.MultiOptionsPolyline@mjanda/Leaflet.MultiOptionsPolyline#master":
+  version "0.8.1"
+  resolved "https://codeload.github.com/mjanda/Leaflet.MultiOptionsPolyline/tar.gz/f30bc90f2146aee266f099306e5d47e69bd28994"
+
+"@bower_components/bootstrap@twbs/bootstrap#~3.3.5":
+  version "3.3.7"
+  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/0b9c4a4007c44201dce9a6cc1a38407005c26c86"
+
+"@bower_components/ember-cli-shims@ember-cli/ember-cli-shims#0.1.1":
+  version "0.0.0"
+  resolved "https://codeload.github.com/ember-cli/ember-cli-shims/tar.gz/5f514ce71f7dc9aedc885371f00fce7349562e06"
+
+"@bower_components/ember-cli-test-loader@ember-cli/ember-cli-test-loader#0.2.2":
+  version "0.0.0"
+  resolved "https://codeload.github.com/ember-cli/ember-cli-test-loader/tar.gz/5c184b79b279ba0438bce0dd30b696efbc030a64"
+
+"@bower_components/ember-qunit-notifications@dockyard/ember-qunit-notifications#0.1.0":
+  version "0.0.0"
+  resolved "https://codeload.github.com/dockyard/ember-qunit-notifications/tar.gz/a83277aa7a1c0545c66e6d133caebb9a620e71ad"
+
+"@bower_components/ember@components/ember#~2.5.0":
+  version "2.5.1"
+  resolved "https://codeload.github.com/components/ember/tar.gz/528d27706befa5564014e62378bd87d5bb33b8c9"
+  dependencies:
+    jquery ">=1.7.0 <3.0.0"
+
+"@bower_components/jquery@jquery/jquery-dist#>= 1.7.0 < 3.0.0":
+  version "2.2.4"
+  resolved "https://codeload.github.com/jquery/jquery-dist/tar.gz/c0185ab7c75aab88762c5aae780b9d83b80eda72"
+
+"@bower_components/leaflet@Leaflet/Leaflet#~0.7.7":
+  version "0.7.7"
+  resolved "https://codeload.github.com/Leaflet/Leaflet/tar.gz/197f9d43b7bbc73c0492bf62cd666a5a98038098"
+
+"@bower_components/qunit-notifications@dockyard/qunit-notifications#~0.1.0":
+  version "0.1.1"
+  resolved "https://codeload.github.com/dockyard/qunit-notifications/tar.gz/7a13f6dba5a340e1cb9e0b64c1c711e4d7edaca1"
+
 JSONStream@^1.0.3:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.2.tgz#c102371b6ec3a7cf3b847ca00c20bb0fce4c6dea"
@@ -106,10 +144,6 @@ amdefine@>=0.0.4:
 ansi-escapes@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
-
-ansi-regex@*, ansi-regex@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
 
 ansi-regex@^0.2.0, ansi-regex@^0.2.1:
   version "0.2.1"
@@ -4129,7 +4163,7 @@ iferr@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
 
-imurmurhash@*, imurmurhash@^0.1.4:
+imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
 
@@ -4392,6 +4426,10 @@ istextorbinary@2.1.0:
     binaryextensions "1 || 2"
     editions "^1.1.1"
     textextensions "1 || 2"
+
+"jquery@>=1.7.0 <3.0.0":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
 "jquery@>=1.8.3 <2.2.0":
   version "2.1.4"
@@ -6983,12 +7021,6 @@ stringset@~0.2.1:
 stringstream@~0.0.4, stringstream@~0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.5.tgz#4e484cd4de5a0bbbee18e46307710a8a81621878"
-
-strip-ansi@*:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
-  dependencies:
-    ansi-regex "^3.0.0"
 
 strip-ansi@^0.3.0:
   version "0.3.0"
