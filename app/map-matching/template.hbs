@@ -20,7 +20,7 @@
       {{#link-to 'map-matching' (query-params bbox=bbox pin=pin trace=null)}}<button class="btn btn-mapzen-alt">Try Map Matching</button>{{/link-to}}
     <div class="expanded-selection">
       {{#unless trace}}
-        <div>Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/" target="_blank">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
+        <div>Match GPS locations to a known route and see detailed attributes about the line.<br><br>Read more about <a href="https://github.com/transitland/mobility-explorer/blob/master/docs/map-matching.md" target="_blank">map matching</a>, or get started by choosing a sample GPX trace or using your own file.</div>
       {{/unless}}
       <h5>Choose a GPX file for matching</h5>
       {{#power-select
@@ -117,7 +117,7 @@
           {{#if showTraceAttribute}}
             <div class="upload-options">
               <h5>Style route segments by:&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}Display each matched line segment by either its slope or speed limit.<br><br>
-                The <a href="https://mapzen.com/documentation/mobility/explorer/map-matching/#view-the-attributes-of-the-matched-route" target="_blank">weighted grade</a> measure provides an idea of the average grade for each segment, calculated from elevation data.<br><br>
+                The <a href="https://github.com/transitland/mobility-explorer/blob/master/docs/map-matching.md#view-the-attributes-of-the-matched-route" target="_blank">weighted grade</a> measure provides an idea of the average grade for each segment, calculated from elevation data.<br><br>
                 If no speed limit information exists, a default speed based on road classification is used.{{/popover-on-element}}<br></h5>
               {{#if (eq selectedAttribute null)}}
                 <input type="radio" id="none" name="options" checked {{action "styleByAttribute" null}}>
@@ -174,8 +174,7 @@
             <!-- TODO: review errors and error messages -->
               {{#if showErrorMessage}}
                 <div class="error-message">
-                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like the map-matching service has returned the following error:<br><br><i>"{{errorMessage}}"</i><br><br>
-                  If you would like help processing your gpx file, please email it to routing@mapzen.com.
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>We're sorry, but it looks like the map-matching service has returned the following error:<br><br><i>"{{errorMessage}}"</i>
                 </div>
               {{/if}}
               {{#if this.model.gpxTrace.error_message}}
@@ -186,7 +185,7 @@
           {{/if}}
           {{#if selectedSegment}}
             <div class="gpx-upload">
-              <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Valhalla routing calculations.<br>Read more about segment attributes in the <a href="https://mapzen.com/documentation/mobility/map-matching/api-reference/#outputs-of-trace_attributes" target="_blank">Map Matching documentation</a>.{{/popover-on-element}}</h5>
+              <h5>Attributes for the selected segment&nbsp;<div class="fa fa-question-circle"></div><br>{{#popover-on-element class="tooltip-on-sidebar" event="click"}}View attribute information for the segment you clicked on the map.<br>Values are from OpenStreetMap source data and Valhalla routing calculations.<br>Read more about segment attributes in the <a href="https://github.com/transitland/mobility-explorer/blob/master/docs/map-matching.md#outputs-of-trace_attributes" target="_blank">Map Matching documentation</a>.{{/popover-on-element}}</h5>
               <table class="table">
                 {{#each segmentAttributes as | segment |}}
                   {{#unless (eq segment.attribute "skip")}}
