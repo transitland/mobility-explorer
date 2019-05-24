@@ -1,6 +1,6 @@
 <div id="sidebar" class="collapse in col-md-4">
   <div class="col-xs-12 no-padding">
-    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin trace=null)}}<h1>Mobility Explorer</h1>{{/link-to}}
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin trace=null)}}<h1>Interline Mobility Explorer</h1>{{/link-to}}
   </div>
   {{#if media.isMobile}}
     {{#unless textboxIsClosed}}
@@ -267,7 +267,7 @@
                       {{/if}}
                   {{/each}}
                 </div>
-            {{/unless}}      
+            {{/unless}}
           {{/if}}
         {{/if}}
       </form>

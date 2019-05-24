@@ -1,6 +1,6 @@
 <div id="sidebar" class="collapse in col-md-4">
   <div class="col-xs-12 no-padding">
-    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Mobility Explorer</h1>{{/link-to}}
+    {{#link-to 'index' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null isochrone_mode=null pin=pin)}}<h1>Interline Mobility Explorer</h1>{{/link-to}}
   </div>
   {{#if media.isMobile}}
 		{{#unless textboxIsClosed}}
@@ -56,15 +56,15 @@
 	<div class="btn-group-vertical" role="group" >
 		{{#link-to 'isochrones' (query-params bbox=leafletBbox onestop_id=null served_by=null operated_by=null serves=null style_routes_by=null pin=pin isochrone_mode=null)}}<button class="btn btn-transparent-alt">Generate Isochrones</button>{{/link-to}}
 		{{#link-to 'map-matching' (query-params bbox=leafletBbox onestop_id=null served_by=null isochrone_mode=null operated_by=null pin=pin serves=null vehicle_type=null isochrone_mode=null trace=null)}}<button class="btn btn-transparent-alt">Try Map Matching</button>{{/link-to}}
-	</div>	
+	</div>
 </div>
 <div class="col-md-8">
 	<div class="row">
 	  {{#if media.isMobile}}
 		  <button type="button" class="collapsed collapse-tab" data-toggle="collapse" data-target="#sidebar">&#8597;</button>
-		{{/if}} 
+		{{/if}}
 	  {{#if currentlyLoading.isLoading}}<div class="loading-spinner-03"></div>{{/if}}
-	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}> 
+	  <div id={{if currentlyLoading.isLoading 'map-loading' 'map'}}>
 	  	<div class="location-search">
 	      <div class="row">
 	        <div class="col-md-2 ember-basic-dropdown-trigger-icon">
@@ -93,7 +93,7 @@
 	        {{/unless}}
 	      {{/unless}}
 	    </div>
-	    
+
 		  {{#leaflet-map bounds=leafletBounds onMoveend=(action "updateLeafletBbox") onDragend=(action "updateMapMoved") onMouseover=(action "mouseOver") onZoomend=(action "updateMapMoved") onClick=(action "dropPin")}}
         {{#if webGL}}
           {{tangram-refill-basemap-layer}}
