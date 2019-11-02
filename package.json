@@ -56,7 +56,7 @@
     "eonasdan-bootstrap-datetimepicker-npm": "4.17.37",
     "gpx-parse": "^0.10.4",
     "loader.js": "^4.0.1",
-    "moment": "2.15.2",
+    "moment": "2.24.0",
     "moment-timezone": "0.5.7",
     "polyline-encoded": "0.0.8",
     "turf-difference": "^3.0.12",
