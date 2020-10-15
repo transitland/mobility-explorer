@@ -1,5 +1,11 @@
 # Mobility Explorer
 
+---
+
+**October 2020**: Try the <a href="https://www.transit.land/map/">new global transit map on the Transitland v2 website</a>. The Transitland v1 Datastore API, which powers Mobility Explorer, is now deprecated. It will be supported for the time being, but we encourage all users and developers to <a href="https://www.transit.land/documentation/">learn more about the Transitland v2 website and APIs</a>.
+
+---
+
 Mobility Explorer helps you understand transportation networks around the world. Search for a place or browse the map, and use the buttons to view transit routes, stops, and operators.
 
 Use Mobility Explorer to query and visualize transit data from [Transitland](https://transit.land), a community-edited, open transit data aggregation project, and to analyze access using an instance of the [Valhalla routing engine](https://github.com/valhalla/valhalla-docs).
