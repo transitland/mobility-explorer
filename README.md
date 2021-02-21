@@ -23,7 +23,7 @@ Use Mobility Explorer to query and visualize transit data from [Transitland](htt
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
+* [Node.js](http://nodejs.org/) (with NPM and Yarn)
 * [Bower](http://bower.io/)
 * [Ember CLI](http://ember-cli.com/)
 
@@ -31,7 +31,7 @@ You will need the following things properly installed on your computer.
 
 * `git clone <repository-url>` this repository
 * change into the new directory
-* `npm install`
+* `yarn install`
 * `bower install`
 
 ## Running / Development
